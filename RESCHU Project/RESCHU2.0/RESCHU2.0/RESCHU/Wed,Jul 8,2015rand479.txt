@@ -1,0 +1,33 @@
+07/08/2015 13:06:38:785  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+13:06:58:316,     0,     54,     3,     Intersect with a HazardArea,     48,152
+13:06:58:316,     0,     54,     4,     Intersect with a HazardArea,     95,199
+13:06:58:316,     0,     54,     5,     Intersect with a HazardArea,     339,195
+13:06:59:82,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+13:06:59:331,     0,     51,     4,     Damaged with a HazardArea,     35,346
+13:06:59:660,     1,     22,     4,     Goal set start,     -1,-1
+13:07:00:596,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+13:07:00:596,     1,     26,     4,     Goal change end. target[H] assigned,     28,412
+13:07:02:531,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+13:07:03:94,     1,     22,     1,     Goal set start,     -1,-1
+13:07:03:827,     1,     26,     1,     Goal change end. target[K] assigned,     280,427
+13:07:08:555,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+13:07:13:704,     0,     54,     3,     Intersect with a HazardArea,     59,124
+13:07:29:151,     0,     54,     2,     Intersect with a HazardArea,     251,220
+13:07:29:151,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+13:07:34:284,     0,     54,     5,     Intersect with a HazardArea,     237,288
+13:07:38:388,     0,     53,     4,     Arrives To Target[H],     28,412
+13:07:45:948,     1,     42,     4,     Payload Engaged to Target[H],     -1,-1
+13:07:52:782,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+13:07:52:782,     1,     23,     4,     Goal set end; assigned to target[F],     66,294
+13:07:52:782,     0,     21,     4,     Goal set by system; assigned to target[F],     -1,-1
+13:07:54:923,     0,     33,     -1,     Target[H] disappeared,     28,412
+13:07:54:923,     0,     31,     -1,     Target[H] generated (visibile=true),     135,437
+13:07:54:923,     0,     51,     2,     Damaged with a HazardArea,     251,220
+13:08:00:43,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+13:08:00:558,     0,     53,     1,     Arrives To Target[K],     280,427
+13:08:10:277,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+13:08:13:835,     1,     101,     1,     Vehicle select tab,     -1,-1
+13:08:14:772,     1,     42,     1,     Payload Engaged to Target[K],     -1,-1
+13:08:21:698,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+13:08:21:698,     1,     23,     1,     Goal set end; assigned to target[G],     29,278
+13:08:21:714,     0,     21,     1,     Goal set by system; assigned to target[G],     -1,-1

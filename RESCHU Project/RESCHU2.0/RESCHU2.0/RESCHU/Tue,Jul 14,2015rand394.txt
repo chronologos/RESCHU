@@ -1,0 +1,54 @@
+07/14/2015 12:42:13:687  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+12:42:33:701,     0,     54,     3,     Intersect with a HazardArea,     293,285
+12:42:33:701,     0,     54,     11,     Intersect with a HazardArea,     85,305
+12:42:35:574,     1,     104,     12,     Vehicle select map Rbtn,     -1,-1
+12:42:37:26,     1,     22,     12,     Goal set start,     -1,-1
+12:42:37:901,     1,     25,     2,     Goal change start from Target[I],     235,29
+12:42:38:26,     1,     103,     12,     Vehicle select map Lbtn,     -1,-1
+12:42:38:806,     0,     54,     2,     Intersect with a HazardArea,     293,285
+12:42:39:618,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+12:42:40:335,     1,     22,     4,     Goal set start,     -1,-1
+12:42:41:335,     1,     25,     6,     Goal change start from Target[D],     101,89
+12:42:43:971,     1,     104,     6,     Vehicle select map Rbtn,     -1,-1
+12:42:44:783,     1,     22,     6,     Goal set start,     -1,-1
+12:42:47:404,     1,     27,     6,     Goal change end; target unassigned,     88,225
+12:42:47:404,     1,     103,     6,     Vehicle select map Lbtn,     -1,-1
+12:42:54:987,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+12:42:56:236,     1,     11,     2,     WP add start,     -1,-1
+12:42:58:62,     1,     12,     2,     WP add end,     310,318
+12:42:59:779,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+12:43:00:841,     1,     11,     3,     WP add start,     -1,-1
+12:43:03:88,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+12:43:03:88,     1,     12,     3,     WP add end,     336,258
+12:43:04:977,     0,     53,     1,     Arrives To Target[A],     128,291
+12:43:07:747,     1,     104,     12,     Vehicle select map Rbtn,     -1,-1
+12:43:08:794,     1,     22,     12,     Goal set start,     -1,-1
+12:43:10:838,     1,     25,     8,     Goal change start from Target[K],     207,120
+12:43:11:900,     1,     104,     8,     Vehicle select map Rbtn,     -1,-1
+12:43:13:133,     1,     22,     8,     Goal set start,     -1,-1
+12:43:13:852,     1,     25,     12,     Goal change start from Target[L],     220,162
+12:43:19:718,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+12:43:23:775,     0,     51,     2,     Damaged with a HazardArea,     293,285
+12:43:24:899,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+12:43:26:631,     1,     42,     1,     Payload Engaged to Target[A],     -1,-1
+12:43:26:820,     0,     51,     2,     Damaged with a HazardArea,     293,285
+12:43:40:48,     0,     53,     7,     Arrives To Target[E],     256,368
+12:43:40:555,     0,     53,     4,     Arrives To Target[C],     132,16
+12:43:53:313,     0,     54,     2,     Intersect with a HazardArea,     286,142
+12:43:53:313,     0,     54,     10,     Intersect with a HazardArea,     234,318
+12:43:53:313,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+12:43:54:328,     0,     51,     2,     Damaged with a HazardArea,     293,285
+12:43:55:421,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+12:43:55:421,     1,     23,     1,     Goal set end; assigned to target[D],     102,88
+12:43:55:437,     0,     21,     1,     Goal set by system; assigned to target[D],     -1,-1
+12:43:58:390,     0,     55,     10,     Escape from a HazardArea,     -1,-1
+12:43:58:390,     0,     33,     -1,     Target[A] disappeared,     128,291
+12:43:58:390,     0,     31,     -1,     Target[A] generated (visibile=true),     79,289
+12:44:03:24,     0,     53,     12,     Arrives To Target[L],     215,164
+12:44:03:525,     0,     53,     5,     Arrives To Target[J],     210,222
+12:44:03:525,     0,     54,     10,     Intersect with a HazardArea,     234,318
+12:44:04:575,     1,     103,     5,     Vehicle select map Lbtn,     -1,-1
+12:44:05:588,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+12:44:06:275,     1,     42,     5,     Payload Engaged to Target[J],     -1,-1
+12:44:14:247,     0,     55,     10,     Escape from a HazardArea,     -1,-1
+12:44:19:957,     0,     51,     10,     Damaged with a HazardArea,     234,318

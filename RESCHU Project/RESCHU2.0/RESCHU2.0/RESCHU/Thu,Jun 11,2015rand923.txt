@@ -1,0 +1,12 @@
+06/11/2015 10:52:16:88  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+10:52:42:227,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+10:52:43:3,     1,     22,     4,     Goal set start,     -1,-1
+10:52:43:870,     1,     26,     4,     Goal change end. target[H] assigned,     28,412
+10:52:44:340,     0,     54,     3,     Intersect with a HazardArea,     108,89
+10:52:44:341,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+10:52:45:811,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+10:52:46:923,     1,     22,     1,     Goal set start,     -1,-1
+10:52:48:339,     1,     26,     1,     Goal change end. target[E] assigned,     105,414
+10:53:09:843,     0,     53,     4,     Arrives To Target[H],     28,412
+10:53:39:947,     1,     101,     4,     Vehicle select tab,     -1,-1
+10:53:40:864,     1,     42,     4,     Payload Engaged to Target[H],     -1,-1

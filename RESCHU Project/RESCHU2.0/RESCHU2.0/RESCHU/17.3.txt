@@ -1,0 +1,78 @@
+07/17/2015 12:53:08:34  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+12:53:50:386,     0,     54,     4,     Intersect with a HazardArea,     43,200
+12:53:50:387,     0,     54,     5,     Intersect with a HazardArea,     320,305
+12:53:52:895,     1,     25,     5,     Goal change start from Target[J],     278,428
+12:53:54:220,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+12:53:54:221,     1,     26,     5,     Goal change end. target[K] assigned,     210,205
+12:53:55:559,     1,     25,     1,     Goal change start from Target[A],     42,155
+12:53:56:551,     1,     26,     1,     Goal change end. target[G] assigned,     179,129
+12:53:59:19,     1,     25,     4,     Goal change start from Target[C],     18,63
+12:53:59:965,     1,     26,     4,     Goal change end. target[A] assigned,     43,156
+12:54:01:39,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+12:54:02:128,     1,     11,     4,     WP add start,     -1,-1
+12:54:04:115,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+12:54:04:116,     1,     12,     4,     WP add end,     106,425
+12:54:18:371,     1,     13,     4,     WP move start,     104,227
+12:54:20:386,     0,     54,     4,     Intersect with a HazardArea,     94,341
+12:54:20:873,     1,     14,     4,     WP move end,     107,227
+12:54:23:3,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+12:54:23:906,     1,     11,     4,     WP add start,     -1,-1
+12:54:25:386,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+12:54:25:536,     1,     12,     4,     WP add end,     107,389
+12:54:32:887,     0,     53,     1,     Arrives To Target[G],     179,129
+12:54:34:119,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+12:54:34:668,     1,     42,     1,     Payload Engaged to Target[G],     -1,-1
+12:54:38:186,     1,     44,     1,     Payload Finished. INCORRECT,     -1,-1
+12:54:38:187,     0,     54,     1,     Intersect with a HazardArea,     172,236
+12:54:38:188,     1,     23,     1,     Goal set end; assigned to target[E],     190,287
+12:54:38:190,     0,     21,     1,     Goal set by system; assigned to target[E],     -1,-1
+12:54:40:386,     0,     54,     4,     Intersect with a HazardArea,     99,217
+12:54:40:387,     0,     33,     -1,     Target[G] disappeared,     179,129
+12:54:40:387,     0,     31,     -1,     Target[G] generated (visibile=true),     56,55
+12:54:45:386,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+12:54:46:534,     1,     13,     4,     WP move start,     141,318
+12:54:48:279,     1,     14,     4,     WP move end,     124,265
+12:54:49:447,     1,     13,     4,     WP move start,     107,228
+12:54:50:103,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+12:54:50:103,     1,     14,     4,     WP move end,     91,247
+12:54:51:401,     1,     13,     4,     WP move start,     125,264
+12:54:52:155,     1,     14,     4,     WP move end,     110,277
+12:54:54:386,     0,     53,     3,     Arrives To Target[B],     25,385
+12:55:12:387,     0,     53,     2,     Arrives To Target[I],     210,83
+12:55:13:403,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+12:55:13:973,     1,     42,     2,     Payload Engaged to Target[I],     -1,-1
+12:55:19:747,     1,     43,     2,     Payload Finished; CORRECT,     -1,-1
+12:55:19:748,     0,     54,     2,     Intersect with a HazardArea,     234,146
+12:55:19:750,     1,     23,     2,     Goal set end; assigned to target[J],     280,428
+12:55:19:750,     0,     21,     2,     Goal set by system; assigned to target[J],     -1,-1
+12:55:20:414,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+12:55:20:415,     0,     33,     -1,     Target[I] disappeared,     210,83
+12:55:20:415,     0,     31,     -1,     Target[I] generated (visibile=false),     235,18
+12:55:23:323,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+12:55:24:228,     0,     32,     -1,     Target[B] became visible,     25,385
+12:55:24:230,     1,     23,     3,     Goal set end; assigned to target[D],     118,415
+12:55:24:232,     0,     21,     3,     Goal set by system; assigned to target[D],     -1,-1
+12:55:24:234,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+12:55:33:640,     1,     15,     4,     WP delete start,     -1,-1
+12:55:33:641,     1,     16,     4,     WP delete end,     91,247
+12:55:53:623,     1,     25,     2,     Goal change start from Target[J],     279,427
+12:55:54:855,     1,     27,     2,     Goal change end; target unassigned,     248,336
+12:55:55:559,     1,     25,     2,     Goal change start from Target[NULL],     248,335
+12:55:56:667,     1,     26,     2,     Goal change end. target[J] assigned,     280,428
+12:56:05:418,     0,     54,     2,     Intersect with a HazardArea,     251,254
+12:56:16:419,     0,     53,     1,     Arrives To Target[E],     190,287
+12:56:18:847,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+12:56:19:505,     1,     42,     1,     Payload Engaged to Target[E],     -1,-1
+12:56:27:984,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+12:56:27:986,     1,     23,     1,     Goal set end; assigned to target[H],     35,12
+12:56:27:987,     0,     21,     1,     Goal set by system; assigned to target[H],     -1,-1
+12:56:28:424,     0,     53,     3,     Arrives To Target[D],     118,415
+12:56:30:424,     0,     33,     -1,     Target[E] disappeared,     190,287
+12:56:30:424,     0,     31,     -1,     Target[E] generated (visibile=true),     24,119
+12:56:35:643,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+12:56:36:236,     0,     32,     -1,     Target[D] became visible,     118,415
+12:56:36:238,     0,     54,     3,     Intersect with a HazardArea,     137,349
+12:56:36:238,     1,     23,     3,     Goal set end; assigned to target[F],     137,279
+12:56:36:239,     0,     21,     3,     Goal set by system; assigned to target[F],     -1,-1
+12:56:36:239,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+12:56:40:424,     0,     55,     2,     Escape from a HazardArea,     -1,-1

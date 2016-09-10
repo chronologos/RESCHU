@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/comm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/corecomponents-swing-win.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/Jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/jogl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/TableLayout-bin-jdk1.5-2007-04-21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/TimingFramework-0.53.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/webrenderer-swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib/webrenderer-swing-win.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,12 @@
+06/09/2015 19:48:22:368  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+19:48:54:920,     0,     54,     3,     Intersect with a HazardArea,     293,285
+19:49:20:477,     0,     54,     2,     Intersect with a HazardArea,     288,185
+19:49:23:37,     0,     53,     1,     Arrives To Target[A],     128,291
+19:49:48:187,     0,     51,     2,     Damaged with a HazardArea,     293,285
+19:50:02:384,     0,     53,     4,     Arrives To Target[C],     132,16
+19:50:06:452,     0,     51,     3,     Damaged with a HazardArea,     293,285
+19:50:12:615,     0,     51,     2,     Damaged with a HazardArea,     293,285
+19:50:19:814,     0,     53,     5,     Arrives To Target[J],     210,222
+19:50:21:455,     1,     101,     5,     Vehicle select tab,     -1,-1
+19:50:21:824,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+19:50:22:307,     1,     42,     5,     Payload Engaged to Target[J],     -1,-1
