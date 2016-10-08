@@ -1,0 +1,3 @@
+0# UAV# LAND# -836# -246# Find the grey car that is parked to the left of the tower
+1# UAV# SHORE# -859# -713# Find the swimming pool
+44# UUV# SHORE# 1415# -147# Find the red car

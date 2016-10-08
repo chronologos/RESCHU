@@ -1,0 +1,8 @@
+07/08/2015 13:51:59:536  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+13:53:19:912,     0,     53,     3,     Arrives To Target[B],     156,294
+13:53:31:313,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+13:53:31:906,     1,     22,     1,     Goal set start,     -1,-1
+13:53:32:858,     1,     26,     1,     Goal change end. target[C] assigned,     86,224
+13:53:52:343,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+13:53:52:844,     1,     22,     1,     Goal set start,     -1,-1
+13:53:53:764,     1,     26,     1,     Goal change end. target[E] assigned,     118,415

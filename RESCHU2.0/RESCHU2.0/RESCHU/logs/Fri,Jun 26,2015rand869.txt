@@ -1,0 +1,22 @@
+06/26/2015 13:35:13:730  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+13:36:35:897,     0,     54,     4,     Intersect with a HazardArea,     35,346
+13:36:37:51,     1,     101,     1,     Vehicle select tab,     -1,-1
+13:36:38:227,     1,     103,     4,     Vehicle select map Lbtn,     -1,-1
+13:36:38:866,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+13:36:39:985,     1,     11,     4,     WP add start,     -1,-1
+13:36:42:705,     1,     12,     4,     WP add end,     36,364
+13:36:55:915,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+13:37:03:909,     0,     51,     4,     Damaged with a HazardArea,     35,346
+13:37:26:62,     1,     101,     1,     Vehicle select tab,     -1,-1
+13:37:58:399,     0,     53,     3,     Arrives To Target[B],     163,149
+13:37:58:896,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+13:38:03:894,     1,     101,     3,     Vehicle select tab,     -1,-1
+13:38:05:900,     0,     54,     2,     Intersect with a HazardArea,     265,174
+13:38:15:910,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+13:38:20:671,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+13:38:22:980,     1,     11,     5,     WP add start,     -1,-1
+13:38:25:500,     1,     12,     5,     WP add end,     294,180
+13:38:29:59,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+13:38:30:622,     1,     11,     2,     WP add start,     -1,-1
+13:38:30:915,     0,     53,     4,     Arrives To Target[C],     16,193
+13:38:34:734,     1,     17,     2,     WP add canceled,     -1,-1
