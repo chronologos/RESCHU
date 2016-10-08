@@ -1,0 +1,26 @@
+07/10/2015 15:04:21:706  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+15:05:32:686,     0,     51,     1,     Damaged with a HazardArea,     75,366
+15:06:08:305,     0,     53,     3,     Arrives To Target[B],     156,294
+15:06:36:391,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+15:06:36:927,     1,     22,     1,     Goal set start,     -1,-1
+15:06:37:715,     1,     26,     1,     Goal change end. target[C] assigned,     86,224
+15:06:50:171,     1,     25,     1,     Goal change start from Target[C],     86,224
+15:06:52:271,     1,     26,     1,     Goal change end. target[E] assigned,     118,415
+15:07:10:546,     0,     32,     -1,     Target[B] became visible,     156,294
+15:07:10:548,     1,     23,     3,     Goal set end; assigned to target[D],     28,155
+15:07:10:549,     0,     21,     3,     Goal set by system; assigned to target[D],     -1,-1
+15:07:10:549,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+15:07:23:686,     0,     54,     1,     Intersect with a HazardArea,     75,366
+15:07:23:687,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+15:07:30:654,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+15:07:32:259,     1,     11,     1,     WP add start,     -1,-1
+15:07:34:175,     1,     12,     1,     WP add end,     57,325
+15:07:44:446,     1,     13,     1,     WP move start,     107,355
+15:07:44:814,     1,     14,     1,     WP move end,     107,367
+15:07:53:926,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+15:07:55:65,     1,     11,     1,     WP add start,     -1,-1
+15:07:56:575,     1,     12,     1,     WP add end,     78,343
+15:08:05:55,     1,     15,     1,     WP delete start,     -1,-1
+15:08:05:55,     1,     16,     1,     WP delete end,     117,381
+15:08:27:687,     0,     53,     2,     Arrives To Target[H],     210,205
+15:08:42:685,     1,     42,     2,     Payload Engaged to Target[H],     -1,-1

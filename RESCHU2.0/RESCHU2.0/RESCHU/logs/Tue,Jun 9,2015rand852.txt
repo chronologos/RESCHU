@@ -1,0 +1,13 @@
+06/09/2015 19:45:41:835  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+19:45:59:888,     0,     51,     4,     Damaged with a HazardArea,     35,346
+19:45:59:983,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+19:46:00:591,     1,     22,     4,     Goal set start,     -1,-1
+19:46:01:137,     0,     54,     4,     Intersect with a HazardArea,     35,346
+19:46:01:137,     1,     27,     4,     Goal change end; target unassigned,     67,286
+19:46:01:918,     0,     54,     3,     Intersect with a HazardArea,     48,152
+19:46:01:918,     0,     54,     5,     Intersect with a HazardArea,     339,195
+19:46:04:24,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+19:46:04:789,     1,     22,     3,     Goal set start,     -1,-1
+19:46:05:585,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+19:46:05:585,     1,     26,     3,     Goal change end. target[D] assigned,     138,42
+19:46:07:6,     0,     55,     4,     Escape from a HazardArea,     -1,-1

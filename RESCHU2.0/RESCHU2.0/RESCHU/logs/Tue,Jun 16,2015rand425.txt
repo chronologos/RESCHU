@@ -1,0 +1,4 @@
+06/16/2015 14:03:09:966  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+14:03:41:811,     0,     54,     3,     Intersect with a HazardArea,     108,89
+14:03:41:812,     0,     54,     4,     Intersect with a HazardArea,     35,346
+14:03:41:813,     0,     55,     3,     Escape from a HazardArea,     -1,-1

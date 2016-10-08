@@ -1,0 +1,75 @@
+07/21/2015 16:05:17:213  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+16:06:32:818,     0,     54,     4,     Intersect with a HazardArea,     35,346
+16:06:34:862,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:06:36:937,     1,     11,     4,     WP add start,     -1,-1
+16:06:37:817,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+16:06:38:279,     1,     12,     4,     WP add end,     39,371
+16:06:42:296,     1,     13,     4,     WP move start,     94,316
+16:06:42:871,     1,     14,     4,     WP move end,     80,287
+16:06:54:817,     0,     51,     4,     Damaged with a HazardArea,     35,346
+16:06:59:148,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:07:00:639,     1,     11,     1,     WP add start,     -1,-1
+16:07:02:363,     1,     12,     1,     WP add end,     190,368
+16:07:04:3,     1,     13,     1,     WP move start,     208,317
+16:07:05:559,     1,     14,     1,     WP move end,     228,270
+16:07:12:817,     0,     54,     1,     Intersect with a HazardArea,     237,288
+16:07:18:817,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:07:20:127,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:07:21:817,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:07:22:96,     1,     22,     4,     Goal set start,     -1,-1
+16:07:22:822,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+16:07:24:916,     1,     26,     4,     Goal change end. target[G] assigned,     29,278
+16:07:27:817,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:07:48:817,     0,     51,     1,     Damaged with a HazardArea,     237,288
+16:07:51:215,     1,     13,     1,     WP move start,     226,270
+16:07:52:0,     1,     14,     1,     WP move end,     154,261
+16:07:53:307,     1,     13,     1,     WP move start,     155,260
+16:07:53:849,     1,     14,     1,     WP move end,     167,255
+16:07:56:819,     0,     53,     3,     Arrives To Target[B],     163,149
+16:08:02:318,     0,     53,     4,     Arrives To Target[G],     29,278
+16:08:02:817,     0,     54,     2,     Intersect with a HazardArea,     265,174
+16:08:12:817,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+16:08:13:247,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:08:14:159,     0,     32,     -1,     Target[B] became visible,     163,149
+16:08:14:161,     1,     23,     3,     Goal set end; assigned to target[D],     138,42
+16:08:14:164,     0,     21,     3,     Goal set by system; assigned to target[D],     -1,-1
+16:08:14:164,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+16:08:30:131,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:08:33:744,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:08:47:525,     1,     42,     4,     Payload Engaged to Target[G],     -1,-1
+16:09:23:57,     0,     53,     3,     Arrives To Target[D],     138,42
+16:09:28:13,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+16:09:28:15,     1,     23,     4,     Goal set end; assigned to target[E],     105,414
+16:09:28:16,     0,     21,     4,     Goal set by system; assigned to target[E],     -1,-1
+16:09:28:64,     0,     33,     -1,     Target[G] disappeared,     29,278
+16:09:28:64,     0,     31,     -1,     Target[G] generated (visibile=true),     178,376
+16:09:42:39,     0,     53,     1,     Arrives To Target[A],     112,162
+16:09:44:327,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:09:45:201,     1,     42,     1,     Payload Engaged to Target[A],     -1,-1
+16:10:06:215,     0,     53,     5,     Arrives To Target[J],     210,218
+16:10:09:116,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+16:10:09:118,     1,     23,     1,     Goal set end; assigned to target[H],     28,412
+16:10:09:119,     0,     21,     1,     Goal set by system; assigned to target[H],     -1,-1
+16:10:13:197,     0,     33,     -1,     Target[A] disappeared,     112,162
+16:10:13:198,     0,     31,     -1,     Target[A] generated (visibile=false),     122,299
+16:10:21:195,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+16:10:22:5,     1,     42,     5,     Payload Engaged to Target[J],     -1,-1
+16:10:35:583,     1,     43,     5,     Payload Finished; CORRECT,     -1,-1
+16:10:35:584,     1,     23,     5,     Goal set end; assigned to target[K],     280,427
+16:10:35:586,     0,     21,     5,     Goal set by system; assigned to target[K],     -1,-1
+16:10:38:208,     0,     33,     -1,     Target[J] disappeared,     210,218
+16:10:38:211,     0,     31,     -1,     Target[J] generated (visibile=true),     230,270
+16:10:48:207,     0,     54,     5,     Intersect with a HazardArea,     271,352
+16:10:51:208,     0,     53,     2,     Arrives To Target[I],     205,133
+16:10:58:207,     0,     54,     1,     Intersect with a HazardArea,     52,358
+16:10:58:208,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+16:11:08:207,     0,     54,     5,     Intersect with a HazardArea,     271,352
+16:11:08:208,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+16:11:10:708,     0,     53,     4,     Arrives To Target[E],     105,414
+16:11:13:207,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+16:11:23:207,     0,     54,     5,     Intersect with a HazardArea,     271,352
+16:11:43:207,     0,     54,     1,     Intersect with a HazardArea,     58,373
+16:12:03:207,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+16:12:53:207,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+16:12:58:708,     0,     53,     1,     Arrives To Target[H],     28,412
+16:14:28:208,     0,     92,     -1,     Game End. user=null. scenario=4. total_damage=1,     -1,-1

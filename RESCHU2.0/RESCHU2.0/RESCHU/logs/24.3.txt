@@ -1,0 +1,211 @@
+07/21/2015 16:45:37:375  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+16:47:09:832,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:47:10:908,     1,     22,     4,     Goal set start,     -1,-1
+16:47:11:548,     1,     26,     4,     Goal change end. target[H] assigned,     28,412
+16:47:13:179,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:47:13:871,     1,     22,     1,     Goal set start,     -1,-1
+16:47:14:740,     1,     26,     1,     Goal change end. target[K] assigned,     280,427
+16:47:20:571,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+16:47:21:635,     1,     11,     5,     WP add start,     -1,-1
+16:47:23:751,     1,     12,     5,     WP add end,     359,164
+16:47:33:55,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:47:33:744,     1,     22,     3,     Goal set start,     -1,-1
+16:47:34:436,     1,     26,     3,     Goal change end. target[D] assigned,     138,42
+16:47:40:799,     0,     53,     4,     Arrives To Target[H],     28,412
+16:47:41:764,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:47:42:842,     1,     42,     4,     Payload Engaged to Target[H],     -1,-1
+16:47:54:886,     0,     53,     3,     Arrives To Target[D],     138,42
+16:48:04:19,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+16:48:04:23,     1,     23,     4,     Goal set end; assigned to target[E],     105,414
+16:48:04:25,     0,     21,     4,     Goal set by system; assigned to target[E],     -1,-1
+16:48:05:419,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:48:05:452,     0,     53,     1,     Arrives To Target[K],     280,427
+16:48:06:60,     0,     32,     -1,     Target[D] became visible,     138,42
+16:48:06:64,     1,     23,     3,     Goal set end; assigned to target[F],     66,294
+16:48:06:66,     0,     21,     3,     Goal set by system; assigned to target[F],     -1,-1
+16:48:06:67,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+16:48:06:943,     0,     33,     -1,     Target[H] disappeared,     28,412
+16:48:06:944,     0,     31,     -1,     Target[H] generated (visibile=true),     135,437
+16:48:08:551,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:48:09:432,     1,     22,     3,     Goal set start,     -1,-1
+16:48:10:155,     1,     26,     3,     Goal change end. target[L] assigned,     220,61
+16:48:12:943,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:48:14:704,     1,     13,     5,     WP move start,     284,185
+16:48:15:615,     1,     14,     5,     WP move end,     289,210
+16:48:15:943,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:48:16:835,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+16:48:16:943,     0,     54,     2,     Intersect with a HazardArea,     265,174
+16:48:18:83,     1,     11,     2,     WP add start,     -1,-1
+16:48:18:944,     0,     51,     5,     Damaged with a HazardArea,     339,195
+16:48:22:980,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+16:48:22:980,     1,     12,     2,     WP add end,     311,245
+16:48:25:119,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:48:25:843,     1,     42,     1,     Payload Engaged to Target[K],     -1,-1
+16:48:39:588,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+16:48:39:590,     0,     54,     1,     Intersect with a HazardArea,     222,393
+16:48:39:592,     1,     23,     1,     Goal set end; assigned to target[G],     29,278
+16:48:39:594,     0,     21,     1,     Goal set by system; assigned to target[G],     -1,-1
+16:48:42:58,     0,     33,     -1,     Target[K] disappeared,     280,427
+16:48:42:60,     0,     31,     -1,     Target[K] generated (visibile=false),     235,11
+16:48:42:843,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:48:44:99,     1,     22,     1,     Goal set start,     -1,-1
+16:48:45:155,     1,     26,     1,     Goal change end. target[H] assigned,     135,437
+16:48:46:743,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:48:47:623,     1,     11,     1,     WP add start,     -1,-1
+16:48:49:394,     1,     12,     1,     WP add end,     268,423
+16:48:50:62,     0,     53,     4,     Arrives To Target[E],     105,414
+16:48:50:779,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:48:51:871,     1,     11,     1,     WP add start,     -1,-1
+16:48:55:380,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+16:48:55:381,     1,     12,     1,     WP add end,     263,421
+16:49:01:299,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:49:02:79,     1,     42,     4,     Payload Engaged to Target[E],     -1,-1
+16:49:02:625,     0,     53,     3,     Arrives To Target[L],     220,61
+16:49:36:406,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+16:49:36:407,     1,     23,     4,     Goal set end; assigned to target[C],     16,193
+16:49:36:432,     0,     21,     4,     Goal set by system; assigned to target[C],     -1,-1
+16:49:37:230,     0,     33,     -1,     Target[E] disappeared,     105,414
+16:49:37:231,     0,     31,     -1,     Target[E] generated (visibile=true),     90,84
+16:49:40:71,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:49:41:71,     1,     11,     1,     WP add start,     -1,-1
+16:49:42:230,     0,     54,     1,     Intersect with a HazardArea,     183,427
+16:49:42:955,     1,     12,     1,     WP add end,     185,441
+16:49:43:987,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:49:44:771,     1,     11,     1,     WP add start,     -1,-1
+16:49:46:55,     1,     17,     1,     WP add canceled,     -1,-1
+16:49:47:127,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:49:48:135,     1,     11,     1,     WP add start,     -1,-1
+16:49:51:150,     0,     55,     1,     Escape from a HazardArea,     -1,-1
+16:49:51:151,     1,     12,     1,     WP add end,     177,438
+16:49:56:347,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:49:56:971,     0,     32,     -1,     Target[L] became visible,     220,61
+16:49:56:973,     1,     23,     3,     Goal set end; assigned to target[B],     163,149
+16:49:56:975,     0,     21,     3,     Goal set by system; assigned to target[B],     -1,-1
+16:49:56:975,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+16:50:02:35,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:50:02:759,     1,     22,     4,     Goal set start,     -1,-1
+16:50:03:765,     1,     26,     4,     Goal change end. target[G] assigned,     29,278
+16:50:12:233,     0,     53,     1,     Arrives To Target[H],     135,437
+16:50:14:391,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:50:15:3,     1,     42,     1,     Payload Engaged to Target[H],     -1,-1
+16:50:32:700,     1,     44,     1,     Payload Finished. INCORRECT,     -1,-1
+16:50:32:702,     1,     23,     1,     Goal set end; assigned to target[A],     112,162
+16:50:32:703,     0,     21,     1,     Goal set by system; assigned to target[A],     -1,-1
+16:50:37:301,     0,     33,     -1,     Target[H] disappeared,     135,437
+16:50:37:302,     0,     31,     -1,     Target[H] generated (visibile=false),     210,395
+16:50:45:399,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:50:46:791,     1,     11,     1,     WP add start,     -1,-1
+16:50:50:187,     1,     12,     1,     WP add end,     122,419
+16:50:54:302,     0,     53,     5,     Arrives To Target[J],     210,218
+16:50:54:863,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+16:50:55:953,     1,     42,     5,     Payload Engaged to Target[J],     -1,-1
+16:51:02:786,     1,     43,     5,     Payload Finished; CORRECT,     -1,-1
+16:51:02:787,     1,     23,     5,     Goal set end; assigned to target[L],     220,61
+16:51:02:789,     0,     21,     5,     Goal set by system; assigned to target[L],     -1,-1
+16:51:07:403,     0,     33,     -1,     Target[J] disappeared,     210,218
+16:51:07:404,     0,     31,     -1,     Target[J] generated (visibile=true),     260,394
+16:51:07:903,     0,     53,     3,     Arrives To Target[B],     163,149
+16:51:08:896,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:51:10:256,     0,     32,     -1,     Target[B] became visible,     163,149
+16:51:10:257,     1,     23,     3,     Goal set end; assigned to target[F],     66,294
+16:51:10:259,     0,     21,     3,     Goal set by system; assigned to target[F],     -1,-1
+16:51:10:260,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+16:51:11:699,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+16:51:12:531,     1,     22,     5,     Goal set start,     -1,-1
+16:51:13:404,     0,     53,     4,     Arrives To Target[G],     29,278
+16:51:13:651,     1,     27,     5,     Goal change end; target unassigned,     163,149
+16:51:13:652,     1,     103,     3,     Vehicle select map Lbtn,     -1,-1
+16:51:17:731,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:51:18:341,     1,     42,     4,     Payload Engaged to Target[G],     -1,-1
+16:51:25:921,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+16:51:25:923,     1,     23,     4,     Goal set end; assigned to target[D],     138,42
+16:51:25:926,     0,     21,     4,     Goal set by system; assigned to target[D],     -1,-1
+16:51:27:450,     0,     33,     -1,     Target[G] disappeared,     29,278
+16:51:27:451,     0,     31,     -1,     Target[G] generated (visibile=false),     150,433
+16:51:35:571,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:51:36:326,     1,     22,     4,     Goal set start,     -1,-1
+16:51:37:203,     1,     26,     4,     Goal change end. target[C] assigned,     16,193
+16:52:05:587,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:52:06:644,     1,     11,     3,     WP add start,     -1,-1
+16:52:07:445,     0,     53,     2,     Arrives To Target[I],     205,133
+16:52:07:446,     0,     54,     3,     Intersect with a HazardArea,     97,246
+16:52:08:371,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+16:52:08:372,     1,     12,     3,     WP add end,     132,228
+16:52:11:139,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+16:52:12:832,     1,     42,     2,     Payload Engaged to Target[I],     -1,-1
+16:52:18:136,     1,     43,     2,     Payload Finished; CORRECT,     -1,-1
+16:52:18:138,     0,     54,     2,     Intersect with a HazardArea,     259,327
+16:52:18:139,     1,     23,     2,     Goal set end; assigned to target[J],     260,394
+16:52:18:140,     0,     21,     2,     Goal set by system; assigned to target[J],     -1,-1
+16:52:22:235,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+16:52:22:444,     0,     33,     -1,     Target[I] disappeared,     205,133
+16:52:22:445,     0,     31,     -1,     Target[I] generated (visibile=true),     220,249
+16:52:23:262,     1,     22,     2,     Goal set start,     -1,-1
+16:52:23:963,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+16:52:23:964,     1,     26,     2,     Goal change end. target[L] assigned,     220,61
+16:52:26:945,     0,     53,     4,     Arrives To Target[C],     16,193
+16:52:30:311,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:52:31:415,     1,     22,     3,     Goal set start,     -1,-1
+16:52:32:247,     1,     27,     3,     Goal change end; target unassigned,     221,249
+16:52:37:56,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:52:37:795,     1,     42,     4,     Payload Engaged to Target[C],     -1,-1
+16:52:46:336,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+16:52:46:338,     1,     23,     4,     Goal set end; assigned to target[E],     90,84
+16:52:46:339,     0,     21,     4,     Goal set by system; assigned to target[E],     -1,-1
+16:52:47:467,     0,     33,     -1,     Target[C] disappeared,     16,193
+16:52:47:468,     0,     31,     -1,     Target[C] generated (visibile=true),     121,322
+16:52:50:11,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:52:51:223,     1,     22,     1,     Goal set start,     -1,-1
+16:52:51:911,     1,     27,     1,     Goal change end; target unassigned,     63,298
+16:52:54:477,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:52:55:163,     1,     22,     1,     Goal set start,     -1,-1
+16:52:55:931,     1,     25,     3,     Goal change start from Target[NULL],     222,251
+16:52:56:11,     1,     27,     3,     Goal change end; target unassigned,     222,252
+16:52:58:467,     0,     51,     1,     Damaged with a HazardArea,     97,246
+16:52:58:976,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:52:59:861,     1,     22,     1,     Goal set start,     -1,-1
+16:53:00:771,     1,     26,     1,     Goal change end. target[I] assigned,     220,249
+16:53:01:691,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:53:02:478,     1,     22,     3,     Goal set start,     -1,-1
+16:53:03:327,     1,     26,     3,     Goal change end. target[F] assigned,     66,294
+16:53:11:927,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:53:12:599,     1,     22,     1,     Goal set start,     -1,-1
+16:53:13:431,     1,     26,     1,     Goal change end. target[C] assigned,     121,322
+16:53:17:583,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:53:18:495,     1,     11,     4,     WP add start,     -1,-1
+16:53:19:963,     1,     12,     4,     WP add end,     24,144
+16:53:46:967,     0,     53,     3,     Arrives To Target[F],     66,294
+16:53:52:652,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:53:53:687,     0,     32,     -1,     Target[F] became visible,     66,294
+16:53:53:689,     0,     54,     3,     Intersect with a HazardArea,     94,257
+16:53:53:690,     1,     23,     3,     Goal set end; assigned to target[K],     235,11
+16:53:53:690,     0,     21,     3,     Goal set by system; assigned to target[K],     -1,-1
+16:53:53:691,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+16:53:53:968,     0,     53,     1,     Arrives To Target[C],     121,322
+16:53:59:311,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+16:54:00:22,     1,     22,     3,     Goal set start,     -1,-1
+16:54:01:235,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+16:54:01:236,     1,     26,     3,     Goal change end. target[H] assigned,     210,395
+16:54:02:549,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+16:54:03:173,     1,     42,     1,     Payload Engaged to Target[C],     -1,-1
+16:54:09:497,     0,     53,     4,     Arrives To Target[E],     90,84
+16:54:10:969,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+16:54:10:971,     1,     23,     1,     Goal set end; assigned to target[B],     163,149
+16:54:10:972,     0,     21,     1,     Goal set by system; assigned to target[B],     -1,-1
+16:54:12:227,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+16:54:12:491,     0,     33,     -1,     Target[C] disappeared,     121,322
+16:54:12:491,     0,     31,     -1,     Target[C] generated (visibile=true),     13,201
+16:54:14:337,     1,     42,     4,     Payload Engaged to Target[E],     -1,-1
+16:54:14:754,     0,     53,     2,     Arrives To Target[L],     220,61
+16:54:44:301,     1,     44,     4,     Payload Finished. INCORRECT,     -1,-1
+16:54:44:303,     1,     23,     4,     Goal set end; assigned to target[D],     138,42
+16:54:44:305,     0,     21,     4,     Goal set by system; assigned to target[D],     -1,-1
+16:54:47:688,     0,     33,     -1,     Target[E] disappeared,     90,84
+16:54:47:689,     0,     31,     -1,     Target[E] generated (visibile=true),     98,31
+16:54:49:863,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
+16:54:50:592,     1,     42,     2,     Payload Engaged to Target[L],     -1,-1
+16:55:07:624,     1,     43,     2,     Payload Finished; CORRECT,     -1,-1
+16:55:07:627,     1,     23,     2,     Goal set end; assigned to target[J],     260,394
+16:55:07:628,     0,     21,     2,     Goal set by system; assigned to target[J],     -1,-1
+16:55:07:749,     0,     92,     -1,     Game End. user=null. scenario=4. total_damage=2,     -1,-1
+16:55:07:796,     0,     33,     -1,     Target[L] disappeared,     220,61

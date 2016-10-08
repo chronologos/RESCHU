@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;&apos; to &apos;reschu.app.AppMain._scenario&apos;&#x0D;&#x0A;- Original project: &apos;RESCHU&apos;&#x0D;&#x0A;- Destination element: &apos;reschu.app.AppMain._scenario&apos;&#x0D;&#x0A;- Original element: &apos;reschu.app.AppMain._scenario&apos;" description="Copy field" destination="/src&lt;reschu.app{AppMain.java[AppMain^_scenario" element1="/src&lt;reschu.app{AppMain.java[AppMain^_scenario" flags="589830" id="org.eclipse.jdt.ui.copy" members="1" policy="org.eclipse.jdt.ui.copyMembers" stamp="1437065991931" version="1.0"/>
+</session>
