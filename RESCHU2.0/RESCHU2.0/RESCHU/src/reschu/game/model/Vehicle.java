@@ -1,6 +1,7 @@
 package reschu.game.model;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import reschu.constants.*;
@@ -8,15 +9,15 @@ import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
 
 public class Vehicle { 
-	final static public String TYPE_UAV = "UAV";
-	final static public String TYPE_UUV = "UUV";
-	final static public String PAYLOAD_ISR = "ISR";
-	final static public String PAYLOAD_COM = "COM";
 	
 	private String name; 
     private String type;
     private String payload;
-    private int pos_x, pos_y;
+    private int groundTruthPosX;
+    private int groundTruthPosY;
+    private int observedPosX;
+    private int observedPosY;
+    private boolean hijacked;
     private Target target;
     private LinkedList<int[]> path = new LinkedList<int[]>();
     private Map map;
@@ -26,16 +27,40 @@ public class Vehicle {
     private int status;
     private double vDamage;
     private Game g;
-//    private int velocity_buffer;
-//    private int velocity_scale;
+    // private int velocity_buffer;
+    // private int velocity_scale;
     private int UUV_stuck_count;
     private boolean UUV_stuck;
     private boolean intersect;
     
+    public static final String TYPE_UAV = "UAV";
+    public static final String TYPE_UUV = "UUV";
+    public static final String PAYLOAD_ISR = "ISR";
+    public static final String PAYLOAD_COM = "COM";
+    
+    public Vehicle(Map m, Game g) { 
+    	setX(0); 
+    	setY(0); 
+    	hijacked = false; // set to true by AttackEngine, at which point groundTruthPos != ObservedPos
+    	setTarget(null); 
+    	this.g = g;
+    	map=m; 
+    	setStatus(MyGame.STATUS_VEHICLE_STASIS); 
+    	vDamage = 0;
+//    	velocity_scale = MySpeed.SPEED_TIMER;
+//    	velocity_buffer = 0;
+    	UUV_stuck_count = 0;
+    	UUV_stuck = false;
+    	intersect = false;
+    }
+    
     /**
      * Set the position of this vehicle (synchronized)
      */
-    public synchronized void setPos(int x, int y) { setX(x); setY(y); }
+    public synchronized void setPos(int x, int y) {
+    	setX(x); 
+    	setY(y); 
+    }
     
     /**
      * Get a path of this vehicle  (synchronized) 
@@ -90,19 +115,36 @@ public class Vehicle {
     /**
      * Returns a map that this vehicle is assigned to 
      */
-    public synchronized Map getMap() { return map; }
-
-    public synchronized void setX(int x){ pos_x = x; }
-    public synchronized int getX(){ return pos_x; } 
+    public synchronized Map getMap() {return map;}
+    /***
+     * Called by AttackEngine to hijack this vehicle. If hijacked, setX and setY update groundTruthPos but not observedPos.
+     */
+    public synchronized void hijack(){
+    	System.out.println("hijacked!"); //TODO remove
+    	hijacked = true;
+	}
+    public synchronized void setX(int x){
+    	if (!hijacked){
+    		observedPosX = x;
+    	}
+    	groundTruthPosX = x;
+    }
+    public synchronized int getX(){return observedPosX;} 
     
-    public synchronized void setY(int y){ pos_y = y; }   
-    public synchronized int getY(){ return pos_y; }
+    public synchronized void setY(int y){
+    	if (!hijacked){
+    		observedPosY = y;
+    	}
+    	groundTruthPosY = y;
+    }
+    
+    public synchronized int getY(){return observedPosY;}
             
-    public void setName(String strName) { name = strName; }
+    public void setName(String strName) {name = strName;}
     public String getName() {return name;}
     
-    public void setType(String strType) { type = strType; }  
-    public String getType() { return type; }  
+    public void setType(String strType) {type = strType;}  
+    public String getType() {return type;}  
     
     public void setIndex(int idx) { index = idx; }
     public int getIndex() {return index;}
@@ -122,31 +164,18 @@ public class Vehicle {
     public void setIntersect(boolean b) { intersect = b; }
     public boolean getIntersect() { return intersect; }
     
-    static public boolean isVehicleType(String s) {
-    	if( s.equals(TYPE_UAV) || s.equals(TYPE_UUV) ) return true;
-    	else return false;
+    public static boolean isVehicleType(String s) {
+    	return ( s.equals(TYPE_UAV) || s.equals(TYPE_UUV) )? true : false;
     }
     
     public double getDamage() { return vDamage; }
     
     public void setGuiListener(GUI_Listener l) {lsnr = l;}
     
-    public Vehicle(Map m, Game g) { 
-    	setX(0); setY(0); 
-    	setTarget(null); 
-    	this.g = g;
-    	map=m; 
-    	setStatus(MyGame.STATUS_VEHICLE_STASIS); 
-    	vDamage = 0;
-//    	velocity_scale = MySpeed.SPEED_TIMER;
-//    	velocity_buffer = 0;
-    	UUV_stuck_count = 0;
-    	UUV_stuck = false;
-    	intersect = false;
-    }
+
 
     private boolean boundaryCheck(int x, int y, int[] target_pos) {
-    	int w = Math.round(MySize.SIZE_TARGET_PXL / MySize.SIZE_CELL / 2);    	 
+    	int w = MySize.SIZE_TARGET_PXL / MySize.SIZE_CELL / 2;    	 
     	if( (x<=target_pos[0]+w)&&(x>=target_pos[0]-w)&&(y<=target_pos[1]+w)&&(y>=target_pos[1]-w) ) return true;
     	return false;	
     }
@@ -178,7 +207,8 @@ public class Vehicle {
     		
     		if( !t.isVisible() ) {
     			if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
-    				x = target_pos[0]; y = target_pos[1];            		
+    				x = target_pos[0];
+    				y = target_pos[1];            		
         			setTarget(getMap().getListUnassignedTarget().get(i)); 
         			//PanelMsgBoard.Msg("Vehicle ["+index+"] is assigned to a target type ["+target.getMission()+"]");
         			PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
@@ -188,7 +218,7 @@ public class Vehicle {
     			}
     			else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
     				//2008-04-05
-    				//UAV to grey target   ¡°You cannot assign a UAV to a grey target, please reassign¡±
+    				//UAV to grey target   ï¿½ï¿½You cannot assign a UAV to a grey target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
     			}
     		}
@@ -197,7 +227,7 @@ public class Vehicle {
     				x = target_pos[0]; y = target_pos[1];
             		if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
             			//2008-04-05
-            			//UUV to land target (grey or red) ¡°You cannot assign a UUV to a land target, please reassign¡±
+            			//UUV to land target (grey or red) ï¿½ï¿½You cannot assign a UUV to a land target, please reassignï¿½ï¿½
             			lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
             			break;
             		}
@@ -209,7 +239,7 @@ public class Vehicle {
     			}
     			else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
     				//2008-04-05
-    				//HALE to red target ¡°You cannot assign a HALE to a red target, please reassign¡±
+    				//HALE to red target ï¿½ï¿½You cannot assign a HALE to a red target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
     			}
     		}	
@@ -254,7 +284,7 @@ public class Vehicle {
     			}
     			else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
     				//2008-04-05
-    				//UAV to grey target   ¡°You cannot assign a UAV to a grey target, please reassign¡±
+    				//UAV to grey target   ï¿½ï¿½You cannot assign a UAV to a grey target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
     			}
     		}
@@ -263,7 +293,7 @@ public class Vehicle {
     				x = new_target_pos[0]; y = new_target_pos[1];
             		if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
             			//2008-04-05
-            			//UUV to land target (grey or red) ¡°You cannot assign a UUV to a land target, please reassign¡±
+            			//UUV to land target (grey or red) ï¿½ï¿½You cannot assign a UUV to a land target, please reassignï¿½ï¿½
             			lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
             			break; 
             		}
@@ -275,7 +305,7 @@ public class Vehicle {
     			}
     			else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
     				//2008-04-05
-    				//HALE to red target ¡°You cannot assign a HALE to a red target, please reassign¡±
+    				//HALE to red target ï¿½ï¿½You cannot assign a HALE to a red target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
     			}
     		}	
@@ -335,9 +365,9 @@ public class Vehicle {
     		}
     } 
     
-    public boolean hasGoal() { if( getPathSize() == 0 ) return false; return true; }
+    public boolean hasGoal() {return getPathSize() != 0;}
     
-    public boolean hasWaypoint() { if( getPathSize()-1 == 0 ) return false; return true; }
+    public boolean hasWaypoint() {return getPathSize()-1 != 0;}
     
     // Moving Algorithms
     public double getDistance(int pos_x, int pos_y) {
@@ -516,8 +546,8 @@ public class Vehicle {
     	for(int i=0; i<map.getListHazard().size(); i++ ) {
     		hazard_pos = map.getListHazard().get(i);
     		d = Math.sqrt( 
-    				Math.pow( (double)(pos_x - hazard_pos[0]), 2.0 ) + 
-    				Math.pow( (double)(pos_y - hazard_pos[1]), 2.0 ) )
+    				Math.pow( (double)(groundTruthPosX - hazard_pos[0]), 2.0 ) + 
+    				Math.pow( (double)(groundTruthPosY - hazard_pos[1]), 2.0 ) )
     		   * MySize.SIZE_CELL;
     		if(d <= MySize.SIZE_HAZARD_1_PXL ) damage += 50;
     		else if(d < MySize.SIZE_HAZARD_2_PXL && d > MySize.SIZE_HAZARD_1_PXL) damage += 30;

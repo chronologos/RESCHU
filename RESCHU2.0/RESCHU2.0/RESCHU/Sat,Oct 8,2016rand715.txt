@@ -1,0 +1,8 @@
+10/08/2016 16:31:15:60  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+16:31:42:529,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+16:31:44:576,     1,     25,     1,     Goal change start from Target[A],     30,28
+16:31:48:434,     1,     26,     1,     Goal change end. target[D] assigned,     28,155
+16:31:49:892,     1,     25,     1,     Goal change start from Target[D],     28,155
+16:31:52:865,     1,     25,     1,     Goal change start from Target[D],     28,156
+16:31:54:615,     1,     25,     1,     Goal change start from Target[D],     29,156
+16:31:55:950,     1,     26,     1,     Goal change end. target[A] assigned,     30,27

@@ -62,7 +62,7 @@ public class Reschu extends JFrame implements GUI_Listener {
     private Tutorial tutorial; 
    
     public String filename;
-    
+    		
     /** Interactive Tutorial Mode? */
     public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
 	/** Training Mode? */

@@ -1,0 +1,2 @@
+// Vehicle number, time attack starts (in milliseconds after game starts)
+0,10000

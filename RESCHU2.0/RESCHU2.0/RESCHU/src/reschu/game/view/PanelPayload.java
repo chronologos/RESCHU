@@ -72,7 +72,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     private BufferedImage img;
     private Game g;
     private GUI_Listener lsnr;
-    private PayloadList payload_list;
+//    private PayloadList payload_list;
     private java.awt.event.MouseEvent mouseEvt;
     private int GL_width,  GL_height;
     
@@ -135,7 +135,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     	glCanvas = payload_canvas;
         this.g = g;
         
-        payload_list = g.getPayloadList();
+//        payload_list = g.getPayloadList();
         Image_Loading = false;
         flash = 0; 
         
