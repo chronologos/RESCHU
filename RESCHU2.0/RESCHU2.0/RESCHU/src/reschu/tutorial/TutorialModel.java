@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-import com.sun.opengl.impl.mipmap.Image;
 
 import reschu.app.AppMain;
 

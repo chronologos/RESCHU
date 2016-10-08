@@ -1,9 +1,11 @@
 package reschu.game.view;
 
-import javax.media.opengl.GLJPanel;  
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter; 
 import java.awt.event.MouseWheelListener;
+
+import com.jogamp.opengl.awt.GLJPanel;
+
 import java.awt.event.MouseWheelEvent;
 
 public class MyCanvas extends GLJPanel { 

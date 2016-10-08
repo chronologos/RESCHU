@@ -15,16 +15,21 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.imageio.ImageIO;
-import javax.media.opengl.*;
-import javax.media.opengl.glu.GLU;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;  
 
-import static javax.media.opengl.GL.*;
-
-import com.sun.opengl.util.j2d.*;
-import com.sun.opengl.util.texture.*;
+	
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.awt.GLJPanel;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.util.awt.TextRenderer;
+import com.jogamp.opengl.util.awt.TextureRenderer;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureCoords;
 
 import org.jdesktop.animation.timing.*;
 import org.jdesktop.animation.timing.interpolation.*;
@@ -201,9 +206,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
      */
     public void init(GLAutoDrawable drawable) {
     	if( GL_DEBUG ) System.out.println("GL: init called");        
-    	GL gl = drawable.getGL();
+    	GL2 gl = drawable.getGL().getGL2();
         gl.setSwapInterval(0);
-        gl.glEnable(GL_DEPTH_TEST);
+        gl.glEnable(GL2.GL_DEPTH_TEST);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);         
         
         initAnimRenderer();      
@@ -216,14 +221,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     	if( GL_DEBUG ) System.out.println("GL: display called"); 
     	if( !isEnabled() && screenBlackedAfterPayloadDone ) return;
     	
-        GL gl = drawable.getGL();        
-        gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        gl.glMatrixMode(GL_MODELVIEW);
+        GL2 gl = drawable.getGL().getGL2();        
+        gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+        gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity(); 
         
-        gl.glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
-        gl.glGetDoublev(GL.GL_MODELVIEW_MATRIX, mvmatrix, 0);
-        gl.glGetDoublev(GL.GL_PROJECTION_MATRIX, projmatrix, 0);
+        gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+        gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+        gl.glGetDoublev(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
   
         glu.gluLookAt(camera_x + image_x + x_dist, // eyeX
         		camera_y + image_y + y_dist, // eyeY
@@ -293,13 +298,13 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     	if( GL_DEBUG ) System.out.println("GL: reshape called");
         GL_width = width;
         GL_height = height;
-        GL gl = drawable.getGL();
+        GL2 gl = drawable.getGL().getGL2();
         gl.glViewport(0, 0, GL_width, GL_height);
-        gl.glMatrixMode(GL_PROJECTION);
+        gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         double aspectRatio = (double) GL_width / (double) GL_height;
         glu.gluPerspective(CAMERA_ANGLE + zoom_angle_off, aspectRatio, 100, 2500.0);
-        gl.glMatrixMode(GL_MODELVIEW); 
+        gl.glMatrixMode(GL2.GL_MODELVIEW); 
     } 
     /**
      * Called by the drawable when the display mode or the display device 
@@ -372,6 +377,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         new Thread(new Runnable() {
             public void run() {
                 try { 
+                	System.out.println("payload reached");
                 	img = ImageIO.read(new File(curPayload.getFilename())); // HERE
                 } catch (IOException ex) {									
                     ex.printStackTrace();									
@@ -406,81 +412,81 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     private void displayText(GLAutoDrawable drawable) {
     	if( GL_DEBUG ) System.out.println("GL: displayText called");
         if (Image_Loading) {
-        	trB24.beginRendering(drawable.getWidth(), drawable.getHeight());
+        	trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
         	trB24.setColor(0.9f, 0.9f, 0.9f, flash);
-        	trB24.draw("INITIATING VIDEO FEED", drawable.getWidth() / 2 - 120, drawable.getHeight() / 2);
+        	trB24.draw("INITIATING VIDEO FEED", drawable.getSurfaceWidth() / 2 - 120, drawable.getSurfaceHeight() / 2);
         	trB24.endRendering();
         }
         if (isEnabled()) {
-        	trB24.beginRendering(drawable.getWidth(), drawable.getHeight());
+        	trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
         	trB24.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-        	trB24.draw("_", drawable.getWidth() / 2 - 25, drawable.getHeight() / 2 + 5);
-        	trB24.draw("_", drawable.getWidth() / 2 + 18, drawable.getHeight() / 2 + 5);
-        	trB24.draw("|", drawable.getWidth() / 2 - 1, drawable.getHeight() / 2 - 25);
-        	trB24.draw("|", drawable.getWidth() / 2 - 1, drawable.getHeight() / 2 + 18);
+        	trB24.draw("_", drawable.getSurfaceWidth() / 2 - 25, drawable.getSurfaceHeight() / 2 + 5);
+        	trB24.draw("_", drawable.getSurfaceWidth() / 2 + 18, drawable.getSurfaceHeight() / 2 + 5);
+        	trB24.draw("|", drawable.getSurfaceWidth() / 2 - 1, drawable.getSurfaceHeight() / 2 - 25);
+        	trB24.draw("|", drawable.getSurfaceWidth() / 2 - 1, drawable.getSurfaceHeight() / 2 + 18);
         	trB24.endRendering();
 
-        	trP14.beginRendering(drawable.getWidth(), drawable.getHeight());
+        	trP14.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
         	trP14.setColor(0.9f, 0.9f, 0.9f, 0.9f);
         	trP14.draw("|      |     |     |     |     |     |     |      |", 
-            		drawable.getWidth() / 4 - 5, 10 + drawable.getHeight() * 4 / 5);
+            		drawable.getSurfaceWidth() / 4 - 5, 10 + drawable.getSurfaceHeight() * 4 / 5);
         	trP14.endRendering();
 
-        	trB20.beginRendering(drawable.getWidth(), drawable.getHeight());
+        	trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
         	trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-        	trB20.draw("|", (int) (-8 + drawable.getWidth() / 2 + (drawable.getWidth() / 4) * ((image_x + x_dist) / max_x)), 
-            		5 + drawable.getHeight() * 4 / 5);
+        	trB20.draw("|", (int) (-8 + drawable.getSurfaceWidth() / 2 + (drawable.getSurfaceWidth() / 4) * ((image_x + x_dist) / max_x)), 
+            		5 + drawable.getSurfaceHeight() * 4 / 5);
         	trB20.endRendering();
 
-        	trB12.beginRendering(drawable.getWidth(), drawable.getHeight());
+        	trB12.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
         	trB12.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 - 12);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 13);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 40);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 61);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 83);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 105);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 128);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 151);
-        	trB12.draw("__", drawable.getWidth() * 9 / 10, drawable.getHeight() / 4 + 172);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 - 12);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 13);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 40);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 61);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 83);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 105);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 128);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 151);
+        	trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 172);
         	trB12.endRendering();
 
-            trB20.beginRendering(drawable.getWidth(), drawable.getHeight());
+            trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
             trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-            trB20.draw("__", 17 + drawable.getWidth() * 5 / 6, (int) (drawable.getHeight() / 2 + (drawable.getHeight() / 4) * ((image_y + y_dist) / max_y)));
+            trB20.draw("__", 17 + drawable.getSurfaceWidth() * 5 / 6, (int) (drawable.getSurfaceHeight() / 2 + (drawable.getSurfaceHeight() / 4) * ((image_y + y_dist) / max_y)));
             trB20.endRendering();
 
-            trB17.beginRendering(drawable.getWidth(), drawable.getHeight());
+            trB17.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
             trB17.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-            trB17.draw("[+]", (drawable.getWidth() * 1 / 10) + 22, drawable.getHeight() / 4 + 140);
-            trB17.draw("_", (drawable.getWidth() * 1 / 10) + 28, drawable.getHeight() / 4 + 133);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 25, drawable.getHeight() / 4 + 120);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 25, drawable.getHeight() / 4 + 105);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 25, drawable.getHeight() / 4 + 90);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 25, drawable.getHeight() / 4 + 75);
+            trB17.draw("[+]", (drawable.getSurfaceWidth() * 1 / 10) + 22, drawable.getSurfaceHeight() / 4 + 140);
+            trB17.draw("_", (drawable.getSurfaceWidth() * 1 / 10) + 28, drawable.getSurfaceHeight() / 4 + 133);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 120);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 105);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 90);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 75);
 
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 35, drawable.getHeight() / 4 + 120);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 35, drawable.getHeight() / 4 + 105);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 35, drawable.getHeight() / 4 + 90);
-            trB17.draw("|", (drawable.getWidth() * 1 / 10) + 35, drawable.getHeight() / 4 + 75);
-            trB17.draw("_", (drawable.getWidth() * 1 / 10) + 28, drawable.getHeight() / 4 + 74);
-            trB17.draw("[-]", (drawable.getWidth() * 1 / 10) + 22, drawable.getHeight() / 4 + 50);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 120);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 105);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 90);
+            trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 75);
+            trB17.draw("_", (drawable.getSurfaceWidth() * 1 / 10) + 28, drawable.getSurfaceHeight() / 4 + 74);
+            trB17.draw("[-]", (drawable.getSurfaceWidth() * 1 / 10) + 22, drawable.getSurfaceHeight() / 4 + 50);
             trB17.endRendering();
 
-            trB20.beginRendering(drawable.getWidth(), drawable.getHeight());
+            trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
             trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-            trB20.draw("__", (drawable.getWidth() * 1 / 10) + 20, drawable.getHeight() / 4 + 75 + (int) (60 / 3) * zoom_count);
+            trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20, drawable.getSurfaceHeight() / 4 + 75 + (int) (60 / 3) * zoom_count);
             trB20.endRendering();
 
             if (rbtnClicked) { 
                 //System.out.println("CLICKEDX AND CLICKEDY="+clickedX+","+ clickedY);
                 //System.out.println("HEIGHT AND WIDTH OF DRAWABLE=" +drawable.getWidth()+","+drawable.getHeight());
-                trB24.beginRendering(drawable.getWidth(), drawable.getHeight());
+                trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
                 trB24.setColor(0.1f, 0.1f, 1.0f, 0.9f);
                 //System.out.println((x_dist / (pxl_width * 2) * drawable.getWidth())+","+(y_dist / (pxl_height * 2) * drawable.getHeight()));
                 //System.out.println(x_dist+","+y_dist);
-                double box_center_x = clickedX - (x_dist / (pxl_width * 2)) * drawable.getWidth();
-                double box_center_y = drawable.getHeight() - clickedY - (y_dist / (pxl_height * 2)) * drawable.getHeight();
+                double box_center_x = clickedX - (x_dist / (pxl_width * 2)) * drawable.getSurfaceWidth();
+                double box_center_y = drawable.getSurfaceHeight() - clickedY - (y_dist / (pxl_height * 2)) * drawable.getSurfaceHeight();
                 //System.out.println("BOX X AND Y="+box_center_x+","+ box_center_y);
                 trB24.draw("|", (int) box_center_x - 15, (int) box_center_y - 7);
                 trB24.draw("|", (int) box_center_x + 9, (int) box_center_y - 7);
@@ -502,7 +508,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     	if( GL_DEBUG ) System.out.println("GL: displayAnimRenderer called");    
         if (bezierAlpha == 0f) return;
 
-        GL gl = drawable.getGL();
+        GL2 gl = drawable.getGL().getGL2();
         Texture tex = animRenderer.getTexture();
         TextureCoords tc = tex.getImageTexCoords();
         
@@ -511,10 +517,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         float tx2 = tc.right();
         float ty2 = tc.bottom();
 
-        gl.glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-        tex.bind();
-        tex.enable();
-        gl.glBegin(GL.GL_QUADS);
+        gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_MODULATE);
+        tex.bind(gl);
+        tex.enable(gl);
+        gl.glBegin(GL2.GL_QUADS);
 
         float rgb = bezierAlpha;
         float corner_x = pxl_width;
@@ -526,31 +532,31 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         gl.glTexCoord2f(tx1, ty2); gl.glVertex3f(-corner_x, -corner_y, 0f);
         gl.glEnd();
 
-        tex.disable();
+        tex.disable(gl);
     }
 
-    private void camera_pers(GL gl) {
+    private void camera_pers(GL2 gl) {
     	if( GL_DEBUG ) System.out.println("GL: camera_pers called");
         gl.glViewport(0, 0, GL_width, GL_height);
-        gl.glMatrixMode(GL_PROJECTION);
+        gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         double aspectRatio = (double) GL_width / (double) GL_height;
         glu.gluPerspective(CAMERA_ANGLE + zoom_angle_off, aspectRatio, 100, 2500.0);
-        gl.glMatrixMode(GL_MODELVIEW); 
+        gl.glMatrixMode(GL2.GL_MODELVIEW); 
         lsnr.Payload_Graphics_Update(); 
     }
 
-    private void unproj(GL gl, int x, int y, double[] wcoord) {
+    private void unproj(GL2 gl, int x, int y, double[] wcoord) {
     	if( GL_DEBUG ) System.out.println("GL: unproj called");
-        gl.glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
-        gl.glGetDoublev(GL.GL_MODELVIEW_MATRIX, mvmatrix, 0);
-        gl.glGetDoublev(GL.GL_PROJECTION_MATRIX, projmatrix, 0); 
+        gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+        gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+        gl.glGetDoublev(GL2.GL_PROJECTION_MATRIX, projmatrix, 0); 
 
         /* note viewport[3] is height of window in pixels */
         int realx = (int) x; 				// GL x coord pos
         int realy = viewport[3] - (int) y; 	// GL y coord pos
        
-        gl.glReadPixels(realx, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, frameBuffer);
+        gl.glReadPixels(realx, realy, 1, 1, GL2.GL_DEPTH_COMPONENT, GL2.GL_FLOAT, frameBuffer);
         frameBuffer.rewind(); 
         glu.gluUnProject((double) realx, (double) realy, (double) frameBuffer.get(0), //winX,winY,winZ 
         		mvmatrix, 0, projmatrix, 0, viewport, 0, wcoord, 0);
@@ -753,7 +759,13 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     		glCanvas.remove(btnSubmit);
     		glCanvas.remove(btnCancel);
     	}
-    }  
+    }
+
+	@Override
+	public void dispose(GLAutoDrawable arg0) {
+		// TODO Auto-generated method stub
+		
+	}  
 }
 
 
