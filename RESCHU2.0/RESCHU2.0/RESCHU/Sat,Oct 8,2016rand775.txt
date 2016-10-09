@@ -1,2 +1,0 @@
-10/08/2016 17:37:50:641  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
-17:38:10:191,     0,     51,     1,     Damaged with a HazardArea,     75,366

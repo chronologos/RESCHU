@@ -2,4 +2,5 @@ parport-win32
 Code Backups
 *.zip
 *.pdf
-
+*.txt
+/.DS_Store

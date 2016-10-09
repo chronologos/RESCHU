@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 public class AttackEngine {
 	private Timer attackTimer;
+	private Timer attackEndTimer;
 	public static final String ATTACK_FILENAME = "AttackFile.txt";
 	public int delay; // REQ-INI-0004
 	public int vehicle; //TODO, support multi-vehicle attacks
@@ -37,16 +38,26 @@ public class AttackEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		System.out.printf("%d, %d", delay, vehicle);
-		ActionListener taskPerformer = new ActionListener() {
-		    public void actionPerformed(ActionEvent evt) {
-		    	vehicleList.getVehicle(vehicle).hijack(); //TODO, should this be final?
-				System.out.printf("attack done");
-		    }
+		System.out.printf("[AttackEngine.java] %d, %d %n", delay, vehicle);
+		ActionListener hijackVehicle = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				vehicleList.getVehicle(vehicle).hijack();
+			}
 		};
-		attackTimer = new Timer(delay, taskPerformer);
+		ActionListener endHijackVehicle = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				vehicleList.getVehicle(vehicle).endHijack();
+			}
+		};
+		
+		attackTimer = new Timer(delay, hijackVehicle);
+		attackEndTimer = new Timer(delay*2, endHijackVehicle);
 		attackTimer.setRepeats(false);
+		attackEndTimer.setRepeats(false);
 		attackTimer.start();
+		attackEndTimer.start();
 
-		}
+	}
 }

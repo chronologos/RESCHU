@@ -1,4 +1,0 @@
-10/08/2016 17:18:38:630  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
-17:19:02:540,     1,     25,     1,     Goal change start from Target[A],     31,29
-17:19:05:381,     1,     25,     1,     Goal change start from Target[A],     28,28
-17:19:06:384,     1,     26,     1,     Goal change end. target[B] assigned,     156,294

@@ -123,6 +123,13 @@ public class Vehicle {
     	System.out.println("hijacked!"); //TODO remove
     	hijacked = true;
 	}
+    /***
+     * Called by AttackEngine to end hijack of this vehicle.
+     */
+    public synchronized void endHijack(){
+    	System.out.println("end hijack"); //TODO remove
+    	hijacked = false;
+	}
     public synchronized void setX(int x){
     	if (!hijacked){
     		observedPosX = x;
