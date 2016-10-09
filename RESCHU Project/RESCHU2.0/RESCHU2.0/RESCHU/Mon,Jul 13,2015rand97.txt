@@ -1,0 +1,26 @@
+07/13/2015 11:03:41:380  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+11:04:36:645,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+11:04:37:525,     1,     22,     1,     Goal set start,     -1,-1
+11:04:38:678,     1,     26,     1,     Goal change end. target[D] assigned,     28,155
+11:04:58:233,     1,     25,     1,     Goal change start from Target[D],     27,159
+11:04:59:764,     1,     26,     1,     Goal change end. target[E] assigned,     118,415
+11:05:15:384,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+11:05:16:388,     1,     11,     1,     WP add start,     -1,-1
+11:05:17:532,     1,     12,     1,     WP add end,     73,324
+11:05:28:400,     1,     13,     1,     WP move start,     100,354
+11:05:28:736,     1,     14,     1,     WP move end,     101,361
+11:05:36:644,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+11:05:37:436,     1,     11,     1,     WP add start,     -1,-1
+11:05:39:4,     1,     12,     1,     WP add end,     83,342
+11:05:48:656,     1,     15,     1,     WP delete start,     -1,-1
+11:05:48:657,     1,     16,     1,     WP delete end,     103,371
+11:05:57:431,     0,     51,     1,     Damaged with a HazardArea,     75,366
+11:06:09:429,     0,     51,     1,     Damaged with a HazardArea,     75,366
+11:06:40:931,     0,     53,     1,     Arrives To Target[E],     118,415
+11:06:42:147,     1,     42,     1,     Payload Engaged to Target[E],     -1,-1
+11:06:53:410,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+11:06:53:413,     1,     23,     1,     Goal set end; assigned to target[B],     156,294
+11:06:53:415,     0,     21,     1,     Goal set by system; assigned to target[B],     -1,-1
+11:06:53:937,     0,     33,     -1,     Target[E] disappeared,     118,415
+11:06:53:938,     0,     31,     -1,     Target[E] generated (visibile=true),     50,71
+11:07:04:938,     0,     92,     -1,     Game End. user=null. scenario=1. total_damage=0,     -1,-1

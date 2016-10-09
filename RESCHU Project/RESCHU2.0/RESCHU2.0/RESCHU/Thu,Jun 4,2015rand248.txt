@@ -1,0 +1,20 @@
+06/04/2015 10:37:39:737  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+10:38:22:263,     0,     51,     4,     Damaged with a HazardArea,     35,346
+10:38:24:323,     0,     54,     3,     Intersect with a HazardArea,     108,89
+10:38:24:323,     0,     54,     4,     Intersect with a HazardArea,     35,346
+10:38:24:323,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+10:38:44:916,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+10:38:53:138,     0,     51,     4,     Damaged with a HazardArea,     35,346
+10:39:57:445,     0,     54,     2,     Intersect with a HazardArea,     265,174
+10:40:00:35,     0,     53,     3,     Arrives To Target[B],     163,149
+10:40:07:704,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+10:40:14:897,     0,     53,     4,     Arrives To Target[C],     16,193
+10:40:32:552,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+10:40:33:426,     0,     32,     -1,     Target[B] became visible,     163,149
+10:40:33:426,     1,     23,     3,     Goal set end; assigned to target[D],     138,42
+10:40:33:426,     0,     21,     3,     Goal set by system; assigned to target[D],     -1,-1
+10:40:33:426,     1,     41,     3,     Payload Engaged and Finished. COMM,     -1,-1
+10:40:49:401,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+10:40:50:369,     1,     103,     4,     Vehicle select map Lbtn,     -1,-1
+10:40:51:40,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+10:40:51:836,     1,     42,     4,     Payload Engaged to Target[C],     -1,-1

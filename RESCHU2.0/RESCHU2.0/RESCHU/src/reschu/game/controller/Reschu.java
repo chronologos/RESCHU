@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,6 +30,7 @@ import reschu.game.view.PanelMsgBoard;
 import reschu.game.view.PanelPayload;
 import reschu.game.view.PanelPayloadControls;
 import reschu.game.view.PanelTimeLine;
+import reschu.game.view.Prototype;
 import reschu.tutorial.Tutorial;
 import info.clearthought.layout.TableLayout;
 
@@ -234,10 +236,16 @@ public class Reschu extends JFrame implements GUI_Listener {
        	game = new Game(this, _scenario);        
         origin_time = System.currentTimeMillis();
         
-        payload_canvas = new MyCanvas(); // and this
+        //payload_canvas = new MyCanvas(); // and this
+        payload_canvas = new Prototype(new File("lib/LargeImage.jpg"));
+        
         pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game);  
         payload_canvas.addListener(pnlPayload);   
         payload_canvas.addGLEventListener(pnlPayload);   
+        
+        // Initialize and bind Prototype
+        //Prototype.activate(new GLCanvas, new File("lib/LargeImage.jpg"));
+        
         
         // Create Each Panel Objects
         pnlMap = new PanelMap(this, game, "MAP_PANEL");

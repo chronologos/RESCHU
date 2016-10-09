@@ -1,0 +1,10 @@
+06/11/2015 10:50:37:801  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+10:50:51:363,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+10:50:52:172,     1,     22,     4,     Goal set start,     -1,-1
+10:50:52:627,     0,     51,     4,     Damaged with a HazardArea,     35,346
+10:50:52:932,     1,     26,     4,     Goal change end. target[H] assigned,     28,412
+10:50:55:243,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+10:50:55:899,     1,     22,     1,     Goal set start,     -1,-1
+10:50:56:843,     1,     26,     1,     Goal change end. target[E] assigned,     105,414
+10:51:18:630,     0,     53,     4,     Arrives To Target[H],     28,412
+10:51:20:99,     1,     101,     4,     Vehicle select tab,     -1,-1

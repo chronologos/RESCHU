@@ -1,0 +1,19 @@
+06/16/2015 14:08:26:187  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+14:08:59:767,     0,     54,     11,     Intersect with a HazardArea,     85,305
+14:09:04:766,     0,     54,     3,     Intersect with a HazardArea,     293,285
+14:09:14:478,     1,     101,     1,     Vehicle select tab,     -1,-1
+14:09:14:769,     0,     54,     2,     Intersect with a HazardArea,     277,123
+14:09:27:768,     0,     53,     1,     Arrives To Target[A],     128,291
+14:09:28:563,     1,     42,     1,     Payload Engaged to Target[A],     -1,-1
+14:09:29:788,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+14:09:33:856,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+14:09:34:803,     0,     33,     -1,     Target[A] disappeared,     128,291
+14:09:34:804,     0,     31,     -1,     Target[A] generated (visibile=true),     155,201
+14:09:38:958,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+14:09:39:702,     1,     22,     1,     Goal set start,     -1,-1
+14:09:40:902,     1,     23,     1,     Goal set end; assigned to target[A],     155,201
+14:09:53:304,     0,     53,     7,     Arrives To Target[E],     256,368
+14:09:54:803,     0,     55,     11,     Escape from a HazardArea,     -1,-1
+14:09:55:166,     1,     101,     7,     Vehicle select tab,     -1,-1
+14:09:56:1,     1,     42,     7,     Payload Engaged to Target[E],     -1,-1
+14:10:01:353,     1,     43,     7,     Payload Finished; CORRECT,     -1,-1

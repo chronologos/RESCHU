@@ -128,24 +128,40 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
     private JButton btnSubmit, btnCancel;
     
+    private Prototype prototype;
+    
     public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payload_canvas, Game g) {
     	if( GL_DEBUG ) System.out.println("GL: PanelPayload created");
     
+    	prototype = (Prototype)payload_canvas;
+    	
     	lsnr = e;
     	glCanvas = payload_canvas;
         this.g = g;
         
+<<<<<<< HEAD
 //        payload_list = g.getPayloadList();
+=======
+        System.out.println("Set payload panel to be galaxy");
+        
+        payload_list = g.getPayloadList();
+>>>>>>> bc23cd6ef3d3f49ac50cc0a3b82a58d4676d23f2
         Image_Loading = false;
         flash = 0; 
         
-        glEnabled(false);
+        //glEnabled(false);
+        glEnabled(true);
      	
         setPopup();
         initTextRenenders();
         makeVibrateThread();  
         
-        glCanvas.setLayout(null); 
+        
+        
+        //GLContext
+        System.out.println("Is glCanvas enabled:? " + glCanvas.isEnabled());
+        
+        //glCanvas.setLayout(null); 
     }
 
     private void initTextRenenders() {
@@ -205,6 +221,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
      * Called by the drawable immediately after the OpenGL context is initialized.
      */
     public void init(GLAutoDrawable drawable) {
+    	
+    	System.out.println("Calling init of panel payload's drawable");
+    	
     	if( GL_DEBUG ) System.out.println("GL: init called");        
     	GL2 gl = drawable.getGL().getGL2();
         gl.setSwapInterval(0);
@@ -218,6 +237,13 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 * Called by the drawable to initiate OpenGL rendering by the client.
 	 */
     public void display(GLAutoDrawable drawable) {
+    	//glCanvas.display();
+    	System.out.println("Calling display of prototype from panel payload");
+    	prototype.doDisplay();
+    	/*
+    	
+    	System.out.println("Calling display of the PanelPayload");
+    	
     	if( GL_DEBUG ) System.out.println("GL: display called"); 
     	if( !isEnabled() && screenBlackedAfterPayloadDone ) return;
     	
@@ -285,11 +311,12 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
             }
             mouseEvt = null;
         }
-        camera_pers(gl);
+        //camera_pers(gl);
         lsnr.Payload_Graphics_Update();
         // Indicate the GL that display doesn't have to be called again and again
         // because it is already blacked out.
         if( !isEnabled() ) screenBlackedAfterPayloadDone = true;
+    	*/
     }
     /**
      *  Called by the drawable during the first repaint after the component has been resized.
@@ -303,7 +330,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         double aspectRatio = (double) GL_width / (double) GL_height;
-        glu.gluPerspective(CAMERA_ANGLE + zoom_angle_off, aspectRatio, 100, 2500.0);
+        //glu.gluPerspective(CAMERA_ANGLE + zoom_angle_off, aspectRatio, 100, 2500.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW); 
     } 
     /**
@@ -386,6 +413,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
                 pxl_width = (type == Vehicle.TYPE_UUV) ? 2000 : img.getWidth();
                 pxl_height = img.getHeight();
 
+                if (animRenderer == null) initAnimRenderer();
+                
                 // updates animation renderer with this image's size                
                 animRenderer.setSize(pxl_width, pxl_height);                
                 updateAnimRenderer();

@@ -1,0 +1,33 @@
+06/16/2015 14:06:29:470  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+14:06:46:705,     0,     54,     3,     Intersect with a HazardArea,     108,89
+14:06:46:706,     0,     54,     4,     Intersect with a HazardArea,     35,346
+14:06:46:706,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+14:06:47:902,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+14:06:48:439,     1,     22,     4,     Goal set start,     -1,-1
+14:06:49:110,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+14:06:49:111,     1,     26,     4,     Goal change end. target[H] assigned,     28,412
+14:06:51:174,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
+14:06:51:814,     1,     22,     1,     Goal set start,     -1,-1
+14:06:52:614,     1,     26,     1,     Goal change end. target[E] assigned,     105,414
+14:07:19:207,     0,     53,     4,     Arrives To Target[H],     28,412
+14:07:22:934,     1,     101,     4,     Vehicle select tab,     -1,-1
+14:07:23:588,     1,     42,     4,     Payload Engaged to Target[H],     -1,-1
+14:07:29:911,     1,     43,     4,     Payload Finished; CORRECT,     -1,-1
+14:07:29:912,     1,     23,     4,     Goal set end; assigned to target[G],     29,278
+14:07:29:914,     0,     21,     4,     Goal set by system; assigned to target[G],     -1,-1
+14:07:31:734,     0,     33,     -1,     Target[H] disappeared,     28,412
+14:07:31:735,     0,     31,     -1,     Target[H] generated (visibile=true),     54,216
+14:07:37:726,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+14:07:38:734,     1,     22,     4,     Goal set start,     -1,-1
+14:07:41:198,     1,     25,     4,     Goal change start from Target[G],     29,279
+14:07:41:734,     0,     54,     2,     Intersect with a HazardArea,     265,174
+14:07:43:606,     1,     104,     4,     Vehicle select map Rbtn,     -1,-1
+14:07:45:158,     1,     11,     4,     WP add start,     -1,-1
+14:07:47:214,     1,     12,     4,     WP add end,     30,388
+14:07:48:414,     1,     13,     4,     WP move start,     11,339
+14:07:48:893,     1,     14,     4,     WP move end,     9,338
+14:07:56:735,     0,     53,     1,     Arrives To Target[E],     105,414
+14:07:58:257,     1,     42,     1,     Payload Engaged to Target[E],     -1,-1
+14:08:04:713,     1,     43,     1,     Payload Finished; CORRECT,     -1,-1
+14:08:04:715,     1,     23,     1,     Goal set end; assigned to target[K],     280,427
+14:08:04:716,     0,     21,     1,     Goal set by system; assigned to target[K],     -1,-1
