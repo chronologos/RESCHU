@@ -48,6 +48,8 @@ public class Prototype extends MyCanvas implements GLEventListener {
   private int xPos = 0;
   private int yPos = 0;
   
+  private int zoomLevel = 1;
+  
   private int corners = 0;
   
   private Transition t;
@@ -71,21 +73,26 @@ public class Prototype extends MyCanvas implements GLEventListener {
 	    frame.setVisible(true);
   } 
   
-  /*
-  public static void activate(GLCanvas glcanvas, File imageFile) {
-	    Prototype t = new Prototype(imageFile);
-	    glcanvas.addGLEventListener(t);
-	    glcanvas.setSize(VIEWPORT_LENGTH, VIEWPORT_LENGTH);
-	    //creating frame
-	    final Frame frame = new Frame ("straight Line");
-	    //adding canvas to frame
-	    frame.add(glcanvas);
-	    frame.setSize(glcanvas.getWidth(), glcanvas.getHeight());
-	    //frame.setSize(400, 600);
-	    frame.setVisible(true);
-	    
+  
+  public void setX(int x) {
+	  xPos = x;
   }
-  */
+  
+  public void setY(int y) {
+	  yPos = y;
+  }
+  
+  public void setXDirection(int xDir) {
+	  xDirection = xDir;
+  }
+  
+  public void setYDirection(int yDir) {
+	  yDirection = yDir;
+  }
+  
+  public void setZoom(int zoomLevel) {
+	  this.zoomLevel = zoomLevel;
+  }
   
   public void doDisplay() {
 	  //myCanvas.display();
@@ -211,20 +218,20 @@ public class Prototype extends MyCanvas implements GLEventListener {
   
   
   private void render(GLAutoDrawable drawable, float x1, float x2, float y1, float y2, GL2 gl) {
-	gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
-    gl.glEnable(GL.GL_TEXTURE_2D);
-    CurrentTexture.bind(gl);
-    gl.glBegin(GL2.GL_QUADS);
-    gl.glTexCoord2f(x2, y1); // bot right
-    gl.glVertex3f(1.0f, 1.0f, 0);
-    gl.glTexCoord2f(x1, y1); // bot left
-    gl.glVertex3f(-1.0f, 1.0f, 0);
-    gl.glTexCoord2f(x1, y2); // top left
-    gl.glVertex3f(-1.0f, -1.0f, 0);
-    gl.glTexCoord2f(x2, y2); //top right
-    gl.glVertex3f(1.0f, -1.0f, 0);
-    gl.glEnd();
-  }
+		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+	    gl.glEnable(GL.GL_TEXTURE_2D);
+	    CurrentTexture.bind(gl);
+	    gl.glBegin(GL2.GL_QUADS);
+	    gl.glTexCoord2f(x1+(x2-x1)/zoomLevel, y2 + (y1 - y2)/zoomLevel); // bot right
+	    gl.glVertex3f(1.0f, 1.0f, 0);
+	    gl.glTexCoord2f(x1, y2 + (y1 - y2)/zoomLevel); // bot left
+	    gl.glVertex3f(-1.0f, 1.0f, 0);
+	    gl.glTexCoord2f(x1, y2); // top left
+	    gl.glVertex3f(-1.0f, -1.0f, 0);
+	    gl.glTexCoord2f(x1 + (x2 - x1)/zoomLevel, y2); //top right
+	    gl.glVertex3f(1.0f, -1.0f, 0);
+	    gl.glEnd();
+	  }
   
   private void getNewQuadrant(int quadrant, GLAutoDrawable drawable) {
     BufferedImage subImage = backingImage.getSubimage((quadrant % 2) * backingImage.getWidth()/2, (quadrant/2) * backingImage.getHeight()/2, backingImage.getWidth()/2, backingImage.getHeight()/2);
