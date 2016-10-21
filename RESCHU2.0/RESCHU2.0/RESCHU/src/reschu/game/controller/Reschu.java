@@ -242,7 +242,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 		origin_time = System.currentTimeMillis();
 
 		payload_canvas = new MyCanvas(); // and this
-		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);  
+		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
+//		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,1488, 812);  
 		payload_canvas.addListener(pnlPayload);   
 		payload_canvas.addGLEventListener(pnlPayload);   
 		uavMonitor = new UAVMonitor(pnlPayload);
