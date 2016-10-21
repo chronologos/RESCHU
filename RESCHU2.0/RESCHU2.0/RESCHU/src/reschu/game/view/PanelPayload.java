@@ -178,7 +178,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		flash = 0;         
 		glEnabled(true);
 		setPopup();
-		//initTextRenderers();
 		//makeVibrateThread();  // TO BE RESTORED
 		backingImgHeight = imageHeight;
 		backingImgWidth = imageWidth;

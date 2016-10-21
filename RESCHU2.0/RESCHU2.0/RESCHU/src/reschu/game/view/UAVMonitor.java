@@ -48,13 +48,13 @@ public class UAVMonitor {
 	// pass x and y coordinates to prototype
 	public void setCoords() {
 		if (!displayEnabled || activeUAV == null){
-			System.out.println("display not enabled / no active UAV in UAVMonitor");
 			return;
 		}
-		System.out.println("X coordinate" + activeUAV.getX());
+		//System.out.println("X coordinate" + activeUAV.getX() + "Y coordinate" + activeUAV.getY());
 		int xAdded = 0;
 		int yAdded = 0;
 		if (panning) {
+			// do not allow panning more than VIEWPORT_LENGTH/2
 			if ((xPanOffset < PanelPayload.VIEWPORT_LENGTH/2 && xDistToPan >= 0) || (xPanOffset > - PanelPayload.VIEWPORT_LENGTH/2 && xDistToPan <= 0)) {			
 				if (xDistToPan > 0) {
 					xDistToPan -= PAN_SPEED;
@@ -64,9 +64,6 @@ public class UAVMonitor {
 					xDistToPan += PAN_SPEED;
 					xAdded -= PAN_SPEED;
 				}
-			}
-			else {
-				System.out.println("Greedy x pan rejected");
 			}
 			if ((yPanOffset < PanelPayload.VIEWPORT_LENGTH/2 && yDistToPan >= 0) || (yPanOffset > - PanelPayload.VIEWPORT_LENGTH/2 && yDistToPan <= 0)) {
 				if (yDistToPan > 0) {
@@ -78,10 +75,6 @@ public class UAVMonitor {
 					yAdded -= PAN_SPEED;
 				}
 			}
-			else {
-				System.out.println("Greedy y pan rejected");
-			}
-
 			xPanOffset += xAdded;
 			yPanOffset += yAdded;
 			if (xDistToPan == 0 && yDistToPan == 0) panning = false;

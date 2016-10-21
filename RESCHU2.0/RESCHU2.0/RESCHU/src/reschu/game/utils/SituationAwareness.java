@@ -1,6 +1,7 @@
 package reschu.game.utils;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import reschu.game.model.Vehicle;
 
@@ -14,15 +15,15 @@ public class SituationAwareness {
 	 * @param d Radius of a hazard area
 	 * @return True if intersects
 	 */
-	public static int checkIntersect(final Vehicle v, final LinkedList<int[]> haz, final int d) {
+	public static int checkIntersect(final Vehicle v, final List<int[]> list, final int d) {
 		LinkedList<int[]> path = new LinkedList<int[]>();		
 		path.addFirst(new int[]{v.getX(), v.getY()});	// add the vehicle's position to the first to the path
 		for( int i=0; i<v.getPathSize(); i++ ) 
 			path.addLast(v.getPathAt(i));
 		
 		for( int i=0; i<path.size()-1; i++ ) 
-			for( int j=0; j<haz.size(); j++ ) 
-				if( getDistance(path.get(i), path.get(i+1), haz.get(j)) <= 15.0d ) // pixel d doesn't work. so I just hardcode here
+			for( int j=0; j<list.size(); j++ ) 
+				if( getDistance(path.get(i), path.get(i+1), list.get(j)) <= 15.0d ) // pixel d doesn't work. so I just hardcode here
 				{
 					return j;
 				}

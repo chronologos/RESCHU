@@ -32,6 +32,7 @@ import reschu.game.view.PanelPayload;
 import reschu.game.view.PanelPayloadControls;
 import reschu.game.view.PanelTimeLine;
 import reschu.game.view.Prototype;
+import reschu.game.view.TextOverlay;
 import reschu.game.view.UAVMonitor;
 import reschu.tutorial.Tutorial;
 import info.clearthought.layout.TableLayout;
@@ -240,12 +241,13 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 		game = new Game(this, _scenario);        
 		origin_time = System.currentTimeMillis();
-
+		
 		payload_canvas = new MyCanvas(); // and this
 		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
 //		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,1488, 812);  
 		payload_canvas.addListener(pnlPayload);   
 		payload_canvas.addGLEventListener(pnlPayload);   
+		payload_canvas.addGLEventListener(new TextOverlay());
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
 
