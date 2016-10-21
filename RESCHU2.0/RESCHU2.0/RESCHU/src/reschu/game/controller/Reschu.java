@@ -21,6 +21,7 @@ import reschu.constants.*;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
 import reschu.game.model.Vehicle;
+import reschu.game.model.VehicleList;
 import reschu.game.utils.SituationAwareness;
 import reschu.game.utils.WAVPlayer;
 import reschu.game.view.MyCanvas;
@@ -57,13 +58,14 @@ public class Reschu extends JFrame implements GUI_Listener {
     public PanelPayloadControls pnlPayloadControls; 
     public PanelMsgBoard pnlMsgBoard;
     public PanelTimeLine pnlTimeLine;
+    public UAVMonitor uavMonitor;
     
     public Game game;
     private double origin_time;
     private TitledBorder bdrTitle;  
     
     private Tutorial tutorial; 
-   
+    
     public String filename;
     
     /** Interactive Tutorial Mode? */
@@ -244,7 +246,7 @@ public class Reschu extends JFrame implements GUI_Listener {
         pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);  
         payload_canvas.addListener(pnlPayload);   
         payload_canvas.addGLEventListener(pnlPayload);   
-        UAVMonitor uavMonitor = new UAVMonitor(pnlPayload);
+        uavMonitor = new UAVMonitor(pnlPayload);
         pnlPayload.setUAVMonitor(uavMonitor);
         
         // Initialize and bind Prototype
@@ -642,7 +644,8 @@ public class Reschu extends JFrame implements GUI_Listener {
      * Yves
      */
     public void EVT_VSelect_Map_LBtn(int vIdx) { 
-    	Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx, "Vehicle select map Lbtn", -1, -1);
+    	Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx, "Vehicle select map Lbtn (trying to enable video feed)", -1, -1);
+    	uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(vIdx-1));
     }
     public void EVT_VSelect_Map_RBtn(int vIdx) { 
     	Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn", -1, -1);

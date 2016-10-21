@@ -1,0 +1,14 @@
+10/20/2016 22:13:48:975  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+22:14:18:735,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:14:18:909,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:14:21:825,     0,     54,     3,     Intersect with a HazardArea,     48,152
+22:14:21:826,     0,     54,     4,     Intersect with a HazardArea,     35,346
+22:14:21:826,     0,     54,     5,     Intersect with a HazardArea,     339,195
+22:14:22:833,     0,     51,     4,     Damaged with a HazardArea,     35,346
+22:14:31:844,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+22:14:36:852,     0,     54,     3,     Intersect with a HazardArea,     59,124
+22:14:51:885,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:14:56:900,     0,     54,     2,     Intersect with a HazardArea,     251,220
+22:14:56:900,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+22:15:01:899,     0,     54,     5,     Intersect with a HazardArea,     237,288
+22:15:06:916,     0,     55,     2,     Escape from a HazardArea,     -1,-1

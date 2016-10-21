@@ -6,7 +6,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener; 
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
@@ -479,7 +480,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         // get the current payload of this vehicle
         curPayload = payload_list.getPayload(type, mission); // this line
         Image_Loading = true;
-      
         uavMonitor.enableUAVFeed(v);
       
      
@@ -677,19 +677,21 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
     public void mouse_click(java.awt.event.MouseEvent m_ev) {
     	if( GL_DEBUG ) System.out.println("GL(Mouse): " + m_ev.toString());
-        if (Utils.isRightClick(m_ev)) { 
-            clickedX = m_ev.getX();
-            clickedY = m_ev.getY();
+    	clickedX = m_ev.getX();
+        clickedY = m_ev.getY();
+    	if (Utils.isRightClick(m_ev)) { 
             rbtnClicked = true;
 //            showPopup(getParent(), m_ev.getXOnScreen()+10, m_ev.getYOnScreen()+10);
             showPopup(getParent(), m_ev.getX()+10, m_ev.getY()+10);            
             lsnr.Payload_Submit(true); // T3
         	
         } else if (Utils.isLeftClick(m_ev)) {
+        	uavMonitor.applyPan(clickedX, clickedY);
         	rbtnClicked = false; 
         }
         mouseEvt = m_ev;
     }
+    
  
     /**
      * Check if the mouse clicked position is correct place 
@@ -786,13 +788,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     }
     */
     public void zoom_in() {
+    	
         if (zoomLevel >= 1) {
         	zoomLevel ++;
         }
         else {
         	zoomLevel = 1/((1/zoomLevel) - 1);
         }
-    	zoomLevel ++;
+    	System.out.println("zoom is" + zoomLevel);
     	return;
     	/*
     	if (!isEnabled() || zoom_count == 3 || (changing_view != null && changing_view.isRunning())) {
@@ -808,13 +811,16 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         changing_view.start();
         */
     }
+    
     public void zoom_out() {
+    	
     	if (zoomLevel <= 1) {
     		zoomLevel = 1/((1/zoomLevel) + 1);
     	}
     	else {
     		zoomLevel --;
     	}
+    	System.out.println("zoom is" + zoomLevel);
     	return;
     	/*
         if (!isEnabled() || zoom_count == 0 || (changing_view != null && changing_view.isRunning())) {
@@ -1107,7 +1113,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	      CurrentTexture = subTextures.get(startTileKey);
 	      CurrentTexture.enable(gl);
 	      System.out.println("Initialized and enabled current texture");
-	      final FPSAnimator animator = new FPSAnimator(arg0, 180);
+	      final FPSAnimator animator = new FPSAnimator(arg0, 10);
 	      animator.start();
 	    //}
 	    /*

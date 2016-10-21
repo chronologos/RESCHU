@@ -1,0 +1,103 @@
+10/20/2016 22:04:53:419  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+22:05:28:831,     0,     51,     4,     Damaged with a HazardArea,     35,346
+22:05:30:841,     0,     54,     3,     Intersect with a HazardArea,     48,152
+22:05:30:842,     0,     54,     4,     Intersect with a HazardArea,     35,346
+22:05:30:842,     0,     54,     5,     Intersect with a HazardArea,     339,195
+22:05:33:654,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:39:83,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:39:267,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:40:893,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+22:05:44:857,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:45:261,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:45:430,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:45:915,     0,     54,     3,     Intersect with a HazardArea,     59,124
+22:05:47:963,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:48:113,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:05:55:971,     0,     51,     4,     Damaged with a HazardArea,     35,346
+22:06:00:992,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:06:02:25,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:02:188,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:02:598,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:06:5,     0,     54,     2,     Intersect with a HazardArea,     251,220
+22:06:06:5,     0,     55,     4,     Escape from a HazardArea,     -1,-1
+22:06:09:336,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:09:498,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:11:18,     0,     54,     5,     Intersect with a HazardArea,     237,288
+22:06:12:422,     1,     103,     2,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:12:801,     1,     103,     2,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:13:581,     1,     103,     2,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:13:727,     1,     103,     2,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:17:45,     0,     51,     3,     Damaged with a HazardArea,     59,124
+22:06:18:521,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:18:671,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:25:583,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:25:736,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:28:635,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:28:785,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:28:931,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:29:37,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:29:70,     0,     51,     2,     Damaged with a HazardArea,     251,220
+22:06:34:971,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:35:204,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:36:448,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:36:625,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:06:41:93,     0,     55,     2,     Escape from a HazardArea,     -1,-1
+22:06:41:94,     0,     55,     3,     Escape from a HazardArea,     -1,-1
+22:06:50:113,     0,     51,     2,     Damaged with a HazardArea,     251,220
+22:06:56:130,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:07:20:174,     0,     51,     1,     Damaged with a HazardArea,     99,263
+22:07:21:180,     0,     53,     3,     Arrives To Target[C],     16,193
+22:07:42:774,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:42:951,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:46:657,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:46:987,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:47:751,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:47:903,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:52:731,     0,     53,     2,     Arrives To Target[B],     163,149
+22:07:53:968,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:54:243,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:56:604,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:56:788,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:57:168,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:07:57:289,     1,     103,     1,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:00:788,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:01:333,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:01:500,     1,     103,     4,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:05:7,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:05:153,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:08:569,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:08:760,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:09:380,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:09:549,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:13:680,     1,     25,     5,     Goal change start from Target[E],     107,412
+22:08:16:826,     0,     54,     5,     Intersect with a HazardArea,     305,119
+22:08:16:826,     1,     27,     5,     Goal change end; target unassigned,     389,8
+22:08:19:802,     0,     53,     1,     Arrives To Target[A],     112,162
+22:08:20:312,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:20:466,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:08:33:172,     1,     25,     5,     Goal change start from Target[NULL],     390,10
+22:08:34:882,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:08:34:882,     1,     27,     5,     Goal change end; target unassigned,     42,234
+22:08:46:349,     0,     54,     5,     Intersect with a HazardArea,     82,248
+22:08:50:330,     1,     25,     5,     Goal change start from Target[NULL],     41,234
+22:08:51:185,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:08:51:185,     1,     27,     5,     Goal change end; target unassigned,     298,188
+22:08:55:608,     1,     25,     5,     Goal change start from Target[NULL],     300,190
+22:08:56:390,     1,     27,     5,     Goal change end; target unassigned,     49,185
+22:09:02:381,     0,     53,     4,     Arrives To Target[D],     138,42
+22:09:21:419,     0,     54,     5,     Intersect with a HazardArea,     75,201
+22:09:21:419,     0,     55,     5,     Escape from a HazardArea,     -1,-1
+22:09:21:879,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:22:27,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:28:788,     1,     103,     2,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:31:910,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:35:627,     1,     104,     5,     Vehicle select map Rbtn,     -1,-1
+22:09:35:777,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:38:367,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:38:530,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:38:644,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:38:817,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:39:805,     1,     104,     3,     Vehicle select map Rbtn,     -1,-1
+22:09:39:991,     1,     103,     3,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:42:585,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
+22:09:42:739,     1,     103,     5,     Vehicle select map Lbtn (trying to enable video feed),     -1,-1
