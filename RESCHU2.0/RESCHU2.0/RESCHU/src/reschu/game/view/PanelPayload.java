@@ -48,8 +48,6 @@ import reschu.game.model.PayloadList;
 import reschu.game.model.UAV;
 import reschu.game.model.Vehicle;
 import reschu.game.utils.Utils;
-import reschu.game.view.Prototype.GridCreateTest;
-
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
@@ -137,8 +135,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
     private JButton btnSubmit, btnCancel;
     
-    //private Prototype prototype;
-    
     private UAVMonitor uavMonitor;
     
     
@@ -159,85 +155,42 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     public static final int VIEWPORT_LENGTH = 400;
     public static final int OVERLAP_LENGTH = 450;
     public static final int SPEED = 1; // no.of pixels moved in each call to display, leads to movement speed of roughly 500 pixels/sec
-    
-    private GLCanvas myCanvas;
-    
-    
-    private File imgFile;
-    
     private Map<String, Texture> subTextures;
-    
     private int tileX = 0;
     private int tileY = 0;
     private int xPos = 0;
     private int yPos = 0;
-    
     private float zoomLevel = 1;
-    
     private int corners = 0;
-    
     private Transition t;
-    private GridCreateTest tiler;
-
+    private MapTileCreator tiler;
     private String tileFileDir;
     
-    public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payload_canvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
-    	if( GL_DEBUG ) System.out.println("GL: PanelPayload created");
-    
-    	//prototype = (Prototype)payload_canvas;
-    	
+    public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
+    	if( GL_DEBUG ){ 
+    		System.out.println("GL: PanelPayload created");
+    	}
     	lsnr = e;
-    	glCanvas = payload_canvas;
-        this.g = g;
-        
-        System.out.println("Set payload panel to be galaxy");
-        
+    	glCanvas = payloadCanvas;
+        this.g = g; 
         payload_list = g.getPayloadList();
         Image_Loading = false;
-        flash = 0; 
-        
-        //glEnabled(false);
+        flash = 0;         
         glEnabled(true);
-     	
         setPopup();
-        //initTextRenenders();
+        //initTextRenderers();
         //makeVibrateThread();  // TO BE RESTORED
-        
         backingImgHeight = imageHeight;
         backingImgWidth = imageWidth;
-        //uavMonitor= new UAVMonitor(this);
-        
-        
-        
-        //System.out.println("File exists in constructor? " + imgFile.exists());
-  	  this.tileFileDir = tileFileDir;
-  	  //GLCanvas glcanvas = new GLCanvas();
-  	  //myCanvas = glcanvas;
-  	  //Prototype t = new Prototype(imageFile);
-  	    //glcanvas.addGLEventListener(t);
+  	  	this.tileFileDir = tileFileDir;
   	    glCanvas.setSize(VIEWPORT_LENGTH, VIEWPORT_LENGTH);
-  	    //glCanvas.addGLEventListener(this);
-  	    //creating frame
-  	    //final Frame frame = new Frame ("straight Line");
-  	    //adding canvas to frame
-  	    //frame.add(glcanvas);
-  	    //frame.setSize(glcanvas.getWidth(), glcanvas.getHeight());
-  	    //frame.setSize(400, 600);
-  	    //frame.setVisible(true);
-        
-        
-        
-        //GLContext
-        System.out.println("Is glCanvas enabled:? " + glCanvas.isEnabled());
-        
-        //glCanvas.setLayout(null); 
     }
 
     public void setUAVMonitor(UAVMonitor uavMonitor) {
     	this.uavMonitor = uavMonitor;
     }
     
-    private void initTextRenenders() {
+    private void initTextRenderers() {
         trP14 = new TextRenderer(new Font("SansSerif", Font.PLAIN, 14), true, false);
         trB12 = new TextRenderer(new Font("SansSerif", Font.BOLD, 12), true, false); 
         trB17 = new TextRenderer(new Font("SansSerif", Font.BOLD, 17), true, false); 
@@ -443,6 +396,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
      * Called by MyCanvas to check if this panel is enabled, that is, 
      * if there is any payload that is currently shown in the panel 
      */
+    @Override
     public synchronized boolean isEnabled() { return enabled; }
     private synchronized void glEnabled(boolean b) { enabled = b; } 
 
@@ -452,7 +406,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
      */
     public void setClicked(boolean c) {rbtnClicked = c;}
     
-    public void reset_variables() {
+    public void resetVariables() {
         camera_x = 0;
         image_x = image_y = 0;
         new_x_off = new_y_off = 0;
@@ -469,7 +423,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
      * @param v 
      * @throws IOException 
      */
-    public void set_payload(Vehicle v) throws IOException {
+    public void setPayload(Vehicle v) throws IOException {
         this.v = v;        
         final String type = v.getType(); 
         final String mission = v.getTarget().getMission();
@@ -523,6 +477,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     }
          
     private void displayText(GLAutoDrawable drawable) {
+    	
     	if( GL_DEBUG ) System.out.println("GL: displayText called");
         if (Image_Loading) {
         	trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
@@ -1105,7 +1060,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	      //backingImgWidth = backingImage.getWidth();
 	      //backingImgHeight = backingImage.getHeight();
 	      
-	      tiler = new GridCreateTest(TILE_LENGTH, VIEWPORT_LENGTH, OVERLAP_LENGTH); // Precomputing of tiles is complete
+	      tiler = new MapTileCreator(TILE_LENGTH, VIEWPORT_LENGTH, OVERLAP_LENGTH); // Precomputing of tiles is complete
 	      subTextures = tiler.makeGridFiles(arg0);
 	      System.out.println("Constructing new textures");
 	      t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
@@ -1129,7 +1084,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	    // method body
 	  }
 	  
-	  public class GridCreateTest {
+	  public class MapTileCreator {
 		  private int tileLength;
 		  private int viewportLength;
 		  private int overlapLength;
@@ -1143,21 +1098,16 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 		  private int maxTileX = 0;
 		  private int maxTileY = 0;
-		  
-		  //public gridCreateTest(String imagePath){
-		  public GridCreateTest(int tileLength, int viewportLength, int overlapLength) {
-			//this.mainImage = mainImage;
+		  public MapTileCreator(int tileLength, int viewportLength, int overlapLength) {
 			this.tileLength = tileLength;
 			this.viewportLength = viewportLength;
 			this.overlapLength = overlapLength;
-		    //imageWidth = mainImage.getWidth();
-		    //imageHeight = mainImage.getHeight();
 		    imageHeight = backingImgHeight;
 		    imageWidth = backingImgWidth;
 			subImages = new HashMap<String, BufferedImage>();
 		  }
 		  
-		  public List<int[]> CalculateGrids(){
+		  public List<int[]> calculateGrids(){
 			  // Given tileLength, overlapLength and an image, calculate the coordinates of the tiles required to
 			  // cover the image. GetSubimage accepts coordinates of the form 
 			  // (xPixelsFromTopLeft, yPixelsFromTopLeft, Width, Height)
@@ -1259,36 +1209,30 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		  //public Map<String, BufferedImage> makeGridFiles(){
 		  public Map<String, Texture> makeGridFiles(GLAutoDrawable drawable) {
 			  // Using coordinates from CalculateGrids, Generate hashmap of subimages.
-			  List<int[]> allCoords = CalculateGrids();
-			  String key = null;
-			  BufferedImage subImage = null;
-			  File subImageFile = null;
-			  Texture subTexture = null;
+			  List<int[]> allCoords = calculateGrids();
+			  String key;
+			  BufferedImage subImage;
+			  File subImageFile;
+			  Texture subTexture;
 			  
-			  //Map<String, BufferedImage> mySubImages = new HashMap<String, BufferedImage>();
 			  Map<String, Texture> mySubTextures = new HashMap<String, Texture>();
 			  
 			  GL2 gl = drawable.getGL().getGL2();
 			  
 			  for (int[] coords : allCoords) {
 				  key = coordinateConverter(coords);
-				  //subImageFile = new File("lib/imgFiles/" + key + ".jpg");
 				  subImageFile = new File(tileFileDir + "/" + key + ".jpg");
-				  //System.out.println("File exists? " + subImageFile.exists());
 				  try {
 					  subImage = ImageIO.read(subImageFile);
 					  subTexture = AWTTextureIO.newTexture(gl.getGLProfile(), subImage, true);
-					  //mySubImages.put(key, subImage);
 					  mySubTextures.put(key, subTexture);
 				  }
 				  catch (IOException e) {
 					  System.out.println("GG I fucked up");
-					  //System.out.println();
 					  e.printStackTrace();
 					  System.exit(1);
 				  }
 			  }
-			  //return mySubImages;
 			  return mySubTextures;
 		  }
 		  
