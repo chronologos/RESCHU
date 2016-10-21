@@ -1,21 +1,27 @@
 package reschu.game.view;
+import com.jogamp.opengl.awt.GLJPanel;
+
 import reschu.game.model.UAV;
+import reschu.game.model.Vehicle;
 
 public class UAVMonitor {
 	//private UAV uav;
-	private Prototype prototype;
-	private UAV activeUAV;	
+	//private MyCanvas prototype;
+	private PanelPayload prototype;
+	//private UAV activeUAV;	
+	private Vehicle activeUAV;
 	private boolean displayEnabled;
 	private int zoomLevel;
 	
 	// Initialize UAVMonitor with Prototype object
-	public UAVMonitor(Prototype proto) {
+	//public UAVMonitor(Prototype proto) {
+	public UAVMonitor(PanelPayload proto) {
 		prototype = proto;
 		displayEnabled = false;
 		zoomLevel = 1;
 	}
 	
-	public void enableUAVFeed(UAV uav) {
+	public void enableUAVFeed(Vehicle uav) {
 		displayEnabled = true;
 		activeUAV = uav;
 	}
@@ -26,7 +32,7 @@ public class UAVMonitor {
 	}
 	
 	// pass x and y coordinates to prototype
-	public void passCoords() {
+	public void setCoords() {
 		if (!displayEnabled || activeUAV == null) return;
 		prototype.setX(activeUAV.getX());
 		prototype.setY(activeUAV.getY());
@@ -50,9 +56,12 @@ public class UAVMonitor {
 	}
 	
 	// Check if panning will cause
+	
+	/*
 	public boolean applyPan() {
 		
 	}
+	*/
 	
 	// Pass zoom command from GUI through PanelPayload (or PanelPayloadControls) to UAV
 	public void setZoom(int level) {

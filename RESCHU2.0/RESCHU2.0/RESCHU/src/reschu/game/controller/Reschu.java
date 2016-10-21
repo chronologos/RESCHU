@@ -31,6 +31,7 @@ import reschu.game.view.PanelPayload;
 import reschu.game.view.PanelPayloadControls;
 import reschu.game.view.PanelTimeLine;
 import reschu.game.view.Prototype;
+import reschu.game.view.UAVMonitor;
 import reschu.tutorial.Tutorial;
 import info.clearthought.layout.TableLayout;
 
@@ -236,12 +237,15 @@ public class Reschu extends JFrame implements GUI_Listener {
        	game = new Game(this, _scenario);        
         origin_time = System.currentTimeMillis();
         
-        //payload_canvas = new MyCanvas(); // and this
-        payload_canvas = new Prototype(new File("lib/LargeImage.jpg"));
+        payload_canvas = new MyCanvas(); // and this
+        //payload_canvas = new Prototype(new File("lib/LargeImage.jpg"));
+       
         
-        pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game);  
+        pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);  
         payload_canvas.addListener(pnlPayload);   
         payload_canvas.addGLEventListener(pnlPayload);   
+        UAVMonitor uavMonitor = new UAVMonitor(pnlPayload);
+        pnlPayload.setUAVMonitor(uavMonitor);
         
         // Initialize and bind Prototype
         //Prototype.activate(new GLCanvas, new File("lib/LargeImage.jpg"));
@@ -396,9 +400,9 @@ public class Reschu extends JFrame implements GUI_Listener {
     	pnlMap.setTextOnTop(msg, duration);
     }
     
-    public void Rotate_Clockwise_Selected(){ pnlPayload.r_c_2(); }   
+    public void Rotate_Clockwise_Selected(){ return;}//pnlPayload.r_c_2(); }   
     public void Pan_Up_Selected(){ }//pnlPayload.pan_up(); }
-    public void Rotate_Counter_Selected(){ pnlPayload.r_c_c_2(); }
+    public void Rotate_Counter_Selected(){ return;}//pnlPayload.r_c_c_2(); }
     public void Pan_Down_Selected(){ }//pnlPayload.pan_down(); }
     public void Zoom_In(){ pnlPayload.zoom_in(); }
     public void Zoom_Out(){ pnlPayload.zoom_out(); }

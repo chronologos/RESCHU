@@ -39,6 +39,8 @@ public class Prototype extends MyCanvas implements GLEventListener {
   
   private GLCanvas myCanvas;
   
+  private UAVMonitor uavMonitor;
+  
   private File imgFile;
   
   private Map<String, Texture> subTextures;
@@ -55,7 +57,10 @@ public class Prototype extends MyCanvas implements GLEventListener {
   private Transition t;
   private GridCreateTest tiler;
   
-  public Prototype(File imgFile) {
+  public Prototype(File imgFile, UAVMonitor uavMonitor) {
+	  
+	  this.uavMonitor = uavMonitor; 
+	  
 	  System.out.println("File exists in constructor? " + imgFile.exists());
 	  this.imgFile = imgFile;
 	  GLCanvas glcanvas = new GLCanvas();
@@ -105,6 +110,9 @@ public class Prototype extends MyCanvas implements GLEventListener {
 	GL2 gl = drawable.getGL().getGL2();
 	
 	if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
+	
+	uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+    uavMonitor.setVelocity();
 	
     int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
     
@@ -156,9 +164,10 @@ public class Prototype extends MyCanvas implements GLEventListener {
       	xDirection = 1;
       }
       
-      xPos += SPEED * xDirection;
-      yPos += SPEED * yDirection;
+      //xPos += SPEED * xDirection;
+      //yPos += SPEED * yDirection;
       
+    
       float x1 = (float)(xPos - tileX)/TILE_LENGTH;
       float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
       float y1 = (float)(yPos - tileY)/TILE_LENGTH;
