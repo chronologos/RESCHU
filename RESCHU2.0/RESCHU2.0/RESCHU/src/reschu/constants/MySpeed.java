@@ -2,7 +2,6 @@ package reschu.constants;
 
 public class MySpeed {
     final static public int VELOCITY = 1;
-	
 	final static public int SPEED_CONTROL = 1;
     final static public int SPEED_TIMER = 500 / SPEED_CONTROL;
     final static public int SPEED_CLOCK = 1000 / SPEED_CONTROL;
