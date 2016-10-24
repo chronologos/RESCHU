@@ -600,7 +600,7 @@ public class Vehicle {
     	hackPath = temp;
     	System.out.println("Finished replacing original path with hacked path");
     	System.out.println("Next element on hacked path : ");
-    	System.out.println(path.getFirst());
+    	System.out.println(path.getFirst()[0] + ", " + path.getFirst()[1]);
     }
     
     

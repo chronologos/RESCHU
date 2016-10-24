@@ -126,6 +126,7 @@ public class Game implements Runnable, ActionListener
 
 		setVehicle(scenario); 
 		setPayload(); 
+		AttackEngine attackEngine = new AttackEngine(vehicleList);
 	}
 
 	public void setListener(GUI_Listener l){ lsnr = l; }
@@ -443,7 +444,7 @@ public class Game implements Runnable, ActionListener
 
 		for( int i = 0; i < vehicleList.size(); i++) {
 			v = vehicleList.getVehicle(i); 
-			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {v.moveHillClimbing();}
+			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {v.moveBestFirst();}
 		}
 		vehicle_location_change();
 

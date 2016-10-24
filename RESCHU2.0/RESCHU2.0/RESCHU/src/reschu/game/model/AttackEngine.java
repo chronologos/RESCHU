@@ -32,6 +32,7 @@ public class AttackEngine {
 		System.out.println("attack engine loaded");
 		File attackFile = new File(ATTACK_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
+		timerToVehicle = new HashMap<String, Integer>();
 		//attackTimers = new ArrayList<Timer>();
 		hackData = new HashMap<Integer, String>();
 		String line = null;  
