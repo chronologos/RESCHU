@@ -32,6 +32,8 @@ public class Vehicle {
     private boolean UUV_stuck;
     private boolean intersect;
     
+    private LinkedList<int[]> hackPath = new LinkedList<int[]>();
+    
     /**
      * Set the position of this vehicle (synchronized)
      */
@@ -188,7 +190,7 @@ public class Vehicle {
     			}
     			else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
     				//2008-04-05
-    				//UAV to grey target   ¡°You cannot assign a UAV to a grey target, please reassign¡±
+    				//UAV to grey target   ï¿½ï¿½You cannot assign a UAV to a grey target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
     			}
     		}
@@ -197,7 +199,7 @@ public class Vehicle {
     				x = target_pos[0]; y = target_pos[1];
             		if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
             			//2008-04-05
-            			//UUV to land target (grey or red) ¡°You cannot assign a UUV to a land target, please reassign¡±
+            			//UUV to land target (grey or red) ï¿½ï¿½You cannot assign a UUV to a land target, please reassignï¿½ï¿½
             			lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
             			break;
             		}
@@ -209,7 +211,7 @@ public class Vehicle {
     			}
     			else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
     				//2008-04-05
-    				//HALE to red target ¡°You cannot assign a HALE to a red target, please reassign¡±
+    				//HALE to red target ï¿½ï¿½You cannot assign a HALE to a red target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
     			}
     		}	
@@ -254,7 +256,7 @@ public class Vehicle {
     			}
     			else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
     				//2008-04-05
-    				//UAV to grey target   ¡°You cannot assign a UAV to a grey target, please reassign¡±
+    				//UAV to grey target   ï¿½ï¿½You cannot assign a UAV to a grey target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
     			}
     		}
@@ -263,7 +265,7 @@ public class Vehicle {
     				x = new_target_pos[0]; y = new_target_pos[1];
             		if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
             			//2008-04-05
-            			//UUV to land target (grey or red) ¡°You cannot assign a UUV to a land target, please reassign¡±
+            			//UUV to land target (grey or red) ï¿½ï¿½You cannot assign a UUV to a land target, please reassignï¿½ï¿½
             			lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
             			break; 
             		}
@@ -275,7 +277,7 @@ public class Vehicle {
     			}
     			else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
     				//2008-04-05
-    				//HALE to red target ¡°You cannot assign a HALE to a red target, please reassign¡±
+    				//HALE to red target ï¿½ï¿½You cannot assign a HALE to a red target, please reassignï¿½ï¿½
     				lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
     			}
     		}	
@@ -569,4 +571,37 @@ public class Vehicle {
 		setStatus(MyGame.STATUS_VEHICLE_MOVING);
 		lsnr.EVT_Payload_EngagedAndFinished_COMM(index, getTarget().getName());
     }
+    
+    public void hijack(String hackData) throws IllegalArgumentException{
+    	if (hackData == null) throw new IllegalArgumentException("Null hackData");
+    	String[] coordStrings = hackData.split(" ");
+    	if (coordStrings.length != 2) throw new IllegalArgumentException("Wrong number of coordinates in hackdata, must be 2");
+    	int xCoord, yCoord;
+    	try {
+    		xCoord = Integer.parseInt(coordStrings[0]);
+    	}
+    	catch (NumberFormatException e) {
+    		System.out.println("Uncaught number format exception on x-coordinate from AttackEngine");
+    		return;
+    	}
+    	try {
+    		yCoord = Integer.parseInt(coordStrings[1]);
+    	}
+    	catch (NumberFormatException e2) {
+    		System.out.println("Uncaught number format exception on y-coordinate from AttackEngine");
+    		return;
+    	}
+    	int[] hackCoords = new int[]{xCoord, yCoord};
+    	hackPath = new LinkedList<int[]>(path);
+    	LinkedList<int[]> temp = path;
+    	if (hackPath.size() == 0) hackPath.add(hackCoords);
+    	else hackPath.set(0, hackCoords); // Just overwrite next item on path;
+    	path = hackPath; // swap path and hackpath
+    	hackPath = temp;
+    	System.out.println("Finished replacing original path with hacked path");
+    	System.out.println("Next element on hacked path : ");
+    	System.out.println(path.getFirst());
+    }
+    
+    
 }
