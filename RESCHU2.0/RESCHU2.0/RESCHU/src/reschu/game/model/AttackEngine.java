@@ -32,11 +32,12 @@ public class AttackEngine {
 		System.out.println("attack engine loaded");
 		File attackFile = new File(ATTACK_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
+		timerToVehicle = new HashMap<String, Integer>();
 		//attackTimers = new ArrayList<Timer>();
 		hackData = new HashMap<Integer, String>();
-		String line = null;  
-		Timer nextTimer = null;
-		String location = null;
+		String line;  
+		Timer nextTimer;
+		String location;
 		
 		int delay;
 		int vehicle;
@@ -78,11 +79,9 @@ public class AttackEngine {
 				}
 			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Illegal non-numeric values in hacking input file");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Illegal non-numeric values in hacking input file");
 			e.printStackTrace();
 		} 

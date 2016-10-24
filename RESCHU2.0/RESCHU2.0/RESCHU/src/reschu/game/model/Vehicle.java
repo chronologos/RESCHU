@@ -8,17 +8,17 @@ import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
 
 public class Vehicle { 
-	final static public String TYPE_UAV = "UAV";
-	final static public String TYPE_UUV = "UUV";
-	final static public String PAYLOAD_ISR = "ISR";
-	final static public String PAYLOAD_COM = "COM";
+	public static final String TYPE_UAV = "UAV";
+	public static final String TYPE_UUV = "UUV";
+	public static final String PAYLOAD_ISR = "ISR";
+	public static final String PAYLOAD_COM = "COM";
 	
 	private String name; 
     private String type;
     private String payload;
-    private int pos_x, pos_y;
+    private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
     private Target target;
-    private LinkedList<int[]> path = new LinkedList<int[]>();
+    private LinkedList<int[]> groundTruthPath = new LinkedList<int[]>();
     private Map map;
     private int index;
     private int velocity; 
@@ -28,77 +28,98 @@ public class Vehicle {
     private Game g;
 //    private int velocity_buffer;
 //    private int velocity_scale;
-    private int UUV_stuck_count;
-    private boolean UUV_stuck;
+    private int stuckCount;
+    private boolean isStuck;
     private boolean intersect;
+    private boolean isHijacked;
     
-    private LinkedList<int[]> hackPath = new LinkedList<int[]>();
+    private LinkedList<int[]> observedPath;
     
     /**
      * Set the position of this vehicle (synchronized)
      */
-    public synchronized void setPos(int x, int y) { setX(x); setY(y); }
+    public synchronized void setPos(int x, int y) { setGroundTruthX(x); setGroundTruthY(y); }
     
     /**
      * Get a path of this vehicle  (synchronized) 
      */
-    public synchronized LinkedList<int[]> getPath() { return path;}
+    public synchronized LinkedList<int[]> getPath() { return groundTruthPath;}
     
     /**
      * Add a waypoint to the path of this vehicle  (synchronized)
      */
-    public synchronized void addPath(int idx, int[] e) { path.add(idx, e);}
+    public synchronized void addPath(int idx, int[] e) { groundTruthPath.add(idx, e);}
     
     /**
      * Add a waypoint to the last path of this vehicle (synchronized)
      */
-    public synchronized void addPathLast(int[] e) { path.addLast(e); }
+    public synchronized void addPathLast(int[] e) { groundTruthPath.addLast(e); }
     
     /**
      * Set a path of this vehicle  (synchronized)
      */
-    public synchronized void setPath(int idx, int[] e) { path.set(idx, e); };
+    public synchronized void setPath(int idx, int[] e) { groundTruthPath.set(idx, e); };
     
     /**
      * Get the size of a path of this vehicle  (synchronized)
      */
-    public synchronized int getPathSize() {return path.size(); }
+    public synchronized int getPathSize() {return groundTruthPath.size(); }
     
     /**
      * Get a coordinate of a waypoint of this vehicle  (synchronized)
      */
-    public synchronized int[] getPathAt(int idx) {return path.get(idx);}
+    public synchronized int[] getPathAt(int idx) {return groundTruthPath.get(idx);}
     
     /**
      * Remove a waypoint in the path of this vehicle  (synchronized)
      */
-    public synchronized void removePathAt(int idx) {path.remove(idx);}
+    public synchronized void removePathAt(int idx) {groundTruthPath.remove(idx);}
     
     /**
      * Get a coordinate at the first path of this vehicle  (synchronized)
      */
-    public synchronized int[] getFirstPath() {return path.getFirst(); }
+    public synchronized int[] getFirstPath() {return groundTruthPath.getFirst(); }
     
     /**
      * Get a coordinate at the last path of this vehicle  (synchronized)
      */
-    public synchronized int[] getLastPath() {return path.getLast(); }
+    public synchronized int[] getLastPath() {return groundTruthPath.getLast(); }
     
     /**
      * Remove the first waypoint of path of this vehicle  (synchronized)
      */
-    public synchronized void removeFirstPath() {path.removeFirst(); }
+    public synchronized void removeFirstPath() {groundTruthPath.removeFirst(); }
     
     /**
      * Returns a map that this vehicle is assigned to 
      */
     public synchronized Map getMap() { return map; }
 
-    public synchronized void setX(int x){ pos_x = x; }
-    public synchronized int getX(){ return pos_x; } 
+    public synchronized void setGroundTruthX(int x){ xPosGroundTruth = x; }
+    public synchronized int getGroundTruthX(){ return xPosGroundTruth; } 
     
-    public synchronized void setY(int y){ pos_y = y; }   
-    public synchronized int getY(){ return pos_y; }
+    public synchronized void setGroundTruthY(int y){ yPosGroundTruth = y; }   
+    public synchronized int getGroundTruthY(){ return yPosGroundTruth; }
+    
+    public synchronized void setX(int x){ xPosObserved = x; }
+    public synchronized int getX(){ 
+    	if (isHijacked){
+    		return xPosObserved;
+    	}
+    	else{
+    		return xPosGroundTruth;
+    	}
+    } 
+    
+    public synchronized void setY(int y){ yPosObserved = y; }   
+    public synchronized int getY(){
+    	if (isHijacked){
+    		return yPosObserved;
+    	}
+    	else{
+    		return yPosGroundTruth;
+    	}
+    }
             
     public void setName(String strName) { name = strName; }
     public String getName() {return name;}
@@ -134,7 +155,7 @@ public class Vehicle {
     public void setGuiListener(GUI_Listener l) {lsnr = l;}
     
     public Vehicle(Map m, Game g) { 
-    	setX(0); setY(0); 
+    	setGroundTruthX(0); setGroundTruthY(0); 
     	setTarget(null); 
     	this.g = g;
     	map=m; 
@@ -142,8 +163,8 @@ public class Vehicle {
     	vDamage = 0;
 //    	velocity_scale = MySpeed.SPEED_TIMER;
 //    	velocity_buffer = 0;
-    	UUV_stuck_count = 0;
-    	UUV_stuck = false;
+    	stuckCount = 0;
+    	isStuck = false;
     	intersect = false;
     }
 
@@ -294,7 +315,7 @@ public class Vehicle {
     	double d, idx = 0;
     	double distance = 9999999;	// infinite
     	
-    	d = Game.getDistance(getX(), getY(), x, y) + Game.getDistance(getPathAt(0)[0], getPathAt(0)[1], x, y);    	
+    	d = Game.getDistance(getGroundTruthX(), getGroundTruthY(), x, y) + Game.getDistance(getPathAt(0)[0], getPathAt(0)[1], x, y);    	
     	if( d < distance ) distance = d; idx = 0;
     		
     	for( int i=0; i<getPathSize()-1; i++ ) {
@@ -354,9 +375,9 @@ public class Vehicle {
     }
 
     public void moveHillClimbing() { 
-    	if( UUV_stuck ) {
+    	if( isStuck ) {
     		moveTo(6);
-    		if(--UUV_stuck_count <= 0) UUV_stuck = false;
+    		if(--stuckCount <= 0) isStuck = false;
     		return;
     	}
     	
@@ -365,25 +386,25 @@ public class Vehicle {
         int direction = 8;    
         boolean stuck = true;
     	   	
-    	presentDistance = getDistance(getX(), getY());
+    	presentDistance = getDistance(getGroundTruthX(), getGroundTruthY());
     	    	
     	for( int i=0; i<8; i++ ) {
     		direction = rnd.nextInt(8);
     		switch( direction ) {
-	    		case 0: d = getDistance(getX()-1, getY()-1); 	break;
-	    		case 1: d = getDistance(getX()-1, getY()); 		break;
-	    		case 2:	d = getDistance(getX()-1, getY()+1); 	break;
-	    		case 3: d = getDistance(getX(), getY()-1); 		break;
-	    		case 4: d = getDistance(getX(), getY()+1); 		break;
-	    		case 5: d = getDistance(getX()+1, getY()-1); 	break;
-	    		case 6: d = getDistance(getX()+1, getY()); 		break;
-	    		case 7: d = getDistance(getX()+1, getY()+1); 	break;
+	    		case 0: d = getDistance(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
+	    		case 1: d = getDistance(getGroundTruthX()-1, getGroundTruthY()); 		break;
+	    		case 2:	d = getDistance(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
+	    		case 3: d = getDistance(getGroundTruthX(), getGroundTruthY()-1); 		break;
+	    		case 4: d = getDistance(getGroundTruthX(), getGroundTruthY()+1); 		break;
+	    		case 5: d = getDistance(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
+	    		case 6: d = getDistance(getGroundTruthX()+1, getGroundTruthY()); 		break;
+	    		case 7: d = getDistance(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
     		}
     		if( d < presentDistance && chkValidMove(direction)) { stuck = false; break; }
     	}
     	if( stuck ) {
-    		UUV_stuck_count++;
-    		if( UUV_stuck_count >= 5 ) UUV_stuck = true;
+    		stuckCount++;
+    		if( stuckCount >= 5 ) isStuck = true;
     	}    	
     	else moveTo(direction);
     }
@@ -394,23 +415,74 @@ public class Vehicle {
     	
     	for( int i=0; i<8; i++ ) {    		
     		switch( i ) {
-	    		case 0: d = getDistance(getX()-1, getY()-1); 	break;
-	    		case 1: d = getDistance(getX()-1, getY()); 		break;
-	    		case 2:	d = getDistance(getX()-1, getY()+1); 	break;
-	    		case 3: d = getDistance(getX(), getY()-1); 		break;
-	    		case 4: d = getDistance(getX(), getY()+1); 		break;
-	    		case 5: d = getDistance(getX()+1, getY()-1); 	break;
-	    		case 6: d = getDistance(getX()+1, getY()); 		break;
-	    		case 7: d = getDistance(getX()+1, getY()+1); 	break;
+	    		case 0: d = getDistance(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
+	    		case 1: d = getDistance(getGroundTruthX()-1, getGroundTruthY()); 		break;
+	    		case 2:	d = getDistance(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
+	    		case 3: d = getDistance(getGroundTruthX(), getGroundTruthY()-1); 		break;
+	    		case 4: d = getDistance(getGroundTruthX(), getGroundTruthY()+1); 		break;
+	    		case 5: d = getDistance(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
+	    		case 6: d = getDistance(getGroundTruthX()+1, getGroundTruthY()); 		break;
+	    		case 7: d = getDistance(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
     		}
     		if( d < bestDistance ) {
     			bestDistance = d; direction = i;
     		}
     	}
     	if( chkValidMove(direction) ) moveTo(direction);
+    	
+    	// if vehicle is hijacked we need to move observed location as well
+    	if (isHijacked){
+        	direction=0;
+        	d = 999999999;
+        	bestDistance = 999999999;
+        	for( int i=0; i<8; i++ ) {    		
+        		switch( i ) {
+    	    		case 0: d = getDistance(getX()-1, getY()-1); 	break;
+    	    		case 1: d = getDistance(getX()-1, getY()); 		break;
+    	    		case 2:	d = getDistance(getX()-1, getY()+1); 	break;
+    	    		case 3: d = getDistance(getX(), getY()-1); 		break;
+    	    		case 4: d = getDistance(getX(), getY()+1); 		break;
+    	    		case 5: d = getDistance(getX()+1, getY()-1); 	break;
+    	    		case 6: d = getDistance(getX()+1, getY()); 		break;
+    	    		case 7: d = getDistance(getX()+1, getY()+1); 	break;
+        		}
+        		if( d < bestDistance ) {
+        			bestDistance = d; direction = i;
+        		}
+        	}
+        	if( chkValidMove(direction) ) moveObservedTo(direction);
+    	}
     }
     
     public void moveTo(int direction) {
+        switch (direction) {
+            case 0:	// up-left
+            	setGroundTruthX(getGroundTruthX()-MySpeed.VELOCITY); 
+            	setGroundTruthY(getGroundTruthY()-MySpeed.VELOCITY); break;
+            case 1: // up
+               	setGroundTruthX(getGroundTruthX()-MySpeed.VELOCITY); break;
+            case 2: // up-right
+               	setGroundTruthX(getGroundTruthX()-MySpeed.VELOCITY); 
+               	setGroundTruthY(getGroundTruthY()+MySpeed.VELOCITY); break;
+            case 3: // left
+               	setGroundTruthY(getGroundTruthY()-MySpeed.VELOCITY); break;
+            case 4: // right
+               	setGroundTruthY(getGroundTruthY()+MySpeed.VELOCITY); break;
+            case 5: // down-left
+               	setGroundTruthX(getGroundTruthX()+MySpeed.VELOCITY); 
+               	setGroundTruthY(getGroundTruthY()-MySpeed.VELOCITY); break;
+            case 6: // down
+              	setGroundTruthX(getGroundTruthX()+MySpeed.VELOCITY); break;
+            case 7: // down-right
+               	setGroundTruthX(getGroundTruthX()+MySpeed.VELOCITY); 
+               	setGroundTruthY(getGroundTruthY()+MySpeed.VELOCITY); break;
+            default:
+               	break;
+        }        
+        payloadCheck(getGroundTruthX(), getGroundTruthY());
+    }
+    
+    public void moveObservedTo(int direction) {
         switch (direction) {
             case 0:	// up-left
             	setX(getX()-MySpeed.VELOCITY); 
@@ -435,7 +507,7 @@ public class Vehicle {
             default:
                	break;
         }        
-        payloadCheck(getX(), getY());
+        payloadCheck(getX(), getY()); //TODO(iantay) is this correct
     }
     
     private void payloadCheck(int pos_x, int pos_y) {
@@ -460,43 +532,43 @@ public class Vehicle {
     public synchronized boolean chkValidMove(int direction) {
     	switch (direction) {
 	        case 0:	// up-left
-	        	if( (getX() > 0 && getY() > 0) && 
-	        			(chkValidPosition(getX()-MySpeed.VELOCITY, getY()-MySpeed.VELOCITY)) ) 
+	        	if( (getGroundTruthX() > 0 && getGroundTruthY() > 0) && 
+	        			(chkValidPosition(getGroundTruthX()-MySpeed.VELOCITY, getGroundTruthY()-MySpeed.VELOCITY)) ) 
 	        		return true;
 	        	return false; 
 	        case 1: // up
-	           	if( (getX() > 0) && 
-	           			(chkValidPosition(getX()-MySpeed.VELOCITY, getY())) ) 
+	           	if( (getGroundTruthX() > 0) && 
+	           			(chkValidPosition(getGroundTruthX()-MySpeed.VELOCITY, getGroundTruthY())) ) 
 	           		return true;
 	           	return false;
 	        case 2: // up-right
-	           	if( (getX() > 0 && getY() < MySize.height-1) && 
-	           			(chkValidPosition(getX()-MySpeed.VELOCITY, getY()+MySpeed.VELOCITY)) ) 
+	           	if( (getGroundTruthX() > 0 && getGroundTruthY() < MySize.height-1) && 
+	           			(chkValidPosition(getGroundTruthX()-MySpeed.VELOCITY, getGroundTruthY()+MySpeed.VELOCITY)) ) 
 	           		return true;
 	           	return false;
 	        case 3: // left
-	           	if( (getY() > 0 ) &&
-	           			( chkValidPosition(getX(), getY()-MySpeed.VELOCITY)) ) 
+	           	if( (getGroundTruthY() > 0 ) &&
+	           			( chkValidPosition(getGroundTruthX(), getGroundTruthY()-MySpeed.VELOCITY)) ) 
 	           		return true;
 	            return false;
 	        case 4: // right
-	           	if( (getY() < MySize.height-1) && 
-	           			( chkValidPosition(getX(), getY()+MySpeed.VELOCITY)) )
+	           	if( (getGroundTruthY() < MySize.height-1) && 
+	           			( chkValidPosition(getGroundTruthX(), getGroundTruthY()+MySpeed.VELOCITY)) )
 	           		return true;
 	           	return false;
 	        case 5: // down-left
-	           	if( (getX() < MySize.width-1 && getY() > 0) &&
-	           			( chkValidPosition(getX()+MySpeed.VELOCITY, getY()-MySpeed.VELOCITY)) )
+	           	if( (getGroundTruthX() < MySize.width-1 && getGroundTruthY() > 0) &&
+	           			( chkValidPosition(getGroundTruthX()+MySpeed.VELOCITY, getGroundTruthY()-MySpeed.VELOCITY)) )
 	           		return true;
 	           	return false;
 	        case 6: // down
-	          	if( (getX() < MySize.width-1 ) &&
-	          			( chkValidPosition(getX()+MySpeed.VELOCITY, getY())) )
+	          	if( (getGroundTruthX() < MySize.width-1 ) &&
+	          			( chkValidPosition(getGroundTruthX()+MySpeed.VELOCITY, getGroundTruthY())) )
 	          		return true;
 	          	return false;
 	        case 7: // down-right
-	           	if( (getX() < MySize.width-1 && getY() < MySize.height-1 ) &&
-	           			( chkValidPosition(getX()+MySpeed.VELOCITY, getY()+MySpeed.VELOCITY)) )
+	           	if( (getGroundTruthX() < MySize.width-1 && getGroundTruthY() < MySize.height-1 ) &&
+	           			( chkValidPosition(getGroundTruthX()+MySpeed.VELOCITY, getGroundTruthY()+MySpeed.VELOCITY)) )
 	           		return true;
 	           	return false;
 	        default:
@@ -518,8 +590,8 @@ public class Vehicle {
     	for(int i=0; i<map.getListHazard().size(); i++ ) {
     		hazard_pos = map.getListHazard().get(i);
     		d = Math.sqrt( 
-    				Math.pow( (double)(pos_x - hazard_pos[0]), 2.0 ) + 
-    				Math.pow( (double)(pos_y - hazard_pos[1]), 2.0 ) )
+    				Math.pow( (double)(xPosGroundTruth - hazard_pos[0]), 2.0 ) + 
+    				Math.pow( (double)(yPosGroundTruth - hazard_pos[1]), 2.0 ) )
     		   * MySize.SIZE_CELL;
     		if(d <= MySize.SIZE_HAZARD_1_PXL ) damage += 50;
     		else if(d < MySize.SIZE_HAZARD_2_PXL && d > MySize.SIZE_HAZARD_1_PXL) damage += 30;
@@ -565,14 +637,15 @@ public class Vehicle {
     }
     
     public void COM_Payload() {
-		updateVisibility(getX(), getY());
-		getMap().unassignTarget(new int[]{getX(), getY()});
+		updateVisibility(getGroundTruthX(), getGroundTruthY());
+		getMap().unassignTarget(new int[]{getGroundTruthX(), getGroundTruthY()});
 		lsnr.Target_Become_Visible_From_Vehicle(this);
 		setStatus(MyGame.STATUS_VEHICLE_MOVING);
 		lsnr.EVT_Payload_EngagedAndFinished_COMM(index, getTarget().getName());
     }
     
     public void hijack(String hackData) throws IllegalArgumentException{
+    	isHijacked = true;
     	if (hackData == null) throw new IllegalArgumentException("Null hackData");
     	String[] coordStrings = hackData.split(" ");
     	if (coordStrings.length != 2) throw new IllegalArgumentException("Wrong number of coordinates in hackdata, must be 2");
@@ -592,15 +665,18 @@ public class Vehicle {
     		return;
     	}
     	int[] hackCoords = new int[]{xCoord, yCoord};
-    	hackPath = new LinkedList<int[]>(path);
-    	LinkedList<int[]> temp = path;
-    	if (hackPath.size() == 0) hackPath.add(hackCoords);
-    	else hackPath.set(0, hackCoords); // Just overwrite next item on path;
-    	path = hackPath; // swap path and hackpath
-    	hackPath = temp;
-    	System.out.println("Finished replacing original path with hacked path");
-    	System.out.println("Next element on hacked path : ");
-    	System.out.println(path.getFirst());
+    	observedPath = new LinkedList<int[]>();
+    	observedPath.add(hackCoords);
+//    	else observedPath.set(0, hackCoords); // Just overwrite next item on path;
+//    	groundTruthPath = observedPath; // swap path and hackpath
+//    	observedPath = temp;
+//    	System.out.println("Finished replacing original path with hacked path");
+//    	System.out.println("Next element on hacked path : ");
+//    	System.out.println(groundTruthPath.getFirst()[0] + ", " + groundTruthPath.getFirst()[1]);
+    }
+    
+    public void endHijack() {
+    	isHijacked = false;
     }
     
     

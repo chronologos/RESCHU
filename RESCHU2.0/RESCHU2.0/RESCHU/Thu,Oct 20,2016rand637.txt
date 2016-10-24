@@ -1,2 +1,0 @@
-10/20/2016 21:35:13:431  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
-21:35:52:782,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1

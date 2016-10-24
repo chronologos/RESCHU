@@ -93,7 +93,7 @@ public class VehicleList {
      */
     public Vehicle getVehicle(int x, int y) {
     	for( int i = 0; i < v_list.size(); i++) {
-    		if( v_list.get(i).getX() == x && v_list.get(i).getY() == y)
+    		if( v_list.get(i).getGroundTruthX() == x && v_list.get(i).getGroundTruthY() == y)
     			return v_list.get(i);
     	}
     	return new Vehicle(new Map(), g);	// Never reaches.
