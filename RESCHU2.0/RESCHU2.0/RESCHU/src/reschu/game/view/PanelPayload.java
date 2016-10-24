@@ -137,11 +137,12 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	private UAVMonitor uavMonitor;
 
-
-
 	// Prototype instance variables
 	private int xDirection = 1;
 	private int yDirection = 0;
+	
+	private float centreX = 0;
+	private float centreY = 0;
 
 	//private BufferedImage backingImage;
 	private int backingImgWidth;
@@ -954,7 +955,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-
+		if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+	    if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
 		render(drawable, x1, x2, y1, y2, gl);
 	}
 
@@ -1013,15 +1015,28 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		gl.glEnable(GL.GL_TEXTURE_2D);
 		CurrentTexture.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glTexCoord2f(x1+(x2-x1)/zoomLevel, y2 + (y1 - y2)/zoomLevel); // bot right
+		
+		float left = centreX - (x2 - x1)/(2 * zoomLevel);
+		float right = centreX + (x2 - x1)/(2 * zoomLevel);
+		
+		float top = centreY - (y2 - y1)/(2 * zoomLevel);
+		float bottom = centreY + (y2 - y1)/(2 * zoomLevel);
+		
+		//gl.glTexCoord2f(x1+(x2-x1)/zoomLevel, y2 + (y1 - y2)/zoomLevel); // bot right
+		gl.glTexCoord2f(right, bottom);
 		gl.glVertex3f(1.0f, 1.0f, 0);
-		gl.glTexCoord2f(x1, y2 + (y1 - y2)/zoomLevel); // bot left
+		//gl.glTexCoord2f(x1, y2 + (y1 - y2)/zoomLevel); // bot left
+		gl.glTexCoord2f(left, bottom);
 		gl.glVertex3f(-1.0f, 1.0f, 0);
-		gl.glTexCoord2f(x1, y2); // top left
+		//gl.glTexCoord2f(x1, y2); // top left
+		gl.glTexCoord2f(left, top);
 		gl.glVertex3f(-1.0f, -1.0f, 0);
-		gl.glTexCoord2f(x1 + (x2 - x1)/zoomLevel, y2); //top right
+		//gl.glTexCoord2f(x1 + (x2 - x1)/zoomLevel, y2); //top right
+		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, -1.0f, 0);
 		gl.glEnd();
+		centreX = (left + right)/2;
+		centreY = (top + bottom)/2;
 	}
 
 
