@@ -152,9 +152,9 @@ public class Map {
     } 
     for(int i=0; i<g.getVehicleList().size(); i++) {
       Vehicle v = g.getVehicleList().getVehicle(i);
-      if(Game.getDistance(v.getX(), v.getY(), x, y) < LIMIT_DISTANCE) {
-        int x1 = v.getX(), y1 = v.getY(), x2 = x, y2 = y;
-        double d = Game.getDistance(v.getX(), v.getY(), x, y);
+      if(Game.getDistance(v.getGroundTruthX(), v.getGroundTruthY(), x, y) < LIMIT_DISTANCE) {
+        int x1 = v.getGroundTruthX(), y1 = v.getGroundTruthY(), x2 = x, y2 = y;
+        double d = Game.getDistance(v.getGroundTruthX(), v.getGroundTruthY(), x, y);
         if(DEBUG) System.err.println("LVH("+x1+","+y1+") with randomly generated ("+x2+","+y2+"), d=("+d+")");
         return false;
       }
@@ -266,7 +266,7 @@ public class Map {
     } 
     for(int i=0; i<g.getVehicleList().size(); i++) {
       Vehicle v = g.getVehicleList().getVehicle(i);
-      if(Game.getDistance(v.getX(), v.getY(), x, y) < MySize.SIZE_HAZARD_3_PXL) 
+      if(Game.getDistance(v.getGroundTruthX(), v.getGroundTruthY(), x, y) < MySize.SIZE_HAZARD_3_PXL) 
         return false;
     }
     return true;

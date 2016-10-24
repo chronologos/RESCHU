@@ -17,7 +17,8 @@ public class SituationAwareness {
 	 */
 	public static int checkIntersect(final Vehicle v, final List<int[]> list, final int d) {
 		LinkedList<int[]> path = new LinkedList<int[]>();		
-		path.addFirst(new int[]{v.getX(), v.getY()});	// add the vehicle's position to the first to the path
+		path.addFirst(new int[]{v.getGroundTruthX(), v.getGroundTruthY()});	// TODO(iantay) should this be groundtruth or observed
+		// add the vehicle's position to the first to the path
 		for( int i=0; i<v.getPathSize(); i++ ) 
 			path.addLast(v.getPathAt(i));
 		

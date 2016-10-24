@@ -79,8 +79,8 @@ public class UAVMonitor {
 			yPanOffset += yAdded;
 			if (xDistToPan == 0 && yDistToPan == 0) panning = false;
 		}
-		prototype.setX(activeUAV.getX() + xPanOffset/zoomLevel);
-		prototype.setY(activeUAV.getY() + yPanOffset/zoomLevel);
+		prototype.setX(activeUAV.getGroundTruthX() + xPanOffset/zoomLevel);
+		prototype.setY(activeUAV.getGroundTruthY() + yPanOffset/zoomLevel);
 	}
 
 	// pass direction to prototype based on vector to next way coordinate in UAV's path
@@ -92,8 +92,8 @@ public class UAVMonitor {
 			return;
 		}
 		int[] nextPoint = activeUAV.getFirstPath();
-		int currentX = activeUAV.getX();
-		int currentY = activeUAV.getY();
+		int currentX = activeUAV.getGroundTruthX();
+		int currentY = activeUAV.getGroundTruthY();
 		int nextX = nextPoint[0];
 		int nextY = nextPoint[1];
 		int xOffset = nextX - currentX;

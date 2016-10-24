@@ -320,7 +320,9 @@ public class Game implements Runnable, ActionListener
 	public Vehicle Vechicle_Location_Check(int x, int y)
 	{
 		for( int i=0; i<vehicleList.size(); i++ ) {
-			int v_x = vehicleList.getVehicle(i).getX();
+			// this is only called when vehicle is clicked in panelMap, so we should be using getX and getY
+			// since we want observed coordinates when vehicle is hijacked.
+			int v_x = vehicleList.getVehicle(i).getX(); 
 			int v_y = vehicleList.getVehicle(i).getY();
 			int w = Math.round(MySize.SIZE_VEHICLE_WIDTH_PXL/MySize.SIZE_CELL);
 			int h = Math.round(MySize.SIZE_VEHICLE_HEIGHT_PXL/MySize.SIZE_CELL);

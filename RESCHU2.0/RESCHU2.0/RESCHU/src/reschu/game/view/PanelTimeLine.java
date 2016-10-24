@@ -226,7 +226,7 @@ class VehicleTime extends JPanel
 		int flag;
 		for(int i=-1; i<v.getPathSize()-1; i++) { 
 			 if( i==-1 ) {
-				 if( i == v.getPathSize()-2 ) flag = 1; else flag = 0;  // 여기 고쳐야 함.				 
+				 if( i == v.getPathSize()-2 ) flag = 1; else flag = 0;		 
 				 pathList.add(new int[]{
 						 (int)Math.round(
 								 getD(v.getPath().get(0)[0], v.getPath().get(0)[1], v.getX(), v.getY()) * (v.getVelocity()/1000.0) ), flag});
