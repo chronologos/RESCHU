@@ -1,0 +1,5 @@
+10/20/2016 21:40:03:398  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
+21:40:37:785,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+21:40:43:298,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+21:40:43:465,     1,     103,     1,     Vehicle select map Lbtn,     -1,-1
+21:41:14:851,     0,     53,     1,     Arrives To Target[A],     128,291
