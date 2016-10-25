@@ -955,8 +955,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-		if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-	    if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+		//if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+	    //if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+	      centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+	      centreY = y1 + (y2 - y1)/(2 * zoomLevel);
 		render(drawable, x1, x2, y1, y2, gl);
 	}
 
@@ -968,7 +970,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		int nextTileY = tileY + yDelta * TILE_LENGTH - yDelta * OVERLAP_LENGTH;
 
 		System.out.println("Current Tile X: " + this.tileX + "; " + "NextTile X : " + nextTileX);
-
 
 		if (nextTileX > tiler.getMaxTileX() || nextTileY > tiler.getMaxTileY()) {
 			System.out.println("Next tile exceeds last tile, not switching");
