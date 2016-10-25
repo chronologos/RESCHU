@@ -23,13 +23,13 @@ public class UAVMonitor {
 	// Initialize UAVMonitor with Prototype object
 	public UAVMonitor(PanelPayload proto) {
 		prototype = proto;
-		displayEnabled = true; // TODO(kill nerdo)
+		displayEnabled = true; // TODO (kill nerdo)
 		zoomLevel = 1;
 	}
 
 	public void enableUAVFeed(Vehicle uav) {
 		displayEnabled = true;
-		activeUAV = uav;
+		
 		if (uav != activeUAV){
 			zoomLevel = 1; // zoom should be per-vehicle state
 			panning = false;
@@ -38,6 +38,7 @@ public class UAVMonitor {
 			xPanOffset = 0;
 			yPanOffset = 0;
 		}
+		activeUAV = uav;
 	}
 
 	public void disableUAVFeed(UAV uav) {
@@ -50,6 +51,8 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null){
 			return;
 		}
+		//System.out.println("Panning command received");
+		
 		//System.out.println("X coordinate" + activeUAV.getX() + "Y coordinate" + activeUAV.getY());
 		int xAdded = 0;
 		int yAdded = 0;
@@ -114,13 +117,15 @@ public class UAVMonitor {
 	}
 
 	// Pass zoom command from GUI through PanelPayload (or PanelPayloadControls) to UAV
+	/*
 	public void setZoom(int level) {
 		zoomLevel = level;
 		prototype.setZoom(level);
 	}
-
+	
 	public int getZoom() {
 		return zoomLevel;
 	}
+	*/
 
 }

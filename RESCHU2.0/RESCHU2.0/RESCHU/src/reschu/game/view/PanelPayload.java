@@ -143,6 +143,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	
 	private float centreX = 0;
 	private float centreY = 0;
+	
+	private float left = 0;
+	private float right = 0;
+	private float top = 0;
+	private float bottom = 0;
 
 	//private BufferedImage backingImage;
 	private int backingImgWidth;
@@ -167,6 +172,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private MapTileCreator tiler;
 	private String tileFileDir;
 
+	private float nextZoomLevel = 1;
+	
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
 			System.out.println("GL: PanelPayload created");
@@ -744,13 +751,17 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 */
 	public void zoom_in() {
 
-		if (zoomLevel >= 1) {
-			zoomLevel ++;
+		//if (zoomLevel >= 1) {
+		if (nextZoomLevel >= 1) {
+			//zoomLevel ++;
+			nextZoomLevel ++;
 		}
 		else {
-			zoomLevel = 1/((1/zoomLevel) - 1);
+			//zoomLevel = 1/((1/zoomLevel) - 1);
+			nextZoomLevel = 1/((1/nextZoomLevel) - 1);
 		}
-		System.out.println("zoom is" + zoomLevel);
+		//System.out.println("new zoom is" + zoomLevel);
+		//System.out.println("new zoom level is" + nextZoomLevel);
 		return;
 		/*
     	if (!isEnabled() || zoom_count == 3 || (changing_view != null && changing_view.isRunning())) {
@@ -769,13 +780,17 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	public void zoom_out() {
 
-		if (zoomLevel <= 1) {
-			zoomLevel = 1/((1/zoomLevel) + 1);
+		//if (zoomLevel <= 1) {
+		if (nextZoomLevel <= 1) {
+		//	zoomLevel = 1/((1/zoomLevel) + 1);
+			nextZoomLevel = 1/((1/nextZoomLevel) + 1);
 		}
 		else {
-			zoomLevel --;
+			//zoomLevel --;
+			nextZoomLevel --;
 		}
-		System.out.println("zoom is" + zoomLevel);
+		//System.out.println("zoom is" + zoomLevel);
+		//System.out.println("zoom is " + nextZoomLevel);
 		return;
 		/*
         if (!isEnabled() || zoom_count == 0 || (changing_view != null && changing_view.isRunning())) {
@@ -863,11 +878,15 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 
 	public void setX(int x) {
+		int oldXPos = xPos;
 		xPos = x;
+		centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
 	}
 
 	public void setY(int y) {
+		int oldYPos = yPos;
 		yPos = y;
+		centreY += ((float)(yPos - oldYPos))/TILE_LENGTH;
 	}
 
 	public void setXDirection(int xDir) {
@@ -878,8 +897,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		yDirection = yDir;
 	}
 
+	//public synchronized void setZoom(int zoomLevel) {
+	//	this.zoomLevel = zoomLevel;
+	//}
 	public void setZoom(int zoomLevel) {
-		this.zoomLevel = zoomLevel;
+		nextZoomLevel = zoomLevel;
 	}
 
 	public void doDisplay() {
@@ -887,7 +909,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		//display(myCanvas);
 	}
 
-
+	public void applyZoom() {
+		if (zoomLevel != nextZoomLevel) {
+			System.out.println("Applying zoom; Old zoom level: " + zoomLevel + "; new zoom level: " + nextZoomLevel + "; old centre x: " + centreX);
+			zoomLevel = nextZoomLevel;
+		}
+	}
+	
+	
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -946,20 +975,25 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			}
 			xDirection = 1;
 		}
-
-		//xPos += SPEED * xDirection;
-		//yPos += SPEED * yDirection;
-
-
 		float x1 = (float)(xPos - tileX)/TILE_LENGTH;
 		float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-		//if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-	    //if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
-	      centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-	      centreY = y1 + (y2 - y1)/(2 * zoomLevel);
-		render(drawable, x1, x2, y1, y2, gl);
+		if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+	    if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+	    if (right == 0) { // very first call to render  
+	    	right = x2;
+	    	left = x1;
+	    	top = y1;
+	    	bottom = y2;
+	    }
+	    
+	    //centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+	    //centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+		
+	    //centreX = (left + right)/2;
+		//centreY = (top + bottom)/2;
+	    render(drawable, x1, x2, y1, y2, gl);
 	}
 
 	private boolean getNextImage(int tileX, int tileY, int tileIncrement, GLAutoDrawable drawable, GL2 gl) {
@@ -1016,28 +1050,32 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		gl.glEnable(GL.GL_TEXTURE_2D);
 		CurrentTexture.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);
-		
-		float left = centreX - (x2 - x1)/(2 * zoomLevel);
-		float right = centreX + (x2 - x1)/(2 * zoomLevel);
-		
-		float top = centreY - (y2 - y1)/(2 * zoomLevel);
-		float bottom = centreY + (y2 - y1)/(2 * zoomLevel);
-		
+		//System.out.println("Centre X : " + centreX);
+		//centreX = (x1 + x2)/(2 * zoomLevel);
+		//centreY = (y1 + y2)/(2 * zoomLevel);
+		applyZoom();		
+		left = centreX - (x2 - x1)/(2 * zoomLevel);
+		right = centreX + (x2 - x1)/(2 * zoomLevel);
+		top = centreY - (y2 - y1)/(2 * zoomLevel);
+		bottom = centreY + (y2 - y1)/(2 * zoomLevel);
 		//gl.glTexCoord2f(x1+(x2-x1)/zoomLevel, y2 + (y1 - y2)/zoomLevel); // bot right
-		gl.glTexCoord2f(right, bottom);
+		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
 		//gl.glTexCoord2f(x1, y2 + (y1 - y2)/zoomLevel); // bot left
-		gl.glTexCoord2f(left, bottom);
+		
+		gl.glTexCoord2f(left, top);
+		
 		gl.glVertex3f(-1.0f, 1.0f, 0);
 		//gl.glTexCoord2f(x1, y2); // top left
-		gl.glTexCoord2f(left, top);
+		gl.glTexCoord2f(left, bottom);
 		gl.glVertex3f(-1.0f, -1.0f, 0);
 		//gl.glTexCoord2f(x1 + (x2 - x1)/zoomLevel, y2); //top right
-		gl.glTexCoord2f(right, top);
+		gl.glTexCoord2f(right, bottom);
 		gl.glVertex3f(1.0f, -1.0f, 0);
 		gl.glEnd();
-		centreX = (left + right)/2;
-		centreY = (top + bottom)/2;
+		//centreX = (left + right)/2;
+		//centreY = (top + bottom)/2;
+		//System.out.println("Centre X: " + centreX);
 	}
 
 
