@@ -54,7 +54,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 /**
  * @author Carl Nehme
- * Code modified by yale. 
+ * Code modified by yale, ian, adithya.
  */
 public class PanelPayload extends MyCanvas implements GLEventListener {
 
@@ -140,10 +140,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	// Prototype instance variables
 	private int xDirection = 1;
 	private int yDirection = 0;
-	
+
 	private float centreX = 0;
 	private float centreY = 0;
-	
+
 	private float left = 0;
 	private float right = 0;
 	private float top = 0;
@@ -167,13 +167,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private int xPos = 0;
 	private int yPos = 0;
 	private float zoomLevel = 1;
+	private float rotateAngle = 0f; // controls rotation of texture to always show movement as northward
 	private int corners = 0;
 	private Transition t;
 	private MapTileCreator tiler;
 	private String tileFileDir;
 
 	private float nextZoomLevel = 1;
-	
+
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
 			System.out.println("GL: PanelPayload created");
@@ -422,7 +423,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		zoom_count = 0;
 		min_x = max_x = 0;
 		min_y = max_y = 0;
-		//      penalize = false;
+		//penalize = false;
 	}
 
 	/**
@@ -782,7 +783,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 		//if (zoomLevel <= 1) {
 		if (nextZoomLevel <= 1) {
-		//	zoomLevel = 1/((1/zoomLevel) + 1);
+			//	zoomLevel = 1/((1/zoomLevel) + 1);
 			nextZoomLevel = 1/((1/nextZoomLevel) + 1);
 		}
 		else {
@@ -915,8 +916,23 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			zoomLevel = nextZoomLevel;
 		}
 	}
-	
-	
+
+	/**
+	 * This method rotates the texture that is displayed by render.
+	 */
+	public void applyRotate(GL2 gl) {
+		gl.glLoadIdentity();
+		gl.glMatrixMode(GL2.GL_TEXTURE); 
+		// this line specifies that the texture matrix is to be rotated
+		// rather than the vertices of the object.
+		gl.glTranslated(0.5,0.5,0.0); 
+		// by default rotation is not at the center
+		// so we translate, rotate and translate back.
+		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
+		gl.glTranslated(-0.5,-0.5,0.0);
+	}
+
+
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -980,20 +996,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 		if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-	    if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
-	    if (right == 0) { // very first call to render  
-	    	right = x2;
-	    	left = x1;
-	    	top = y1;
-	    	bottom = y2;
-	    }
-	    
-	    //centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-	    //centreY = y1 + (y2 - y1)/(2 * zoomLevel);
-		
-	    //centreX = (left + right)/2;
-		//centreY = (top + bottom)/2;
-	    render(drawable, x1, x2, y1, y2, gl);
+		if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+		if (right == 0) { // very first call to render  
+			right = x2;
+			left = x1;
+			top = y1;
+			bottom = y2;
+		}
+		render(drawable, x1, x2, y1, y2, gl);
 	}
 
 	private boolean getNextImage(int tileX, int tileY, int tileIncrement, GLAutoDrawable drawable, GL2 gl) {
@@ -1048,34 +1058,26 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private void render(GLAutoDrawable drawable, float x1, float x2, float y1, float y2, GL2 gl) {
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glEnable(GL.GL_TEXTURE_2D);
+		gl.glLoadIdentity();
 		CurrentTexture.bind(gl);
+		applyZoom();	
+		rotateAngle += 0.2f;
+		applyRotate(gl);
 		gl.glBegin(GL2.GL_QUADS);
-		//System.out.println("Centre X : " + centreX);
-		//centreX = (x1 + x2)/(2 * zoomLevel);
-		//centreY = (y1 + y2)/(2 * zoomLevel);
-		applyZoom();		
 		left = centreX - (x2 - x1)/(2 * zoomLevel);
 		right = centreX + (x2 - x1)/(2 * zoomLevel);
 		top = centreY - (y2 - y1)/(2 * zoomLevel);
 		bottom = centreY + (y2 - y1)/(2 * zoomLevel);
-		//gl.glTexCoord2f(x1+(x2-x1)/zoomLevel, y2 + (y1 - y2)/zoomLevel); // bot right
 		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
-		//gl.glTexCoord2f(x1, y2 + (y1 - y2)/zoomLevel); // bot left
-		
 		gl.glTexCoord2f(left, top);
-		
 		gl.glVertex3f(-1.0f, 1.0f, 0);
-		//gl.glTexCoord2f(x1, y2); // top left
 		gl.glTexCoord2f(left, bottom);
 		gl.glVertex3f(-1.0f, -1.0f, 0);
-		//gl.glTexCoord2f(x1 + (x2 - x1)/zoomLevel, y2); //top right
 		gl.glTexCoord2f(right, bottom);
 		gl.glVertex3f(1.0f, -1.0f, 0);
 		gl.glEnd();
-		//centreX = (left + right)/2;
-		//centreY = (top + bottom)/2;
-		//System.out.println("Centre X: " + centreX);
+		gl.glFlush();
 	}
 
 
@@ -1157,7 +1159,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 					finalRowTileLength = imageHeight - subImgYCoords.get(subImgYCoords.size()-1);
 				}
 			}
-			
+
 			for (int i = 0; i < subImgXCoords.size(); i++){
 				for (int j = 0; j < subImgYCoords.size(); j++){
 					if (i == subImgXCoords.size()-1 && j == subImgYCoords.size()-1){
@@ -1193,33 +1195,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			return bob.toString();
 		}
 
-		//public Map<String, BufferedImage> makeGrid(){
-		/*
-		  public Map<String, Texture> makeGrid(GLAutoDrawable drawable) {
-			  // Using coordinates from CalculateGrids, Generate hashmap of subimages.
-			  List<int[]> allCoords = CalculateGrids();
-			  String key = null;
-			  BufferedImage subImage = null;
-			  Texture subTexture = null;
-
-//			  Map<String, BufferedImage> mySubImages = new HashMap<String, BufferedImage>();
-			  Map<String, Texture> mySubTextures = new HashMap<String, Texture>();
-
-			  GL2 gl = drawable.getGL().getGL2();
-
-			  for (int[] coords : allCoords) {
-				  key = coordinateConverter(coords);
-				  subImage = mainImage.getSubimage(coords[0], coords[1], coords[2], coords[3]);  
-				  //mySubImages.put(key, subImage);
-				  subTexture = AWTTextureIO.newTexture(gl.getGLProfile(), subImage, true);
-				  mySubTextures.put(key, subTexture);
-			  }
-			  //return mySubImages;
-			  return mySubTextures;
-		  }
-		 */
-		// Approach 2 - Partitioning the original image file into multiple files (Runs into out of memory problem...)
-		//public Map<String, BufferedImage> makeGridFiles(){
 		public Map<String, Texture> makeGridFiles(GLAutoDrawable drawable) {
 			// Using coordinates from CalculateGrids, Generate hashmap of subimages.
 			List<int[]> allCoords = calculateGrids();
