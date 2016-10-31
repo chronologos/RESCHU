@@ -175,6 +175,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	private float nextZoomLevel = 1;
 
+	//private int displayX;
+	private int displayY;
+	
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
 			System.out.println("GL: PanelPayload created");
@@ -881,13 +884,15 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void setX(int x) {
 		int oldXPos = xPos;
 		xPos = x;
-		centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
+		//centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
 	}
 
 	public void setY(int y) {
 		int oldYPos = yPos;
 		yPos = y;
-		centreY += ((float)(yPos - oldYPos))/TILE_LENGTH;
+		//centreY += ((float)(yPos - oldYPos))/TILE_LENGTH;
+		System.out.println("DisplayY is " + displayY);
+		centreY += (float)(displayY)/(TILE_LENGTH);
 	}
 
 	public void setXDirection(int xDir) {
@@ -898,6 +903,18 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		yDirection = yDir;
 	}
 
+	public void setDisplayY() {
+		displayY = -1;
+	}
+	
+	public void unsetDisplayY() {
+		displayY = 0;
+	}
+	
+	public void resetCenterX() {
+		centreX = 0;
+	}
+	
 	//public synchronized void setZoom(int zoomLevel) {
 	//	this.zoomLevel = zoomLevel;
 	//}
@@ -939,9 +956,12 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 		if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
 
-		uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+		//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
 		uavMonitor.setVelocity();
+		uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+		uavMonitor.setRotation();
 
+		
 		int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
 
 		if (tileIncrement != 0) { // New tile
@@ -1061,9 +1081,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		gl.glLoadIdentity();
 		CurrentTexture.bind(gl);
 		applyZoom();	
-		rotateAngle += 0.2f;
+		//rotateAngle += 0.2f;
 		applyRotate(gl);
 		gl.glBegin(GL2.GL_QUADS);
+		System.out.println("Centre Y is " + centreY);
 		left = centreX - (x2 - x1)/(2 * zoomLevel);
 		right = centreX + (x2 - x1)/(2 * zoomLevel);
 		top = centreY - (y2 - y1)/(2 * zoomLevel);
@@ -1109,6 +1130,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		// method body
 	}
 
+	public void setRotateAngle(float angle) {
+		rotateAngle = angle;
+	}
+
+	
 	public class MapTileCreator {
 		private int tileLength;
 		private int viewportLength;
@@ -1129,6 +1155,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			subImages = new HashMap<String, BufferedImage>();
 		}
 
+		
 		public List<int[]> calculateGrids(){
 			// Given tileLength, overlapLength and an image, calculate the coordinates of the tiles required to
 			// cover the image. GetSubimage accepts coordinates of the form 
