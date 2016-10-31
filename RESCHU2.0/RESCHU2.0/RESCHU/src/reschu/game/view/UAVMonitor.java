@@ -107,6 +107,43 @@ public class UAVMonitor {
 		prototype.setYDirection(yDir);
 	}
 
+	// Determine angle to next waypoint and provide rotation angle accordingly
+	public void setRotation() {
+		if (!displayEnabled || activeUAV == null) return;
+		int[] nextLocation = activeUAV.getFirstPath();
+		double xDelta = nextLocation[0] - activeUAV.getX();
+		double yDelta = nextLocation[1] - activeUAV.getY();
+		
+		yDelta *= -1;
+		
+		System.out.println("xDelta: " + xDelta);
+		System.out.println("yDelta : " + yDelta);
+		
+		
+		
+		double angleToNorth;
+		if (yDelta == 0) {
+			angleToNorth = xDelta > 0 ? Math.PI/2 : - Math.PI/2; 
+		}
+		else if (yDelta > 0) {
+			angleToNorth = Math.atan(xDelta/yDelta);
+		}
+		else {
+			double posYDelta = -yDelta;
+			if (xDelta >= 0) {
+				angleToNorth = Math.PI - Math.atan(xDelta/posYDelta);
+			}
+			else {
+				
+				angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
+			}
+		}
+		angleToNorth *= 180;
+		angleToNorth /= Math.PI;
+		System.out.println("Angle for ship to rotate " + angleToNorth);
+		prototype.setRotateAngle((float)-angleToNorth);
+	}
+	
 	// Check if panning will cause	
 	public void applyPan(int x, int y) {
 		// check if enabled
