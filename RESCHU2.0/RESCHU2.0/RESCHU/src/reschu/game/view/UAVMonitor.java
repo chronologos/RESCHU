@@ -37,6 +37,7 @@ public class UAVMonitor {
 			yDistToPan = 0;
 			xPanOffset = 0;
 			yPanOffset = 0;
+			prototype.resetCenterX();
 		}
 		activeUAV = uav;
 	}
@@ -105,6 +106,17 @@ public class UAVMonitor {
 		int yDir = yOffset > 0 ? 1 : yOffset < 0 ? -1 : 0;
 		prototype.setXDirection(xDir);
 		prototype.setYDirection(yDir);
+		
+		//if (activeUAV.hasWaypoint()) {
+		if (activeUAV.getPathSize() > 0) {
+			System.out.println("Setting display Y");
+			prototype.setDisplayY();
+		}
+		else {
+			System.out.println("No waypoint, setting Y to 0");
+			prototype.unsetDisplayY();
+		}
+		
 	}
 
 	// Determine angle to next waypoint and provide rotation angle accordingly
