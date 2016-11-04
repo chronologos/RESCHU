@@ -174,6 +174,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private String tileFileDir;
 
 	private float nextZoomLevel = 1;
+	public boolean needToRotate = false;
+	
 
 	//private int displayX;
 	private int displayY;
@@ -938,15 +940,24 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 * This method rotates the texture that is displayed by render.
 	 */
 	public void applyRotate(GL2 gl) {
-		gl.glLoadIdentity();
+		
 		gl.glMatrixMode(GL2.GL_TEXTURE); 
+		gl.glLoadIdentity();
+
 		// this line specifies that the texture matrix is to be rotated
 		// rather than the vertices of the object.
-		gl.glTranslated(0.5,0.5,0.0); 
+		gl.glTranslated(centreX, centreY,0.0);
+//		gl.glTranslated(0.35, 0.35,0.0); 
+
 		// by default rotation is not at the center
 		// so we translate, rotate and translate back.
 		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
-		gl.glTranslated(-0.5,-0.5,0.0);
+		gl.glTranslated(-centreX,-centreY,0.0);
+//		gl.glTranslated(-0.35, -0.35,0.0); 
+        gl.glMatrixMode(GL2.GL_MODELVIEW); 
+
+        needToRotate = false;
+//		System.out.println(x);
 	}
 
 
@@ -959,7 +970,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
 		uavMonitor.setVelocity();
 		uavMonitor.setCoords(); // updates the x and y coordinates as necessary
-		uavMonitor.setRotation();
+		//uavMonitor.setRotation();
 
 		
 		int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
@@ -1015,8 +1026,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-		if (centreX == 0) centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-		if (centreY == 0) centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+		if (centreX == 0){ 
+			centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+			centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+		}
 		if (right == 0) { // very first call to render  
 			right = x2;
 			left = x1;
@@ -1082,13 +1095,19 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		CurrentTexture.bind(gl);
 		applyZoom();	
 		//rotateAngle += 0.2f;
-		applyRotate(gl);
+		//if (xPos % 10 == 0) applyRotate(gl);
+		if (needToRotate) applyRotate(gl);
 		gl.glBegin(GL2.GL_QUADS);
-		System.out.println("Centre Y is " + centreY);
 		left = centreX - (x2 - x1)/(2 * zoomLevel);
 		right = centreX + (x2 - x1)/(2 * zoomLevel);
 		top = centreY - (y2 - y1)/(2 * zoomLevel);
 		bottom = centreY + (y2 - y1)/(2 * zoomLevel);
+		//left = 0;
+		//right = 1;
+		//bottom = 1;
+		//top = 0;
+		System.out.println("Centre Y is " + centreY + ", centre X is" + centreX);
+		System.out.println("left is" + left + "right is" + right);
 		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
 		gl.glTexCoord2f(left, top);

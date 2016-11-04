@@ -18,19 +18,22 @@ public class UAVMonitor {
 	private int yDistToPan;
 	private int xPanOffset;
 	private int yPanOffset;
+	private int[] prevTargetPos;
 
 	public static final int PAN_SPEED = 1;
 	// Initialize UAVMonitor with Prototype object
 	public UAVMonitor(PanelPayload proto) {
 		prototype = proto;
-		displayEnabled = true; // TODO (kill nerdo)
+		displayEnabled = true; // TODO (kill nerdbeast)
 		zoomLevel = 1;
+		prevTargetPos = new int[2];
 	}
 
 	public void enableUAVFeed(Vehicle uav) {
 		displayEnabled = true;
 		
 		if (uav != activeUAV){
+			System.out.println("ACTIVE UAV CHANGED TO " + activeUAV);
 			zoomLevel = 1; // zoom should be per-vehicle state
 			panning = false;
 			xDistToPan = 0;
@@ -38,8 +41,15 @@ public class UAVMonitor {
 			xPanOffset = 0;
 			yPanOffset = 0;
 			prototype.resetCenterX();
+			prototype.needToRotate = true;
+			
 		}
 		activeUAV = uav;
+		if (activeUAV.getPathSize() > 0) {
+			setRotation();
+			prevTargetPos = activeUAV.getFirstPath();
+		}
+		//prototype.setRotateAngle(prototype.getR);
 	}
 
 	public void disableUAVFeed(UAV uav) {
@@ -85,6 +95,16 @@ public class UAVMonitor {
 		}
 		prototype.setX(activeUAV.getGroundTruthX() + xPanOffset/zoomLevel);
 		prototype.setY(activeUAV.getGroundTruthY() + yPanOffset/zoomLevel);
+		
+		if (activeUAV.getPathSize() > 0) {
+			int[] currentTargetPos = activeUAV.getFirstPath();
+			if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
+				System.out.println("Detected change in waypoint!");
+				setRotation();
+				prevTargetPos = currentTargetPos;
+				prototype.needToRotate = true;
+			}
+		}
 	}
 
 	// pass direction to prototype based on vector to next way coordinate in UAV's path
@@ -93,6 +113,8 @@ public class UAVMonitor {
 		if (activeUAV.getPathSize() == 0){
 			prototype.setXDirection(0);
 			prototype.setYDirection(0);
+			prototype.unsetDisplayY();
+			System.out.println("Setting y velocity to 0");
 			return;
 		}
 		int[] nextPoint = activeUAV.getFirstPath();
@@ -150,6 +172,7 @@ public class UAVMonitor {
 				angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
 			}
 		}
+		
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		System.out.println("Angle for ship to rotate " + angleToNorth);
