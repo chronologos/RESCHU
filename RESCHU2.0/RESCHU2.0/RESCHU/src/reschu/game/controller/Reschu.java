@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import reschu.app.AppMain;
 import reschu.constants.*;
+import reschu.game.model.AttackNotificationEngine;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
 import reschu.game.model.Vehicle;
@@ -60,6 +61,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public PanelMsgBoard pnlMsgBoard;
 	public PanelTimeLine pnlTimeLine;
 	public UAVMonitor uavMonitor;
+	public AttackNotificationEngine attackNotificationEngine;
 
 	public Game game;
 	private double origin_time;
@@ -250,6 +252,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		payload_canvas.addGLEventListener(new TextOverlay());
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
+		attackNotificationEngine = new AttackNotificationEngine(game.getVehicleList(),uavMonitor);
 
 		// Create Each Panel Objects
 		pnlMap = new PanelMap(this, game, "MAP_PANEL");

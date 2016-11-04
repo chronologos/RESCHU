@@ -96,11 +96,12 @@ public class AttackNotificationEngine {
 	public void launchHackWarning(int VehicleID) {
 		// Launch warning 
 		Object[] options = {"Investigate", "Ignore"};
-		JOptionPane hackPane = new JOptionPane();
-		hackPane.showOptionDialog(null, "Investigate", "Security Alert", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-		Object selectedValue = hackPane.getValue();
-		if (selectedValue.equals("Investigate")) {
+		JOptionPane hackPane = new JOptionPane(); 
+		int selectedValue = JOptionPane.showOptionDialog(hackPane, "Vehicle " + VehicleID + " seems to be malfunctioning. Please contact Mahmoud for details.", "Security Alert", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		System.out.println("elfar:" + selectedValue);
+		if (selectedValue == 0) {
 			uavMonitor.enableUAVFeed(vehicleList.getVehicle(VehicleID));
+			System.out.println("blahblah");
 		}
 		else {
 			System.out.println("Burden alert");
