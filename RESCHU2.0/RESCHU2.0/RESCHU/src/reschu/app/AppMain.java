@@ -41,7 +41,8 @@ public class AppMain implements ActionListener
         if( _gamemode == MyGameMode.TUTORIAL_MODE ) {
         	_gamemode = MyGameMode.TRAIN_MODE;
         }
-        reschu.Game_End();
+        //reschu.Game_End();
+        reschu.gameEnd();
         reschu.dispose();
         reschu = null;
         
@@ -115,6 +116,7 @@ public class AppMain implements ActionListener
 		_frmLogin.setAlwaysOnTop(true);
 		_frmLogin.setVisible(true);        
         
+		
 		double sizeMain[][] = {{TableLayout.FILL, 50, 238, 50, TableLayout.FILL}, 
 				{10, 194, 130, TableLayout.FILL}};				
 		double sizeInside[][] = {{TableLayout.FILL, 60, 10, 140, TableLayout.FILL}, 
