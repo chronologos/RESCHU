@@ -93,6 +93,21 @@ public class UAVMonitor {
 			yPanOffset += yAdded;
 			if (xDistToPan == 0 && yDistToPan == 0) panning = false;
 		}
+		
+		if (xDistToPan != 0) {
+			System.out.println("Applying panning in x-direction of " + (xDistToPan > 0 ? 1 : - 1));
+			prototype.setDisplayX(xDistToPan > 0 ? PAN_SPEED : - PAN_SPEED);
+		}
+		else {
+			System.out.println("No horizontal panning, move vertically");
+			prototype.setDisplayX(0); // If no horizontal panning required, displayX speed must be 0
+		}
+		
+		if (yDistToPan != 0) {
+			System.out.println("Applying in y-direction of " + (yDistToPan > 0 ? 1 : - 1));
+			prototype.setDisplayY((yDistToPan > 0 ? PAN_SPEED : - PAN_SPEED));
+		}
+		
 		prototype.setX(activeUAV.getGroundTruthX() + xPanOffset/zoomLevel);
 		prototype.setY(activeUAV.getGroundTruthY() + yPanOffset/zoomLevel);
 		
@@ -131,12 +146,14 @@ public class UAVMonitor {
 		
 		//if (activeUAV.hasWaypoint()) {
 		if (activeUAV.getPathSize() > 0) {
-			System.out.println("Setting display Y");
-			prototype.setDisplayY();
+			System.out.println("Incrementing display Y to -1 for northward movement");
+			prototype.setDisplayY((int)Math.max(-PAN_SPEED, prototype.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
 		}
 		else {
-			System.out.println("No waypoint, setting Y to 0");
-			prototype.unsetDisplayY();
+			if (yDistToPan == 0) {
+				System.out.println("No waypoint and no panning, setting Y to 0");
+				prototype.unsetDisplayY();
+			}
 		}
 		
 	}

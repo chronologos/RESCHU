@@ -177,7 +177,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public boolean needToRotate = false;
 	
 
-	//private int displayX;
+	private int displayX;
 	private int displayY;
 	
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
@@ -887,6 +887,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		int oldXPos = xPos;
 		xPos = x;
 		//centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
+		centreX += (float)(displayX)/(TILE_LENGTH); // ONLY FOR PANNING
 	}
 
 	public void setY(int y) {
@@ -905,12 +906,24 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		yDirection = yDir;
 	}
 
-	public void setDisplayY() {
-		displayY = -1;
+	public void setDisplayY(int y) {
+		displayY = y;
 	}
 	
 	public void unsetDisplayY() {
 		displayY = 0;
+	}
+	
+	public void setDisplayX(int x) {
+		displayX = x;
+	}
+	
+	public void unsetDisplayX() {
+		displayX = 0;
+	}
+	
+	public int getDisplayY() {
+		return displayY;
 	}
 	
 	public void resetCenterX() {
