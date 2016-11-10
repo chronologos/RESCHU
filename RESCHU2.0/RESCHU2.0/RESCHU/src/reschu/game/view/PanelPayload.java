@@ -981,9 +981,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
 	
 			//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
-			uavMonitor.setVelocity();
 			uavMonitor.setCoords(); // updates the x and y coordinates as necessary
-			//uavMonitor.setRotation();
+			uavMonitor.setVelocity();
 	
 			
 			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
