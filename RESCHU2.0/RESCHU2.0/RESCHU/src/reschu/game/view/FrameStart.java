@@ -101,7 +101,7 @@ public class FrameStart extends JFrame implements ActionListener {
 		
 		if( e.getSource() == btnStart ) {
 			this.setVisible(false);
-			lsnr.Game_Start(); 
+			lsnr.gameStart(); 
 		}
 		
 	} 

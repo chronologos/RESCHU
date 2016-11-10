@@ -12,20 +12,21 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JOptionPane;
 
+import reschu.game.controller.GUI_Listener;
 import reschu.game.view.UAVMonitor;
 
 public class AttackNotificationEngine {
-	
+
 	public static final String ATTACK_NOTIFICATIONS_FILENAME = "AttackNotificationFile.txt";
 	// attackfile should specify attack in the format: vehicle number,attack time 
 	// where vehicle number is int and attack time is time in seconds after game starts
 	public Map<Integer, Integer> hackData; // Map Vehicles to the notification times
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
-	
-	private UAVMonitor uavMonitor;
-	private VehicleList vehicleList;
-	
-	public AttackNotificationEngine(final VehicleList vehicleList, UAVMonitor uavMonitor) throws FileNotFoundException {
+	private GUI_Listener lsnr; // Reschu.java
+
+
+	public AttackNotificationEngine(GUI_Listener l) throws FileNotFoundException {
+		lsnr = l;
 		System.out.println("attack notifications engine loaded");
 		File attackFile = new File(ATTACK_NOTIFICATIONS_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
@@ -34,19 +35,18 @@ public class AttackNotificationEngine {
 		String line;  
 		Timer nextTimer;
 		String nextTime;
-		
+
 		int delay;
 		int vehicle;
-		
-		this.vehicleList = vehicleList;
-		this.uavMonitor = uavMonitor;
-		
+
+
+
 		class Hack extends TimerTask {	
 			String timerName;
 			public Hack(String timerName) {
 				this.timerName = timerName;
 			}
-			
+
 			@Override 
 			public void run() {
 				//Integer hackTime = hackData.get(timerName);
@@ -62,9 +62,9 @@ public class AttackNotificationEngine {
 				}
 			}			
 		};
-		
-		
-		
+
+
+
 		try {
 			while ((line = br.readLine()) != null){  
 				if (!line.startsWith("//")){
@@ -92,7 +92,7 @@ public class AttackNotificationEngine {
 		//attackTimer.setRepeats(false);
 		//attackTimer.start();
 	}
-	
+
 	public void launchHackWarning(int VehicleID) {
 		// Launch warning 
 		Object[] options = {"Investigate", "Ignore"};
@@ -100,13 +100,15 @@ public class AttackNotificationEngine {
 		int selectedValue = JOptionPane.showOptionDialog(hackPane, "Vehicle " + VehicleID + " seems to be malfunctioning. Please contact Mahmoud for details.", "Security Alert", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		System.out.println("elfar:" + selectedValue);
 		if (selectedValue == 0) {
-			uavMonitor.enableUAVFeed(vehicleList.getVehicle(VehicleID));
+			lsnr.activateUAVFeed(VehicleID);
+			lsnr.Vehicle_Selected_From_pnlMap(VehicleID);
+			lsnr.EVT_VSelect_Map_LBtn(VehicleID); 
 			System.out.println("blahblah");
 		}
 		else {
 			System.out.println("Burden alert");
 		}
-		
+
 	}
 
 }

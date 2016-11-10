@@ -42,7 +42,7 @@ public class UAVMonitor {
 			yPanOffset = 0;
 			prototype.resetCenterX();
 			prototype.needToRotate = true;
-			
+
 		}
 		activeUAV = uav;
 		if (activeUAV.getPathSize() > 0) {
@@ -52,7 +52,7 @@ public class UAVMonitor {
 		//prototype.setRotateAngle(prototype.getR);
 	}
 
-	public void disableUAVFeed(UAV uav) {
+	public void disableUAVFeed() {
 		displayEnabled = false;
 		activeUAV = null;
 	}
@@ -63,7 +63,7 @@ public class UAVMonitor {
 			return;
 		}
 		//System.out.println("Panning command received");
-		
+
 		//System.out.println("X coordinate" + activeUAV.getX() + "Y coordinate" + activeUAV.getY());
 		int xAdded = 0;
 		int yAdded = 0;
@@ -95,7 +95,7 @@ public class UAVMonitor {
 		}
 		prototype.setX(activeUAV.getGroundTruthX() + xPanOffset/zoomLevel);
 		prototype.setY(activeUAV.getGroundTruthY() + yPanOffset/zoomLevel);
-		
+
 		if (activeUAV.getPathSize() > 0) {
 			int[] currentTargetPos = activeUAV.getFirstPath();
 			if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
@@ -128,7 +128,7 @@ public class UAVMonitor {
 		int yDir = yOffset > 0 ? 1 : yOffset < 0 ? -1 : 0;
 		prototype.setXDirection(xDir);
 		prototype.setYDirection(yDir);
-		
+
 		//if (activeUAV.hasWaypoint()) {
 		if (activeUAV.getPathSize() > 0) {
 			System.out.println("Setting display Y");
@@ -138,7 +138,7 @@ public class UAVMonitor {
 			System.out.println("No waypoint, setting Y to 0");
 			prototype.unsetDisplayY();
 		}
-		
+
 	}
 
 	// Determine angle to next waypoint and provide rotation angle accordingly
@@ -147,14 +147,14 @@ public class UAVMonitor {
 		int[] nextLocation = activeUAV.getFirstPath();
 		double xDelta = nextLocation[0] - activeUAV.getX();
 		double yDelta = nextLocation[1] - activeUAV.getY();
-		
+
 		yDelta *= -1;
-		
+
 		System.out.println("xDelta: " + xDelta);
 		System.out.println("yDelta : " + yDelta);
-		
-		
-		
+
+
+
 		double angleToNorth;
 		if (yDelta == 0) {
 			angleToNorth = xDelta > 0 ? Math.PI/2 : - Math.PI/2; 
@@ -168,17 +168,17 @@ public class UAVMonitor {
 				angleToNorth = Math.PI - Math.atan(xDelta/posYDelta);
 			}
 			else {
-				
+
 				angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
 			}
 		}
-		
+
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		System.out.println("Angle for ship to rotate " + angleToNorth);
 		prototype.setRotateAngle((float)-angleToNorth);
 	}
-	
+
 	// Check if panning will cause	
 	public void applyPan(int x, int y) {
 		// check if enabled
@@ -188,16 +188,20 @@ public class UAVMonitor {
 		panning = true;
 	}
 
+	public boolean isEnabled(){
+		return displayEnabled;
+	}
+
 	// Pass zoom command from GUI through PanelPayload (or PanelPayloadControls) to UAV
 	/*
 	public void setZoom(int level) {
 		zoomLevel = level;
 		prototype.setZoom(level);
 	}
-	
+
 	public int getZoom() {
 		return zoomLevel;
 	}
-	*/
+	 */
 
 }

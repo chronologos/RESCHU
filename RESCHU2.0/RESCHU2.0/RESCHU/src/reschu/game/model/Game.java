@@ -315,7 +315,7 @@ public class Game implements Runnable, ActionListener
 	public VehicleList getVehicleList(){ return vehicleList; }    
 	public PayloadList getPayloadList(){ return payloadList; }
 
-	public void vehicle_location_change(){ lsnr.vehicle_location_changed(); }
+	public void vehicle_location_change(){ lsnr.vehicleLocationChanged(); }
 
 	public Vehicle Vechicle_Location_Check(int x, int y)
 	{
@@ -433,7 +433,7 @@ public class Game implements Runnable, ActionListener
 				getDBWriter().UserTable_SetGameFinish(Reschu._username);
 			}
 
-			lsnr.Game_End();    		
+			lsnr.gameEnd();    		
 
 			// TEMPORARY SOLUTION
 			FrameEnd frmEnd = new FrameEnd(lsnr);
@@ -451,7 +451,7 @@ public class Game implements Runnable, ActionListener
 		vehicle_location_change();
 
 		// Update pnlControl's "ENGAGE" button
-		if( elapsedTime % MySpeed.SPEED_CLOCK == 0 ) lsnr.Clock_Tick(elapsedTime);
+		if( elapsedTime % MySpeed.SPEED_CLOCK == 0 ) lsnr.clockTick(elapsedTime);
 
 		// Pending Vehicle's Flashing Color
 		if( vehicleColorFlashFlag ) MyColor.COLOR_VEHICLE_PENDING = new Color(128,224,255,255);

@@ -41,7 +41,7 @@ public class AppMain implements ActionListener
         if( _gamemode == MyGameMode.TUTORIAL_MODE ) {
         	_gamemode = MyGameMode.TRAIN_MODE;
         }
-        reschu.Game_End();
+        reschu.gameEnd();
         reschu.dispose();
         reschu = null;
         

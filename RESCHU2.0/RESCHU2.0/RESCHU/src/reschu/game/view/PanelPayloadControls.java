@@ -74,13 +74,13 @@ public class PanelPayloadControls extends JPanel implements ActionListener
     }
     
     public void actionPerformed(ActionEvent e){
-        if(e.getSource() == btnUp)		listener.Pan_Up_Selected(); 
-        if(e.getSource() == btnDown) 	listener.Pan_Down_Selected();
-        if(e.getSource() == btnCW)   	listener.Rotate_Clockwise_Selected();
-        if(e.getSource() == btnCCW)		listener.Rotate_Counter_Selected();
-        if(e.getSource() == btnZoomIn)	listener.Zoom_In();
-        if(e.getSource() == btnZoomOut)	listener.Zoom_Out();
-        if(e.getSource() == btnSubmit) listener.Submit_Payload();
+        if(e.getSource() == btnUp)		listener.panUpSelected(); 
+        if(e.getSource() == btnDown) 	listener.panDownSelected();
+        if(e.getSource() == btnCW)   	listener.rotateCWSelected();
+        if(e.getSource() == btnCCW)		listener.rotateCCWSelected();
+        if(e.getSource() == btnZoomIn)	listener.zoomIn();
+        if(e.getSource() == btnZoomOut)	listener.zoomOut();
+        if(e.getSource() == btnSubmit) listener.submitPayload();
     }
     
     public void enableSubmit(boolean enable) { btnSubmit.setEnabled(enable); }

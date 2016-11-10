@@ -9,21 +9,21 @@ import reschu.game.model.Vehicle;
 public interface GUI_Listener {
     
     /** Creates a new instance of Gui_Listener */
-    public void vehicle_location_changed();
+    public void vehicleLocationChanged();
     
-    public void Clock_Tick(int milliseconds);
+    public void clockTick(int milliseconds);
     
-    public void Game_Start();
-    public void Game_End();
+    public void gameStart();
+    public void gameEnd();
     
     // Events from pnlPayloadControl
-    public void Pan_Up_Selected();    
-    public void Pan_Down_Selected();    
-    public void Rotate_Clockwise_Selected();    
-    public void Rotate_Counter_Selected();    
-    public void Zoom_In();    
-    public void Zoom_Out();
-    public void Submit_Payload();	// For T3
+    public void panUpSelected();    
+    public void panDownSelected();    
+    public void rotateCWSelected();    
+    public void rotateCCWSelected();    
+    public void zoomIn();    
+    public void zoomOut();
+    public void submitPayload();	// For T3
         
     public void showMessageOnTopOfMap(String msg, int duration);
     
@@ -43,7 +43,7 @@ public interface GUI_Listener {
     public void Vehicle_Selected_From_pnlMap(int idx);
     public void Vehicle_Engage_From_pnlMap(Vehicle v);
     public void Vehicle_Unselected_From_pnlMap();
-        
+       
     // Events From pnlControl
     public void Vehicle_Selected_From_pnlControl(int idx); 
     public void Vehicle_Unselected_From_pnlControl();
@@ -52,6 +52,9 @@ public interface GUI_Listener {
     public void Vehicle_WP_Del_From_pnlControl(Vehicle v);
     public void Vehicle_Engage_From_pnlControl(Vehicle v);
     
+    // Events from AttackNotification
+	public void activateUAVFeed(int idx);
+
     // Database
     public void EVT_WP_AddWP_Start(int vIdx);	 
     public void EVT_WP_AddWP_End(int vIdx, int mouseCoordX, int mouseCoordY);  

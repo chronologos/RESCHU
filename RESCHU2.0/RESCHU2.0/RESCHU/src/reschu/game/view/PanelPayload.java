@@ -175,11 +175,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	private float nextZoomLevel = 1;
 	public boolean needToRotate = false;
-	
+
 
 	//private int displayX;
 	private int displayY;
-	
+
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
 			System.out.println("GL: PanelPayload created");
@@ -908,15 +908,15 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void setDisplayY() {
 		displayY = -1;
 	}
-	
+
 	public void unsetDisplayY() {
 		displayY = 0;
 	}
-	
+
 	public void resetCenterX() {
 		centreX = 0;
 	}
-	
+
 	//public synchronized void setZoom(int zoomLevel) {
 	//	this.zoomLevel = zoomLevel;
 	//}
@@ -940,24 +940,24 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 * This method rotates the texture that is displayed by render.
 	 */
 	public void applyRotate(GL2 gl) {
-		
+
 		gl.glMatrixMode(GL2.GL_TEXTURE); 
 		gl.glLoadIdentity();
 
 		// this line specifies that the texture matrix is to be rotated
 		// rather than the vertices of the object.
 		gl.glTranslated(centreX, centreY,0.0);
-//		gl.glTranslated(0.35, 0.35,0.0); 
+		//		gl.glTranslated(0.35, 0.35,0.0); 
 
 		// by default rotation is not at the center
 		// so we translate, rotate and translate back.
 		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
 		gl.glTranslated(-centreX,-centreY,0.0);
-//		gl.glTranslated(-0.35, -0.35,0.0); 
-        gl.glMatrixMode(GL2.GL_MODELVIEW); 
+		//		gl.glTranslated(-0.35, -0.35,0.0); 
+		gl.glMatrixMode(GL2.GL_MODELVIEW); 
 
-        needToRotate = false;
-//		System.out.println(x);
+		needToRotate = false;
+		//		System.out.println(x);
 	}
 
 
@@ -965,78 +965,95 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 
-		if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
+		if (uavMonitor.isEnabled()){
+			if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
 
-		//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
-		uavMonitor.setVelocity();
-		uavMonitor.setCoords(); // updates the x and y coordinates as necessary
-		//uavMonitor.setRotation();
+			//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+			uavMonitor.setVelocity();
+			uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+			//uavMonitor.setRotation();
 
-		
-		int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
 
-		if (tileIncrement != 0) { // New tile
-			System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
-			if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
-				System.out.println("Nerd Alert! Reversing!");
+			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
+
+			if (tileIncrement != 0) { // New tile
+				System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
+				if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
+					System.out.println("Nerd Alert! Reversing!");
+				}
 			}
+
+			if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
+				System.out.println("Hit right end of image, reversing!");
+				if (++corners % 4 == 0) {
+					xDirection *= -1;
+				}
+				else {
+					xDirection = 0;
+				}
+				yDirection = 1;
+			}
+
+			if (xPos - TILE_LENGTH <= SPEED && xDirection == -1) {
+				if (++corners % 4 == 0) {
+					xDirection *= -1;
+				}
+				else {
+					xDirection = 0;
+				}
+				yDirection = -1;
+			}
+
+			if (yPos + TILE_LENGTH >= backingImgHeight - SPEED && yDirection == 1) {
+				if (++ corners % 4 == 0) {
+					yDirection *= -1;
+				}
+				else {
+					yDirection = 0;
+				}
+				xDirection = -1;
+			}
+
+			if (yPos - TILE_LENGTH <= SPEED && yDirection == -1) {
+				if (++ corners % 4 == 0) {
+					yDirection *= -1;
+				}
+				else {
+					yDirection = 0;
+				}
+				xDirection = 1;
+			}
+			float x1 = (float)(xPos - tileX)/TILE_LENGTH;
+			float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
+			float y1 = (float)(yPos - tileY)/TILE_LENGTH;
+			float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
+			if (centreX == 0){ 
+				centreX = x1 + (x2 - x1)/(2 * zoomLevel);
+				centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+			}
+			if (right == 0) { // very first call to render  
+				right = x2;
+				left = x1;
+				top = y1;
+				bottom = y2;
+			}
+			render(drawable, x1, x2, y1, y2, gl);
+		}
+		else if (!uavMonitor.isEnabled()) {
+			gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+			gl.glTexCoord2f(right, top);
+			gl.glVertex3f(1.0f, 1.0f, 0);
+			gl.glTexCoord2f(left, top);
+			gl.glVertex3f(-1.0f, 1.0f, 0);
+			gl.glTexCoord2f(left, bottom);
+			gl.glVertex3f(-1.0f, -1.0f, 0);
+			gl.glTexCoord2f(right, bottom);
+			gl.glVertex3f(1.0f, -1.0f, 0);
+			gl.glEnd();
+			gl.glFlush();
 		}
 
-		if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
-			System.out.println("Hit right end of image, reversing!");
-			if (++corners % 4 == 0) {
-				xDirection *= -1;
-			}
-			else {
-				xDirection = 0;
-			}
-			yDirection = 1;
-		}
 
-		if (xPos - TILE_LENGTH <= SPEED && xDirection == -1) {
-			if (++corners % 4 == 0) {
-				xDirection *= -1;
-			}
-			else {
-				xDirection = 0;
-			}
-			yDirection = -1;
-		}
-
-		if (yPos + TILE_LENGTH >= backingImgHeight - SPEED && yDirection == 1) {
-			if (++ corners % 4 == 0) {
-				yDirection *= -1;
-			}
-			else {
-				yDirection = 0;
-			}
-			xDirection = -1;
-		}
-
-		if (yPos - TILE_LENGTH <= SPEED && yDirection == -1) {
-			if (++ corners % 4 == 0) {
-				yDirection *= -1;
-			}
-			else {
-				yDirection = 0;
-			}
-			xDirection = 1;
-		}
-		float x1 = (float)(xPos - tileX)/TILE_LENGTH;
-		float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-		float y1 = (float)(yPos - tileY)/TILE_LENGTH;
-		float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
-		if (centreX == 0){ 
-			centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-			centreY = y1 + (y2 - y1)/(2 * zoomLevel);
-		}
-		if (right == 0) { // very first call to render  
-			right = x2;
-			left = x1;
-			top = y1;
-			bottom = y2;
-		}
-		render(drawable, x1, x2, y1, y2, gl);
 	}
 
 	private boolean getNextImage(int tileX, int tileY, int tileIncrement, GLAutoDrawable drawable, GL2 gl) {
@@ -1153,7 +1170,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		rotateAngle = angle;
 	}
 
-	
+
 	public class MapTileCreator {
 		private int tileLength;
 		private int viewportLength;
@@ -1174,7 +1191,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			subImages = new HashMap<String, BufferedImage>();
 		}
 
-		
+
 		public List<int[]> calculateGrids(){
 			// Given tileLength, overlapLength and an image, calculate the coordinates of the tiles required to
 			// cover the image. GetSubimage accepts coordinates of the form 

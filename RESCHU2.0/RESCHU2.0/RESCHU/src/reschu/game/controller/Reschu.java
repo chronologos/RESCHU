@@ -243,16 +243,16 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 		game = new Game(this, _scenario);        
 		origin_time = System.currentTimeMillis();
-		
+
 		payload_canvas = new MyCanvas(); // and this
-//		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
+		//		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
 		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,3300, 6000);  
 		payload_canvas.addListener(pnlPayload);   
 		payload_canvas.addGLEventListener(pnlPayload);   
 		payload_canvas.addGLEventListener(new TextOverlay());
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
-		attackNotificationEngine = new AttackNotificationEngine(game.getVehicleList(),uavMonitor);
+		attackNotificationEngine = new AttackNotificationEngine(this);
 
 		// Create Each Panel Objects
 		pnlMap = new PanelMap(this, game, "MAP_PANEL");
@@ -337,22 +337,26 @@ public class Reschu extends JFrame implements GUI_Listener {
 	} 
 
 	//Gui_Listener Interface
-	public void vehicle_location_changed(){
+	
+	@Override
+	public void vehicleLocationChanged(){
 		// TODO: Do I really want to repaint the whole map here?
 		pnlMap.repaint(); 
 	}
-
-	public void Clock_Tick(int milliseconds) {
-		if( tutorial() )
-			if( milliseconds%1000 == 0 ) tutorial.tick();
+	
+	@Override
+	public void clockTick(int milliseconds) {
+		if(tutorial())
+			if( milliseconds % 1000 == 0 ) tutorial.tick();
 		pnlTimeLine.refresh(milliseconds);
 		pnlControl.chkEngageEnabled();
 
 		// This decreases the remaining duration of TextOnTop (the warning msg)
 		pnlMap.decreaseTextOnTopTime();
 	}
-
-	public void Game_Start() {  
+	
+	@Override
+	public void gameStart() {  
 		// screen resolution check for Java WebStart. 
 		//    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
 		//    		setVisible(false);
@@ -386,7 +390,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlMap.setEnabled(true); 
 	}
 
-	public void Game_End() { 
+	@Override
+	public void gameEnd() { 
 		PanelMsgBoard.Msg("YOUR TOTAL SCORE: " + game.getScore()); 
 		EVT_System_GameEnd();
 		game.stop();
@@ -399,19 +404,56 @@ public class Reschu extends JFrame implements GUI_Listener {
 	 * @param msg message
 	 * @param duration duration of displaying the message (in second)
 	 */
+	@Override
 	public void showMessageOnTopOfMap(String msg, int duration) {
 		pnlMap.setTextOnTop(msg, duration);
 	}
-
-	public void Rotate_Clockwise_Selected(){ return;}//pnlPayload.r_c_2(); }   
-	public void Pan_Up_Selected(){ }//pnlPayload.pan_up(); }
-	public void Rotate_Counter_Selected(){ return;}//pnlPayload.r_c_c_2(); }
-	public void Pan_Down_Selected(){ }//pnlPayload.pan_down(); }
-	public void Zoom_In(){ pnlPayload.zoom_in(); }
-	public void Zoom_Out(){ pnlPayload.zoom_out(); }
-	public void Submit_Payload() { pnlPayload.checkCorrect(); }
+	@Override
+	public void rotateCWSelected(){
+		return;
+		//pnlPayload.r_c_2();
+	}
+	@Override
+	public void panUpSelected(){
+		//pnlPayload.pan_up();
+		return;
+	}
+	@Override
+	public void rotateCCWSelected(){
+		//pnlPayload.r_c_c_2(); }
+		return;
+	}
+	@Override
+	public void panDownSelected(){
+		return;
+		//pnlPayload.pan_down(); }
+	}
+	@Override
+	public void zoomIn() {
+		pnlPayload.zoom_in();
+	}
+	@Override
+	public void zoomOut() {
+		pnlPayload.zoom_out();
+	}
+	@Override
+	public void submitPayload() {
+		pnlPayload.checkCorrect();
+	}
+	@Override
+	public void activateUAVFeed(int idx) {
+		uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(idx));
+	}
+	@Override
 	public void Vehicle_Selected_From_pnlMap(int idx) { pnlControl.Show_Vehicle_Status(idx); }
-	public void Vehicle_Unselected_From_pnlMap() {pnlMap.setClear(); pnlMap.setSelectedVehicle(null); pnlControl.Show_Vehicle_Status(0);}
+	@Override
+	public void Vehicle_Unselected_From_pnlMap() {
+		pnlMap.setClear();
+		pnlMap.setSelectedVehicle(null);
+		pnlControl.Show_Vehicle_Status(0);
+		uavMonitor.disableUAVFeed();
+	}
+	@Override
 	public void Vehicle_Engage_From_pnlMap(Vehicle v) { 
 		try {
 			Engage(v);
