@@ -122,7 +122,7 @@ public class UAVMonitor {
 		
 		if (xDistToPan != 0) {
 			System.out.println("Applying panning in x-direction of " + (xAdded > 0 ? 1 : - 1));
-			prototype.setDisplayX(xAdded);
+			prototype.setDisplayX(xAdded/zoomLevel);
 			System.out.println("Adding x-panning of " + xAdded);
 		}
 		else {
@@ -132,7 +132,7 @@ public class UAVMonitor {
 		
 		if (yDistToPan != 0) {
 			System.out.println("Applying panning in y-direction of " + (yAdded > 0 ? 1 : - 1));
-			prototype.setDisplayY(yAdded);
+			prototype.setDisplayY(yAdded/zoomLevel);
 			System.out.println("Added y-panning of " + yAdded);
 		}
 		
