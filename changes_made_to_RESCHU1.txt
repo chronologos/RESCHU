@@ -1,3 +1,0 @@
-Changes Made 2/22/1989
-	private static final String DATE_FORMAT_NOW = "HH:mm:ss"; added to Reschu()
-	Now() added to Reschu()
