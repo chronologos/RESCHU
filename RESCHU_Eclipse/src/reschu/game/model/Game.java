@@ -126,7 +126,6 @@ public class Game implements Runnable, ActionListener
 
 		setVehicle(scenario); 
 		setPayload(); 
-		AttackEngine attackEngine = new AttackEngine(vehicleList);
 	}
 
 	public void setListener(GUI_Listener l){ lsnr = l; }
@@ -286,7 +285,8 @@ public class Game implements Runnable, ActionListener
 			for(int j=DB[i]+1; j<MySize.width; j++) map.setCellType(j, i, MyGame.SEA);
 		}
 	}     
-
+	
+	@Override
 	public void run() {    	
 		AutoTargetAssignAll();
 		tmr_clock.start();

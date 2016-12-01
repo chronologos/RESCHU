@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import reschu.app.AppMain;
 import reschu.constants.*;
+import reschu.game.model.AttackEngine;
 import reschu.game.model.AttackNotificationEngine;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
@@ -62,6 +63,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public PanelTimeLine pnlTimeLine;
 	public UAVMonitor uavMonitor;
 	public AttackNotificationEngine attackNotificationEngine;
+	public AttackEngine attackEngine;
 
 	public Game game;
 	private double origin_time;
@@ -252,7 +254,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 		payload_canvas.addGLEventListener(new TextOverlay());
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
-		attackNotificationEngine = new AttackNotificationEngine(this);
 
 		// Create Each Panel Objects
 		pnlMap = new PanelMap(this, game, "MAP_PANEL");
@@ -356,7 +357,17 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	@Override
-	public void gameStart() {  
+	public void gameStart() {
+		try {
+			attackNotificationEngine = new AttackNotificationEngine(this);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			attackEngine = new AttackEngine(game.getVehicleList());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		// screen resolution check for Java WebStart. 
 		//    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
 		//    		setVisible(false);
@@ -383,7 +394,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 							"when you are done to proceed to the main experiment. ", "Message", 1);
 
 		}
-
+		
 		new Thread(game).start();
 
 		// enable panels which are initially disabled
@@ -677,7 +688,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 			checkIntersect(vIdx+1);
 		//Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
+	@Override
 	public void EVT_System_GameStart(){ 
+		
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario, -1, -1); 
 	}
 	public void EVT_System_GameEnd(){ 
