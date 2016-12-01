@@ -887,7 +887,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		int oldXPos = xPos;
 		xPos = x;
 		//centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
-		centreX += (float)(displayX)/(TILE_LENGTH); // ONLY FOR PANNING
+		centreX += (float)(displayX)/(zoomLevel * TILE_LENGTH); // ONLY FOR PANNING
 	}
 
 	public void setY(int y) {
@@ -895,7 +895,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		yPos = y;
 		//centreY += ((float)(yPos - oldYPos))/TILE_LENGTH;
 		System.out.println("DisplayY is " + displayY);
-		centreY += (float)(displayY)/(TILE_LENGTH);
+		centreY += (float)(displayY)/(zoomLevel * TILE_LENGTH);
 	}
 
 	public void setXDirection(int xDir) {
