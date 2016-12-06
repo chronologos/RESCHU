@@ -8,7 +8,7 @@ import reschu.game.model.UAV;
 import reschu.game.model.Vehicle;
 
 public class UAVMonitor {
-	private PanelPayload prototype;
+	private PanelPayload panelpayload;
 	private Vehicle activeUAV;
 	private boolean displayEnabled;
 	private int zoomLevel;
@@ -23,7 +23,7 @@ public class UAVMonitor {
 	public static final int PAN_SPEED = 5;
 	// Initialize UAVMonitor with Prototype object
 	public UAVMonitor(PanelPayload proto) {
-		prototype = proto;
+		panelpayload = proto;
 		displayEnabled = true;
 		zoomLevel = 1;
 		prevTargetPos = new int[2];
@@ -40,10 +40,10 @@ public class UAVMonitor {
 			yDistToPan = 0;
 			xPanOffset = 0;
 			yPanOffset = 0;
-			prototype.resetCenterX();
-			prototype.needToRotate = true;
-			prototype.fetchImage(prototype.scaleMapXToViewport(uav.getGroundTruthX()), prototype.scaleMapYToViewport(uav.getGroundTruthY()));
-			prototype.needToRecenter = true;
+			panelpayload.resetCenterX();
+			panelpayload.needToRotate = true;
+			panelpayload.fetchImage(panelpayload.scaleMapXToViewport(uav.getGroundTruthX()), panelpayload.scaleMapYToViewport(uav.getGroundTruthY()));
+			panelpayload.needToRecenter = true;
 		}
 		activeUAV = uav;
 		//if (activeUAV.getPathSize() > 0) {
@@ -120,58 +120,58 @@ public class UAVMonitor {
 		
 		if (xDistToPan != 0) {
 			System.out.println("Applying panning in x-direction of " + (xAdded > 0 ? 1 : - 1));
-			prototype.setDisplayX(xAdded/zoomLevel);
+			panelpayload.setDisplayX(xAdded/zoomLevel);
 			System.out.println("Adding x-panning of " + xAdded);
 		}
 		else {
 			System.out.println("No horizontal panning, move vertically");
-			prototype.setDisplayX(0); // If no horizontal panning required, displayX speed must be 0
+			panelpayload.setDisplayX(0); // If no horizontal panning required, displayX speed must be 0
 		}
 		
 		if (yDistToPan != 0) {
 			System.out.println("Applying panning in y-direction of " + (yAdded > 0 ? 1 : - 1));
-			prototype.setDisplayY(yAdded/zoomLevel);
+			panelpayload.setDisplayY(yAdded/zoomLevel);
 			System.out.println("Added y-panning of " + yAdded);
 		}
 		
 		else {
 			System.out.println("No vertical panning");
-			prototype.setDisplayY(0);
+			panelpayload.setDisplayY(0);
 		}
 		
 		if (activeUAV.getPathSize() > 0) {
 			System.out.println("Incrementing display Y to -1 for northward movement");
-			prototype.setDisplayY((int)Math.max(-PAN_SPEED, prototype.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
+			panelpayload.setDisplayY((int)Math.max(-PAN_SPEED, panelpayload.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
 	
 			int[] currentTargetPos = activeUAV.getFirstPath();
 			if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
 				System.out.println("Detected change in waypoint!");
 				setRotation();
 				prevTargetPos = currentTargetPos;
-				prototype.needToRotate = true;
+				panelpayload.needToRotate = true;
 			}
 		
 		}
 		else {
 			if (yDistToPan == 0) {
 				System.out.println("No waypoint and no panning, setting Y to 0");
-				prototype.unsetDisplayY();
+				panelpayload.unsetDisplayY();
 			}
 			
 		}
 		
-		prototype.setX(activeUAV.getGroundTruthX());
-		prototype.setY(activeUAV.getGroundTruthY());
+		panelpayload.setX(activeUAV.getGroundTruthX());
+		panelpayload.setY(activeUAV.getGroundTruthY());
 		
 		if (xPanOffset != 0) {
-			prototype.applyPanX((float)xAdded/zoomLevel);
+			panelpayload.applyPanX((float)xAdded/zoomLevel);
 		}
 		if (yPanOffset != 0) {
-			prototype.applyPanY((float)yAdded/zoomLevel);
+			panelpayload.applyPanY((float)yAdded/zoomLevel);
 		}
 
 		
-		prototype.moveCenter();
+		panelpayload.moveCenter();
 
 	}
 
@@ -179,9 +179,9 @@ public class UAVMonitor {
 	public void setVelocity() {
 		if (!displayEnabled || activeUAV == null) return;
 		if (activeUAV.getPathSize() == 0){
-			prototype.setXDirection(0);
-			prototype.setYDirection(0);
-			prototype.unsetDisplayY();
+			panelpayload.setXDirection(0);
+			panelpayload.setYDirection(0);
+			panelpayload.unsetDisplayY();
 			System.out.println("Setting y velocity to 0");
 			return;
 		}
@@ -194,8 +194,8 @@ public class UAVMonitor {
 		int yOffset = nextY - currentY;
 		int xDir = xOffset > 0 ? 1 : xOffset < 0 ? -1 : 0;
 		int yDir = yOffset > 0 ? 1 : yOffset < 0 ? -1 : 0;
-		prototype.setXDirection(xDir);
-		prototype.setYDirection(yDir);
+		panelpayload.setXDirection(xDir);
+		panelpayload.setYDirection(yDir);
 	}
 
 	// Determine angle to next waypoint and provide rotation angle accordingly
@@ -203,14 +203,14 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null) return;
 		if (activeUAV.getPathSize() == 0) {
 			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");
-			prototype.setRotateAngle(0);
+			panelpayload.setRotateAngle(0);
 		}
 		
 		System.out.println("Applying rotation!");
 		
 		int[] nextLocation = activeUAV.getFirstPath();
-		double xDelta = nextLocation[0] - activeUAV.getX();
-		double yDelta = nextLocation[1] - activeUAV.getY();
+		double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
+		double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
 
 		yDelta *= -1;
 
@@ -240,7 +240,7 @@ public class UAVMonitor {
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		System.out.println("Angle for ship to rotate " + angleToNorth);
-		prototype.setRotateAngle((float)angleToNorth);
+		panelpayload.setRotateAngle((float)angleToNorth);
 	}
 
 	// Check if panning will cause	
