@@ -41,6 +41,7 @@ import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import org.jdesktop.animation.timing.*;
 import org.jdesktop.animation.timing.interpolation.*;
 
+import reschu.constants.MySize;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
@@ -157,15 +158,20 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public Animator a;
 	public int numCalls;
 	public long startTime;
-	public static final int TILE_LENGTH = 1000;
+	public static final int TILE_LENGTH = 12000;
 	public static final int VIEWPORT_LENGTH = 400;
-	public static final int OVERLAP_LENGTH = 450;
+	public static final int OVERLAP_LENGTH = 100;
 	public static final int SPEED = 1; // no.of pixels moved in each call to display, leads to movement speed of roughly 500 pixels/sec
 	private Map<String, Texture> subTextures;
 	private int tileX = 0;
 	private int tileY = 0;
-	private int xPos = 0;
-	private int yPos = 0;
+
+	private int xPos = 0; // [IMPORTANT] x Coordinate of top left corner of viewport
+	private int yPos = 0; // y Coordinate of top left corner of viewport
+	private int xPosPrevious = 0;
+	private int yPosPrevious = 0;
+	private int centerMoveDist = 0;
+
 	private float zoomLevel = 1;
 	private float rotateAngle = 0f; // controls rotation of texture to always show movement as northward
 	private int corners = 0;
@@ -175,11 +181,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	private float nextZoomLevel = 1;
 	public boolean needToRotate = false;
-	
+	public boolean needToRecenter = false;
 
 	private int displayX;
 	private int displayY;
-	
+
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
 			System.out.println("GL: PanelPayload created");
@@ -883,20 +889,35 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 
 
+	public int scaleMapXToViewport(int x) {
+		return (int)(x*(float)backingImgWidth/MySize.width);
+	}
+
+	public int scaleMapYToViewport(int y) {
+		return (int)(y*(float)backingImgHeight/MySize.height);
+	}
+
+
+	public void moveCenter(){
+		// Update position of viewport center to match distance moved by UAV. Only called by UAVMonitor.
+		if (xPosPrevious != xPos || yPosPrevious != yPos){
+			centreY -= (float)(Math.sqrt(Math.pow(xPos-xPosPrevious, 2) + Math.pow(yPos-yPosPrevious, 2)))/TILE_LENGTH;
+			centreX += (float)(displayX)/(TILE_LENGTH); // ONLY FOR PANNING TODO
+		}
+
+	}
 	public void setX(int x) {
-		int oldXPos = xPos;
-		xPos = x;
-		//centreX += ((float)(xPos - oldXPos))/TILE_LENGTH;
-		centreX += (float)(displayX)/(zoomLevel * TILE_LENGTH); // ONLY FOR PANNING
+		xPosPrevious = xPos;
+		xPos = (int)(scaleMapXToViewport(x) - (float)VIEWPORT_LENGTH/2);
+		System.out.println("xPos is " + xPos);
 	}
 
 	public void setY(int y) {
-		int oldYPos = yPos;
-		yPos = y;
-		//centreY += ((float)(yPos - oldYPos))/TILE_LENGTH;
-		System.out.println("DisplayY is " + displayY);
-		centreY += (float)(displayY)/(zoomLevel * TILE_LENGTH);
+		yPosPrevious = yPos;
+		yPos = (int)(scaleMapYToViewport(y) - (float)VIEWPORT_LENGTH/2);
+		System.out.println("yPos is " + yPos);
 	}
+
 
 	public void setXDirection(int xDir) {
 		xDirection = xDir;
@@ -909,38 +930,31 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void setDisplayY(int y) {
 		displayY = y;
 	}
-	
+
 	public void unsetDisplayY() {
 		displayY = 0;
 	}
-	
+
 	public void setDisplayX(int x) {
 		displayX = x;
 	}
-	
+
 	public void unsetDisplayX() {
 		displayX = 0;
 	}
-	
+
 	public int getDisplayY() {
 		return displayY;
 	}
-	
+
 	public void resetCenterX() {
 		centreX = 0;
 	}
-	
-	//public synchronized void setZoom(int zoomLevel) {
-	//	this.zoomLevel = zoomLevel;
-	//}
+
 	public void setZoom(int zoomLevel) {
 		nextZoomLevel = zoomLevel;
 	}
 
-	public void doDisplay() {
-		//myCanvas.display();
-		//display(myCanvas);
-	}
 
 	public void applyZoom() {
 		if (zoomLevel != nextZoomLevel) {
@@ -949,91 +963,111 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		}
 	}
 
+	private float[] rotatePoint(float[] rotPoint, float angle, float[] p) {
+		// helper method for rotating p about another point by angle
+		System.out.println(p);
+		float s = (float) Math.sin(angle);
+		float c = (float) Math.cos(angle);
+
+		// translate point back to origin:
+		p[0] -= rotPoint[0];
+		p[1] -= rotPoint[1];
+
+		// rotate point
+		float xnew = p[0] * c - p[1] * s;
+		float ynew = p[0] * s + p[1] * c;
+
+		// translate point back:
+		p[0] = xnew + rotPoint[0];
+		p[1] = ynew + rotPoint[1];
+		
+		return p;
+	}
+
 	/**
 	 * This method rotates the texture that is displayed by render.
 	 */
 	public void applyRotate(GL2 gl) {
-		
+
 		gl.glMatrixMode(GL2.GL_TEXTURE); 
 		gl.glLoadIdentity();
-
 		// this line specifies that the texture matrix is to be rotated
 		// rather than the vertices of the object.
 		gl.glTranslated(centreX, centreY,0.0);
-//		gl.glTranslated(0.35, 0.35,0.0); 
-
 		// by default rotation is not at the center
 		// so we translate, rotate and translate back.
 		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
 		gl.glTranslated(-centreX,-centreY,0.0);
-//		gl.glTranslated(-0.35, -0.35,0.0); 
-        gl.glMatrixMode(GL2.GL_MODELVIEW); 
-
-        needToRotate = false;
-//		System.out.println(x);
+		gl.glMatrixMode(GL2.GL_MODELVIEW); 
+		needToRotate = false;
 	}
 
 
 	@Override
 	public void display(GLAutoDrawable drawable) {
+		System.out.println("Display Loop Begin: xPos is - " +  xPos + "and yPos is - " + yPos);
 		GL2 gl = drawable.getGL().getGL2();
 		if (uavMonitor.isEnabled()){
 			if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
-	
-			//uavMonitor.setCoords(); // updates the x and y coordinates as necessary
+
 			uavMonitor.setCoords(); // updates the x and y coordinates as necessary
 			uavMonitor.setVelocity();
-	
-			
 			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
-	
+
 			if (tileIncrement != 0) { // New tile
 				System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
 				if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
-					System.out.println("Nerd Alert! Reversing!");
+					System.out.println("[Error] Cannot fetch next tile.");
 				}
+
+				needToRecenter = true;
+
 			}
-	
-			if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
-				System.out.println("Hit right end of image, reversing!");
-				if (++corners % 4 == 0) {
-					xDirection *= -1;
-				}
-				else {
-					xDirection = 0;
-				}
-				yDirection = 1;
+			else {
+				System.out.println("Not switching tiles. TileX is " + tileX + " and TileY is " + tileY);
 			}
-	
-			if (xPos - TILE_LENGTH <= SPEED && xDirection == -1) {
-				if (++corners % 4 == 0) {
-					xDirection *= -1;
-				}
-				else {
-					xDirection = 0;
-				}
-				yDirection = -1;
-			}
-	
-			if (yPos + TILE_LENGTH >= backingImgHeight - SPEED && yDirection == 1) {
-				if (++ corners % 4 == 0) {
-					yDirection *= -1;
-				}
-				else {
-					yDirection = 0;
-				}
-				xDirection = -1;
-			}
-	
-			if (yPos - TILE_LENGTH <= SPEED && yDirection == -1) {
-				if (++ corners % 4 == 0) {
-					yDirection *= -1;
-				}
-				else {
-					yDirection = 0;
-				}
-				xDirection = 1;
-			}
+//
+//			if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
+//				System.out.println("Hit right end of image, reversing!");
+//				if (++corners % 4 == 0) {
+//					xDirection *= -1;
+//				}
+//				else {
+//					xDirection = 0;
+//				}
+//				yDirection = 1;
+//			}
+//
+//			if (xPos - TILE_LENGTH <= SPEED && xDirection == -1) {
+//				if (++corners % 4 == 0) {
+//					xDirection *= -1;
+//				}
+//				else {
+//					xDirection = 0;
+//				}
+//				yDirection = -1;
+//			}
+//
+//			if (yPos + TILE_LENGTH >= backingImgHeight - SPEED && yDirection == 1) {
+//				if (++ corners % 4 == 0) {
+//					yDirection *= -1;
+//				}
+//				else {
+//					yDirection = 0;
+//				}
+//				xDirection = -1;
+//			}
+//
+//			if (yPos - TILE_LENGTH <= SPEED && yDirection == -1) {
+//				if (++ corners % 4 == 0) {
+//					yDirection *= -1;
+//				}
+//				else {
+//					yDirection = 0;
+//				}
+//				xDirection = 1;
+//			}
+
 			float x1 = (float)(xPos - tileX)/TILE_LENGTH;
 			float x2 = x1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 			float y1 = (float)(yPos - tileY)/TILE_LENGTH;
@@ -1042,6 +1076,21 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 				centreX = x1 + (x2 - x1)/(2 * zoomLevel);
 				centreY = y1 + (y2 - y1)/(2 * zoomLevel);
 			}
+//			float[] centre = {centreX, centreY};
+//			float [] topLeft = {x1, y1};
+//			float [] botRight = {x2, y2};
+//			float[] x1r_y1r = rotatePoint(centre, rotateAngle, topLeft);
+//			float[] x2r_y2r = rotatePoint(centre, rotateAngle, botRight);
+//			x1 = x1r_y1r[0];
+//			y1 = x1r_y1r[1];
+//			x2 = x2r_y2r[0];
+//			y2 = x2r_y2r[1];
+
+
+			//			System.out.println("xTileOffset float: " + x1 + "; yTileOffset float: " + y1);
+
+			if (needToRecenter) recenterViewport();
+
 			if (right == 0) { // very first call to render  
 				right = x2;
 				left = x1;
@@ -1050,7 +1099,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			}
 			render(drawable, x1, x2, y1, y2, gl);
 		}
-		
+
 		else if (!uavMonitor.isEnabled()) {
 			gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 			gl.glTexCoord2f(right, top);
@@ -1072,14 +1121,12 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		int xDelta = (tileIncrement % 3) - 1;
 		int nextTileX = tileX + xDelta * TILE_LENGTH - xDelta * OVERLAP_LENGTH;
 		int nextTileY = tileY + yDelta * TILE_LENGTH - yDelta * OVERLAP_LENGTH;
-
 		System.out.println("Current Tile X: " + this.tileX + "; " + "NextTile X : " + nextTileX);
-
 		if (nextTileX > tiler.getMaxTileX() || nextTileY > tiler.getMaxTileY()) {
+			System.out.println(tiler.getMaxTileX() + " MAXTILES " + tiler.getMaxTileY());
 			System.out.println("Next tile exceeds last tile, not switching");
 			return false;
 		}
-
 		int curXTileWidth;
 		//compute curXTileWidth rather than using TILE_LENGTH due to last row and column of tiles having different dimensions.
 		if (nextTileX + TILE_LENGTH > backingImgWidth){
@@ -1104,15 +1151,62 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			curYTileHeight = TILE_LENGTH;
 		}
 		String imgKey = tiler.coordinateConverter(new int[]{nextTileX, nextTileY, curXTileWidth, curYTileHeight});
-		System.out.println("Key for next image: " + imgKey);
-
 		CurrentTexture = subTextures.get(imgKey);
-		System.out.println("---");
-
 		this.tileX = nextTileX;
 		this.tileY = nextTileY;
 		return true;
 	}
+
+	
+	public void applyPanX(float xPan) {
+		centreX += (xPan/TILE_LENGTH);
+	}
+	
+	public void applyPanY(float yPan) {
+		centreY += (yPan/TILE_LENGTH);
+	}
+
+	public void recenterViewport() {	
+		System.out.println("[Recentering viewport] tileX is " + tileX + " and xPos is " + xPos);
+		System.out.println("[Recentering viewport] tileY is " + tileY + " and yPos is " + yPos);
+		centreY = (float)(yPos + (float)VIEWPORT_LENGTH/2 - tileY)/TILE_LENGTH;
+		centreX = (float)(xPos + (float)VIEWPORT_LENGTH/2 - tileX)/TILE_LENGTH;
+		System.out.println("[Recentering viewport] Centre Y is " + centreY + ", centre X is" + centreX);
+		needToRecenter = false;
+	}
+
+	public boolean fetchImage(int xPos, int yPos) {
+		String imgKey = findKey(xPos, yPos);
+		Texture found = subTextures.get(imgKey);
+		if (found == null) {
+			System.out.println("[error] cannot find texture for " + imgKey);
+			return false;
+		}
+		CurrentTexture = found;
+		this.tileX = Integer.parseInt(imgKey.split(" ")[0]);
+		this.tileY = Integer.parseInt(imgKey.split(" ")[1]);
+		return true;
+	}
+
+	public String findKey(int xPos, int yPos) {
+		int tileX = xPos - (xPos % (TILE_LENGTH - OVERLAP_LENGTH));
+		int tileY = yPos - (yPos % (TILE_LENGTH - OVERLAP_LENGTH));
+		int tileWidth, tileHeight;
+		if (tileX == tiler.getMaxTileX()) {
+			tileWidth = backingImgWidth - tileX;
+		}
+		else {
+			tileWidth = TILE_LENGTH;
+		}
+		if (tileY == tiler.getMaxTileY()) {
+			tileHeight = backingImgHeight - tileY;
+		}
+		else {
+			tileHeight = TILE_LENGTH;
+		}
+		return tileX + " " + tileY + " " + tileWidth + " " + tileHeight;
+	}
+
 
 
 	private void render(GLAutoDrawable drawable, float x1, float x2, float y1, float y2, GL2 gl) {
@@ -1133,7 +1227,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		//right = 1;
 		//bottom = 1;
 		//top = 0;
-		System.out.println("Centre Y is " + centreY + ", centre X is" + centreX);
+
 		System.out.println("left is" + left + "right is" + right);
 		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
@@ -1180,7 +1274,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		rotateAngle = angle;
 	}
 
-	
+
 	public class MapTileCreator {
 		private int tileLength;
 		private int viewportLength;
@@ -1201,7 +1295,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			subImages = new HashMap<String, BufferedImage>();
 		}
 
-		
+
 		public List<int[]> calculateGrids(){
 			// Given tileLength, overlapLength and an image, calculate the coordinates of the tiles required to
 			// cover the image. GetSubimage accepts coordinates of the form 
@@ -1216,9 +1310,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			List<int[]> coordinates = new ArrayList<int[]>();
 
 			// tiles usually do not exactly cover image. In last row and column they will be shorter. 
+
 			while (currentimageWidth < imageWidth){
 				int nextXCoordinate = currentimageWidth - overlapLength;
 				subImgXCoords.add(nextXCoordinate);
+				maxTileX = nextXCoordinate;
 				currentimageWidth = nextXCoordinate + tileLength;
 				if (currentimageWidth > imageWidth){
 					finalColTileWidth = imageWidth - subImgXCoords.get(subImgXCoords.size()-1);
@@ -1227,6 +1323,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			while (currentimageHeight < imageHeight){
 				int nextYCoordinate = currentimageHeight - overlapLength;
 				subImgYCoords.add(nextYCoordinate);
+				maxTileY = nextYCoordinate;
 				currentimageHeight = nextYCoordinate + tileLength;
 				if (currentimageHeight > imageHeight){
 					finalRowTileLength = imageHeight - subImgYCoords.get(subImgYCoords.size()-1);

@@ -20,11 +20,11 @@ public class UAVMonitor {
 	private int yPanOffset;
 	private int[] prevTargetPos;
 
-	public static final int PAN_SPEED = 2;
+	public static final int PAN_SPEED = 5;
 	// Initialize UAVMonitor with Prototype object
 	public UAVMonitor(PanelPayload proto) {
 		prototype = proto;
-		displayEnabled = true; // TODO (kill nerdbeast)
+		displayEnabled = true;
 		zoomLevel = 1;
 		prevTargetPos = new int[2];
 	}
@@ -42,7 +42,8 @@ public class UAVMonitor {
 			yPanOffset = 0;
 			prototype.resetCenterX();
 			prototype.needToRotate = true;
-
+			prototype.fetchImage(prototype.scaleMapXToViewport(uav.getGroundTruthX()), prototype.scaleMapYToViewport(uav.getGroundTruthY()));
+			prototype.needToRecenter = true;
 		}
 		activeUAV = uav;
 		//if (activeUAV.getPathSize() > 0) {
@@ -64,9 +65,6 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null){
 			return;
 		}
-		//System.out.println("Panning command received");
-
-		//System.out.println("X coordinate" + activeUAV.getX() + "Y coordinate" + activeUAV.getY());
 		int xAdded = 0;
 		int yAdded = 0;
 		if (panning) {
@@ -162,20 +160,19 @@ public class UAVMonitor {
 			
 		}
 		
-		prototype.setX(activeUAV.getGroundTruthX() + xPanOffset/zoomLevel);
-		prototype.setY(activeUAV.getGroundTruthY() + yPanOffset/zoomLevel);
-
-		/*
-		if (activeUAV.getPathSize() > 0) {
-			int[] currentTargetPos = activeUAV.getFirstPath();
-			if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
-				System.out.println("Detected change in waypoint!");
-				setRotation();
-				prevTargetPos = currentTargetPos;
-				prototype.needToRotate = true;
-			}
+		prototype.setX(activeUAV.getGroundTruthX());
+		prototype.setY(activeUAV.getGroundTruthY());
+		
+		if (xPanOffset != 0) {
+			prototype.applyPanX((float)xAdded/zoomLevel);
 		}
-		*/
+		if (yPanOffset != 0) {
+			prototype.applyPanY((float)yAdded/zoomLevel);
+		}
+
+		
+		prototype.moveCenter();
+
 	}
 
 	// pass direction to prototype based on vector to next way coordinate in UAV's path
@@ -243,7 +240,7 @@ public class UAVMonitor {
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		System.out.println("Angle for ship to rotate " + angleToNorth);
-		prototype.setRotateAngle((float)-angleToNorth);
+		prototype.setRotateAngle((float)angleToNorth);
 	}
 
 	// Check if panning will cause	
