@@ -248,7 +248,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 		payload_canvas = new MyCanvas(); // and this
 		//		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
-		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,12000, 16000);  
+		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,12000, 12000);  
 		payload_canvas.addListener(pnlPayload);   
 		payload_canvas.addGLEventListener(pnlPayload);   
 		payload_canvas.addGLEventListener(new TextOverlay());
