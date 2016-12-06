@@ -390,7 +390,7 @@ public class Vehicle {
 		moveTo(rnd.nextInt(8));
 	}
 
-	
+	/*
 	public void moveHillClimbing() { 
 		if( isStuck ) {
 			moveTo(6);
@@ -425,6 +425,7 @@ public class Vehicle {
 		}    	
 		else moveTo(direction);
 	}
+	*/
 	
 	public void moveBestFirst() {
 		int direction=0;
@@ -528,7 +529,7 @@ public class Vehicle {
 	}
 
 	private void payloadCheck(int pos_x, int pos_y) {
-		if( getPathSize()!=0 && (pos_x==getFirstPath()[0] && pos_y==getFirstPath()[1])) {
+		if( getPathSize()!=0 && (pos_x==getFirstPathObserved()[0] && pos_y==getFirstPathObserved()[1])) {
 			if( getPathSize() == 1 && target != null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				if( getPayload() == Vehicle.PAYLOAD_COM ) { 

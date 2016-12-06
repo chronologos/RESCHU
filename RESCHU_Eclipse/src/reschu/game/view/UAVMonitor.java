@@ -50,7 +50,7 @@ public class UAVMonitor {
 			System.out.println("Recalculating rotation for new UAV");
 			setRotation();
 			if (activeUAV.getPathSize() > 0) {
-				prevTargetPos = activeUAV.getFirstPath();
+				prevTargetPos = activeUAV.getFirstPathGround();
 			}
 		//}
 	}
@@ -143,7 +143,7 @@ public class UAVMonitor {
 			System.out.println("Incrementing display Y to -1 for northward movement");
 			panelpayload.setDisplayY((int)Math.max(-PAN_SPEED, panelpayload.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
 	
-			int[] currentTargetPos = activeUAV.getFirstPath();
+			int[] currentTargetPos = activeUAV.getFirstPathGround();
 			if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
 				System.out.println("Detected change in waypoint!");
 				setRotation();
@@ -185,7 +185,7 @@ public class UAVMonitor {
 			System.out.println("Setting y velocity to 0");
 			return;
 		}
-		int[] nextPoint = activeUAV.getFirstPath();
+		int[] nextPoint = activeUAV.getFirstPathGround();
 		int currentX = activeUAV.getGroundTruthX();
 		int currentY = activeUAV.getGroundTruthY();
 		int nextX = nextPoint[0];
@@ -208,7 +208,7 @@ public class UAVMonitor {
 		
 		System.out.println("Applying rotation!");
 		
-		int[] nextLocation = activeUAV.getFirstPath();
+		int[] nextLocation = activeUAV.getFirstPathGround();
 		double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
 		double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
 
