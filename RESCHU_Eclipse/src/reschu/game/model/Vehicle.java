@@ -88,7 +88,7 @@ public class Vehicle {
 	 * Get a coordinate at the first path of this vehicle  (synchronized)
 	 */
 	public synchronized int[] getFirstPathGround() {return groundTruthPath.getFirst(); }
-	public synchronized int[] getFirstPathObserved() {return observedPath.getFirst();}
+	public synchronized int[] getFirstPathObserved() {return observedPath == null ? groundTruthPath.getFirst() : observedPath.getFirst();}
 
 	/**
 	 * Get a coordinate at the last path of this vehicle  (synchronized)
@@ -114,6 +114,7 @@ public class Vehicle {
 	public synchronized void setObservedX(int x){ xPosObserved = x; }
 	public synchronized int getX(){ 
 		if (isHijacked){
+			System.out.println("Returning observed X");
 			return xPosObserved;
 		}
 		else{
@@ -428,6 +429,9 @@ public class Vehicle {
 	*/
 	
 	public void moveBestFirst() {
+		
+		System.out.println("moveBestFirst called");
+		
 		int direction=0;
 		double d = 999999999, bestDistance = 999999999;
 
@@ -663,6 +667,8 @@ public class Vehicle {
 	}
 
 	public synchronized void hijack(String hackData) throws IllegalArgumentException{
+		setObservedX(getX());
+		setObservedY(getY()); 
 		isHijacked = true;
 		if (hackData == null) throw new IllegalArgumentException("Null hackData");
 		String[] coordStrings = hackData.split(" ");
@@ -683,9 +689,14 @@ public class Vehicle {
 			return;
 		}
 		int[] hackCoords = new int[]{xCoord, yCoord};
+		
+		//System.out.println("About to add hack coords, getX currently returns " + getX());
 		observedPath = new LinkedList<int[]>(groundTruthPath);
 		groundTruthPath.clear();
 		groundTruthPath.add(hackCoords);
+		//System.out.println("Hack complete, getX currently returns " + getX());		
+		//groundTruthPath.addFirst(hackCoords);
+		//groundTruthPath.set(1, hackCoords);
 		//    	else observedPath.set(0, hackCoords); // Just overwrite next item on path;
 		//    	groundTruthPath = observedPath; // swap path and hackpath
 		//    	observedPath = temp;
