@@ -667,11 +667,11 @@ public class Vehicle {
 	}
 
 	public synchronized void hijack(String hackData) throws IllegalArgumentException{
+		// hackData comes in form "NEW_X_TARGET NEW_Y_TARGET"
 		setObservedX(getX());
 		setObservedY(getY()); 
-		isHijacked = true;
-		if (hackData == null) throw new IllegalArgumentException("Null hackData");
 		String[] coordStrings = hackData.split(" ");
+		if (hackData == null) throw new IllegalArgumentException("Null hackData");
 		if (coordStrings.length != 2) throw new IllegalArgumentException("Wrong number of coordinates in hackdata, must be 2");
 		int xCoord, yCoord;
 		try {
@@ -688,6 +688,15 @@ public class Vehicle {
 			System.out.println("Uncaught number format exception on y-coordinate from AttackEngine");
 			return;
 		}
+		if (xCoord < 0 || yCoord < 0){
+			System.out.println("Fake attack launched.");
+			lsnr.EVT_Hack_Launch_Fake(index);
+			return;
+		}
+		isHijacked = true;
+		System.out.println("Launching hack");
+		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
+		
 		int[] hackCoords = new int[]{xCoord, yCoord};
 		
 		//System.out.println("About to add hack coords, getX currently returns " + getX());

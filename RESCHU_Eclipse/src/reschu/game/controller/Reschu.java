@@ -359,6 +359,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void gameStart() {
 		try {
+			//attackNotificationEngine = new AttackNotificationEngine(this, userLogFile);
 			attackNotificationEngine = new AttackNotificationEngine(this);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -714,6 +715,37 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_DESELECT_TAB, -1, "Vehicle deselect tab", -1, -1);
 	}
 
+	/*
+	 * 
+	 * 
+	 * final public static int HACK_LAUNCHED 				= 110;
+	
+	final public static int HACK_NOTIFICATION_LAUNCHED			= 111;
+	final public static int HACK_NOTIFICATION_IGNORED	= 112;
+	final public static int HACK_NOTIFICATION_INVESTIGATED = 113;
+	
+	
+	public void EVT_Hack_Launch_Fake(int vIdx)
+	 */
+	
+	public void EVT_Hack_Launch(int vIdx, int xCoord, int yCoord) {
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked", xCoord, yCoord);
+	}
+	public void EVT_Hack_Launch_Fake(int vIdx) {
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack", -1, -1);
+	}
+
+    public void EVT_Hack_Notification_Launch(int vIdx) {
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_LAUNCHED, vIdx, "Hack Notification Launched", -1, -1);
+    }
+    public void EVT_Hack_Notification_Ignore(int vIdx) {
+    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_IGNORED, vIdx, "Hack Notification Ignored", -1, -1);
+    }
+    public void EVT_Hack_Notification_Investigate(int vIdx) {
+    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);    	
+    }
+	
+	
 	private void play(String arg) {
 
 		new WAVPlayer(arg).start();

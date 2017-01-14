@@ -25,9 +25,8 @@ public class AttackEngine {
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
 		timerToVehicle = new HashMap<String, Integer>();
 		hackData = new HashMap<Integer, String>();
-		String line;  
+		String line, location, action;
 		Timer nextTimer;
-		String location;
 
 		int delay;
 		int vehicle;
@@ -53,12 +52,18 @@ public class AttackEngine {
 
 		try {
 			// Parse AttackFile
+			// NOTIFY,VEH_NO,TIME 
+			// ATTACK,VEH_NO,TIME,NEW_X_TARGET NEW_Y_TARGET
 			while ((line = br.readLine()) != null){  
 				if (!line.startsWith("//")){
 					String[] attackParams = line.split(",");
-					vehicle = Integer.parseInt(attackParams[0]);
-					delay = Integer.parseInt(attackParams[1]);
-					location = attackParams[2];
+					action = attackParams[0];
+					if (!action.equals("ATTACK")){
+						continue;
+					}
+					vehicle = Integer.parseInt(attackParams[1]);
+					delay = Integer.parseInt(attackParams[2]);
+					location = attackParams[3];
 					hackData.put(vehicle, location);
 					String timerName = "HackTimer" + vehicle;// TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);

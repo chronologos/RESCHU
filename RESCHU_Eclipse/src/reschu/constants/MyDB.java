@@ -51,4 +51,11 @@ public class MyDB {
 	final public static int STATE_WEB_LOG_IN			= 1;
 	final public static int STATE_GAME_START			= 2;
 	final public static int STATE_GAME_FINISH			= 3;
+	
+	final public static int HACK_LAUNCHED 				= 111;
+	final public static int HACK_LAUNCHED_FAKE			= 112;
+	
+	final public static int HACK_NOTIFICATION_LAUNCHED			= 121;
+	final public static int HACK_NOTIFICATION_IGNORED	= 122;
+	final public static int HACK_NOTIFICATION_INVESTIGATED = 123;
 }
