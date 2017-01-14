@@ -103,4 +103,5 @@ public interface GUI_Listener {
     public void EVT_Hack_Notification_Launch(int vIdx);
     public void EVT_Hack_Notification_Ignore(int vIdx);
     public void EVT_Hack_Notification_Investigate(int vIdx);
+    public void EVT_Hack_Notification_Missed(int vIdx);
 }

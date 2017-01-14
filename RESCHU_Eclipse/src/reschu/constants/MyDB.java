@@ -58,4 +58,5 @@ public class MyDB {
 	final public static int HACK_NOTIFICATION_LAUNCHED			= 121;
 	final public static int HACK_NOTIFICATION_IGNORED	= 122;
 	final public static int HACK_NOTIFICATION_INVESTIGATED = 123;
+	final public static int HACK_NOTIFICATION_MISSED = 124;
 }

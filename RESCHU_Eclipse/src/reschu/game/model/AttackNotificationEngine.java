@@ -31,9 +31,12 @@ public class AttackNotificationEngine {//implements UserInputListener {
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
 	private GUI_Listener lsnr; // Reschu.java
 	//private Reschu reschu;
-	private boolean hackPaneOpen; // track as instance variable so that new pane can close old one
+	private boolean hackPaneOpen = false; // track as instance variable so that new pane can close old one
 	private JOptionPane hackPane;
+	private JDialog optionDialog;
 	private FileWriter logFile;
+	
+	private int prevIdx = -1;
 	
 	public AttackNotificationEngine(GUI_Listener l) throws FileNotFoundException {
 	//public AttackNotificationEngine(Reschu l) throws FileNotFoundException {
@@ -116,42 +119,23 @@ public class AttackNotificationEngine {//implements UserInputListener {
 	@SuppressWarnings("deprecation")
 	public void launchHackWarning(int VehicleID) {
 		// Launch warning 
-		if (hackPaneOpen && hackPane != null){
+		if (hackPane != null && hackPaneOpen){
 			System.out.println("Closing existing jpane");
-			//hackPane.getRootPane().setVisible(false);
-			hackPane.setVisible(false);
+			// Add logging event for auto-closing of window
+			lsnr.EVT_Hack_Notification_Missed(prevIdx);
+			optionDialog.setVisible(false);
+		} 
+		else {
+			if (!hackPaneOpen) System.out.println("Hack pane is closed");
+			if (hackPane != null) System.out.println("Hack pane is null");
 		}
-		Object[] options = {"Investigate", "Ignore"};
-		hackPane = new JOptionPane(); 
-		JDialog optionDialog = new JDialog();
-		optionDialog.
-//		
-//		 JOptionPane             pane = new JOptionPane(message, messageType,
-//                 optionType, icon,
-//                 options, initialValue);
-//
-//pane.setInitialValue(initialValue);
-//pane.setComponentOrientation(((parentComponent == null) ?
-//getRootFrame() : parentComponent).getComponentOrientation());
-//
-//int style = styleFromMessageType(messageType);
-//JDialog dialog = pane.createDialog(parentComponent, title, style);
-//
-//pane.selectInitialValue();
-//dialog.show();
-//dialog.dispose();
-
-
 		hackPaneOpen = true;
-		PanelMsgBoard.Msg("Vehicle ["+VehicleID+"] might be hacked."); 
-		int selectedValue = JOptionPane.showOptionDialog(hackPane, "Vehicle " + VehicleID + " seems to be malfunctioning. Please contact Mahmoud for details.", "Security Alert", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-		//JDialog dialog = hackPane.createDialog("title");
-		//dialog.addC
-		 lsnr.EVT_Hack_Notification_Launch(VehicleID);
-		 
+		prevIdx = VehicleID;
 		
-		System.out.println("elfar:" + selectedValue);
-		if (selectedValue == 0) {
+		lsnr.EVT_Hack_Notification_Launch(VehicleID);
+
+		int selected = displayNotification(VehicleID);
+		if (selected == 0) {
 			
 			lsnr.EVT_Hack_Notification_Investigate(VehicleID);
 			
@@ -165,6 +149,7 @@ public class AttackNotificationEngine {//implements UserInputListener {
 			lsnr.EVT_Hack_Notification_Ignore(VehicleID);
 			
 		}
+		System.out.println("Setting hackPaneOpen to false");
 		hackPaneOpen = false;
 	}
 	
@@ -174,5 +159,36 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		System.out.println("User ignored hack alert");
 	}
 	*/
+	public int displayNotification(int VehicleID) {
+		Object[] options = {"Investigate", "Ignore"};
+		hackPane = new JOptionPane("Vehicle " + VehicleID + " seems to be malfunctioning.", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION,null,options,options[1]); 
+		hackPane.setInitialValue(options[1]);
+		hackPane.setVisible(true);
+		optionDialog =  hackPane.createDialog(hackPane.getParent(), "hacked");
+		optionDialog.setVisible(true);
+		hackPane.selectInitialValue();
+		hackPaneOpen = true;
+
+		Object        selectedValue = hackPane.getValue();
+		optionDialog.dispose();
+
+        int selected;
+		if(selectedValue == null)
+            selected = JOptionPane.CLOSED_OPTION;
+        if(options == null) {
+            if(selectedValue instanceof Integer)
+            	selected = ((Integer)selectedValue).intValue();
+            selected = JOptionPane.CLOSED_OPTION;
+        }
+        for(int counter = 0, maxCounter = options.length;
+            counter < maxCounter; counter++) {
+            if(options[counter].equals(selectedValue))
+            	selected = counter;
+        }
+        selected = JOptionPane.CLOSED_OPTION;
+		PanelMsgBoard.Msg("Vehicle ["+VehicleID+"] might be hacked."); 
+		return selected;
+	}
+	
 
 }

@@ -744,6 +744,10 @@ public class Reschu extends JFrame implements GUI_Listener {
     public void EVT_Hack_Notification_Investigate(int vIdx) {
     	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);    	
     }
+    
+    public void EVT_Hack_Notification_Missed(int vIdx) {
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_MISSED, vIdx, "Hack Notification Missed", -1, -1);
+    }
 	
 	
 	private void play(String arg) {
