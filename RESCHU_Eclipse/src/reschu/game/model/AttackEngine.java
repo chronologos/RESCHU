@@ -59,7 +59,7 @@ public class AttackEngine {
 					if (!action.equals("ATTACK")){
 						continue;
 					}
-					vehicle = Integer.parseInt(attackParams[1]);
+					vehicle = Integer.parseInt(attackParams[1]) - 1;
 					delay = Integer.parseInt(attackParams[2]);
 					location = attackParams[3];
 					hackData.put(vehicle, location);

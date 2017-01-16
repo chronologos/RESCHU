@@ -621,7 +621,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				&& !vehicleWPAddMode 
 				&& !vehicleWPDelMode) {        	
 			setSelectedVehicle(v);
-			lsnr.activateUAVFeed(v.getIndex());
+			System.out.println("selected vehicle is " + v.getIndex());
+			lsnr.activateUAVFeed(v.getIndex()-1);
 			lsnr.Vehicle_Selected_From_pnlMap(v.getIndex());
 			if( Utils.isLeftClick(m_ev) ){
 				lsnr.EVT_VSelect_Map_LBtn(v.getIndex());        		        		
@@ -688,7 +689,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			// MOVE - GP
 			if( Utils.isLeftClick(m_ev) && gp != null ) {
 				setSelectedVehicle(gp.getV());   
-				lsnr.activateUAVFeed(gp.getV().getIndex());
+				lsnr.activateUAVFeed(gp.getV().getIndex()-1);
 				repaint();
 				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(gp)"); 
 				vehicleGoalChangeMode = true;
@@ -705,7 +706,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			// MOVE - WP
 			if( wp != null && Utils.isLeftClick(m_ev) && !vehicleWPDelMode) {        	
 				setSelectedVehicle(wp.getV());
-				lsnr.activateUAVFeed(wp.getV().getIndex());
+				lsnr.activateUAVFeed(wp.getV().getIndex()-1);
 
 				repaint();
 				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(wp)");        	
@@ -732,7 +733,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
 			if( wp != null ) { 
 				setSelectedVehicle(wp.getV());
-				lsnr.activateUAVFeed(wp.getV().getIndex());
+				lsnr.activateUAVFeed(wp.getV().getIndex()-1);
 
 				WPRightClickedMode = true;
 				showPopup(this, m_ev.getX(), m_ev.getY(), getSelectedVehicle());
