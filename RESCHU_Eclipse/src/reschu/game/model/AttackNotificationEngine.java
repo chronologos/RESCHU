@@ -89,7 +89,7 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		// Launch warning 
 		if (hackPane != null && hackPaneOpen){
 			// Add logging event for auto-closing of window
-			lsnr.EVT_Hack_Notification_Missed(prevIdx);
+			lsnr.EVT_Hack_Notification_Missed(prevIdx + 1);
 			optionDialog.setVisible(false);
 		} 
 		else {
