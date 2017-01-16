@@ -20,17 +20,16 @@ public class AttackEngine {
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
 
 	public AttackEngine(final VehicleList vehicleList) throws FileNotFoundException {
-		System.out.println("attack engine loaded");
+		String line, location, action;
+		Timer nextTimer;
+		int delay;
+		int vehicle;
+		
 		File attackFile = new File(ATTACK_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
 		timerToVehicle = new HashMap<String, Integer>();
 		hackData = new HashMap<Integer, String>();
-		String line, location, action;
-		Timer nextTimer;
-
-		int delay;
-		int vehicle;
-
+		
 		class Hack extends TimerTask {	
 			String timerName;
 			public Hack(String timerName) {
@@ -39,7 +38,6 @@ public class AttackEngine {
 
 			@Override 
 			public void run() {
-				String hackLocation = hackData.get(timerName);
 				int vehicle = timerToVehicle.get(timerName);
 				try {
 					vehicleList.getVehicle(vehicle).hijack(hackData.get(vehicle));

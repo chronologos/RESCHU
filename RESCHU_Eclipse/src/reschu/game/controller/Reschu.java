@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,7 +22,6 @@ import reschu.game.model.AttackNotificationEngine;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
 import reschu.game.model.Vehicle;
-import reschu.game.model.VehicleList;
 import reschu.game.utils.SituationAwareness;
 import reschu.game.utils.WAVPlayer;
 import reschu.game.view.MyCanvas;
@@ -33,7 +31,6 @@ import reschu.game.view.PanelMsgBoard;
 import reschu.game.view.PanelPayload;
 import reschu.game.view.PanelPayloadControls;
 import reschu.game.view.PanelTimeLine;
-import reschu.game.view.Prototype;
 import reschu.game.view.TextOverlay;
 import reschu.game.view.UAVMonitor;
 import reschu.tutorial.Tutorial;
@@ -142,6 +139,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 				line2 = line;
 			}
 		}
+		br.close();
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ScenarioCount.txt",false)));
 
 		if(_scenario == 4){
@@ -220,17 +218,16 @@ public class Reschu extends JFrame implements GUI_Listener {
 				break;
 			}
 		}
+		br1.close();
 		if(done1){
 
 			BufferedReader br = new BufferedReader(new FileReader("PayloadText.txt"));  
-			String line = null;  
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("PayloadText.txt",false)));
-			while ((line = br.readLine()) != null) {
-
+			while ((br.readLine()) != null) {
 				out.println("");
-
 			}
 			out.close();
+			br.close();
 		}
 
 	}
@@ -247,7 +244,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 		origin_time = System.currentTimeMillis();
 
 		payload_canvas = new MyCanvas(); // and this
-		//		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"lib/imgFiles" ,12392, 15852);
 		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,12000, 12000);  
 		payload_canvas.addListener(pnlPayload);   
 		payload_canvas.addGLEventListener(pnlPayload);   
@@ -452,12 +448,24 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void submitPayload() {
 		pnlPayload.checkCorrect();
 	}
+	
 	@Override
 	public void activateUAVFeed(int idx) {
 		uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(idx));
 	}
+	
 	@Override
-	public void Vehicle_Selected_From_pnlMap(int idx) { pnlControl.Show_Vehicle_Status(idx); }
+	public void Vehicle_Selected_From_pnlMap(int idx) { 
+		System.out.println("Vehicle_Selected_From_pnlMap " + idx);
+		pnlControl.Show_Vehicle_Status(idx);
+	}
+	
+	@Override
+	public void Vechicle_Selected_From_Investigate(int idx){
+		pnlControl.Show_Vehicle_Status(idx+1); // TODO why doesn't it work without +1?
+		pnlMap.setSelectedVehicle(game.getVehicleList().getVehicle(idx));
+	}
+	
 	@Override
 	public void Vehicle_Unselected_From_pnlMap() {
 		pnlMap.setClear();
@@ -465,6 +473,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlControl.Show_Vehicle_Status(0);
 		uavMonitor.disableUAVFeed();
 	}
+	
 	@Override
 	public void Vehicle_Engage_From_pnlMap(Vehicle v) { 
 		try {
@@ -553,7 +562,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 			return;
 		}
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:S");
 		String temp = Now() + ",     " + invoker  + ",     " + type  + ",     " + vIdx  + ",     " + log  + ",     " + X + "," + Y;
 		System.out.println(temp);
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");

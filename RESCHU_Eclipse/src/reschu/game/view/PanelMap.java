@@ -6,11 +6,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.*;
-import java.awt.Toolkit;
-
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.controller.Reschu;
@@ -65,8 +60,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private final int vHeight = MySize.SIZE_VEHICLE_HEIGHT_PXL;
 	private final int targetsize = MySize.SIZE_TARGET_PXL;
 
-	private synchronized Vehicle getV() {return selectedVehicle;}
-	private synchronized void setV(Vehicle v) {selectedVehicle = v;}
+	public synchronized Vehicle getSelectedVehicle() {return selectedVehicle;}
+	public synchronized void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
 
 	public PanelMap(GUI_Listener l, Game g, String strTitle) {
 		lsnr = l;
@@ -488,13 +483,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		return (AlphaComposite.getInstance(type, alpha));
 	}
 
-	public void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
 
 	private void setWPNextPrev(int idx) {
 		if( idx == 0 ) vehicleWPAddPrevMode = false;
 		else vehicleWPAddPrevMode = true;
 
-		if( idx == getV().getPath().size()-2 ) vehicleWPAddNextMode = false;
+		if( idx == getSelectedVehicle().getPath().size()-2 ) vehicleWPAddNextMode = false;
 		else vehicleWPAddNextMode = true;
 	}
 
@@ -535,13 +529,13 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	// ActionListener interface
 	public void actionPerformed(ActionEvent evt) {		
 		if( evt.getSource() == mnuItemSetGoal) { 
-			Vehicle v = getV();
+			Vehicle v = getSelectedVehicle();
 			setClear();
 			setGoal(v);
 			lsnr.EVT_GP_SetGP_Start(v.getIndex());
 		}
 		if( evt.getSource() == mnuItemAddWP) { 
-			Vehicle v = getV();
+			Vehicle v = getSelectedVehicle();
 			if(v!=null) {
 				setClear();
 				addWP(v); 
@@ -549,7 +543,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			}
 		}
 		if( evt.getSource() == mnuItemDelWP) {
-			Vehicle v = getV();
+			Vehicle v = getSelectedVehicle();
 			setClear();
 			delWP(v);  
 			lsnr.EVT_WP_DeleteWP_Start(v.getIndex());
@@ -565,7 +559,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		if( evt.getSource() == mnuItemCancel) {
 			repaint();
-			getV().delWaypoint(just_added_WP[0], just_added_WP[1]);
+			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
 			if(vehicleWPAddMode) {
 				// This is the exact point where the user finishes to add a waypoint. 
 				lsnr.EVT_WP_AddWP_Cancel(selectedVehicle.getIndex());
@@ -575,8 +569,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		if( evt.getSource() == mnuItemPrev) {
 			int idx;		
-			getV().delWaypoint(just_added_WP[0], just_added_WP[1]);
-			idx = getV().addWaypoint(just_added_WP[0], just_added_WP[1], --just_added_WP[2]);
+			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
+			idx = getSelectedVehicle().addWaypoint(just_added_WP[0], just_added_WP[1], --just_added_WP[2]);
 			setWPNextPrev(idx);
 			if(!TABLETOP) {
 				clicked_pos_x = (int) getMousePosition().getX() / cellsize - 10;
@@ -586,8 +580,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		if( evt.getSource() == mnuItemNext) {
 			int idx;
-			getV().delWaypoint(just_added_WP[0], just_added_WP[1]);
-			idx = getV().addWaypoint(just_added_WP[0], just_added_WP[1], ++just_added_WP[2]);
+			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
+			idx = getSelectedVehicle().addWaypoint(just_added_WP[0], just_added_WP[1], ++just_added_WP[2]);
 			setWPNextPrev(idx); 
 			if(!TABLETOP) {
 				clicked_pos_x = (int) getMousePosition().getX() / cellsize - 10;
@@ -596,7 +590,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			showPopup(this, clicked_pos_x*cellsize, clicked_pos_y*cellsize, game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
 		}
 		if( evt.getSource() == mnuItemInstantDelWP ) {
-			Vehicle v = getV();
+			Vehicle v = getSelectedVehicle();
 			if(v!=null) {
 				v.delWaypoint(wp.getX(), wp.getY());
 				lsnr.EVT_WP_DeleteWP_Start(selectedVehicle.getIndex());
@@ -626,7 +620,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				&& !mapSettingMode 
 				&& !vehicleWPAddMode 
 				&& !vehicleWPDelMode) {        	
-			setV(v);
+			setSelectedVehicle(v);
+			lsnr.activateUAVFeed(v.getIndex());
 			lsnr.Vehicle_Selected_From_pnlMap(v.getIndex());
 			if( Utils.isLeftClick(m_ev) ){
 				lsnr.EVT_VSelect_Map_LBtn(v.getIndex());        		        		
@@ -649,12 +644,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		// Add goal
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleGoalMode ) { 
-			if( getV().getPath().size() == 0 ) 
-				getV().addGoal(clicked_pos_x, clicked_pos_y);
+			if( getSelectedVehicle().getPath().size() == 0 ) 
+				getSelectedVehicle().addGoal(clicked_pos_x, clicked_pos_y);
 			else
-				getV().changeGoal(getV().getPath().getLast(), clicked_pos_x, clicked_pos_y);
+				getSelectedVehicle().changeGoal(getSelectedVehicle().getPath().getLast(), clicked_pos_x, clicked_pos_y);
 			setClear();
-			//        	setV(null);
+
 			mapSettingMode = false; 
 			vehicleGoalMode = false;
 		}
@@ -662,7 +657,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		if(!TABLETOP) {
 			// Add a waypoint
 			if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPAddMode ) {  
-				int idx = getV().addWaypoint(clicked_pos_x, clicked_pos_y);        	
+				int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);        	
 				just_added_WP = new int[]{clicked_pos_x, clicked_pos_y, idx};	        
 				setWPNextPrev(idx);	        
 				showPopup(this, m_ev.getX(), m_ev.getY(), game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));        	
@@ -671,7 +666,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		// Delete a waypoint
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode  && wp!=null) {  
-			getV().delWaypoint(wp.getX(), wp.getY());
+			getSelectedVehicle().delWaypoint(wp.getX(), wp.getY());
 			setClear();
 			//System.out.println("Vehicle deselected by deleting waypoint");
 		} 
@@ -692,11 +687,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 			// MOVE - GP
 			if( Utils.isLeftClick(m_ev) && gp != null ) {
-				setV(gp.getV());        	
+				setSelectedVehicle(gp.getV());   
+				lsnr.activateUAVFeed(gp.getV().getIndex());
 				repaint();
 				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(gp)"); 
 				vehicleGoalChangeMode = true;
-				lsnr.Vehicle_Selected_From_pnlMap(getV().getIndex());
+				lsnr.Vehicle_Selected_From_pnlMap(getSelectedVehicle().getIndex());
 				ex_GP_x = gp.getX();
 				ex_GP_y = gp.getY();
 
@@ -708,11 +704,13 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 			// MOVE - WP
 			if( wp != null && Utils.isLeftClick(m_ev) && !vehicleWPDelMode) {        	
-				setV(wp.getV());
+				setSelectedVehicle(wp.getV());
+				lsnr.activateUAVFeed(wp.getV().getIndex());
+
 				repaint();
 				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(wp)");        	
 				vehicleWPChangeMode = true;
-				lsnr.Vehicle_Selected_From_pnlMap(getV().getIndex());
+				lsnr.Vehicle_Selected_From_pnlMap(getSelectedVehicle().getIndex());
 				ex_WP_x = wp.getX();
 				ex_WP_y = wp.getY();
 				lsnr.EVT_WP_MoveWP_Start(selectedVehicle.getIndex(), clicked_pos_x, clicked_pos_y);
@@ -733,36 +731,38 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		if( Utils.isRightClick(m_ev) && !mapSettingMode  ) {  	
 			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
 			if( wp != null ) { 
-				setV(wp.getV());
+				setSelectedVehicle(wp.getV());
+				lsnr.activateUAVFeed(wp.getV().getIndex());
+
 				WPRightClickedMode = true;
-				showPopup(this, m_ev.getX(), m_ev.getY(), getV());
+				showPopup(this, m_ev.getX(), m_ev.getY(), getSelectedVehicle());
 				WPRightClickedMode = false;
 			}            
 		}
 
 		// Menu - Goal point set (either adding or changing)
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleGoalMode && !vehicleWPAddMode && !vehicleWPChangeMode && !vehicleWPDelMode ) {
-			if( getV().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
+			if( getSelectedVehicle().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
 				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 10);
 			}
-			else if( getV().getPath().size() == 0 ) {
-				getV().addGoal(clicked_pos_x, clicked_pos_y);
+			else if( getSelectedVehicle().getPath().size() == 0 ) {
+				getSelectedVehicle().addGoal(clicked_pos_x, clicked_pos_y);
 			}
 			else {
-				getV().changeGoal(getV().getPath().getLast(), clicked_pos_x, clicked_pos_y);
+				getSelectedVehicle().changeGoal(getSelectedVehicle().getPath().getLast(), clicked_pos_x, clicked_pos_y);
 			}
 			setClear();
 		}
 
 		// DRAG - GOAL CHANGE
 		if( Utils.isLeftClick(m_ev) && !vehicleWPAddMode && vehicleGoalChangeMode && !vehicleWPDelMode ) {
-			if( getV().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
+			if( getSelectedVehicle().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
 				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 10);
 			}
-			else if( getV().getPath().size() == 0 ) 
-				getV().addGoal(new_GP_x, new_GP_y);
+			else if( getSelectedVehicle().getPath().size() == 0 ) 
+				getSelectedVehicle().addGoal(new_GP_x, new_GP_y);
 			else
-				getV().changeGoal(new int[]{ex_GP_x, ex_GP_y}, new_GP_x, new_GP_y);
+				getSelectedVehicle().changeGoal(new int[]{ex_GP_x, ex_GP_y}, new_GP_x, new_GP_y);
 			setClear();
 
 			//System.out.println("Vehicle deselected by drag changing goal.");
@@ -772,7 +772,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		// Menu - Add WP
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && !vehicleGoalMode && vehicleWPAddMode && !vehicleWPChangeMode && !vehicleWPDelMode ) {
-			int idx = getV().addWaypoint(clicked_pos_x, clicked_pos_y);        	
+			int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);        	
 			just_added_WP = new int[]{clicked_pos_x, clicked_pos_y, idx};	        
 			setWPNextPrev(idx);	        
 			showPopup(this, m_ev.getX(), m_ev.getY(), game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
@@ -780,7 +780,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		// DRAG - WayPoint CHANGE
 		if( Utils.isLeftClick(m_ev) && !vehicleWPAddMode && vehicleWPChangeMode && !vehicleWPDelMode ) { 
-			getV().changeWaypoint(ex_WP_x, ex_WP_y, new_WP_x, new_WP_y); 
+			getSelectedVehicle().changeWaypoint(ex_WP_x, ex_WP_y, new_WP_x, new_WP_y); 
 			//System.out.println("Vehicle deselected by changing waypoint.");
 			vehicleWPChangeMode = false;
 			wp = null;
@@ -857,7 +857,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
 	public void popupMenuCanceled(PopupMenuEvent e) {
 		if( mapSettingMode && vehicleWPAddMode ) {
-			getV().delWaypoint(just_added_WP[0], just_added_WP[1]);  
+			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);  
 			lsnr.EVT_WP_AddWP_Cancel(selectedVehicle.getIndex());
 		}
 		setClear(); 

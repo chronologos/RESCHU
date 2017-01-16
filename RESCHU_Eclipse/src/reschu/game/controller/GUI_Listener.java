@@ -52,8 +52,10 @@ public interface GUI_Listener {
     public void Vehicle_WP_Del_From_pnlControl(Vehicle v);
     public void Vehicle_Engage_From_pnlControl(Vehicle v);
     
-    // Events from AttackNotification
+    // Events from AttackNotificationEngine
+    // Use to propagate from AttackNotificationEngine to PanelMap and PanelCtrl
 	public void activateUAVFeed(int idx);
+	public void Vechicle_Selected_From_Investigate(int idx);
 
     // Database
     public void EVT_WP_AddWP_Start(int vIdx);	 

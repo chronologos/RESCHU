@@ -5,8 +5,6 @@ import info.clearthought.layout.TableLayout;
 import java.awt.*; 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
@@ -94,7 +92,9 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 			}
 		}
 		else {
-			lsnr.Vehicle_Selected_From_pnlControl(i-1);
+			// i = 0 is No vehicle selected, i = 1 is vehicle 0
+			lsnr.Vehicle_Selected_From_pnlControl(i - 1);
+			lsnr.activateUAVFeed(i - 1);
 			if( !eventFromMap ) {
 				lsnr.EVT_VSelect_Tab(i);
 			}
