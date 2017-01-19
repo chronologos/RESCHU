@@ -57,7 +57,13 @@ public class Vehicle {
 	/**
 	 * Add a waypoint to the path of this vehicle  (synchronized)
 	 */
-	public synchronized void addPath(int idx, int[] e) { groundTruthPath.add(idx, e);}
+	public synchronized void addPath(int idx, int[] e) {
+		if (isHijacked){
+			observedPath.add(idx, e);
+		} else {
+			groundTruthPath.add(idx, e);
+		}
+	}
 
 	/**
 	 * Add a waypoint to the last path of this vehicle (synchronized)

@@ -354,17 +354,18 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	@Override
 	public void gameStart() {
-		try {
-			//attackNotificationEngine = new AttackNotificationEngine(this, userLogFile);
-			attackNotificationEngine = new AttackNotificationEngine(this);
+		if (!tutorial()){
+			try {
+				attackNotificationEngine = new AttackNotificationEngine(this);
+				attackEngine = new AttackEngine(game.getVehicleList());
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		try {
-			attackEngine = new AttackEngine(game.getVehicleList());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		
+	}
+		
+		
 		// screen resolution check for Java WebStart. 
 		//    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
 		//    		setVisible(false);
