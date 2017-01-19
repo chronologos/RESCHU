@@ -52,7 +52,7 @@ public class Vehicle {
 		}
 	}
 	public synchronized LinkedList<int[]> getGroundTruthPath() { return groundTruthPath;} 
- 
+	
 
 	/**
 	 * Add a waypoint to the path of this vehicle  (synchronized)
@@ -62,12 +62,23 @@ public class Vehicle {
 	/**
 	 * Add a waypoint to the last path of this vehicle (synchronized)
 	 */
-	public synchronized void addPathLast(int[] e) { groundTruthPath.addLast(e); }
+	public synchronized void addPathLast(int[] e) { 
+		if (isHijacked){
+			observedPath.addLast(e);
+		} else {
+		groundTruthPath.addLast(e);
+		}
+	}
 
 	/**
 	 * Set a path of this vehicle  (synchronized)
 	 */
-	public synchronized void setPath(int idx, int[] e) { groundTruthPath.set(idx, e); };
+	public synchronized void setPath(int idx, int[] e) { 
+		if (isHijacked){
+			observedPath.set(idx, e);
+		} else {
+		groundTruthPath.set(idx, e); }
+	}
 
 	/**
 	 * Get the size of a path of this vehicle  (synchronized)
