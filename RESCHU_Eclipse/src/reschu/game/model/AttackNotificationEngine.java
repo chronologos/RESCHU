@@ -113,21 +113,21 @@ public class AttackNotificationEngine {//implements UserInputListener {
 	public int displayNotification(int VehicleID) {
 		int dispayVehicleID = VehicleID + 1;
 		Object[] options = {"Investigate", "Ignore"};
-		hackPane = new JOptionPane("Possible cyber attack under UAV " + dispayVehicleID, JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[1]);
-		hackPane.setInitialValue(options[1]);
+		hackPane = new JOptionPane("Possible cyber attack under UAV " + dispayVehicleID, JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[1]); 
+		// hackPane.setInitialValue(options[1]);
 		hackPane.setVisible(true);
-		optionDialog = hackPane.createDialog(hackPane.getParent(), "hacked");
+		optionDialog = hackPane.createDialog(hackPane.getParent(), "Attack Notification");
 		optionDialog.setVisible(true);
 		hackPane.selectInitialValue();
 		hackPaneOpen = true;
 		Object selectedValue = hackPane.getValue();
 		optionDialog.dispose();
-		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked."); 
+		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked.");
 		if(selectedValue == null){
 			return JOptionPane.CLOSED_OPTION;
 		}
 		for(int counter = 0, maxCounter = options.length; counter < maxCounter; counter++) {
-			if(options[counter].equals(selectedValue)) { 
+			if(options[counter].equals(selectedValue)) {
 				return counter;
 			}
 		}

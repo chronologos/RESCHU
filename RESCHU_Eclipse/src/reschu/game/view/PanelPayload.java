@@ -158,7 +158,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public Animator a;
 	public int numCalls;
 	public long startTime;
-	public static final int TILE_LENGTH = 12000;
+	// public static final int TILE_LENGTH = 12000;
+	public static final int TILE_LENGTH = 4000;
+	// public static final int TILE_LENGTH = 563;
 	public static final int VIEWPORT_LENGTH = 400;
 	public static final int OVERLAP_LENGTH = 100;
 	public static final int SPEED = 1; // no.of pixels moved in each call to display, leads to movement speed of roughly 500 pixels/sec
@@ -495,6 +497,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		lsnr.Payload_Assigned_From_pnlPayload(v, curPayload);
 	}
 
+	// This method is not called anywhere
+	/*
 	private void displayText(GLAutoDrawable drawable) {
 
 		if( GL_DEBUG ) System.out.println("GL: displayText called");
@@ -583,13 +587,13 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 				trB24.endRendering();
 			}
 		}
-		/*
-	    if (penalize) {
-	    textRenderer.setColor(1.0f, 0.2f, 0.3f, 0.9f);
-	    textRenderer.draw("INCORRECT LOCATION", 40, drawable.getHeight() / 2);
-	    }
-		 */
+		//
+	    // if (penalize) {
+	    // textRenderer.setColor(1.0f, 0.2f, 0.3f, 0.9f);
+	    // textRenderer.draw("INCORRECT LOCATION", 40, drawable.getHeight() / 2);
+	    // }
 	}
+	*/
 
 	private void displayAnimRenderer(GLAutoDrawable drawable, int viewport_x, int viewport_y, float x_off, float y_off) {
 		if( GL_DEBUG ) System.out.println("GL: displayAnimRenderer called");    
