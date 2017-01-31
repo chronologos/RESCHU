@@ -175,11 +175,11 @@ public class Game implements Runnable, ActionListener
 		try {
 			switch( scenario ) {
 			case 1:
-				vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
-				if( !Reschu.tutorial() ) vehicleList.addVehicle(2, Vehicle.TYPE_UAV, "Fire Scout B", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
-				if( !Reschu.tutorial() ) vehicleList.addVehicle(3, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
-				if( !Reschu.tutorial() ) vehicleList.addVehicle(4, Vehicle.TYPE_UAV, "Fire Scout D", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);            
-				if( !Reschu.tutorial() ) vehicleList.addVehicle(5, Vehicle.TYPE_UAV, "Fire Scout E", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
+				vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 750/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
+				if( !Reschu.tutorial() ) vehicleList.addVehicle(2, Vehicle.TYPE_UAV, "Fire Scout B", Vehicle.PAYLOAD_ISR, 750/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
+				if( !Reschu.tutorial() ) vehicleList.addVehicle(3, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 750/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
+				// if( !Reschu.tutorial() ) vehicleList.addVehicle(4, Vehicle.TYPE_UAV, "Fire Scout D", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);            
+				// if( !Reschu.tutorial() ) vehicleList.addVehicle(5, Vehicle.TYPE_UAV, "Fire Scout E", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
 				break;
 			case 2:
 				vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
@@ -194,7 +194,7 @@ public class Game implements Runnable, ActionListener
 				if( !Reschu.tutorial() ) vehicleList.addVehicle(3, Vehicle.TYPE_UAV, "Fire Scout B", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
 				if( !Reschu.tutorial() ) vehicleList.addVehicle(4, Vehicle.TYPE_UAV, "Global Hawk B", Vehicle.PAYLOAD_COM, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
 				if( !Reschu.tutorial() ) vehicleList.addVehicle(5, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
-				break;	        		
+				break;
 			case 4:
 				vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
 				vehicleList.addVehicle(2, Vehicle.TYPE_UUV, "Talisman A", Vehicle.PAYLOAD_ISR, 1000/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);            

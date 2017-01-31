@@ -121,6 +121,9 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		hackPane.selectInitialValue();
 		hackPaneOpen = true;
 		Object selectedValue = hackPane.getValue();
+		
+		System.out.println("selected value: " + selectedValue);
+		
 		optionDialog.dispose();
 		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked.");
 		if(selectedValue == null){
