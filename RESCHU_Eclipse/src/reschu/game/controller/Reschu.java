@@ -231,6 +231,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		}
 
 	}
+	
 	private void initComponents() throws NumberFormatException, IOException {  
 		double sizeMain[][] = {{TableLayout.FILL, 440, 5, 820, TableLayout.FILL}, 
 				{370, 110, TableLayout.FILL, 200}};
@@ -244,8 +245,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 		origin_time = System.currentTimeMillis();
 
 		payload_canvas = new MyCanvas(); // and this
-		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles" ,12000, 12000);  
-		payload_canvas.addListener(pnlPayload);   
+		// pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 12000, 12000);
+		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 4000, 4000);
+		// pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 563, 563);
+		payload_canvas.addListener(pnlPayload);
 		payload_canvas.addGLEventListener(pnlPayload);   
 		payload_canvas.addGLEventListener(new TextOverlay());
 		uavMonitor = new UAVMonitor(pnlPayload);
@@ -294,12 +297,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:S");
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
-		String temp = sdf.format(cal.getTime()) + "  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y";
-		String test = date.format(cal.getTime()) + "rand" +  randstr +  ".txt";
+		String temp = sdf.format(cal.getTime()) + "   Time /   Invoker   / Type / vIdx /   log   / Mouse X / Mouse Y";
+		String test = "logs/" + date.format(cal.getTime()) + "rand" +  randstr +  ".txt";
 
 		//For string
-
-
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(test)));
 			out.println(temp);
@@ -308,7 +309,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 			System.out.println("Warning: File NOT correctly written to.  Reschu:Write()");
 			//exception handling left as an exercise for the reader
 		}
-	} 
+	}
 
 	/**
 	 * For situation awareness research on RESCHU. 
@@ -563,10 +564,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 			return;
 		}
 		Calendar cal = Calendar.getInstance();
-		String temp = Now() + ",     " + invoker  + ",     " + type  + ",     " + vIdx  + ",     " + log  + ",     " + X + "," + Y;
+		String temp = Now() + ",   " + invoker  + ",   " + type  + ",   " + vIdx  + ",   " + log  + ",   " + X + ", " + Y;
 		System.out.println(temp);
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
-		String test = date.format(cal.getTime()) + "rand" + randstr + ".txt";
+		String test = "logs/" + date.format(cal.getTime()) + "rand" + randstr + ".txt";
 
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(test,true)));
