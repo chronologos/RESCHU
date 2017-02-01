@@ -2,3 +2,5 @@ parport-win32
 DS_STORE
 Code Backups
 *.pdf
+RESCHU_Eclipse/logs
+RESCHU_Eclipse/PayloadText.txt
