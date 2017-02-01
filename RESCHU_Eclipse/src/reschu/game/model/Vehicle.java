@@ -517,7 +517,7 @@ public class Vehicle {
 			setGroundTruthY(getGroundTruthY()+MySpeed.VELOCITY); break;
 		default:
 			break;
-		}        
+		}
 		payloadCheck(getGroundTruthX(), getGroundTruthY());
 	}
 
@@ -641,7 +641,7 @@ public class Vehicle {
 
 		}
 		// We don't decrease the speed of a vehicle anymore
-		//setBuffer(damage);	
+		// setBuffer(damage);	
 		vDamage += (double)(damage)/100;
 		lsnr.Vehicle_Damaged_By_Hazard_Area_From_Vehicle(this);
 	}
@@ -734,6 +734,4 @@ public class Vehicle {
 	public void endHijack() {
 		isHijacked = false;
 	}
-
-
 }

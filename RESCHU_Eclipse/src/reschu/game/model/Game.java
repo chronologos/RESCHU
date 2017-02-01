@@ -491,7 +491,7 @@ public class Game implements Runnable, ActionListener
 				targetNamePool[i].setUsed(true);
 				return targetNamePool[i].getName();
 			}
-		return "X";	// MAKE SURE THIS NEVER HAPPENS!! IT SHOULDN'T BE HAPPEN!
+		return "X";	// MAKE SURE THIS NEVER HAPPENS!! IT SHOULDN'T HAPPEN!
 	}
 
 	private void setTargetVisibility() {    	

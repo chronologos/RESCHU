@@ -83,8 +83,9 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		} catch (IOException e) {
 			System.out.println("Illegal non-numeric values in hacking input file");
 			e.printStackTrace();
-		} 
+		}
 	}
+	
 	public void launchHackWarning(int VehicleID) {
 		// Launch warning 
 		if (hackPane != null && hackPaneOpen){
@@ -121,12 +122,19 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		hackPane.selectInitialValue();
 		hackPaneOpen = true;
 		Object selectedValue = hackPane.getValue();
-		
-		System.out.println("selected value: " + selectedValue);
-		
+		// System.out.println("selected value: " + selectedValue);
 		optionDialog.dispose();
 		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked.");
-		if(selectedValue == null){
+
+		if(selectedValue == "Investigate") {
+			Object[] ok_msg = {"OK"};
+			JOptionPane invest_mode = new JOptionPane("Investigation mode start", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, ok_msg, ok_msg[0]);
+			invest_mode.setVisible(true);
+			JDialog invest_dialog = invest_mode.createDialog(invest_mode.getParent(), "Investigation Notification");
+			invest_dialog.setVisible(true);
+		}
+		
+		if(selectedValue == null) {
 			return JOptionPane.CLOSED_OPTION;
 		}
 		for(int counter = 0, maxCounter = options.length; counter < maxCounter; counter++) {

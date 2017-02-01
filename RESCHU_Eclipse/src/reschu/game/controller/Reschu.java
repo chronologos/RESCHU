@@ -297,13 +297,15 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:S");
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
-		String temp = sdf.format(cal.getTime()) + "   Time /   Invoker   / Type / vIdx /   log   / Mouse X / Mouse Y";
+		String temp_1 = sdf.format(cal.getTime());
+		String temp_2 = "Time   / Invoker / Type / vIdx /   log   / Mouse X / Mouse Y";
 		String test = "logs/" + date.format(cal.getTime()) + "rand" +  randstr +  ".txt";
 
 		//For string
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(test)));
-			out.println(temp);
+			out.println(temp_1);
+			out.println(temp_2);
 			out.close();
 		} catch (IOException e) {
 			System.out.println("Warning: File NOT correctly written to.  Reschu:Write()");
