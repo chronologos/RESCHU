@@ -1,3 +1,0 @@
-06/04/2015 10:00:37:937  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
-10:00:55:659,     0,     51,     4,     Damaged with a HazardArea,     35,346
-10:00:57:704,     0,     54,     4,     Intersect with a HazardArea,     35,346

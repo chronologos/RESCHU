@@ -1,8 +1,0 @@
-07/28/2015 14:47:32:494  Time / Invoker / Type / vIdx / log / Mouse X / Mouse Y
-14:52:18:854,     0,     51,     1,     Damaged with a HazardArea,     75,366
-14:52:31:375,     1,     104,     2,     Vehicle select map Rbtn,     -1,-1
-14:52:32:496,     1,     22,     2,     Goal set start,     -1,-1
-14:52:33:197,     1,     26,     2,     Goal change end. target[J] assigned,     230,274
-14:52:39:427,     1,     104,     1,     Vehicle select map Rbtn,     -1,-1
-14:52:40:118,     1,     22,     1,     Goal set start,     -1,-1
-14:52:41:138,     1,     26,     1,     Goal change end. target[C] assigned,     86,224
