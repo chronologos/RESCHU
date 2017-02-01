@@ -69,7 +69,8 @@ public class PanelPayloadControls extends JPanel implements ActionListener
         */ 
         setLayout(new GridLayout(2,1));
         add(btnZoomIn); 	btnZoomIn.addActionListener(this);
-//        add(btnSubmit);		btnSubmit.addActionListener(this);
+        // add(btnSubmit);
+        // btnSubmit.addActionListener(this);
         add(btnZoomOut);	btnZoomOut.addActionListener(this);
     }
     
@@ -80,11 +81,10 @@ public class PanelPayloadControls extends JPanel implements ActionListener
         if(e.getSource() == btnCCW)		listener.rotateCCWSelected();
         if(e.getSource() == btnZoomIn)	listener.zoomIn();
         if(e.getSource() == btnZoomOut)	listener.zoomOut();
-        if(e.getSource() == btnSubmit) listener.submitPayload();
+        if(e.getSource() == btnSubmit)  listener.submitPayload();
     }
     
     public void enableSubmit(boolean enable) { btnSubmit.setEnabled(enable); }
-    public void setListener(GUI_Listener l){ listener = l; }
+    public void setListener(GUI_Listener l) { listener = l; }
     
 }
-

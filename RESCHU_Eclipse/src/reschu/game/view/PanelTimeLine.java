@@ -14,7 +14,7 @@ import reschu.game.model.VehicleList;
 import info.clearthought.layout.TableLayout;
 
 public class PanelTimeLine extends JPanel
-{ 
+{
 	private static final long serialVersionUID = 7243933752530455674L; 
 	private VehicleIcon[] pnlVehicleIcon;
 	private VehicleTime[] pnlVehicleTime;	
@@ -37,7 +37,7 @@ public class PanelTimeLine extends JPanel
 
 		//number_of_row = vl.size() + 2;
 		//row_height = this.getHeight() / number_of_row;
-				
+		
 		add(pnlTimeText, "2,0");
 		
 		for(int i=0; i<vl.size(); i++) {
@@ -45,8 +45,8 @@ public class PanelTimeLine extends JPanel
 			pnlVehicleTime[i] = new VehicleTime(vl.getVehicle(i));
 			add(pnlVehicleIcon[i], "0,"+2*(i+1));
 			add(pnlVehicleTime[i], "2,"+2*(i+1)); 
-		} 
-		 
+		}
+		
 		add(pnlRemainingTime, "2,12");
 	}
 	
@@ -85,7 +85,7 @@ class TimeText extends JPanel
 		p1 = getWidth() / 120; 
 		p2 = 30*getWidth() / 120; 
 		p3 = 60*getWidth() / 120; 
-		p4 = 90*getWidth() / 120; 				
+		p4 = 90*getWidth() / 120;
 		p5 = 119*getWidth() / 120;
 		
 		g.setColor(new Color(238,238,238));

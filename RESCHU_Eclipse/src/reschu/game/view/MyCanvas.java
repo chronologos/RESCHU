@@ -32,7 +32,7 @@ public class MyCanvas extends GLJPanel {
                 pnlPayload.setClicked(false);
                 //pnlPayload.getPopMenu().setVisible(false);
             	if( notches < 0 ) pnlPayload.zoom_in();
-            	else pnlPayload.zoom_out(); 
+            	else pnlPayload.zoom_out();
             }
         	
         });

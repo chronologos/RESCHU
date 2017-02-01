@@ -112,7 +112,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 								"Please follow the appropriate link in on our website.", "Message", 1);
 					}
 				}
-			});	
+			});
 		}
 
 		restartPayloadText();

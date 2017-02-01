@@ -212,7 +212,7 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 		
 		// THIRD
 		btnEngage = new JButton("ENGAGE"); btnEngage.addActionListener(this); btnEngage.setEnabled(false);
-				
+		
 		// SETTING LAYOUT
 		GridBagConstraints gbc = new GridBagConstraints();		
 		setLayout(grid_bag_layout);
@@ -314,14 +314,14 @@ class VehiclePanel extends JPanel implements ActionListener
 		pnlStatus.setLayout(grid_bag_layout); //pnlStatus.setLayout(new GridLayout(5,1));
 		pnlStatus.setBorder(bdrTitle);
 		lblDamage = new JLabel("Damage Level");
-		lblMission = new JLabel("Current Mission"); 
+		lblMission = new JLabel("Current Mission");
 		txtMission.setEditable(false);
 		txtMission.setLineWrap(true);
 		scrollPane = new JScrollPane(txtMission);
-		scrollPane.setAutoscrolls(true);	
+		scrollPane.setAutoscrolls(true);
 		scrollPane.remove(scrollPane.getHorizontalScrollBar());		
 		btnEngage = new JButton("Engage");
-		btnEngage.addActionListener(this);	
+		btnEngage.addActionListener(this);
 		progressBar = new JProgressBar(0, 100);
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
@@ -330,7 +330,7 @@ class VehiclePanel extends JPanel implements ActionListener
         insert_grid(gbc, lblMission, 0, 2, 1, 1, 1, 0.1, 0); pnlStatus.add(lblMission);
         insert_grid(gbc, scrollPane, 0, 3, 1, 1, 1, 0.5, 0); pnlStatus.add(scrollPane);
         insert_grid(gbc, btnEngage, 0, 4, 1, 1, 1, 0.1, 0); pnlStatus.add(btnEngage);
-	 
+        
         add(pnlVehicle, "0,0");
         add(pnlStatus, "1,0");
 		//insert_grid(gbc, pnlVehicle, 0, 0, 1, 1, 0, 0, 0); add(pnlVehicle);

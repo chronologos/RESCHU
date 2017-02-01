@@ -24,7 +24,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 	private JButton btnSend = new JButton("SEND");
 	
 	public PanelMsgBoard() {	
-		TitledBorder bdrTitle = BorderFactory.createTitledBorder("Message");	
+		TitledBorder bdrTitle = BorderFactory.createTitledBorder("Message");
 		this.setBorder(bdrTitle);
 		
 		GridBagConstraints gbc = new GridBagConstraints();

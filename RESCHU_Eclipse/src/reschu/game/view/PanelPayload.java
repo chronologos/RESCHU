@@ -694,11 +694,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 */
 	public void checkCorrect() {
 		if (correct) {
-			PanelMsgBoard.Msg("CORRECT!, SCORE!");
+			PanelMsgBoard.Msg("CORRECT! SCORE!");
 			g.addScore(1);
 			lsnr.EVT_Payload_Finished_Correct(v.getIndex(), v.getTarget().getName());
 		} else {
-			PanelMsgBoard.Msg("INCORRECT!, NO SCORE!");
+			PanelMsgBoard.Msg("INCORRECT! NO SCORE!");
 			lsnr.EVT_Payload_Finished_Incorrect(v.getIndex(), v.getTarget().getName());
 			/*
 			 * This chuck of code was written for penalizing users when they clicked 
@@ -847,7 +847,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			popMenu.add(mnuCancel);
 		}
 		else {
-			btnSubmit = new JButton("SUBMIT");
+			// btnSubmit = new JButton("SUBMIT");
+			btnSubmit = new JButton("NEXT");
 			btnSubmit.addActionListener(
 					new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
