@@ -26,8 +26,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private GUI_Listener lsnr; 
 	private JPopupMenu popMenu; 
 	private JMenuItem mnuItemSetGoal, mnuItemAddWP, mnuItemDelWP, mnuItemSubmit, mnuItemCancel, mnuItemPrev, mnuItemNext, mnuItemInstantDelWP, mnuItemEngage;
-	private Vehicle selectedVehicle; 
 	private boolean mapSettingMode, vehicleGoalMode, vehicleWPAddMode, vehicleWPDelMode, vehicleWPChangeMode, vehicleGoalChangeMode, WPRightClickedMode;
+	public static Vehicle selectedVehicle, investigatedVehicle;
 	public boolean vehicleWPAddPrevMode, vehicleWPAddNextMode;    
 	private boolean dragGPMode, dragWPMode;
 	private int ex_WP_x, ex_WP_y, new_WP_x, new_WP_y, ex_GP_x, ex_GP_y, new_GP_x, new_GP_y;  
@@ -36,7 +36,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private int[] drag_from, drag_to, drag_to_prev, drag_next, region;
 
 	//  private Image backbuffer;
-	//  private Graphics2D backg;   
+	//  private Graphics2D backg;
 	private Image img; 
 	private Game game;
 	private JButton btnEmpty;
@@ -47,8 +47,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	// variables for textOnTop
 	private int _durationTextOnTop = 0;
 	private String _msgTextOnTop = "";
-	private boolean _isTextOnTop = false; 
-	//
+	private boolean _isTextOnTop = false;
 
 	private final int cellsize = MySize.SIZE_CELL;
 	private final int halfcell = MySize.SIZE_HALF_CELL;
@@ -62,6 +61,9 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 	public synchronized Vehicle getSelectedVehicle() {return selectedVehicle;}
 	public synchronized void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
+	
+	public synchronized Vehicle getInvestigatedVehicle() {return investigatedVehicle;}
+	public synchronized void setInvestigatedVehicle(Vehicle v) {investigatedVehicle = v;}
 
 	public PanelMap(GUI_Listener l, Game g, String strTitle) {
 		lsnr = l;
@@ -71,6 +73,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		p = new PaintComponent();
 		mapSettingMode = false;
 		selectedVehicle = null;
+		investigatedVehicle = null;
 		vehicleGoalMode = false; 
 		vehicleGoalChangeMode = false;
 		vehicleWPAddMode = false; 
@@ -88,10 +91,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		btnEmpty = new JButton(); btnEmpty.setEnabled(false);
 
 		this.setSize(mapWidth , mapHeight);
-
-
 		img = Toolkit.getDefaultToolkit().getImage("Pictures/Map/map.jpg");  //HERE
-
 
 		this.add(btnEmpty);       
 		this.addMouseListener(this);
@@ -265,20 +265,29 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if( v.getStatus() == MyGame.STATUS_VEHICLE_PENDING ) clrVehicle = MyColor.COLOR_VEHICLE_PENDING;
 			else clrVehicle = MyColor.COLOR_VEHICLE;
 
-			if( selectedVehicle == v  ) {
+			if( selectedVehicle == v ) {
 				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_HIGHLIGHT, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
 			}
+			
+			if( investigatedVehicle == v ) {
+				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
+						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
+			}
 
 			if( v.getType() == Vehicle.TYPE_UAV  ) {
+				// the UAV shape
 				p.paintArc(g, v.getX(), v.getY(), cellsize, halfcell, rulersize, 
 						vWidth, vHeight, 
-						new Color(0,0,0,250), clrVehicle, Vehicle.TYPE_UAV );        		
+						new Color(0,0,0,250), clrVehicle, Vehicle.TYPE_UAV );
+				// the UAV number
 				p.paintString(g, v.getX()-1, v.getY()+2, cellsize, new Color(255,255,255,255), 
-						MyFont.fontBold, Integer.toString(v.getIndex())); 
-				if( v.getPayload() == Vehicle.PAYLOAD_COM ) 
+						MyFont.fontBold, Integer.toString(v.getIndex()));
+				
+				if( v.getPayload() == Vehicle.PAYLOAD_COM ) {
 					p.paintOval(g, v.getX()+1, v.getY()+2, cellsize, MySize.SIZE_UAV_COMM_PXL, 
 							MyColor.COLOR_VEHICLE_COMM_BOUNDARY);
+				}
 			}
 			else if( v.getType() == Vehicle.TYPE_UUV ) {
 				p.paintArc(g, v.getX(), v.getY(), cellsize, halfcell, rulersize,
@@ -288,7 +297,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 						MyFont.fontBold, Integer.toString(v.getIndex()));
 			}
 
-			if( v.hasGoal() ) {	            
+			if( v.hasGoal() ) {
 				if( v.hasWaypoint()) {
 					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
 					else g.setColor(MyColor.COLOR_LINE);
@@ -555,7 +564,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				lsnr.EVT_WP_AddWP_End(selectedVehicle.getIndex(), clicked_pos_x, clicked_pos_y);
 			}
 			setClear();
-			//System.out.println("Vehicle deselected by adding waypoint"); 
+			// System.out.println("Vehicle deselected by adding waypoint"); 
 		}
 		if( evt.getSource() == mnuItemCancel) {
 			repaint();
@@ -565,7 +574,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				lsnr.EVT_WP_AddWP_Cancel(selectedVehicle.getIndex());
 			}
 			setClear();			
-			//System.out.println("Vehicle deselected by adding waypoint"); 	     
+			// System.out.println("Vehicle deselected by adding waypoint"); 	     
 		}
 		if( evt.getSource() == mnuItemPrev) {
 			int idx;		
@@ -669,10 +678,11 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode  && wp!=null) {  
 			getSelectedVehicle().delWaypoint(wp.getX(), wp.getY());
 			setClear();
-			//System.out.println("Vehicle deselected by deleting waypoint");
+			// System.out.println("Vehicle deselected by deleting waypoint");
 		} 
 		repaint();
-	}    
+	}
+	
 	public void mousePressed(MouseEvent m_ev) { 
 		if( eventDisabled ) return;
 		int clicked_pos_x, clicked_pos_y;        
@@ -709,7 +719,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				lsnr.activateUAVFeed(wp.getV().getIndex()-1);
 
 				repaint();
-				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(wp)");        	
+				// System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(wp)");        	
 				vehicleWPChangeMode = true;
 				lsnr.Vehicle_Selected_From_pnlMap(getSelectedVehicle().getIndex());
 				ex_WP_x = wp.getX();
@@ -766,7 +776,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				getSelectedVehicle().changeGoal(new int[]{ex_GP_x, ex_GP_y}, new_GP_x, new_GP_y);
 			setClear();
 
-			//System.out.println("Vehicle deselected by drag changing goal.");
+			// System.out.println("Vehicle deselected by drag changing goal.");
 			vehicleGoalChangeMode = false;
 			gp = null;
 		}
@@ -782,7 +792,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// DRAG - WayPoint CHANGE
 		if( Utils.isLeftClick(m_ev) && !vehicleWPAddMode && vehicleWPChangeMode && !vehicleWPDelMode ) { 
 			getSelectedVehicle().changeWaypoint(ex_WP_x, ex_WP_y, new_WP_x, new_WP_y); 
-			//System.out.println("Vehicle deselected by changing waypoint.");
+			// System.out.println("Vehicle deselected by changing waypoint.");
 			vehicleWPChangeMode = false;
 			wp = null;
 			lsnr.EVT_WP_MoveWP_End(selectedVehicle.getIndex(), clicked_pos_x, clicked_pos_y);
@@ -796,7 +806,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				wp = null;
 				lsnr.EVT_WP_DeleteWP_End(selectedVehicle.getIndex(),wp.getX(), wp.getY()); 
 				setClear();
-				//System.out.println("Vehicle deselected by deleting waypoint");
+				// System.out.println("Vehicle deselected by deleting waypoint");
 			}
 		} 
 		repaint();
@@ -823,11 +833,11 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			region = getClip(drag_from[0]*w, drag_from[1]*w, 
 					drag_to[0], drag_to[1], 
 					drag_to_prev[0], drag_to_prev[1]);
-			//    		printCoord("GP", region[0], region[1], region[2], region[3]);
+			// printCoord("GP", region[0], region[1], region[2], region[3]);
 			repaint(region[0], region[1], region[2], region[3]);
 			drag_to_prev = drag_to;
-			//    		System.out.println("MOUSE (" + drag_to[0] +","+drag_to[1]+")");
-			//    		repaint();  
+			// System.out.println("MOUSE (" + drag_to[0] +","+drag_to[1]+")");
+			// repaint();  
 		}
 		else if( wp != null && selectedVehicle != null ) {
 			dragWPMode = true; 
@@ -900,6 +910,7 @@ class PaintComponent {
 		g.fillPolygon(px, py, 4); 
 	}
 
+	// this function draw the highlight circle and stoke surrounding an UAV
 	public void paintHighlight(Graphics2D g, int x, int y, 
 			int SIZE_CELL, int half_SIZE_CELL, int object_size, int ruler_size, 
 			Color highlight_color, BasicStroke stroke, BasicStroke wide_stroke) {
@@ -909,7 +920,6 @@ class PaintComponent {
 				(x-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
 				(y-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
 				object_size,object_size);
-
 		g.setStroke(wide_stroke);
 		g.drawLine(
 				(x-Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 

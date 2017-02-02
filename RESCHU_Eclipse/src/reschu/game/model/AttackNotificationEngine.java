@@ -14,8 +14,10 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import reschu.game.controller.GUI_Listener;
-
 import reschu.game.view.PanelMsgBoard;
+// import reschu.game.controller.Reschu;
+import reschu.game.view.PanelMap;
+import reschu.game.model.VehicleList;
 
 public class AttackNotificationEngine {//implements UserInputListener {
 
@@ -26,7 +28,6 @@ public class AttackNotificationEngine {//implements UserInputListener {
 	private boolean hackPaneOpen = false; // track as instance variable so that new pane can close old one
 	private JOptionPane hackPane;
 	private JDialog optionDialog;
-
 	private int prevIdx = -1;
 
 	public AttackNotificationEngine(GUI_Listener l) throws FileNotFoundException {
@@ -127,11 +128,16 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked.");
 
 		if(selectedValue == "Investigate") {
+			// the method of generating a dialog window with options
+			/*
 			Object[] ok_msg = {"OK"};
 			JOptionPane invest_mode = new JOptionPane("Investigation mode start", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, ok_msg, ok_msg[0]);
 			invest_mode.setVisible(true);
 			JDialog invest_dialog = invest_mode.createDialog(invest_mode.getParent(), "Investigation Notification");
 			invest_dialog.setVisible(true);
+			*/
+			
+			PanelMap.investigatedVehicle = VehicleList.getVehicle(VehicleID);
 		}
 		
 		if(selectedValue == null) {

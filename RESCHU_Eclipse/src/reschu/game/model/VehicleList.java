@@ -7,7 +7,7 @@ import reschu.game.controller.GUI_Listener;
 
 public class VehicleList {
 	private Game g;
-    private LinkedList<Vehicle> v_list = new LinkedList<Vehicle>();
+    private static LinkedList<Vehicle> v_list = new LinkedList<Vehicle>();
     
     public VehicleList(Game g) { this.g = g;}
     
@@ -69,7 +69,7 @@ public class VehicleList {
      */
     public int size() { return v_list.size(); }
     
-    public Vehicle getVehicle(int i){ return v_list.get(i); }
+    public static Vehicle getVehicle(int i){ return v_list.get(i); }
     
     /**
      * Get a vehicle with a given name
