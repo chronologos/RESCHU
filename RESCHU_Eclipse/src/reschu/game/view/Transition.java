@@ -34,7 +34,7 @@ public class Transition {
 			nextY = -1;
 		}
 		if (nextX != 0 & nextY != 0){
-			System.out.println("NextX: " + nextX + "; NextY: " + nextY);
+			// System.out.println("NextX: " + nextX + "; NextY: " + nextY);
 		}
 		return nextY * 3 + nextX;
 	}

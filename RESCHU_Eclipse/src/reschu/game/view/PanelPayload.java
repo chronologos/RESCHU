@@ -914,13 +914,13 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void setX(int x) {
 		xPosPrevious = xPos;
 		xPos = (int)(scaleMapXToViewport(x) - (float)VIEWPORT_LENGTH/2);
-		System.out.println("xPos is " + xPos);
+		// System.out.println("xPos is " + xPos);
 	}
 
 	public void setY(int y) {
 		yPosPrevious = yPos;
 		yPos = (int)(scaleMapYToViewport(y) - (float)VIEWPORT_LENGTH/2);
-		System.out.println("yPos is " + yPos);
+		// System.out.println("yPos is " + yPos);
 	}
 
 
@@ -1010,7 +1010,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 	@Override
 	public void display(GLAutoDrawable drawable) {
-		System.out.println("Display Loop Begin: xPos is - " +  xPos + "and yPos is - " + yPos);
+		// System.out.println("Display Loop Begin: xPos is - " +  xPos + "and yPos is - " + yPos);
 		GL2 gl = drawable.getGL().getGL2();
 		if (uavMonitor.isEnabled()){
 			if (t == null) t = new Transition(OVERLAP_LENGTH, VIEWPORT_LENGTH, TILE_LENGTH);
@@ -1020,7 +1020,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
 
 			if (tileIncrement != 0) { // New tile
-				System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
+				// System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
 				if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
 					System.out.println("[Error] Cannot fetch next tile.");
 				}
@@ -1029,7 +1029,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 			}
 			else {
-				System.out.println("Not switching tiles. TileX is " + tileX + " and TileY is " + tileY);
+				// System.out.println("Not switching tiles. TileX is " + tileX + " and TileY is " + tileY);
 			}
 //
 //			if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
@@ -1172,11 +1172,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	}
 
 	public void recenterViewport() {	
-		System.out.println("[Recentering viewport] tileX is " + tileX + " and xPos is " + xPos);
-		System.out.println("[Recentering viewport] tileY is " + tileY + " and yPos is " + yPos);
+		// System.out.println("[Recentering viewport] tileX is " + tileX + " and xPos is " + xPos);
+		// System.out.println("[Recentering viewport] tileY is " + tileY + " and yPos is " + yPos);
 		centreY = (float)(yPos + (float)VIEWPORT_LENGTH/2 - tileY)/TILE_LENGTH;
 		centreX = (float)(xPos + (float)VIEWPORT_LENGTH/2 - tileX)/TILE_LENGTH;
-		System.out.println("[Recentering viewport] Centre Y is " + centreY + ", centre X is" + centreX);
+		// System.out.println("[Recentering viewport] Centre Y is " + centreY + ", centre X is" + centreX);
 		needToRecenter = false;
 	}
 
@@ -1233,7 +1233,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		//bottom = 1;
 		//top = 0;
 
-		System.out.println("left is" + left + "right is" + right);
+		// System.out.println("left is" + left + "right is" + right);
 		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
 		gl.glTexCoord2f(left, top);
@@ -1392,7 +1392,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 					mySubTextures.put(key, subTexture);
 				}
 				catch (IOException e) {
-					System.out.println("GG I fucked up");
+					// System.out.println("GG I fucked up");
 					e.printStackTrace();
 					System.exit(1);
 				}

@@ -277,7 +277,7 @@ class VehiclePanel extends JPanel implements ActionListener
 	private JButton btnEngage;
 	private TitledBorder bdrTitle;
     private GUI_Listener lsnr;	
-	private String name; 
+	private String name;
 	
 	VehiclePanel(GUI_Listener e, Vehicle v) {
 		double size[][] = {{150, TableLayout.FILL}, {TableLayout.FILL}};

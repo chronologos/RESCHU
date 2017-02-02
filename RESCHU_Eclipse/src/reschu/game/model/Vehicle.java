@@ -131,7 +131,7 @@ public class Vehicle {
 	public synchronized void setObservedX(int x){ xPosObserved = x; }
 	public synchronized int getX(){ 
 		if (isHijacked){
-			System.out.println("Returning observed X");
+			// System.out.println("Returning observed X");
 			return xPosObserved;
 		}
 		else{
@@ -447,8 +447,7 @@ public class Vehicle {
 	
 	public void moveBestFirst() {
 		
-		System.out.println("moveBestFirst called");
-		
+		// System.out.println("moveBestFirst called");
 		int direction=0;
 		double d = 999999999, bestDistance = 999999999;
 

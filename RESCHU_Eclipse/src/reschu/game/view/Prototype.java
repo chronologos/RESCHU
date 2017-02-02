@@ -437,8 +437,7 @@ public class Prototype extends MyCanvas implements GLEventListener {
 				  mySubTextures.put(key, subTexture);
 			  }
 			  catch (IOException e) {
-				  System.out.println("GG I fucked up");
-				  //System.out.println();
+				  // System.out.println("GG I fucked up");
 				  e.printStackTrace();
 				  System.exit(1);
 			  }

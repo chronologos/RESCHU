@@ -460,7 +460,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	@Override
 	public void Vehicle_Selected_From_pnlMap(int idx) { 
-		System.out.println("Vehicle_Selected_From_pnlMap " + idx);
+		// System.out.println("Vehicle_Selected_From_pnlMap " + idx);
 		pnlControl.Show_Vehicle_Status(idx);
 	}
 	
@@ -567,7 +567,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		}
 		Calendar cal = Calendar.getInstance();
 		String temp = Now() + ",   " + invoker  + ",   " + type  + ",   " + vIdx  + ",   " + log  + ",   " + X + ", " + Y;
-		System.out.println(temp);
+		// System.out.println(temp);
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
 		String test = "logs/" + date.format(cal.getTime()) + "rand" + randstr + ".txt";
 
