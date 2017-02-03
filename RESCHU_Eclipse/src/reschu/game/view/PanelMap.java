@@ -483,6 +483,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		popMenu.addPopupMenuListener(this);
 	}
+	
 	public boolean chkEngage() { return true; }
 	public boolean chkSwitch() { return true; }  
 

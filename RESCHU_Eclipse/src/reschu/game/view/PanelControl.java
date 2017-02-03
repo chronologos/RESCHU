@@ -274,7 +274,7 @@ class VehiclePanel extends JPanel implements ActionListener
 	private JScrollPane scrollPane;
 	private JProgressBar progressBar;
 	//private JButton btnGoal, btnAddWP, btnDelWP;
-	private JButton btnEngage;
+	private JButton btnEngage, btnHome;
 	private TitledBorder bdrTitle;
     private GUI_Listener lsnr;	
 	private String name;
@@ -292,7 +292,7 @@ class VehiclePanel extends JPanel implements ActionListener
 		//
 		// TOP-LEFT
 		pnlVehicle = new JPanel();
-		bdrTitle = BorderFactory.createTitledBorder("Vehicle Info");
+		bdrTitle = BorderFactory.createTitledBorder("Vehicle");
 		pnlVehicle.setBorder(bdrTitle);
 		imgIcon = new ImageIcon("Temporarily Unavailable"); 
 		BufferedImage img = null;
@@ -300,14 +300,17 @@ class VehiclePanel extends JPanel implements ActionListener
 			 img = ImageIO.read(new File("Pictures/Vehicle/" + v.getType() + "_" + v.getPayload() + ".jpg"));
         } catch (IOException f) {}
 		imgIcon = new ImageIcon(img);
-        //lblVehicle = new JLabel(v.getName(), imgIcon, JLabel.CENTER);
+        // lblVehicle = new JLabel(v.getName(), imgIcon, JLabel.CENTER);
         lblVehicle = new JLabel("", imgIcon, JLabel.CENTER);
         lblVehicle.setVerticalTextPosition(JLabel.BOTTOM);
         lblVehicle.setHorizontalTextPosition(JLabel.CENTER);
         lblVehicle.setFont(MyFont.fontBold);        
-        pnlVehicle.add(lblVehicle);				        
+        pnlVehicle.add(lblVehicle);
+        btnHome = new JButton("Emergency Home");
+        btnHome.addActionListener(this);
+        insert_grid(gbc, btnHome, 0, 1, 1, 1, 1, 0.1, 0);
+        pnlVehicle.add(btnHome);
 
-        //
 		// TOP-RIGHT
 		bdrTitle = BorderFactory.createTitledBorder("Vehicle Health And Status");		
 		pnlStatus = new JPanel();
@@ -360,6 +363,7 @@ class VehiclePanel extends JPanel implements ActionListener
         gbc.insets = new Insets(ins, ins, ins, ins);
         grid_bag_layout.setConstraints(cmpt, gbc);
     }
+    
     public void actionPerformed(ActionEvent e) {  
     	//if( e.getSource() == btnGoal ){ lsnr.Vehicle_Goal_From_pnlControl(selectedVehicle);}
     	//if( e.getSource() == btnAddWP){ if( selectedVehicle.hasGoal() ) lsnr.Vehicle_WP_Add_From_pnlControl(selectedVehicle);}
