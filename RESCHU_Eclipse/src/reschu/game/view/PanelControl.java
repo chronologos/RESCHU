@@ -178,7 +178,7 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 	private TitledBorder bdrTitle;
 	private JPanel pnlVehicle, pnlInfo;
 	private JLabel lblHealth, lblTask;
-	private JButton btnEngage;
+	private JButton btnEngage, btnHome;
 	private GUI_Listener lsnr;
 	private Vehicle v;
 	private VehicleIcon2 iconV;
@@ -211,16 +211,21 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 		pnlInfo.add(lblTask);
 		
 		// THIRD
-		btnEngage = new JButton("ENGAGE"); btnEngage.addActionListener(this); btnEngage.setEnabled(false);
+		btnHome = new JButton("HOME");
+		btnHome.addActionListener(this);
+		btnHome.setEnabled(true);
+		btnEngage = new JButton("ENGAGE");
+		btnEngage.addActionListener(this);
+		btnEngage.setEnabled(false);
 		
 		// SETTING LAYOUT
 		GridBagConstraints gbc = new GridBagConstraints();		
 		setLayout(grid_bag_layout);
 		insert_grid(gbc, pnlVehicle, 0, 0, 1, 1, 0.1, 1.0, 0); add(pnlVehicle);
 		insert_grid(gbc, pnlInfo, 1, 0, 1, 1, 0.85, 1.0, 0); add(pnlInfo);
-		insert_grid(gbc, btnEngage, 2, 0, 1, 1, 0.05, 1.0, 0); add(btnEngage);
-		
-	}	
+		insert_grid(gbc, btnHome, 2, 0, 1, 1, 0.05, 1.0, 0); add(btnHome);
+		insert_grid(gbc, btnEngage, 3, 0, 1, 1, 0.05, 1.0, 0); add(btnEngage);
+	}
 	
 	public void chkEngageEnabled() {
 		repaint();
@@ -238,14 +243,17 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
 			else lsnr.Vehicle_Engage_From_pnlControl(v);
 		}
-		
+		if( e.getSource() == btnHome ) {
+			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
+			else lsnr.Vehicle_Home_From_pnlControl(v);
+		}
 	}
 
 	public void Update_Damage() {
 		if( intDamage != Math.round(v.getDamage()) ) lblHealth.setForeground(Color.red);
 		else lblHealth.setForeground(Color.black);
 		intDamage = (int)Math.round(v.getDamage());
-		lblHealth.setText("Damage : "+Math.round(intDamage)); 
+		lblHealth.setText("Damage : " + Math.round(intDamage)); 
 	}
     private void insert_grid(GridBagConstraints gbc, Component cmpt,
     		int x, int y, int width, int height, double percent_x, double percent_y, int ins) {

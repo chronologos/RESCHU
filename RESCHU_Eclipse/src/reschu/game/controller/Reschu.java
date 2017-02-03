@@ -541,7 +541,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void Vehicle_WP_Add_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.addWP(v);}
 	public void Vehicle_WP_Del_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.delWP(v);}
 	public void Vehicle_Engage_From_pnlControl(Vehicle v) { 
-		pnlControl.Show_Vehicle_Status(v.getIndex()); 
+		pnlControl.Show_Vehicle_Status(v.getIndex());
 		try {
 			Engage(v);
 		} catch (IOException e) {
@@ -551,6 +551,19 @@ public class Reschu extends JFrame implements GUI_Listener {
 		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName()); // and this
 	}
 
+	public void Vehicle_Home_From_pnlControl(Vehicle v) { 
+		pnlControl.Show_Vehicle_Status(v.getIndex());
+		/*
+		try {
+			Engage(v);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
+		*/
+	}
+	
 	private void Engage(Vehicle v) throws IOException {
 		pnlMap.setEnabled(false);
 		pnlControl.setEnabled(false);    	
