@@ -55,8 +55,15 @@ public class MyDB {
 	final public static int HACK_LAUNCHED 				= 111;
 	final public static int HACK_LAUNCHED_FAKE			= 112;
 	
-	final public static int HACK_NOTIFICATION_LAUNCHED			= 121;
+	final public static int HACK_NOTIFICATION_LAUNCHED	= 121;
 	final public static int HACK_NOTIFICATION_IGNORED	= 122;
 	final public static int HACK_NOTIFICATION_INVESTIGATED = 123;
-	final public static int HACK_NOTIFICATION_MISSED = 124;
+	final public static int HACK_NOTIFICATION_MISSED 	= 124;
+	
+	final public static int HOME_FROM_COMPACT			= 70;
+	final public static int HOME_FROM_UAV_PANEL			= 71;
+	final public static int HOME_FROM_COMPACT_YES		= 72;
+	final public static int HOME_FROM_COMPACT_NO		= 73;
+	final public static int HOME_FROM_UAV_PANEL_YES		= 74;
+	final public static int HOME_FROM_UAV_PANEL_NO		= 75;
 }

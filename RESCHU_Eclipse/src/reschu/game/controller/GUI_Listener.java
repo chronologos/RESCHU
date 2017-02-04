@@ -107,4 +107,12 @@ public interface GUI_Listener {
     public void EVT_Hack_Notification_Ignore(int vIdx);
     public void EVT_Hack_Notification_Investigate(int vIdx);
     public void EVT_Hack_Notification_Missed(int vIdx);
+    
+    // For Home (Emergency) Mode
+    public void EVT_Home_From_Compact(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_UAV_Panel(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_Compact_Yes(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_Compact_No(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_UAV_Panel_Yes(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord);
 }

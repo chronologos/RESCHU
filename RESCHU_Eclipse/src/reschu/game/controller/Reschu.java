@@ -552,16 +552,15 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 
 	public void Vehicle_Home_From_pnlControl(Vehicle v) { 
+		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());
-		/*
-		try {
-			Engage(v);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
-		*/
+		// create a dialog
+		Object[] options = {"Yes", "No"};
+		JOptionPane home_mode = new JOptionPane("Let UAV "+v.getIndex()+" go home", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+		home_mode.setVisible(true);
+		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
+		invest_dialog.setVisible(true);
+		// EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
 	}
 	
 	private void Engage(Vehicle v) throws IOException {
@@ -739,19 +738,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_VSelect_Tab_All() { 
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_DESELECT_TAB, -1, "Vehicle deselect tab", -1, -1);
 	}
-
-	/*
-	 * 
-	 * 
-	 * final public static int HACK_LAUNCHED 				= 110;
-	
-	final public static int HACK_NOTIFICATION_LAUNCHED			= 111;
-	final public static int HACK_NOTIFICATION_IGNORED	= 112;
-	final public static int HACK_NOTIFICATION_INVESTIGATED = 113;
-	
-	
-	public void EVT_Hack_Launch_Fake(int vIdx)
-	 */
 	
 	public void EVT_Hack_Launch(int vIdx, int xCoord, int yCoord) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked", xCoord, yCoord);
@@ -769,17 +755,34 @@ public class Reschu extends JFrame implements GUI_Listener {
     public void EVT_Hack_Notification_Investigate(int vIdx) {
     	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);    	
     }
-    
     public void EVT_Hack_Notification_Missed(int vIdx) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_MISSED, vIdx, "Hack Notification Missed", -1, -1);
     }
+    
+    // For Home (Emergency) Mode
+    public void EVT_Home_From_Compact(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_COMPACT, vIdx, "Home button clicked from compact panel", xCoord, yCoord);
+    }
+    public void EVT_Home_From_UAV_Panel(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL, vIdx, "Home button clicked from UAV panel", xCoord, yCoord);
+    }
+    public void EVT_Home_From_Compact_Yes(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_COMPACT_YES, vIdx, "Home button clicked from compact panel comfirmed", xCoord, yCoord);
+    }
+    public void EVT_Home_From_Compact_No(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_COMPACT_NO, vIdx, "Home button clicked from compact panel denied", xCoord, yCoord);
+    }
+    public void EVT_Home_From_UAV_Panel_Yes(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL_YES, vIdx, "Home button clicked from UAV panel comfirmed", xCoord, yCoord);
+    }
+    public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL_NO, vIdx, "Home button clicked from UAV panel denied", xCoord, yCoord);
+    }
 	
-	
+	// main and play function
 	private void play(String arg) {
-
 		new WAVPlayer(arg).start();
-	} 
-
+	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run () { 

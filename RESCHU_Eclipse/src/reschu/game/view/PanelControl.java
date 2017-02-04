@@ -381,8 +381,8 @@ class VehiclePanel extends JPanel implements ActionListener
     		else lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle);
     	}
     	if( e.getSource() == btnHome ) {
-    		// if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
-    		// else lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle);
+    		if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
+    		else lsnr.Vehicle_Home_From_pnlControl(selectedVehicle);
     	}
     }
 }
