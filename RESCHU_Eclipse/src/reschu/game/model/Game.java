@@ -63,7 +63,7 @@ public class Game implements Runnable, ActionListener
 	private int targetVisibilityPool_index;
 	private int score;
 
-	private Random rnd = new Random(); 
+	private Random rnd = new Random();
 
 	public synchronized int getElapsedTime() {return elapsedTime;}
 
@@ -228,8 +228,11 @@ public class Game implements Runnable, ActionListener
 				vehicleList.addVehicle(1, Vehicle.TYPE_UAV, Vehicle.TYPE_UAV+"_1", "ISR", 500, rnd, map, lsnr, this);
 				break;
 			}
-
 		} catch (UserDefinedException e) {e.printStackTrace();}
+	}
+	
+	public void additionVehicle(int idx, String v_type, String v_name, String v_payload, int milliseconds) throws UserDefinedException {
+		vehicleList.addVehicle(idx, v_type, v_name, v_payload, milliseconds, rnd, map, lsnr, this);
 	}
 
 	public void setPayload() throws NumberFormatException, IOException { 

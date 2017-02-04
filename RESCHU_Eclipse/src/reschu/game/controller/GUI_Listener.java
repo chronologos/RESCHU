@@ -1,6 +1,7 @@
 package reschu.game.controller;
 
 import reschu.game.model.Payload;
+import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
 
@@ -51,7 +52,8 @@ public interface GUI_Listener {
     public void Vehicle_WP_Add_From_pnlControl(Vehicle v);
     public void Vehicle_WP_Del_From_pnlControl(Vehicle v);
     public void Vehicle_Engage_From_pnlControl(Vehicle v);
-    public void Vehicle_Home_From_pnlControl(Vehicle v);
+    public void Vehicle_Home_From_Compact(Vehicle v) throws UserDefinedException;
+    public void Vehicle_Home_From_UAV_Panel(Vehicle v) throws UserDefinedException;
     
     // Events from AttackNotificationEngine
     // Use to propagate from AttackNotificationEngine to PanelMap and PanelCtrl

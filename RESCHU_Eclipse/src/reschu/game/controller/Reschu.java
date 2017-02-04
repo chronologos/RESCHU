@@ -21,6 +21,7 @@ import reschu.game.model.AttackEngine;
 import reschu.game.model.AttackNotificationEngine;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
+import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 import reschu.game.utils.SituationAwareness;
 import reschu.game.utils.WAVPlayer;
@@ -65,10 +66,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public Game game;
 	private double origin_time;
 	private TitledBorder bdrTitle;  
-
 	private Tutorial tutorial; 
-
 	public String filename;
+	private Random rnd = new Random();
 
 	/** Interactive Tutorial Mode? */
 	public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
@@ -550,8 +550,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 		} 
 		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName()); // and this
 	}
-
-	public void Vehicle_Home_From_pnlControl(Vehicle v) { 
+	
+	// vehicle home function
+	// from compact panel
+	public void Vehicle_Home_From_Compact(Vehicle v) throws UserDefinedException {
 		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		// create a dialog
@@ -560,7 +562,41 @@ public class Reschu extends JFrame implements GUI_Listener {
 		home_mode.setVisible(true);
 		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
 		invest_dialog.setVisible(true);
-		// EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
+		// write to log file
+		EVT_Home_From_Compact(v.getIndex(), v.getX(), v.getY());
+		// choose YES or NO
+		Object selectedValue = home_mode.getValue();
+		invest_dialog.dispose();
+		if(selectedValue == "Yes") {
+			game.getVehicleList().removeVehicle(v);
+			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
+			EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
+		}
+		else {
+			EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
+		}
+	}
+	// from UAV individual panel
+	public void Vehicle_Home_From_UAV_Panel(Vehicle v) throws UserDefinedException {
+		// create a dialog
+		Object[] options = {"Yes", "No"};
+		JOptionPane home_mode = new JOptionPane("Let UAV "+v.getIndex()+" go home", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+		home_mode.setVisible(true);
+		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
+		invest_dialog.setVisible(true);
+		// write to log file
+		EVT_Home_From_UAV_Panel(v.getIndex(), v.getX(), v.getY());
+		// choose YES or NO
+		Object selectedValue = home_mode.getValue();
+		invest_dialog.dispose();
+		if(selectedValue == "Yes") {
+			game.getVehicleList().removeVehicle(v);
+			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
+			EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
+		}
+		else {
+			EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
+		}
 	}
 	
 	private void Engage(Vehicle v) throws IOException {
@@ -574,7 +610,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 	// DB
 	private void Write(int invoker, int type, int vIdx, String log, int X, int Y) {
-		if (!MyLogging.WRITE_TO_DISK){
+		if (!MyLogging.WRITE_TO_DISK) {
 			return;
 		}
 		Calendar cal = Calendar.getInstance();

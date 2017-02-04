@@ -125,7 +125,7 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		Object selectedValue = hackPane.getValue();
 		// System.out.println("selected value: " + selectedValue);
 		optionDialog.dispose();
-		PanelMsgBoard.Msg("Vehicle ["+(VehicleID+1)+"] might be hacked.");
+		PanelMsgBoard.Msg("Possible cyber attack under UAV " + dispayVehicleID);
 
 		if(selectedValue == "Investigate") {
 			// the method of generating a dialog window with options
@@ -136,7 +136,6 @@ public class AttackNotificationEngine {//implements UserInputListener {
 			JDialog invest_dialog = invest_mode.createDialog(invest_mode.getParent(), "Investigation Notification");
 			invest_dialog.setVisible(true);
 			*/
-			
 			PanelMap.investigatedVehicle = VehicleList.getVehicle(VehicleID);
 		}
 		

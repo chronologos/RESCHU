@@ -64,6 +64,13 @@ public class VehicleList {
         }
     }
     
+    public void removeVehicle(Vehicle v) throws UserDefinedException {
+    	if(!this.hasVehicle(v.getName())) {
+    		throw new UserDefinedException("Vehicle " + v.getName() + " does NOT exist.");
+    	}
+    	v_list.remove(v);
+    }
+    
     /**
      * Returns the size of the vehicle list
      */

@@ -17,6 +17,7 @@ import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
+import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
 
@@ -245,7 +246,14 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 		}
 		if( e.getSource() == btnHome ) {
 			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
-			else lsnr.Vehicle_Home_From_pnlControl(v);
+			else {
+				try {
+					lsnr.Vehicle_Home_From_Compact(v);
+				} catch (UserDefinedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -382,7 +390,14 @@ class VehiclePanel extends JPanel implements ActionListener
     	}
     	if( e.getSource() == btnHome ) {
     		if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
-    		else lsnr.Vehicle_Home_From_pnlControl(selectedVehicle);
+			else {
+				try {
+					lsnr.Vehicle_Home_From_UAV_Panel(selectedVehicle);
+				} catch (UserDefinedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
     	}
     }
 }
