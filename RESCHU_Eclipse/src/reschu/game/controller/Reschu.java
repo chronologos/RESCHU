@@ -456,6 +456,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void activateUAVFeed(int idx) {
 		uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(idx));
+		System.out.println("LIST LENGHT = " + game.getVehicleList().size());
+		System.out.println("FIRST INDEX = " + game.getVehicleList().getLinkedList().getFirst().getIndex());
+		System.out.println("FIRST NAME = " + game.getVehicleList().getLinkedList().getFirst().getName());
 	}
 	
 	@Override
@@ -568,9 +571,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Object selectedValue = home_mode.getValue();
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
-			game.getVehicleList().removeVehicle(v);
-			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
 			EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
+			game.getVehicleList().removeVehicle(v);
+			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
+			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
+			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
 		}
 		else {
 			EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
@@ -590,9 +595,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Object selectedValue = home_mode.getValue();
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
-			game.getVehicleList().removeVehicle(v);
-			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
 			EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
+			game.getVehicleList().removeVehicle(v);
+			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
+			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
+			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
 		}
 		else {
 			EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
@@ -683,11 +690,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 		checkIntersect(vIdx);
 		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_UNASSIGNED, vIdx, "Goal set end. no assign", mouseCoordX, mouseCoordY);
 	}
-	/*
     public void EVT_GP_SetGP_Cancel(int vIdx) {
     	Write(MyDB.INVOKER_USER, MyDB.GP_SET_CANCEL, vIdx, "Goal set canceled", -1, -1); 
     }
-	 */
 	public void EVT_GP_ChangeGP_Start(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){
 		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_START, vIdx, "Goal change start from Target[" + targetName + "]", mouseCoordX, mouseCoordY);    	
 	}
@@ -742,12 +747,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_HazardArea_Generated(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		//Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
 	}
 	public void EVT_HazardArea_Disappeared(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		//Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
 	@Override
 	public void EVT_System_GameStart(){ 
@@ -768,7 +773,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_VSelect_Map_RBtn(int vIdx) { 
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn", -1, -1);
 	}
-	public void EVT_VSelect_Tab(int vIdx) { 
+	public void EVT_VSelect_Tab(int vIdx) {
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_TAB, vIdx, "Vehicle select tab", -1, -1);
 	}
 	public void EVT_VSelect_Tab_All() { 
@@ -813,6 +818,12 @@ public class Reschu extends JFrame implements GUI_Listener {
     }
     public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL_NO, vIdx, "Home button clicked from UAV panel denied", xCoord, yCoord);
+    }
+    public void	EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_ADDED, vIdx, "Additional UAV "+vIdx+" is added", xCoord, yCoord);
+    }
+    public void	EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_DELETED, vIdx, "UAV "+vIdx+" is going home (deleted)", xCoord, yCoord);
     }
 	
 	// main and play function

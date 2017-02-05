@@ -34,7 +34,7 @@ public class VehicleList {
      * @throws UserDefinedException
      */
     public void addVehicle(int idx, String v_type, String v_name, String v_payload, int milliseconds, 
-    		Random rnd, Map m, GUI_Listener l, Game g) throws UserDefinedException {
+    		Random rnd, Map m, GUI_Listener l, Game g, boolean b) throws UserDefinedException {
     	if( this.hasVehicle(v_name) )
             throw new UserDefinedException(v_name + " already exists.");
     	int x = rnd.nextInt(MySize.width);
@@ -60,7 +60,8 @@ public class VehicleList {
             v_uav.setPos(x, y); 
             v_uav.setVelocity(milliseconds);
             v_uav.setGuiListener(l);
-            v_list.addLast(v_uav);
+            if(b) v_list.addLast(v_uav);
+            else v_list.add(idx-1, v_uav);
         }
     }
     
@@ -71,10 +72,9 @@ public class VehicleList {
     	v_list.remove(v);
     }
     
-    /**
-     * Returns the size of the vehicle list
-     */
+    // Returns the properties of the vehicle list
     public int size() { return v_list.size(); }
+    public LinkedList<Vehicle> getLinkedList() { return v_list; };
     
     public static Vehicle getVehicle(int i){ return v_list.get(i); }
     

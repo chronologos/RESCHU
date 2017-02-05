@@ -54,6 +54,8 @@ public interface GUI_Listener {
     public void Vehicle_Engage_From_pnlControl(Vehicle v);
     public void Vehicle_Home_From_Compact(Vehicle v) throws UserDefinedException;
     public void Vehicle_Home_From_UAV_Panel(Vehicle v) throws UserDefinedException;
+    public void EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord);
+    public void EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord);
     
     // Events from AttackNotificationEngine
     // Use to propagate from AttackNotificationEngine to PanelMap and PanelCtrl

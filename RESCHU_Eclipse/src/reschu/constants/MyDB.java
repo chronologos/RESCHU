@@ -66,4 +66,7 @@ public class MyDB {
 	final public static int HOME_FROM_COMPACT_NO		= 73;
 	final public static int HOME_FROM_UAV_PANEL_YES		= 74;
 	final public static int HOME_FROM_UAV_PANEL_NO		= 75;
+	
+	final public static int VEHICLE_ADDED				= 80;
+	final public static int VEHICLE_DELETED				= 81;
 }
