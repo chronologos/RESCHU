@@ -69,4 +69,5 @@ public class MyDB {
 	
 	final public static int VEHICLE_ADDED				= 80;
 	final public static int VEHICLE_DELETED				= 81;
+	final public static int NEW_TARGET_ASSIGNED			= 82;
 }

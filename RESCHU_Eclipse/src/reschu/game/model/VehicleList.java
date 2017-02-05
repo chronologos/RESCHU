@@ -65,13 +65,6 @@ public class VehicleList {
         }
     }
     
-    public void removeVehicle(Vehicle v) throws UserDefinedException {
-    	if(!this.hasVehicle(v.getName())) {
-    		throw new UserDefinedException("Vehicle " + v.getName() + " does NOT exist.");
-    	}
-    	v_list.remove(v);
-    }
-    
     // Returns the properties of the vehicle list
     public int size() { return v_list.size(); }
     public LinkedList<Vehicle> getLinkedList() { return v_list; };

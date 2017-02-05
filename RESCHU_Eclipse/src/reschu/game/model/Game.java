@@ -230,10 +230,6 @@ public class Game implements Runnable, ActionListener
 			}
 		} catch (UserDefinedException e) {e.printStackTrace();}
 	}
-	
-	public void additionVehicle(int idx, String v_type, String v_name, String v_payload, int milliseconds) throws UserDefinedException {
-		vehicleList.addVehicle(idx, v_type, v_name, v_payload, milliseconds, rnd, map, lsnr, this, false);
-	}
 
 	public void setPayload() throws NumberFormatException, IOException { 
 		int lineNum=-1, idx;
@@ -421,10 +417,32 @@ public class Game implements Runnable, ActionListener
 						if( elapsedTime != 0 ) lsnr.EVT_GP_SetGP_by_System(v.getIndex(), target.getName());
 						break;
 					}
-				} 
+				}
 			}
-		}	
-	} 
+		}
+	}
+	
+	// immediately change UAV's position, for HOME functions
+	// change current position and reassign a target
+	public void HomeFunction(Vehicle v) {
+    	int x = rnd.nextInt(MySize.width);
+    	int y = rnd.nextInt(MySize.height);
+    	v.setPos(x, y);
+    	
+    	while(v.getPath().size() > 1) {
+    		v.removeFirstPath();
+    	}
+    	
+		for(int i=0; i<map.getListUnassignedTarget().size(); i++) {
+			if( map.getListUnassignedTarget().get(i).isVisible() ) {
+				Target target = map.getListUnassignedTarget().get(i);
+				if(v.getTarget() != target) {
+					v.changeGoal(v.getLastPath(), target.getPos()[0], target.getPos()[1]);
+					break;
+				}
+			}
+		}
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		elapsedTime += MySpeed.SPEED_TIMER;

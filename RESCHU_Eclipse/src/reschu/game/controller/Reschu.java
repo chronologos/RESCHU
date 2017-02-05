@@ -21,6 +21,7 @@ import reschu.game.model.AttackEngine;
 import reschu.game.model.AttackNotificationEngine;
 import reschu.game.model.Game;
 import reschu.game.model.Payload;
+import reschu.game.model.Target;
 import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 import reschu.game.utils.SituationAwareness;
@@ -456,9 +457,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void activateUAVFeed(int idx) {
 		uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(idx));
-		System.out.println("LIST LENGHT = " + game.getVehicleList().size());
-		System.out.println("FIRST INDEX = " + game.getVehicleList().getLinkedList().getFirst().getIndex());
-		System.out.println("FIRST NAME = " + game.getVehicleList().getLinkedList().getFirst().getName());
 	}
 	
 	@Override
@@ -556,7 +554,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	// vehicle home function
 	// from compact panel
-	public void Vehicle_Home_From_Compact(Vehicle v) throws UserDefinedException {
+	public void Vehicle_Go_Home(Vehicle v, boolean compact) throws UserDefinedException {
 		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		// create a dialog
@@ -566,43 +564,29 @@ public class Reschu extends JFrame implements GUI_Listener {
 		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
 		invest_dialog.setVisible(true);
 		// write to log file
-		EVT_Home_From_Compact(v.getIndex(), v.getX(), v.getY());
+		if(compact)
+			EVT_Home_From_Compact(v.getIndex(), v.getX(), v.getY());
+		else
+			EVT_Home_From_UAV_Panel(v.getIndex(), v.getX(), v.getY());
 		// choose YES or NO
 		Object selectedValue = home_mode.getValue();
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
-			EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
-			game.getVehicleList().removeVehicle(v);
+			if(compact)
+				EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
+			else
+				EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
+			
 			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
-			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
+			game.HomeFunction(v);
 			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
+			EVT_New_Target_Assgined(v.getIndex(), v.getX(), v.getY(), v.getTarget());
 		}
 		else {
-			EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
-		}
-	}
-	// from UAV individual panel
-	public void Vehicle_Home_From_UAV_Panel(Vehicle v) throws UserDefinedException {
-		// create a dialog
-		Object[] options = {"Yes", "No"};
-		JOptionPane home_mode = new JOptionPane("Let UAV "+v.getIndex()+" go home", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
-		home_mode.setVisible(true);
-		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
-		invest_dialog.setVisible(true);
-		// write to log file
-		EVT_Home_From_UAV_Panel(v.getIndex(), v.getX(), v.getY());
-		// choose YES or NO
-		Object selectedValue = home_mode.getValue();
-		invest_dialog.dispose();
-		if(selectedValue == "Yes") {
-			EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
-			game.getVehicleList().removeVehicle(v);
-			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
-			game.additionVehicle(v.getIndex(), v.getType(), v.getName(), v.getPayload(), 500/MySpeed.SPEED_CONTROL);
-			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
-		}
-		else {
-			EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
+			if(compact)
+				EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
+			else
+				EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
 		}
 	}
 	
@@ -824,6 +808,10 @@ public class Reschu extends JFrame implements GUI_Listener {
     }
     public void	EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_DELETED, vIdx, "UAV "+vIdx+" is going home (deleted)", xCoord, yCoord);
+    }
+    public void EVT_New_Target_Assgined(int vIdx, int xCoord, int yCoord, Target t) {
+    	Write(MyDB.INVOKER_USER, MyDB.NEW_TARGET_ASSIGNED, vIdx,
+    			"UAV "+vIdx+" is assigned to target "+t.getName()+" at the position of "+t.getPos()[0]+", "+t.getPos()[1], xCoord, yCoord);
     }
 	
 	// main and play function

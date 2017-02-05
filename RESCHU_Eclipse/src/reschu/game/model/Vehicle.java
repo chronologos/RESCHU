@@ -72,7 +72,7 @@ public class Vehicle {
 		if (isHijacked){
 			observedPath.addLast(e);
 		} else {
-		groundTruthPath.addLast(e);
+			groundTruthPath.addLast(e);
 		}
 	}
 
@@ -83,7 +83,8 @@ public class Vehicle {
 		if (isHijacked){
 			observedPath.set(idx, e);
 		} else {
-		groundTruthPath.set(idx, e); }
+			groundTruthPath.set(idx, e);
+		}
 	}
 
 	/**
