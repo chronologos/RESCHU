@@ -5,8 +5,6 @@ import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
 
-
-
 public interface GUI_Listener {
     
     /** Creates a new instance of Gui_Listener */
@@ -22,8 +20,10 @@ public interface GUI_Listener {
     public void panDownSelected();    
     public void rotateCWSelected();    
     public void rotateCCWSelected();    
-    public void zoomIn();    
+    public void zoomIn();
     public void zoomOut();
+    public void zoomMax();
+    public void zoomMin();
     public void submitPayload();	// For T3
         
     public void showMessageOnTopOfMap(String msg, int duration);

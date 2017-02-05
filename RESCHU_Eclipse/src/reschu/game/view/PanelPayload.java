@@ -62,6 +62,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private static final long serialVersionUID = -6487171440210682586L; 
 	private static final boolean GL_DEBUG = false;
 	private static final boolean USE_POPUP = false;
+	
+	public static final int ZOOM_MAX = 5;
+	public static final int ZOOM_MIN = -5;
 
 	private static final GLU glu = new GLU();
 	private GLJPanel glCanvas;
@@ -103,7 +106,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private double rotate_angle;
 	private double CAMERA_ANGLE;
 
-	private int zoom_count; 
+	private static int zoom_count; 
 	private Vehicle v;
 	private Payload curPayload;
 	private float x_limit = (float) rnd.nextInt(10);
@@ -497,104 +500,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		lsnr.Payload_Assigned_From_pnlPayload(v, curPayload);
 	}
 
-	// This method is not called anywhere
-	/*
-	private void displayText(GLAutoDrawable drawable) {
-
-		if( GL_DEBUG ) System.out.println("GL: displayText called");
-		if (Image_Loading) {
-			trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB24.setColor(0.9f, 0.9f, 0.9f, flash);
-			trB24.draw("INITIATING VIDEO FEED", drawable.getSurfaceWidth() / 2 - 120, drawable.getSurfaceHeight() / 2);
-			trB24.endRendering();
-		}
-		if (isEnabled()) {
-			trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB24.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-			trB24.draw("_", drawable.getSurfaceWidth() / 2 - 25, drawable.getSurfaceHeight() / 2 + 5);
-			trB24.draw("_", drawable.getSurfaceWidth() / 2 + 18, drawable.getSurfaceHeight() / 2 + 5);
-			trB24.draw("|", drawable.getSurfaceWidth() / 2 - 1, drawable.getSurfaceHeight() / 2 - 25);
-			trB24.draw("|", drawable.getSurfaceWidth() / 2 - 1, drawable.getSurfaceHeight() / 2 + 18);
-			trB24.endRendering();
-
-			trP14.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trP14.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-			trP14.draw("|      |     |     |     |     |     |     |      |", 
-					drawable.getSurfaceWidth() / 4 - 5, 10 + drawable.getSurfaceHeight() * 4 / 5);
-			trP14.endRendering();
-
-			trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-			trB20.draw("|", (int) (-8 + drawable.getSurfaceWidth() / 2 + (drawable.getSurfaceWidth() / 4) * ((image_x + x_dist) / max_x)), 
-					5 + drawable.getSurfaceHeight() * 4 / 5);
-			trB20.endRendering();
-
-			trB12.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB12.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 - 12);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 13);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 40);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 61);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 83);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 105);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 128);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 151);
-			trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 172);
-			trB12.endRendering();
-
-			trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-			trB20.draw("__", 17 + drawable.getSurfaceWidth() * 5 / 6, (int) (drawable.getSurfaceHeight() / 2 + (drawable.getSurfaceHeight() / 4) * ((image_y + y_dist) / max_y)));
-			trB20.endRendering();
-
-			trB17.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB17.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-			trB17.draw("[+]", (drawable.getSurfaceWidth() * 1 / 10) + 22, drawable.getSurfaceHeight() / 4 + 140);
-			trB17.draw("_", (drawable.getSurfaceWidth() * 1 / 10) + 28, drawable.getSurfaceHeight() / 4 + 133);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 120);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 105);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 90);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 25, drawable.getSurfaceHeight() / 4 + 75);
-
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 120);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 105);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 90);
-			trB17.draw("|", (drawable.getSurfaceWidth() * 1 / 10) + 35, drawable.getSurfaceHeight() / 4 + 75);
-			trB17.draw("_", (drawable.getSurfaceWidth() * 1 / 10) + 28, drawable.getSurfaceHeight() / 4 + 74);
-			trB17.draw("[-]", (drawable.getSurfaceWidth() * 1 / 10) + 22, drawable.getSurfaceHeight() / 4 + 50);
-			trB17.endRendering();
-
-			trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-			trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
-			trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20, drawable.getSurfaceHeight() / 4 + 75 + (int) (60 / 3) * zoom_count);
-			trB20.endRendering();
-
-			if (rbtnClicked) { 
-				//System.out.println("CLICKEDX AND CLICKEDY="+clickedX+","+ clickedY);
-				//System.out.println("HEIGHT AND WIDTH OF DRAWABLE=" +drawable.getWidth()+","+drawable.getHeight());
-				trB24.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-				trB24.setColor(0.1f, 0.1f, 1.0f, 0.9f);
-				//System.out.println((x_dist / (pxl_width * 2) * drawable.getWidth())+","+(y_dist / (pxl_height * 2) * drawable.getHeight()));
-				//System.out.println(x_dist+","+y_dist);
-				double box_center_x = clickedX - (x_dist / (pxl_width * 2)) * drawable.getSurfaceWidth();
-				double box_center_y = drawable.getSurfaceHeight() - clickedY - (y_dist / (pxl_height * 2)) * drawable.getSurfaceHeight();
-				//System.out.println("BOX X AND Y="+box_center_x+","+ box_center_y);
-				trB24.draw("|", (int) box_center_x - 15, (int) box_center_y - 7);
-				trB24.draw("|", (int) box_center_x + 9, (int) box_center_y - 7);
-				trB24.draw("__", (int) box_center_x - 12, (int) box_center_y + 15);
-				trB24.draw("__", (int) box_center_x - 12, (int) box_center_y - 10);
-				//textRenderer8.draw("K",(int)box_center_x,(int)box_center_y);
-				trB24.endRendering();
-			}
-		}
-		//
-	    // if (penalize) {
-	    // textRenderer.setColor(1.0f, 0.2f, 0.3f, 0.9f);
-	    // textRenderer.draw("INCORRECT LOCATION", 40, drawable.getHeight() / 2);
-	    // }
-	}
-	*/
-
 	private void displayAnimRenderer(GLAutoDrawable drawable, int viewport_x, int viewport_y, float x_off, float y_off) {
 		if( GL_DEBUG ) System.out.println("GL: displayAnimRenderer called");    
 		if (bezierAlpha == 0f) return;
@@ -765,63 +670,34 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         changing_y.start();
     }
 	 */
-	public void zoom_in() {
-
-		//if (zoomLevel >= 1) {
-		if (nextZoomLevel >= 1) {
-			//zoomLevel ++;
-			nextZoomLevel ++;
+	
+	public int zoom_in() {
+		if(zoom_count < ZOOM_MAX){
+			zoom_count += 1;
+			if (nextZoomLevel >= 1) {
+				nextZoomLevel ++;
+			}
+			else {
+				nextZoomLevel = 1/((1/nextZoomLevel) - 1);
+			}
 		}
-		else {
-			//zoomLevel = 1/((1/zoomLevel) - 1);
-			nextZoomLevel = 1/((1/nextZoomLevel) - 1);
-		}
-		//System.out.println("new zoom is" + zoomLevel);
-		//System.out.println("new zoom level is" + nextZoomLevel);
-		return;
-		/*
-    	if (!isEnabled() || zoom_count == 3 || (changing_view != null && changing_view.isRunning())) {
-            return;
-        }
-        zoom_count = zoom_count + 1;
-        if (v.getType() == Vehicle.TYPE_UAV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
-        } else if (v.getType() == Vehicle.TYPE_UUV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
-        }
-        changing_view.setAcceleration(0.4f);
-        changing_view.start();
-		 */
+		return zoom_count;
 	}
 
-	public void zoom_out() {
-
-		//if (zoomLevel <= 1) {
-		if (nextZoomLevel <= 1) {
-			//	zoomLevel = 1/((1/zoomLevel) + 1);
-			nextZoomLevel = 1/((1/nextZoomLevel) + 1);
+	public int zoom_out() {
+		if(zoom_count > ZOOM_MIN) {
+			zoom_count -= 1;
+			if (nextZoomLevel <= 1) {
+				nextZoomLevel = 1/((1/nextZoomLevel) + 1);
+			}
+			else {
+				nextZoomLevel --;
+			}
 		}
-		else {
-			//zoomLevel --;
-			nextZoomLevel --;
-		}
-		//System.out.println("zoom is" + zoomLevel);
-		//System.out.println("zoom is " + nextZoomLevel);
-		return;
-		/*
-        if (!isEnabled() || zoom_count == 0 || (changing_view != null && changing_view.isRunning())) {
-            return;
-        }
-        zoom_count = zoom_count - 1;
-        if (v.getType() == Vehicle.TYPE_UAV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
-        } else if (v.getType() == Vehicle.TYPE_UUV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
-        }
-        changing_view.setAcceleration(0.4f);
-        changing_view.start();
-		 */
+		return zoom_count;
 	}
+	
+	public static int getZoomCount() {return zoom_count;}
 
 	// PopupMenu implementation
 	public JPopupMenu getPopMenu() { return popMenu; }   
@@ -1256,7 +1132,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public void init(GLAutoDrawable arg0) {
 		System.out.println("init() called");
 
-
 		GL2 gl = arg0.getGL().getGL2();
 		tiler = new MapTileCreator(TILE_LENGTH, VIEWPORT_LENGTH, OVERLAP_LENGTH); // Precomputing of tiles is complete
 		subTextures = tiler.makeGridFiles(arg0);
@@ -1400,7 +1275,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			return mySubTextures;
 		}
 
-
 		public int getMaxTileX() {
 			return maxTileX;
 		}
@@ -1409,10 +1283,4 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			return maxTileY;
 		}
 	}
-
-
-
 }
-
-
-

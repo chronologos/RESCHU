@@ -272,7 +272,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			
 			if( investigatedVehicle == v ) {
 				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
-						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
+						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
 			}
 
 			if( v.getType() == Vehicle.TYPE_UAV  ) {
@@ -909,7 +909,7 @@ class PaintComponent {
 		g.fillPolygon(px, py, 4); 
 	}
 
-	// this function draw the highlight circle and stoke surrounding an UAV
+	// this function draw the highlight circle and strokes surrounding an UAV
 	public void paintHighlight(Graphics2D g, int x, int y, 
 			int SIZE_CELL, int half_SIZE_CELL, int object_size, int ruler_size, 
 			Color highlight_color, BasicStroke stroke, BasicStroke wide_stroke) {
@@ -976,5 +976,39 @@ class PaintComponent {
 					y * SIZE_CELL - Math.round(object_height_size/2) - ruler_size, 
 					object_width_size, object_height_size, 180, 180);
 		}
+	}
+	
+	// this function draw the stroke indicating zooming bar
+	public void PaintZoomBar(Graphics2D g, int x, int y, 
+			int SIZE_CELL, int half_SIZE_CELL, int object_size, int ruler_size, 
+			Color highlight_color, BasicStroke stroke, BasicStroke wide_stroke) {
+
+		g.setColor(highlight_color);
+		g.drawOval(
+				(x-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
+				(y-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
+				object_size,object_size);
+		g.setStroke(wide_stroke);
+		g.drawLine(
+				(x-Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
+				(y) * SIZE_CELL + half_SIZE_CELL, 
+				(x-Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL, 
+				(y) * SIZE_CELL + half_SIZE_CELL);
+		g.drawLine(
+				(x+Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
+				(y) * SIZE_CELL + half_SIZE_CELL,  
+				(x+Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL, 
+				(y) * SIZE_CELL + half_SIZE_CELL);
+		g.drawLine(
+				(x) * SIZE_CELL + half_SIZE_CELL, 
+				(y-Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL,   
+				(x) * SIZE_CELL + half_SIZE_CELL, 
+				(y-Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL);
+		g.drawLine(
+				(x) * SIZE_CELL + half_SIZE_CELL, 
+				(y+Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
+				(x) * SIZE_CELL + half_SIZE_CELL, 
+				(y+Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL);
+		g.setStroke(stroke);
 	}
 }

@@ -86,5 +86,4 @@ public class PanelPayloadControls extends JPanel implements ActionListener
     
     public void enableSubmit(boolean enable) { btnSubmit.setEnabled(enable); }
     public void setListener(GUI_Listener l) { listener = l; }
-    
 }

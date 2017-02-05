@@ -443,11 +443,29 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	@Override
 	public void zoomIn() {
-		pnlPayload.zoom_in();
+		int level = pnlPayload.zoom_in();
+		if(level < pnlPayload.ZOOM_MAX) {
+			Write(MyDB.INVOKER_USER, MyDB.ZOOM_IN, -1, "Clicked Zoom In, current Zoom Level = "+level, -1, -1);
+		}
+		else
+			zoomMax();
 	}
 	@Override
 	public void zoomOut() {
-		pnlPayload.zoom_out();
+		int level = pnlPayload.zoom_out();
+		if(level > pnlPayload.ZOOM_MIN) {
+			Write(MyDB.INVOKER_USER, MyDB.ZOOM_OUT, -1, "Clicked Zoom Out, current Zoom Level = "+level, -1, -1);
+		}
+		else
+			zoomMin();
+	}
+	@Override
+	public void zoomMax() {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MAX, -1, "Clicked Zoom In, reached Zoom Max", -1, -1);
+	}
+	@Override
+	public void zoomMin() {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min", -1, -1);
 	}
 	@Override
 	public void submitPayload() {
