@@ -627,7 +627,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		lsnr.Payload_Submit(false); // T3
 		initAnimRenderer(); 
 		glEnabled(false);
-		screenBlackedAfterPayloadDone = false;
+		// screenBlackedAfterPayloadDone = false;
 	}
 
 	// PAYLOAD CAMERA CONTROL
@@ -681,6 +681,21 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 				nextZoomLevel = 1/((1/nextZoomLevel) - 1);
 			}
 		}
+		
+		/*
+    	if (!isEnabled() || zoom_count == 3 || (changing_view != null && changing_view.isRunning())) {
+            return -1;
+        }
+        zoom_count = zoom_count + 1;
+        if (v.getType() == Vehicle.TYPE_UAV) {
+            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
+        } else if (v.getType() == Vehicle.TYPE_UUV) {
+            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
+        }
+        changing_view.setAcceleration(0.4f);
+        changing_view.start();
+		*/
+		
 		return zoom_count;
 	}
 
@@ -694,6 +709,21 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 				nextZoomLevel --;
 			}
 		}
+		
+		/*
+        if (!isEnabled() || zoom_count == 0 || (changing_view != null && changing_view.isRunning())) {
+            return -1;
+        }
+        zoom_count = zoom_count - 1;
+        if (v.getType() == Vehicle.TYPE_UAV) {
+            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
+        } else if (v.getType() == Vehicle.TYPE_UUV) {
+            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
+        }
+        changing_view.setAcceleration(0.4f);
+        changing_view.start();
+		*/
+		
 		return zoom_count;
 	}
 	
@@ -724,7 +754,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		}
 		else {
 			// btnSubmit = new JButton("SUBMIT");
-			btnSubmit = new JButton("NEXT");
+			btnSubmit = new JButton("REASSIGN");
 			btnSubmit.addActionListener(
 					new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
