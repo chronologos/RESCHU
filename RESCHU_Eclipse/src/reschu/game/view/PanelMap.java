@@ -59,6 +59,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private final int vHeight = MySize.SIZE_VEHICLE_HEIGHT_PXL;
 	private final int targetsize = MySize.SIZE_TARGET_PXL;
 
+	private Reschu reschu;
+
 	public synchronized Vehicle getSelectedVehicle() {return selectedVehicle;}
 	public synchronized void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
 	
@@ -97,6 +99,13 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
+	
+	/*
+	// make mutual reference between Reschu and PanelMap
+	public void setRESCHU(Reschu r) {
+		reschu = r;
+	}
+	*/
 
 	/**
 	 * For DEBUG
@@ -115,9 +124,15 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		paintVehicles(g2d);
 		paintDrag(g2d);
 		paintText(g2d);
+		
+		// paintZoomBar(g2d);
 		if( mapSettingMode ) paintBorder(g2d, Color.blue);
 		if( eventDisabled ) paintBorder(g2d, Color.red);
-		//        g.drawImage(backbuffer, 0, 0, this);
+		// g.drawImage(backbuffer, 0, 0, this);
+		
+		// after make mutual reference between Reschu and PanelMap
+		// can call textOverlay.update() every cycle in Reschu
+		// reschu.textOverlay.update();
 	}
 
 	@Override
@@ -355,6 +370,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		//    	System.out.println("DRAW: (" + region[0] + "," + region[1] + ") - ( " +region[2] + "," + region[3] + ")");
 	}
 
+	public void paintZoomBar(Graphics2D g) {
+		p.ZoomBar(g, 0, 0, MyColor.COLOR_ZOOM_INDICATOR, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
+	}
+	
 	public void paintBorder(Graphics2D g, Color c) { 
 		g.setColor(c); 
 		g.fillRect(0,0,getWidth(),5);				// top
@@ -886,7 +905,6 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				Utils.max(x1, x2, x3, x4, x5)+w, Utils.max(y1, y2, y3, y4, y5)+w};
 		return ret;
 	}
-
 }
 
 class PaintComponent {
@@ -979,36 +997,10 @@ class PaintComponent {
 	}
 	
 	// this function draw the stroke indicating zooming bar
-	public void PaintZoomBar(Graphics2D g, int x, int y, 
-			int SIZE_CELL, int half_SIZE_CELL, int object_size, int ruler_size, 
-			Color highlight_color, BasicStroke stroke, BasicStroke wide_stroke) {
-
-		g.setColor(highlight_color);
-		g.drawOval(
-				(x-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
-				(y-Math.round(object_size/SIZE_CELL/2)) * SIZE_CELL, 
-				object_size,object_size);
+	public void ZoomBar(Graphics2D g, int x, int y, Color bar_color, BasicStroke stroke, BasicStroke wide_stroke) {
+		g.setColor(bar_color);
 		g.setStroke(wide_stroke);
-		g.drawLine(
-				(x-Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
-				(y) * SIZE_CELL + half_SIZE_CELL, 
-				(x-Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL, 
-				(y) * SIZE_CELL + half_SIZE_CELL);
-		g.drawLine(
-				(x+Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
-				(y) * SIZE_CELL + half_SIZE_CELL,  
-				(x+Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL, 
-				(y) * SIZE_CELL + half_SIZE_CELL);
-		g.drawLine(
-				(x) * SIZE_CELL + half_SIZE_CELL, 
-				(y-Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL,   
-				(x) * SIZE_CELL + half_SIZE_CELL, 
-				(y-Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL);
-		g.drawLine(
-				(x) * SIZE_CELL + half_SIZE_CELL, 
-				(y+Math.round(object_size/SIZE_CELL/2)-ruler_size) * SIZE_CELL + half_SIZE_CELL, 
-				(x) * SIZE_CELL + half_SIZE_CELL, 
-				(y+Math.round(object_size/SIZE_CELL/2)+ruler_size) * SIZE_CELL + half_SIZE_CELL);
+		g.drawLine(x, y, x+10, y);
 		g.setStroke(stroke);
 	}
 }

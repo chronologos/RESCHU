@@ -5,6 +5,7 @@ import java.awt.Color;
 public class MyColor {
     final static public Color COLOR_HIGHLIGHT 			  = new Color(255,255,255,255);
     final static public Color COLOR_INVESTIGATE			  = new Color(51,255,51,255);
+    final static public Color COLOR_ZOOM_INDICATOR		  = new Color(51,255,51,255);
     final static public Color COLOR_VEHICLE 			  = new Color(128,224,255,150);
     final static public Color COLOR_HIGHLIGHT_CONTROL	  = new Color(128,224,255,255);
     final static public Color COLOR_HIGHLIGHT_TAB	  	  = new Color(128,224,255,200);

@@ -54,6 +54,20 @@ public class AppMain implements ActionListener
     public void TutorialFinished() {
     }
     
+    // for debugging mode
+    public void initRESCHU_public(String username, int scenario) {
+    	_gamemode = 1;
+    	try {
+			initRESCHU(username,  scenario);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
 	private void initRESCHU(String username, int scenario) throws NumberFormatException, IOException 
 	{	  
 		// Setting _scenario again seems counter-intuitive here. 
@@ -171,6 +185,8 @@ public class AppMain implements ActionListener
 		SwingUtilities.invokeLater(new Runnable() {
             public void run () {
     			AppMain app = new AppMain();
+    			// for debugging mode
+    			// app.initRESCHU_public("", 1);
     			app.setFrmLogin();
             }
         });			

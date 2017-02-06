@@ -70,6 +70,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	private Tutorial tutorial; 
 	public String filename;
 	private Random rnd = new Random();
+	public TextOverlay textOverlay;
 
 	/** Interactive Tutorial Mode? */
 	public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
@@ -250,13 +251,16 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 4000, 4000);
 		// pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 563, 563);
 		payload_canvas.addListener(pnlPayload);
-		payload_canvas.addGLEventListener(pnlPayload);   
-		payload_canvas.addGLEventListener(new TextOverlay());
+		payload_canvas.addGLEventListener(pnlPayload); 
+		textOverlay= new TextOverlay();
+		payload_canvas.addGLEventListener(textOverlay);
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
 
 		// Create Each Panel Objects
 		pnlMap = new PanelMap(this, game, "MAP_PANEL");
+		// make mutual reference between Reschu and PanelMap
+		// pnlMap.setRESCHU(this);
 		pnlControl = new PanelControl(this, game, "CONTROL_PANEL");
 		pnlPayloadControls = new PanelPayloadControls(this, "PAYLOAD_CONTROLS", origin_time);  
 		pnlMsgBoard = new PanelMsgBoard();
