@@ -107,7 +107,11 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 		eventFromMap = true;
 		tabbedPane.setSelectedIndex(idx);
 	}
-		
+	
+	public void PrintTaskMsg (int idx) {
+		pnlVehicle[idx-1].PrintTaskMsg();
+	}
+	
 	public void chkEngageEnabled() {
 		pnlGeneral.chkEngageEnabled();
 		for(int i=0; i<pnlVehicle.length; i++) pnlVehicle[i].chkEngageEnabled();
@@ -286,7 +290,7 @@ class VehiclePanel extends JPanel implements ActionListener
 	private ImageIcon imgIcon;
 	private JPanel pnlVehicle, pnlStatus;//, pnlControl;
 	private JLabel lblDamage, lblMission;
-	private JTextArea txtMission = new JTextArea(5,5); 
+	private JTextArea txtMission = new JTextArea(5,5);
 	private JScrollPane scrollPane;
 	private JProgressBar progressBar;
 	//private JButton btnGoal, btnAddWP, btnDelWP;
@@ -305,7 +309,6 @@ class VehiclePanel extends JPanel implements ActionListener
 		setLayout(new TableLayout(size));
 		setPreferredSize(new Dimension(180,230));
 		
-		//
 		// TOP-LEFT
 		pnlVehicle = new JPanel();
 		bdrTitle = BorderFactory.createTitledBorder("Vehicle");
@@ -330,7 +333,7 @@ class VehiclePanel extends JPanel implements ActionListener
 		// TOP-RIGHT
 		bdrTitle = BorderFactory.createTitledBorder("Vehicle Health And Status");		
 		pnlStatus = new JPanel();
-		pnlStatus.setLayout(grid_bag_layout); //pnlStatus.setLayout(new GridLayout(5,1));
+		pnlStatus.setLayout(grid_bag_layout); // pnlStatus.setLayout(new GridLayout(5,1));
 		pnlStatus.setBorder(bdrTitle);
 		lblDamage = new JLabel("Damage Level");
 		lblMission = new JLabel("Current Mission");
@@ -338,7 +341,7 @@ class VehiclePanel extends JPanel implements ActionListener
 		txtMission.setLineWrap(true);
 		scrollPane = new JScrollPane(txtMission);
 		scrollPane.setAutoscrolls(true);
-		scrollPane.remove(scrollPane.getHorizontalScrollBar());		
+		scrollPane.remove(scrollPane.getHorizontalScrollBar());
 		btnEngage = new JButton("Engage");
 		btnEngage.addActionListener(this);
 		progressBar = new JProgressBar(0, 100);
@@ -354,7 +357,15 @@ class VehiclePanel extends JPanel implements ActionListener
         add(pnlStatus, "1,0");
 		//insert_grid(gbc, pnlVehicle, 0, 0, 1, 1, 0, 0, 0); add(pnlVehicle);
 		//insert_grid(gbc, pnlStatus, 1, 0, 1, 1, 0.9, 0, 0); add(pnlStatus); 
-	}	
+	}
+	
+	// print task message when an UAV reaches a target
+	public void PrintTaskMsg() {
+		JLabel task_msg = new JLabel("<html>TASK<br>Please first set the zoom level to 0<br>And count the number of circular building"
+				+ "<br>in the investigation window<br>Then enter your answer and send it<br>to reassign the UAV</html>");
+		task_msg.setVerticalAlignment(SwingConstants.TOP);
+		scrollPane.setViewportView(task_msg);
+	}
 	
 	public String getName() { return name; }	
 	

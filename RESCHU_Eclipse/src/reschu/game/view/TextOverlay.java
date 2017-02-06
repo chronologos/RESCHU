@@ -80,17 +80,17 @@ public class TextOverlay implements GLEventListener {
 		trB17.draw("[+]", (drawable.getSurfaceWidth() * 0 / 10) + 41, drawable.getSurfaceHeight() / 4 + 176);
 		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 169);
 		
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 156);
+		trB17.draw(" 5 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 156);
 		trB17.draw(" 4 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 141);
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 126);
+		trB17.draw(" 3 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 126);
 		trB17.draw(" 2 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 111);
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 96);
+		trB17.draw(" 1 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 96);
 		trB17.draw(" 0 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 81);
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 66);
+		trB17.draw("-1 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 66);
 		trB17.draw("-2 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 51);
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 36);
+		trB17.draw("-3 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 36);
 		trB17.draw("-4 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 21);
-		trB17.draw("   |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 6);
+		trB17.draw("-5 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 6);
 		
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 156);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 141);

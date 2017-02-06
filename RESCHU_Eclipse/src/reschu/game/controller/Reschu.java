@@ -564,6 +564,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void Vehicle_WP_Add_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.addWP(v);}
 	public void Vehicle_WP_Del_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.delWP(v);}
 	public void Vehicle_Engage_From_pnlControl(Vehicle v) { 
+		pnlControl.PrintTaskMsg(v.getIndex());
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		try {
 			Engage(v);
