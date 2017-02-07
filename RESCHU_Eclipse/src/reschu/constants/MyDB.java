@@ -71,6 +71,8 @@ public class MyDB {
 	final public static int VEHICLE_DELETED				= 81;
 	final public static int NEW_TARGET_ASSIGNED			= 82;
 	
+	final public static int GENERATE_GHOST_MISSION		= 85;
+	
 	final public static int ZOOM_IN						= 90;
 	final public static int ZOOM_OUT					= 91;
 	final public static int ZOOM_MAX					= 92;

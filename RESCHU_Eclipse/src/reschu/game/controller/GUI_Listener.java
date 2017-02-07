@@ -118,4 +118,7 @@ public interface GUI_Listener {
     public void EVT_Home_From_Compact_No(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_UAV_Panel_Yes(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord);
+    
+    // For Ghost Mission
+    public void EVT_Generate_Ghost_Mission(Vehicle v);
 }

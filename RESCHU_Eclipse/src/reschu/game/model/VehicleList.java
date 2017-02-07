@@ -34,7 +34,7 @@ public class VehicleList {
      * @throws UserDefinedException
      */
     public void addVehicle(int idx, String v_type, String v_name, String v_payload, int milliseconds, 
-    		Random rnd, Map m, GUI_Listener l, Game g, boolean b) throws UserDefinedException {
+    		Random rnd, Map m, GUI_Listener l, Game g) throws UserDefinedException {
     	if( this.hasVehicle(v_name) )
             throw new UserDefinedException(v_name + " already exists.");
     	int x = rnd.nextInt(MySize.width);
@@ -56,13 +56,28 @@ public class VehicleList {
             v_uav.setIndex(idx);            
             v_uav.setName(v_name);
             v_uav.setType(v_type);
-            v_uav.setPayload(v_payload);            
+            v_uav.setPayload(v_payload);
             v_uav.setPos(x, y); 
             v_uav.setVelocity(milliseconds);
             v_uav.setGuiListener(l);
-            if(b) v_list.addLast(v_uav);
-            else v_list.add(idx-1, v_uav);
+            v_list.addLast(v_uav);
         }
+    }
+    
+    // Add ghost mission UAV
+    public void AddGhostUAV(Vehicle v, Map m, Game g, GUI_Listener l) {
+        UAV v_uav = new UAV(m, g);
+        v_uav.setIndex(v_list.size());            
+        v_uav.setName(v.getName()+" GHOST");
+        v_uav.setType(v.getType());
+        v_uav.setPayload(v.getPayload());
+        v_uav.setPos(v.getX(), v.getY());
+        v_uav.setVelocity(v.getVelocity());
+        v_uav.setGuiListener(l);
+        
+        v_list.addLast(v_uav);
+        
+        v_uav.setTarget(v_uav.getMap().getListUnassignedTarget().get(1));
     }
     
     // Returns the properties of the vehicle list

@@ -836,6 +836,13 @@ public class Reschu extends JFrame implements GUI_Listener {
     	Write(MyDB.INVOKER_USER, MyDB.NEW_TARGET_ASSIGNED, vIdx,
     			"UAV "+vIdx+" is assigned to target "+t.getName()+" at the position of "+t.getPos()[0]+", "+t.getPos()[1], xCoord, yCoord);
     }
+    
+    // For Ghost Mission
+    public void EVT_Generate_Ghost_Mission(Vehicle v) {
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.GENERATE_GHOST_MISSION, v.getIndex(),
+    			"UAV "+v.getIndex()+" is under attck, generate its ghost mission", v.getX(), v.getY());
+    	game.AddGhostUAV(v);
+    }
 	
 	// main and play function
 	private void play(String arg) {

@@ -26,13 +26,12 @@ public class Vehicle {
 	private int status;
 	private double vDamage;
 	private Game g;
-	//    private int velocity_buffer;
-	//    private int velocity_scale;
+	// private int velocity_buffer;
+	// private int velocity_scale;
 	private int stuckCount;
 	private boolean isStuck;
 	private boolean intersect;
 	private boolean isHijacked;
-
 	private LinkedList<int[]> observedPath;
 
 	/**
@@ -51,8 +50,8 @@ public class Vehicle {
 			return groundTruthPath;
 		}
 	}
-	public synchronized LinkedList<int[]> getGroundTruthPath() { return groundTruthPath;} 
 	
+	public synchronized LinkedList<int[]> getGroundTruthPath() { return groundTruthPath; }
 
 	/**
 	 * Add a waypoint to the path of this vehicle  (synchronized)
@@ -132,7 +131,6 @@ public class Vehicle {
 	public synchronized void setObservedX(int x){ xPosObserved = x; }
 	public synchronized int getX(){ 
 		if (isHijacked){
-			// System.out.println("Returning observed X");
 			return xPosObserved;
 		}
 		else{
@@ -190,18 +188,20 @@ public class Vehicle {
 		map=m; 
 		setStatus(MyGame.STATUS_VEHICLE_STASIS); 
 		vDamage = 0;
-		//    	velocity_scale = MySpeed.SPEED_TIMER;
-		//    	velocity_buffer = 0;
+		// velocity_scale = MySpeed.SPEED_TIMER;
+		// velocity_buffer = 0;
 		stuckCount = 0;
 		isStuck = false;
 		intersect = false;
 	}
 
+	// check if reach a target
 	private boolean boundaryCheck(int x, int y, int[] target_pos) {
 		int w = Math.round(MySize.SIZE_TARGET_PXL / MySize.SIZE_CELL / 2);    	 
 		if( (x<=target_pos[0]+w)&&(x>=target_pos[0]-w)&&(y<=target_pos[1]+w)&&(y>=target_pos[1]-w) ) return true;
 		return false;	
 	}
+	
 	/**
 	 * Returns true if a vehicle's goal point is one of occupied targets.
 	 */
@@ -253,7 +253,7 @@ public class Vehicle {
 						lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
 						break;
 					}
-					setTarget(getMap().getListUnassignedTarget().get(i)); 
+					setTarget(getMap().getListUnassignedTarget().get(i));
 					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
 					getMap().assignTarget(new int[]{x, y});
 					assigned = true;
@@ -337,8 +337,7 @@ public class Vehicle {
 			if( assigned ) lsnr.EVT_GP_ChangeGP_End_Assigned(index, x, y, getTarget().getName());
 			else lsnr.EVT_GP_ChangeGP_End_Unassigned(index, x, y);
 		}
-	} 
-
+	}
 
 	public synchronized int addWaypoint(int x, int y) {
 		double d, idx = 0;
@@ -350,8 +349,7 @@ public class Vehicle {
 		for( int i=0; i<getPathSize()-1; i++ ) {
 			d = Game.getDistance(getPathAt(i)[0], getPathAt(i)[1], x, y) + Game.getDistance(getPathAt(i+1)[0], getPathAt(i+1)[1], x, y);
 			if( d < distance ) {distance = d; idx = i+1;} 
-		}    	
-
+		}
 		if( x > 0 && x < MySize.width && y > 0 && y < MySize.height )
 			addPath((int)idx, new int[]{x, y});
 		return (int)idx;
@@ -359,7 +357,6 @@ public class Vehicle {
 
 	public synchronized int addWaypoint(int x, int y, int idx) {
 		addPath(idx, new int[]{x, y});
-
 		return idx;
 	}
 
@@ -367,7 +364,6 @@ public class Vehicle {
 		for( int i=0; i<getPathSize()-1; i++ ) 
 			if( getPathAt(i)[0] == x && getPathAt(i)[1] == y ) {
 				removePathAt(i);
-
 			}
 	}
 
@@ -715,14 +711,17 @@ public class Vehicle {
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		
 		int[] hackCoords = new int[]{xCoord, yCoord};
+		observedPath = groundTruthPath;
 		
-		//System.out.println("About to add hack coords, getX currently returns " + getX());
-		observedPath = new LinkedList<int[]>(groundTruthPath);
-		groundTruthPath.clear();
-		groundTruthPath.add(hackCoords);
-		//System.out.println("Hack complete, getX currently returns " + getX());		
-		//groundTruthPath.addFirst(hackCoords);
-		//groundTruthPath.set(1, hackCoords);
+		lsnr.EVT_Generate_Ghost_Mission(this);
+		
+		// observedPath = new LinkedList<int[]>(groundTruthPath);
+		// groundTruthPath.clear();
+		// groundTruthPath.add(hackCoords);
+		
+		// System.out.println("Hack complete, getX currently returns " + getX());		
+		// groundTruthPath.addFirst(hackCoords);
+		// groundTruthPath.set(1, hackCoords);
 		//    	else observedPath.set(0, hackCoords); // Just overwrite next item on path;
 		//    	groundTruthPath = observedPath; // swap path and hackpath
 		//    	observedPath = temp;
