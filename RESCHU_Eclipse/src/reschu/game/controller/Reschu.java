@@ -63,14 +63,15 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public UAVMonitor uavMonitor;
 	public AttackNotificationEngine attackNotificationEngine;
 	public AttackEngine attackEngine;
+	public TextOverlay payloadTextOverlay;
 
 	public Game game;
 	private double origin_time;
+	private int zoomLevel;
 	private TitledBorder bdrTitle;  
 	private Tutorial tutorial; 
 	public String filename;
 	private Random rnd = new Random();
-	public TextOverlay textOverlay;
 
 	/** Interactive Tutorial Mode? */
 	public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
@@ -251,9 +252,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 4000, 4000);
 		// pnlPayload = new PanelPayload(this, "PAYLOAD_PANEL", payload_canvas, game,"Pictures/Tiles", 563, 563);
 		payload_canvas.addListener(pnlPayload);
-		payload_canvas.addGLEventListener(pnlPayload); 
-		textOverlay= new TextOverlay();
-		payload_canvas.addGLEventListener(textOverlay);
+		payload_canvas.addGLEventListener(pnlPayload);
+		
+		payloadTextOverlay = new TextOverlay();
+		payload_canvas.addGLEventListener(payloadTextOverlay);
+		
 		uavMonitor = new UAVMonitor(pnlPayload);
 		pnlPayload.setUAVMonitor(uavMonitor);
 
@@ -445,6 +448,18 @@ public class Reschu extends JFrame implements GUI_Listener {
 		return;
 		//pnlPayload.pan_down(); }
 	}
+	// zoom functions, need to improve
+	@Override
+	public void zoomIn() {
+		zoomLevel = pnlPayload.zoom_in();
+		payloadTextOverlay.setZoomLevel(zoomLevel);
+	}
+	@Override
+	public void zoomOut() {
+		zoomLevel = pnlPayload.zoom_out();
+		payloadTextOverlay.setZoomLevel(zoomLevel);
+	}
+	/*
 	@Override
 	public void zoomIn() {
 		int level = pnlPayload.zoom_in();
@@ -471,6 +486,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void zoomMin() {
 		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min", -1, -1);
 	}
+	*/
 	@Override
 	public void submitPayload() {
 		pnlPayload.checkCorrect();

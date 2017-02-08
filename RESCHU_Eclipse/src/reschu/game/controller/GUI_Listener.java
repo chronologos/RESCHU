@@ -22,8 +22,8 @@ public interface GUI_Listener {
     public void rotateCCWSelected();    
     public void zoomIn();
     public void zoomOut();
-    public void zoomMax();
-    public void zoomMin();
+    // public void zoomMax();
+    // public void zoomMin();
     public void submitPayload();	// For T3
         
     public void showMessageOnTopOfMap(String msg, int duration);

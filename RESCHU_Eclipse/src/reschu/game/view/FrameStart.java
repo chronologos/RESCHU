@@ -39,7 +39,7 @@ public class FrameStart extends JFrame implements ActionListener {
     private Timer tmr_clock;  
     private int cur_progress;  
     private int cur_time;
-    final private int TIME_WAIT_MSEC = 10 * 1000;
+    final private int TIME_WAIT_MSEC = 10 * 10;
     final private int TIME_INCREMENT_MSEC = 50;
 	
 	public FrameStart(GUI_Listener l) {		
