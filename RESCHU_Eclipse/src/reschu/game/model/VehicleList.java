@@ -65,19 +65,22 @@ public class VehicleList {
     }
     
     // Add ghost mission UAV
-    public void AddGhostUAV(Vehicle v, Map m, Game g, GUI_Listener l) {
+    public Vehicle AddGhostUAV(Vehicle v, Map m, Game g, GUI_Listener l) {
         UAV v_uav = new UAV(m, g);
-        v_uav.setIndex(v_list.size());            
+        v_uav.setIndex(v.getIndex());
+        // v_uav.setIndex(v_list.size()+1);
         v_uav.setName(v.getName()+" GHOST");
         v_uav.setType(v.getType());
         v_uav.setPayload(v.getPayload());
         v_uav.setPos(v.getX(), v.getY());
         v_uav.setVelocity(v.getVelocity());
         v_uav.setGuiListener(l);
-        
-        v_list.addLast(v_uav);
-        
-        v_uav.setTarget(v_uav.getMap().getListUnassignedTarget().get(1));
+        return v_uav;
+    }
+    
+    // add an vehicle to the last position of the list
+    public void AddVehicleToList(Vehicle v) {
+    	v_list.addLast(v);
     }
     
     // Returns the properties of the vehicle list

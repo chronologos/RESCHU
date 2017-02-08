@@ -167,7 +167,7 @@ public class Vehicle {
 	public Target getTarget() { return target; }
 
 	public void setStatus(int i) { status = i; }    
-	public int getStatus() { return status; }   
+	public int getStatus() { return status; }
 
 	public void setIntersect(boolean b) { intersect = b; }
 	public boolean getIntersect() { return intersect; }

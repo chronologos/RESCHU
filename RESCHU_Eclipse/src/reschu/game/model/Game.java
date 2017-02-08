@@ -233,7 +233,9 @@ public class Game implements Runnable, ActionListener
 	
 	// Add ghost UAV to vehicle list
 	public void AddGhostUAV(Vehicle v) {
-		vehicleList.AddGhostUAV(v, map, this, lsnr);
+		Vehicle ghost_uav = vehicleList.AddGhostUAV(v, map, this, lsnr);
+		AutoTargetAssign(ghost_uav);
+		vehicleList.AddVehicleToList(ghost_uav);
 	}
 
 	public void setPayload() throws NumberFormatException, IOException { 
@@ -415,13 +417,18 @@ public class Game implements Runnable, ActionListener
 				}
 			}
 			else {
-				for(int i=0; i<map.getListUnassignedTarget().size(); i++) {
-					if( map.getListUnassignedTarget().get(i).isVisible() ) {
-						target = map.getListUnassignedTarget().get(i);
-						v.addGoal(target.getPos()[0], target.getPos()[1]);
-						if( elapsedTime != 0 ) lsnr.EVT_GP_SetGP_by_System(v.getIndex(), target.getName());
-						break;
+				if(!v.getName().contains("GHOST")) {
+					for(int i=0; i<map.getListUnassignedTarget().size(); i++) {
+						if( map.getListUnassignedTarget().get(i).isVisible() ) {
+							target = map.getListUnassignedTarget().get(i);
+							v.addGoal(target.getPos()[0], target.getPos()[1]);
+							if( elapsedTime != 0 ) lsnr.EVT_GP_SetGP_by_System(v.getIndex(), target.getName());
+							break;
+						}
 					}
+				}
+				else {
+					v.addGoal(500, 500);
 				}
 			}
 		}

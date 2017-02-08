@@ -15,10 +15,10 @@ public class Map {
   private LinkedList<int[]> listHazard = new LinkedList<int[]>();
 
   Map() {}
-  Map(int width, int height, Game g, GUI_Listener l) { 
-    mapArray = new int[width][height]; 
-    this.g = g; 
-    lsnr = l;
+  Map(int width, int height, Game g, GUI_Listener l) {
+	mapArray = new int[width][height];
+	this.g = g; 
+	lsnr = l;
   }
 
   public List<Target> getListAssignedTarget() {return listAssignedTarget; }

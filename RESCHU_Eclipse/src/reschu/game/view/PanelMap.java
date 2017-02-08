@@ -279,6 +279,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			Color clrVehicle;
 			if( v.getStatus() == MyGame.STATUS_VEHICLE_PENDING ) clrVehicle = MyColor.COLOR_VEHICLE_PENDING;
 			else clrVehicle = MyColor.COLOR_VEHICLE;
+			
+			if(v.getName().contains("GHOST")) clrVehicle = MyColor.COLOR_GHOST_VEHICLE;
 
 			if( selectedVehicle == v ) {
 				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
@@ -296,8 +298,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 						vWidth, vHeight, 
 						new Color(0,0,0,250), clrVehicle, Vehicle.TYPE_UAV );
 				// the UAV number
-				p.paintString(g, v.getX()-1, v.getY()+2, cellsize, new Color(255,255,255,255), 
-						MyFont.fontBold, Integer.toString(v.getIndex()));
+				if(v.getName().contains("GHOST"))
+					p.paintString(g, v.getX()-3, v.getY()+4, cellsize, new Color(255,255,255,255),
+							MyFont.fontBold, "\'"+Integer.toString(v.getIndex())+"\'");
+				else
+					p.paintString(g, v.getX()-1, v.getY()+4, cellsize, new Color(255,255,255,255),
+							MyFont.fontBold, Integer.toString(v.getIndex()));
 				
 				if( v.getPayload() == Vehicle.PAYLOAD_COM ) {
 					p.paintOval(g, v.getX()+1, v.getY()+2, cellsize, MySize.SIZE_UAV_COMM_PXL, 
