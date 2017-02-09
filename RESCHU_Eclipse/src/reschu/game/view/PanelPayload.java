@@ -106,7 +106,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private double rotate_angle;
 	private double CAMERA_ANGLE;
 
-	private static int zoom_count; 
+	private static int zoom_count = 3; 
 	private Vehicle v;
 	private Payload curPayload;
 	private float x_limit = (float) rnd.nextInt(10);
@@ -184,7 +184,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private MapTileCreator tiler;
 	private String tileFileDir;
 
-	private float nextZoomLevel = 1;
+	private float nextZoomLevel = 3;
 	public boolean needToRotate = false;
 	public boolean needToRecenter = false;
 
