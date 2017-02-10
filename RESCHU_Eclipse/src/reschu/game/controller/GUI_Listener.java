@@ -32,7 +32,10 @@ public interface GUI_Listener {
     public void Payload_Finished_From_pnlPayload(Vehicle v);
     public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p);
     public void Payload_Graphics_Update(); // For T3
-    public void Payload_Submit(boolean submit);	// For T3 
+    public void Payload_Submit(boolean submit);	// For T3
+    
+    // Events From Message Box
+    public void Payload_Finished_From_Msg();
     
     // Events From Vehicle
     //public void Vehicle_Reached_Target_From_Vehicle(Vehicle v);

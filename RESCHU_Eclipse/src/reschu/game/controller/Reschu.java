@@ -549,6 +549,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlPayloadControls.setEnabled(false);
 		pnlControl.Update_Vehicle_Payload_Clear(v);
 	}
+	
+	public void Payload_Finished_From_Msg() {
+		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
+	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {
 		PanelMsgBoard.Msg("[MISSION(" +v.getIndex()+")] " + p.getStatement());

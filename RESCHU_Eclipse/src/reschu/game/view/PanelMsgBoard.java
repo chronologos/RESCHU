@@ -11,6 +11,8 @@ import javax.swing.border.TitledBorder;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
+import reschu.game.controller.GUI_Listener;
+
 public class PanelMsgBoard extends JPanel implements ActionListener
 {	
 	private static final long serialVersionUID = -6444398994914980642L;
@@ -22,6 +24,8 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 	private static JLabel lblChat = new JLabel(">Msg: ");
 	private JScrollPane scrollPane;
 	private JButton btnSend = new JButton("SEND");
+	
+	private GUI_Listener lsnr;
 	
 	public PanelMsgBoard() {	
 		TitledBorder bdrTitle = BorderFactory.createTitledBorder("Message");
@@ -74,7 +78,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e) {
     	if( e.getSource() == btnSend || e.getSource() == txtChat ) {
     		Msg("(Operator) " + txtChat.getText()); txtChat.setText("");
-    		
+    		lsnr.Payload_Finished_From_Msg();
     	}
     }
 }
