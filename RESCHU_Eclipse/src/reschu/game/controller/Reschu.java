@@ -551,7 +551,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	public void Payload_Finished_From_Msg() {
-		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
+		// Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
+		System.out.println("XXXXX");
 	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {

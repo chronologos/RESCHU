@@ -84,7 +84,7 @@ public class Game implements Runnable, ActionListener
 		frmStart.setSize(400,300);
 		frmStart.setLocation(300,300);
 		frmStart.setAlwaysOnTop(true);
-		frmStart.setVisible(true);	 
+		frmStart.setVisible(true);
 
 		rnd.setSeed( getSeedNum(scenario) ); 
 		setProbability_Target_Visibility(scenario);

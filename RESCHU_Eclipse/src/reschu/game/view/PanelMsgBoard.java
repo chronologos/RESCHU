@@ -78,6 +78,8 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e) {
     	if( e.getSource() == btnSend || e.getSource() == txtChat ) {
     		Msg("(Operator) " + txtChat.getText()); txtChat.setText("");
+    	}
+    	if (e.getSource() == btnSend) {
     		lsnr.Payload_Finished_From_Msg();
     	}
     }
