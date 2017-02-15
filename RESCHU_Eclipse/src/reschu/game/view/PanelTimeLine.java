@@ -100,10 +100,10 @@ class TimeText extends JPanel
 		g.drawString(setTimeFormat(t5), p5-10, 10);
 		*/ 
 		g.drawString("T", p1, 10);
-		g.drawString("T+30", p2-10, 10);
-		g.drawString("T+60", p3-10, 10);
-		g.drawString("T+90", p4-10, 10);
-		g.drawString("T+120", p5-30, 10);
+		g.drawString("T+300", p2-20, 10);
+		g.drawString("T+600", p3-20, 10);
+		g.drawString("T+900", p4-20, 10);
+		g.drawString("T+1200", p5-40, 10);
 	}
 	public void refresh(int milliseconds) {
 		/*

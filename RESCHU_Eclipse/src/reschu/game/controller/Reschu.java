@@ -267,6 +267,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlControl = new PanelControl(this, game, "CONTROL_PANEL");
 		pnlPayloadControls = new PanelPayloadControls(this, "PAYLOAD_CONTROLS", origin_time);  
 		pnlMsgBoard = new PanelMsgBoard();
+		pnlMsgBoard.setReschuInstance(this);
 		pnlTimeLine = new PanelTimeLine(game, game.getVehicleList());
 
 		// Panel Payload Container Setup
@@ -551,8 +552,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	public void Payload_Finished_From_Msg() {
-		// Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
-		System.out.println("XXXXX");
+		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
 	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {
@@ -775,12 +775,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_HazardArea_Generated(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
+		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
 	}
 	public void EVT_HazardArea_Disappeared(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
+		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
 	@Override
 	public void EVT_System_GameStart(){ 

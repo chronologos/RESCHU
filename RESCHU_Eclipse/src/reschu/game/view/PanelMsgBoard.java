@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 import reschu.game.controller.GUI_Listener;
+import reschu.game.controller.Reschu;
 
 public class PanelMsgBoard extends JPanel implements ActionListener
 {	
@@ -25,7 +26,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 	private JScrollPane scrollPane;
 	private JButton btnSend = new JButton("SEND");
 	
-	private GUI_Listener lsnr;
+	private Reschu reschu;
 	
 	public PanelMsgBoard() {	
 		TitledBorder bdrTitle = BorderFactory.createTitledBorder("Message");
@@ -48,6 +49,10 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 		this.insert_grid(gbc, lblChat, 0, 1, 1, 1, 0.0, 0.0, 0); this.add(lblChat);
 		this.insert_grid(gbc, txtChat, 1, 1, 1, 1, 1.0, 0.0, 0); this.add(txtChat);
 		this.insert_grid(gbc, btnSend, 2, 1, 1, 1, 0.0, 0.0, 0); this.add(btnSend);
+	}
+	
+	public void setReschuInstance(Reschu r) {
+		reschu = r;
 	}
 	
 	public static void Msg(String msg) {
@@ -80,7 +85,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     		Msg("(Operator) " + txtChat.getText()); txtChat.setText("");
     	}
     	if (e.getSource() == btnSend) {
-    		lsnr.Payload_Finished_From_Msg();
+    		reschu.Payload_Finished_From_Msg();
     	}
     }
 }

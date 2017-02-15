@@ -290,6 +290,9 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if( investigatedVehicle == v ) {
 				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
+				if(selectedVehicle != investigatedVehicle) {
+					investigatedVehicle = null;
+				}
 			}
 
 			if( v.getType() == Vehicle.TYPE_UAV  ) {
