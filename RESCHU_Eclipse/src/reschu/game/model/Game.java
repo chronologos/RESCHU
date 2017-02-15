@@ -479,7 +479,7 @@ public class Game implements Runnable, ActionListener
 
 		for( int i = 0; i < vehicleList.size(); i++) {
 			v = vehicleList.getVehicle(i); 
-			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {v.moveBestFirst();}
+			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {v.moveHillClimbing();} //far04 changed from moveBestFirst to hill
 		}
 		vehicle_location_change();
 

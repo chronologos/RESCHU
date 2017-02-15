@@ -7,7 +7,7 @@ import java.util.Vector;
 public class DBConnectionMgr {
 	final private String DRIVER_NAME = "org.gjt.mm.mysql.Driver";
 	final private String SERVER_NAME = "cummingslab3.mit.edu";
-	final private String DATABASE = "RESCHU";
+	final private String DATABASE = "RESCHU Security-Aware";
 	final private String DB_USERNAME = "";
 	final private String DB_PASSWORD = "";	
     

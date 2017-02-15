@@ -62,9 +62,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private static final long serialVersionUID = -6487171440210682586L; 
 	private static final boolean GL_DEBUG = false;
 	private static final boolean USE_POPUP = false;
-	
-	public static final int ZOOM_MAX = 5;
-	public static final int ZOOM_MIN = -5;
 
 	private static final GLU glu = new GLU();
 	private GLJPanel glCanvas;
@@ -106,7 +103,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private double rotate_angle;
 	private double CAMERA_ANGLE;
 
-	private static int zoom_count = 3; 
+	private int zoom_count = 3; 
 	private Vehicle v;
 	private Payload curPayload;
 	private float x_limit = (float) rnd.nextInt(10);
@@ -184,7 +181,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private MapTileCreator tiler;
 	private String tileFileDir;
 
-	private float nextZoomLevel = 3;
+	private float nextZoomLevel = 2; //far03
 	public boolean needToRotate = false;
 	public boolean needToRecenter = false;
 
@@ -436,7 +433,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		new_x_off = new_y_off = 0;
 		x_dist = y_dist = 0;
 		rotate_angle = 0;
-		zoom_count = 6;
+		zoom_count = 6; //far01 Zoom level
 		min_x = max_x = 0;
 		min_y = max_y = 0;
 		//penalize = false;
@@ -570,7 +567,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			trB20.setColor(0.8f, 0.1f, 0.1f, 1f);
 			//trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20, drawable.getSurfaceHeight() / 4 + 75 + (int) (60 / 3) * zoom_count);
 			trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20,
-						drawable.getSurfaceHeight() / 4 + 75 + (int) 10 * zoom_count);
+						drawable.getSurfaceHeight() / 4 + 75 + (int) (30 / 3) * zoom_count); //far01 Attach zoom bar
 			trB20.endRendering();
 
 			if (rbtnClicked) { 
@@ -771,7 +768,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     }
 	 */
 	
-	public int zoom_in() {
+	public int zoom_in() { //far01 zooming fn
 		//if (zoom_count == 3 ) {
         //    return;}
 		//if (zoomLevel >= 1) {
@@ -810,7 +807,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		 */
 	}
 
-	public int zoom_out() {
+	public int zoom_out() { //far01 zooming fn
 
 		//if (zoomLevel <= 1) {
 		if (nextZoomLevel <= (2f*1.2f*1.2f)) {
@@ -845,8 +842,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         changing_view.start();
 		 */
 	}
-	
-	public static int getZoomCount() {return zoom_count;}
 
 	// PopupMenu implementation
 	public JPopupMenu getPopMenu() { return popMenu; }   
@@ -1103,8 +1098,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			float y1 = (float)(yPos - tileY)/TILE_LENGTH;
 			float y2 = y1 + (float)VIEWPORT_LENGTH/TILE_LENGTH;
 			if (centreX == 0){ 
-				centreX = x1 + (x2 - x1)/(2 * zoomLevel);
-				centreY = y1 + (y2 - y1)/(2 * zoomLevel);
+				centreX = x1 + (x2 - x1)*(0.25f * zoomLevel);
+				centreY = y1 + (y2 - y1)*(0.25f * zoomLevel);
 			}
 //			float[] centre = {centreX, centreY};
 //			float [] topLeft = {x1, y1};

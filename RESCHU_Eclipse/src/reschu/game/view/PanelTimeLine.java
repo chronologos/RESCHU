@@ -99,12 +99,12 @@ class TimeText extends JPanel
 		g.drawString(setTimeFormat(t4), p4-10, 10);
 		g.drawString(setTimeFormat(t5), p5-10, 10);
 		*/ 
-		g.drawString("T", p1, 10);
 		g.drawString("T+300", p2-20, 10);
 		g.drawString("T+600", p3-20, 10);
 		g.drawString("T+900", p4-20, 10);
 		g.drawString("T+1200", p5-40, 10);
 	}
+	
 	public void refresh(int milliseconds) {
 		/*
 		current_time = milliseconds / 1000;	

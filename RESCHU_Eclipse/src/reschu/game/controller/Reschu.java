@@ -63,11 +63,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public UAVMonitor uavMonitor;
 	public AttackNotificationEngine attackNotificationEngine;
 	public AttackEngine attackEngine;
-	public TextOverlay payloadTextOverlay;
+	public TextOverlay payloadTextOverlay; //far01 pass zoom level to textoverlay
 
 	public Game game;
 	private double origin_time;
-	private int zoomLevel;
+	private int zoomLevel; //far01
 	private TitledBorder bdrTitle;  
 	private Tutorial tutorial; 
 	public String filename;
@@ -95,7 +95,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	 * @throws NumberFormatException 
 	 */
 	public Reschu(int gamemode, int scenario, String username, AppMain main, boolean database) throws NumberFormatException, IOException {
-		super("RESCHU");
+		super("RESCHU Security-Aware");
 		_gamemode = gamemode;
 		_scenario = scenario;
 		_username = username;
@@ -453,12 +453,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void zoomIn() {
 		zoomLevel = pnlPayload.zoom_in();
-		payloadTextOverlay.setZoomLevel(zoomLevel);
+		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
 	}
 	@Override
 	public void zoomOut() {
 		zoomLevel = pnlPayload.zoom_out();
-		payloadTextOverlay.setZoomLevel(zoomLevel);
+		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
 	}
 	/*
 	@Override
@@ -553,6 +553,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	public void Payload_Finished_From_Msg() {
 		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
+		// System.out.println("XXXXX");
 	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {
@@ -862,7 +863,7 @@ public class Reschu extends JFrame implements GUI_Listener {
     public void EVT_Generate_Ghost_Mission(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.GENERATE_GHOST_MISSION, v.getIndex(),
     			"UAV "+v.getIndex()+" is under attck, generate its ghost mission", v.getX(), v.getY());
-    	game.AddGhostUAV(v);
+    	// game.AddGhostUAV(v);
     }
 	
 	// main and play function
@@ -871,7 +872,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run () { 
+			public void run () {
 				try {
 					new Reschu(1, 1, "administartor_0", new AppMain(), false).setVisible(true);
 				} catch (NumberFormatException e) {

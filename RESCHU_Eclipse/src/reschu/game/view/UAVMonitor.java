@@ -25,7 +25,7 @@ public class UAVMonitor {
 	public UAVMonitor(PanelPayload proto) {
 		panelpayload = proto;
 		// Disable initial video feed, changed from true to false
-		displayEnabled = false;
+		displayEnabled = false; //far01 Disable initial video feed
 		zoomLevel = 1;
 		prevTargetPos = new int[2];
 	}

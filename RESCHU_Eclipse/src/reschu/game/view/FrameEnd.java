@@ -35,7 +35,7 @@ public class FrameEnd extends JFrame {
 	
 	public FrameEnd(GUI_Listener l) {
 		//lsnr = l;
-		super("RESCHU");
+		super("RESCHU Security-Aware");
 		
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {

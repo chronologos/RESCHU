@@ -21,8 +21,8 @@ public class TextOverlay implements GLEventListener {
 	private int y_dist = 0;
 	private int max_x = 200;
 	private int max_y = 200;
-	private int zoom_count = 3;
-	
+	private int zoom_count = 3; //far01 zooming
+
 	public static TextRenderer zoom_bar;
 	
 	// for zooming functions
@@ -102,7 +102,7 @@ public class TextOverlay implements GLEventListener {
 
 		trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 		trB20.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20, drawable.getSurfaceHeight() / 4 + 75 + (int) (30 / 3) * zoom_count);
+		trB20.draw("__", (drawable.getSurfaceWidth() * 1 / 10) + 20, drawable.getSurfaceHeight() / 4 + 75 + (int) (30 / 3) * zoom_count); //far01 zooming
 
 		trB20.endRendering();
 	}

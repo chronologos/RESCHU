@@ -39,11 +39,11 @@ public class FrameStart extends JFrame implements ActionListener {
     private Timer tmr_clock;  
     private int cur_progress;  
     private int cur_time;
-    final private int TIME_WAIT_MSEC = 10 * 50;
+    final private int TIME_WAIT_MSEC = 10 * 50; // far01 Reduce waiting time temporarily
     final private int TIME_INCREMENT_MSEC = 50;
 	
 	public FrameStart(GUI_Listener l) {		
-		super("RESCHU");
+		super("RESCHU Security-Aware");
 	    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         tmr_clock = new Timer(TIME_INCREMENT_MSEC, this);
         cur_time = 0;

@@ -379,10 +379,6 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		//    	System.out.println("DRAW: (" + region[0] + "," + region[1] + ") - ( " +region[2] + "," + region[3] + ")");
 	}
 
-	public void paintZoomBar(Graphics2D g) {
-		p.ZoomBar(g, 0, 0, MyColor.COLOR_ZOOM_INDICATOR, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
-	}
-	
 	public void paintBorder(Graphics2D g, Color c) { 
 		g.setColor(c); 
 		g.fillRect(0,0,getWidth(),5);				// top
@@ -1003,13 +999,5 @@ class PaintComponent {
 					y * SIZE_CELL - Math.round(object_height_size/2) - ruler_size, 
 					object_width_size, object_height_size, 180, 180);
 		}
-	}
-	
-	// this function draw the stroke indicating zooming bar
-	public void ZoomBar(Graphics2D g, int x, int y, Color bar_color, BasicStroke stroke, BasicStroke wide_stroke) {
-		g.setColor(bar_color);
-		g.setStroke(wide_stroke);
-		g.drawLine(x, y, x+10, y);
-		g.setStroke(stroke);
 	}
 }

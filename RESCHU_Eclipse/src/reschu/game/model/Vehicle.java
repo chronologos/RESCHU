@@ -441,7 +441,137 @@ public class Vehicle {
 		else moveTo(direction);
 	}
 	*/
+	// far04 changed uncommented
+	public void moveHillClimbing() { 		
+		if( isStuck ) {
+			moveTo(6);
+			if(--stuckCount <= 0) isStuck = false;
+			return;
+		}
+
+		double presentDistance, d=999999999;
+		Random rnd = new Random();
+		int direction = 8;    
+		boolean stuck = true;
+
+		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
+
+		for( int i=0; i<8; i++ ) {
+			direction = rnd.nextInt(8);
+			switch( direction ) {
+			case 0: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
+			case 1: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()); 		break;
+			case 2:	d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
+			case 3: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()-1); 		break;
+			case 4: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()+1); 		break;
+			case 5: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
+			case 6: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()); 		break;
+			case 7: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
+			}
+			if( d < presentDistance && chkValidMove(direction)) { stuck = false; break; }
+		}
+		if( chkValidMove(direction) ) moveTo(direction);
+
+		// if vehicle is hijacked we need to move observed location as well
+		if (isHijacked){
+			direction=0;
+			d = 999999999;
+			presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
+			for( int i=0; i<8; i++ ) {    		
+				switch( i ) {
+				case 0: d = getDistanceObserved(getX()-1, getY()-1); 	break;
+				case 1: d = getDistanceObserved(getX()-1, getY()); 		break;
+				case 2:	d = getDistanceObserved(getX()-1, getY()+1); 	break;
+				case 3: d = getDistanceObserved(getX(), getY()-1); 		break;
+				case 4: d = getDistanceObserved(getX(), getY()+1); 		break;
+				case 5: d = getDistanceObserved(getX()+1, getY()-1); 	break;
+				case 6: d = getDistanceObserved(getX()+1, getY()); 		break;
+				case 7: d = getDistanceObserved(getX()+1, getY()+1); 	break;
+				}
+				if( d < presentDistance && chkValidMove(direction)) { stuck = false; break; }
+			}
+			if( chkValidMove(direction) ) moveObservedTo(direction);
+		}
+		
+		
+		if( stuck ) {
+			stuckCount++;
+			if( stuckCount >= 5 ) isStuck = true;
+		}    	
+		else moveTo(direction);
+	}
+/*	
+	public void moveHillClimbing() { 
+		
+		System.out.println("moveBestFirst called");
+		
+//		if( isStuck ) {
+//			moveTo(6);
+//			if(--stuckCount <= 0) isStuck = false;
+//			return;
+//		}
+
+		double presentDistance, d=999999999;
+//		Random rnd = new Random();
+		int direction = 8;    
+//		boolean stuck = true;
+
+		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
+
+		for( int i=0; i<8; i++ ) {
+//			direction = rnd.nextInt(8);
+			switch( i ) {
+			case 0: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
+			case 1: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()); 		break;
+			case 2:	d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
+			case 3: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()-1); 		break;
+			case 4: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()+1); 		break;
+			case 5: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
+			case 6: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()); 		break;
+			case 7: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
+			}
+			if( d < presentDistance && chkValidMove(i))
+			{
+				//presentDistance = false;
+				direction = i;
+			}
+		}
+		if( chkValidMove(direction) ) moveTo(direction);
+
+		// if vehicle is hijacked we need to move observed location as well
+		if (isHijacked){
+			direction=0;
+			d = 8;
+			presentDistance = getDistanceObserved(getX(), getY());
+			for( int i=0; i<8; i++ ) {    		
+				switch( i ) {
+				case 0: d = getDistanceObserved(getX()-1, getY()-1); 	break;
+				case 1: d = getDistanceObserved(getX()-1, getY()); 		break;
+				case 2:	d = getDistanceObserved(getX()-1, getY()+1); 	break;
+				case 3: d = getDistanceObserved(getX(), getY()-1); 		break;
+				case 4: d = getDistanceObserved(getX(), getY()+1); 		break;
+				case 5: d = getDistanceObserved(getX()+1, getY()-1); 	break;
+				case 6: d = getDistanceObserved(getX()+1, getY()); 		break;
+				case 7: d = getDistanceObserved(getX()+1, getY()+1); 	break;
+				}
+				if( d < presentDistance && chkValidMove(direction))
+				{
+					//presentDistance = false;
+					direction = i;
+				}
+			}
+			if( chkValidMove(direction) ) moveObservedTo(direction);
+		}
+		
+		
+//		if( stuck ) {
+//			stuckCount++;
+//			if( stuckCount >= 5 ) isStuck = true;
+//		}    	
+//		else moveTo(direction);
+	}
 	
+*/	
 	public void moveBestFirst() {
 		
 		// System.out.println("moveBestFirst called");

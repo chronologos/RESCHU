@@ -1,6 +1,5 @@
 package reschu.game.view;
 
-//import java.util.*;
 import java.awt.*; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import javax.swing.border.TitledBorder;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
-import reschu.game.controller.GUI_Listener;
 import reschu.game.controller.Reschu;
 
 public class PanelMsgBoard extends JPanel implements ActionListener
