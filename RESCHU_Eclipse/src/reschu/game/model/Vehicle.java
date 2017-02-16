@@ -42,7 +42,7 @@ public class Vehicle {
 	/**
 	 * Get a path of this vehicle  (synchronized) 
 	 */
-	public synchronized LinkedList<int[]> getPath() { 
+	public synchronized LinkedList<int[]> getPath() {
 		if (isHijacked){
 			return observedPath;
 		}
@@ -51,7 +51,9 @@ public class Vehicle {
 		}
 	}
 	
-	public synchronized LinkedList<int[]> getGroundTruthPath() { return groundTruthPath; }
+	public synchronized LinkedList<int[]> getGroundTruthPath() {
+		return groundTruthPath;
+	}
 
 	/**
 	 * Add a waypoint to the path of this vehicle  (synchronized)
@@ -185,7 +187,7 @@ public class Vehicle {
 		setGroundTruthX(0); setGroundTruthY(0); 
 		setTarget(null); 
 		this.g = g;
-		map=m; 
+		map = m; 
 		setStatus(MyGame.STATUS_VEHICLE_STASIS); 
 		vDamage = 0;
 		// velocity_scale = MySpeed.SPEED_TIMER;
@@ -441,8 +443,12 @@ public class Vehicle {
 		else moveTo(direction);
 	}
 	*/
+	
 	// far04 changed uncommented
-	public void moveHillClimbing() { 		
+	public void moveHillClimbing() {
+		
+		// System.out.println("far moveHillClimbing called");
+		
 		if( isStuck ) {
 			moveTo(6);
 			if(--stuckCount <= 0) isStuck = false;
@@ -477,7 +483,8 @@ public class Vehicle {
 			direction=0;
 			d = 999999999;
 			presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
-			for( int i=0; i<8; i++ ) {    		
+			// presentDistance = getDistanceObserved(getX(), getY());
+			for( int i=0; i<8; i++ ) {
 				switch( i ) {
 				case 0: d = getDistanceObserved(getX()-1, getY()-1); 	break;
 				case 1: d = getDistanceObserved(getX()-1, getY()); 		break;
@@ -575,6 +582,7 @@ public class Vehicle {
 	public void moveBestFirst() {
 		
 		// System.out.println("moveBestFirst called");
+		
 		int direction=0;
 		double d = 999999999, bestDistance = 999999999;
 
@@ -839,12 +847,12 @@ public class Vehicle {
 		isHijacked = true;
 		System.out.println("Launching hack");
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
-		
-		int[] hackCoords = new int[]{xCoord, yCoord};
-		observedPath = groundTruthPath;
-		
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
+		int[] hackCoords = new int[]{xCoord, yCoord};
+		
+		
+		observedPath = groundTruthPath;
 		// observedPath = new LinkedList<int[]>(groundTruthPath);
 		// groundTruthPath.clear();
 		// groundTruthPath.add(hackCoords);

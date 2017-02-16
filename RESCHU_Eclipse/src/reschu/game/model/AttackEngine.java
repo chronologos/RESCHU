@@ -45,7 +45,7 @@ public class AttackEngine {
 				catch(IllegalArgumentException e) {
 					System.out.println("Hack data file has illegal hack coordinates");
 				}
-			}			
+			}
 		};
 
 		try {

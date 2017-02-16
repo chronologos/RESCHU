@@ -370,7 +370,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 			try {
 				attackNotificationEngine = new AttackNotificationEngine(this);
 				attackEngine = new AttackEngine(game.getVehicleList());
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -326,10 +326,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
 					else g.setColor(MyColor.COLOR_LINE);
 					g.drawLine(
-							v.getX()*cellsize + halfcell, 
-							v.getY()*cellsize + halfcell, 
-							v.getPath().get(0)[0]*cellsize + halfcell, 
-							v.getPath().get(0)[1]*cellsize + halfcell); 
+							v.getX()*cellsize + halfcell,
+							v.getY()*cellsize + halfcell,
+							v.getPath().get(0)[0]*cellsize + halfcell,
+							v.getPath().get(0)[1]*cellsize + halfcell);
 					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
 					else g.setColor(MyColor.COLOR_LINE);
 					g.fillOval(
@@ -352,7 +352,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 								(v.getPath().get(j+1)[0]-wpsize/cellsize/2)*cellsize, 
 								(v.getPath().get(j+1)[1]-wpsize/cellsize/2)*cellsize, 
 								wpsize, wpsize);
-					}	            	
+					}
 				}
 				else {
 					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
