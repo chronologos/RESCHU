@@ -478,6 +478,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 		else
 			zoomMin();
 	}
+	*/
+	
 	@Override
 	public void zoomMax() {
 		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MAX, -1, "Clicked Zoom In, reached Zoom Max", -1, -1);
@@ -486,7 +488,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void zoomMin() {
 		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min", -1, -1);
 	}
-	*/
+	
 	@Override
 	public void submitPayload() {
 		pnlPayload.checkCorrect();

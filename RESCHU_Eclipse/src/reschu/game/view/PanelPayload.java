@@ -108,7 +108,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private Payload curPayload;
 	private float x_limit = (float) rnd.nextInt(10);
 	private float y_limit = (float) rnd.nextInt(10);
-	//    private boolean penalize;
+	// private boolean penalize;
 	private boolean enabled = false;
 	private boolean correct = false;
 	private boolean screenBlackedAfterPayloadDone;

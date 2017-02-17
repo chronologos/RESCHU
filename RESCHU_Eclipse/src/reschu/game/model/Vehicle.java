@@ -608,7 +608,7 @@ public class Vehicle {
 			direction=0;
 			d = 999999999;
 			bestDistance = 999999999;
-			for( int i=0; i<8; i++ ) {    		
+			for( int i=0; i<8; i++ ) {
 				switch( i ) {
 				case 0: d = getDistanceObserved(getX()-1, getY()-1); 	break;
 				case 1: d = getDistanceObserved(getX()-1, getY()); 		break;
@@ -623,7 +623,10 @@ public class Vehicle {
 					bestDistance = d; direction = i;
 				}
 			}
-			if( chkValidMove(direction) ) moveObservedTo(direction);
+			if(chkValidMove(direction))
+				moveObservedTo(direction);
+			// if the real UAV position is out of the border
+			else {}
 		}
 	}
 
@@ -852,10 +855,14 @@ public class Vehicle {
 		int[] hackCoords = new int[]{xCoord, yCoord};
 		
 		
-		observedPath = groundTruthPath;
-		// observedPath = new LinkedList<int[]>(groundTruthPath);
-		// groundTruthPath.clear();
-		// groundTruthPath.add(hackCoords);
+		// observedPath = groundTruthPath;
+		// System.out.println(observedPath);
+		observedPath = new LinkedList<int[]>(groundTruthPath);
+		// System.out.println("OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
+		groundTruthPath.clear();
+		groundTruthPath.add(hackCoords);
+		// System.out.println("GROUND "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]+" last "+groundTruthPath.getLast()[0]);
+		// System.out.println("THEN OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
 		
 		// System.out.println("Hack complete, getX currently returns " + getX());		
 		// groundTruthPath.addFirst(hackCoords);
