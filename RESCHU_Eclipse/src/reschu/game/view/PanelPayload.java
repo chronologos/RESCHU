@@ -103,7 +103,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private double rotate_angle;
 	private double CAMERA_ANGLE;
 
-	private int zoom_count = 3; 
+	private int zoom_count = 3;
+	public static int ZOOMMAX = 6;
+	public static int ZOOMMIN = 0;
+	
 	private Vehicle v;
 	private Payload curPayload;
 	private float x_limit = (float) rnd.nextInt(10);
@@ -841,6 +844,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
         changing_view.setAcceleration(0.4f);
         changing_view.start();
 		 */
+	}
+	
+	public int getZoomCount() {
+		return zoom_count;
 	}
 
 	// PopupMenu implementation

@@ -453,11 +453,19 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void zoomIn() {
 		zoomLevel = pnlPayload.zoom_in();
 		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
+		
+		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMAX) {
+			zoomMax();
+		}
 	}
 	@Override
 	public void zoomOut() {
 		zoomLevel = pnlPayload.zoom_out();
 		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
+		
+		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMIN) {
+			zoomMin();
+		}
 	}
 	/*
 	@Override

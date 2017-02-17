@@ -127,11 +127,6 @@ public class TextOverlay implements GLEventListener {
 				drawable.getSurfaceWidth()/4-10, drawable.getSurfaceHeight()*9/10);
 		trP14.endRendering();
 
-		trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-		trB20.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		// trB20.draw("|", (int) (-8 + drawable.getSurfaceWidth() / 2 + (drawable.getSurfaceWidth() / 4) * ((image_x + x_dist) / max_x)), 5 + drawable.getSurfaceHeight() * 4 / 5);
-		trB20.endRendering();
-
 		trB12.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 		trB12.setColor(0.9f, 0.9f, 0.9f, 0.9f);
 		trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 - 19);
@@ -145,44 +140,38 @@ public class TextOverlay implements GLEventListener {
 		trB12.draw("__", drawable.getSurfaceWidth() * 9 / 10, drawable.getSurfaceHeight() / 4 + 197);
 		trB12.endRendering();
 
-		trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-		trB20.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		// trB20.draw("__", 17 + drawable.getSurfaceWidth() * 5 / 6, (int) (drawable.getSurfaceHeight() / 2 + (drawable.getSurfaceHeight() / 4) * ((image_y + y_dist) / max_y)));
-		trB20.endRendering();
-
 		trB17.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 		trB17.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		trB17.draw("[+]", (drawable.getSurfaceWidth() * 0 / 10) + 41, drawable.getSurfaceHeight() / 4 + 176);
-		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 169);
+		trB17.draw("[+]", (drawable.getSurfaceWidth() * 0 / 10) + 41, drawable.getSurfaceHeight() / 4 + 147);
+		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 140);
 		
-		trB17.draw(" 3 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 156);
-		trB17.draw(" 2 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 141);
-		trB17.draw(" 1 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 126);
-		trB17.draw(" 0 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 111);
-		trB17.draw("-1 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 96);
-		trB17.draw("-2 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 81);
-		trB17.draw("-3 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 66);
+		trB17.draw(" 3 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 127);
+		trB17.draw(" 2 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 112);
+		trB17.draw(" 1 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 97);
+		trB17.draw(" 0 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 82);
+		trB17.draw("-1 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 67);
+		trB17.draw("-2 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 52);
+		trB17.draw("-3 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 37);
 		
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 156);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 141);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 126);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 111);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 96);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 81);
-		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 66);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 127);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 112);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 97);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 82);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 67);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 52);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 37);
 		
-		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 65);
-		trB17.draw("[-]", (drawable.getSurfaceWidth() * 0 / 10) + 42, drawable.getSurfaceHeight() / 4 + 45);
+		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 36);
+		trB17.draw("[-]", (drawable.getSurfaceWidth() * 0 / 10) + 42, drawable.getSurfaceHeight() / 4 + 16);
 		trB17.endRendering();
 
 		trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
+		trB20.setColor(0.0f, 1.0f, 0.0f, 1.0f);
+		trB20.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 46 + 15 * zoom_count);
 		trB20.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		trB20.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 75 + 15 * zoom_count);
-
 		trB20.endRendering();
 	}
 	
-
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 		overlay = null;
@@ -190,17 +179,4 @@ public class TextOverlay implements GLEventListener {
 
 	@Override
 	public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {}
-
-	/*
-	// can be called every cycle in Reschu
-	public void update() {
-		System.out.println("1");
-	}
-	*/
-	
-	/*
-	public static void paintZoomBar() {
-		// trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 5);
-	}
-	*/
 }
