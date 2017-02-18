@@ -101,7 +101,14 @@ public class Vehicle {
 	/**
 	 * Remove a waypoint in the path of this vehicle  (synchronized)
 	 */
-	public synchronized void removePathAt(int idx) {groundTruthPath.remove(idx);}
+	public synchronized void removePathAt(int idx) {
+		if(isHijacked) {
+			observedPath.remove(idx);
+		}
+		else {
+			groundTruthPath.remove(idx);
+		}
+	}
 
 	/**
 	 * Get a coordinate at the first path of this vehicle  (synchronized)
@@ -117,7 +124,15 @@ public class Vehicle {
 	/**
 	 * Remove the first waypoint of path of this vehicle  (synchronized)
 	 */
-	public synchronized void removeFirstPath() {groundTruthPath.removeFirst(); }
+	public synchronized void removeFirstPath() {
+		if(isHijacked) {
+			// groundTruthPath.removeFirst();
+			// observedPath.removeFirst();
+		}
+		else {
+			groundTruthPath.removeFirst();
+		}
+	}
 
 	/**
 	 * Returns a map that this vehicle is assigned to 
@@ -363,17 +378,19 @@ public class Vehicle {
 	}
 
 	public void delWaypoint(int x, int y) {
-		for( int i=0; i<getPathSize()-1; i++ ) 
+		for( int i=0; i<getPathSize()-1; i++ ) {
 			if( getPathAt(i)[0] == x && getPathAt(i)[1] == y ) {
 				removePathAt(i);
 			}
+		}
 	}
 
 	public void delWaypoint(int[] coordinate) {
-		for( int i=0; i<getPathSize()-1; i++ ) 
+		for( int i=0; i<getPathSize()-1; i++ ) {
 			if( getPathAt(i) == coordinate ) {
 				removePathAt(i);
-			}	
+			}
+		}
 	}
 
 	public void changeWaypoint( int ex_x, int ex_y, int new_x, int new_y ) {
@@ -593,13 +610,23 @@ public class Vehicle {
 			}
 			if(chkValidMove(direction)) moveObservedTo(direction);
 			
+			// /*
 			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
 			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
 			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
 			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
 			System.out.println("\n");
+			// */
 		}
+		
+		// print position information for debugging
+		/*
+		else {
+			System.out.println(index+" OBSERVED x = "+getX()+"  y = "+getY());
+			System.out.println(index+" GROUND   x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
+		}
+		*/
 	}
 
 	public void moveTo(int direction) {
@@ -666,13 +693,15 @@ public class Vehicle {
 					setStatus(MyGame.STATUS_VEHICLE_PENDING);
 				}
 				else {
-					setStatus(MyGame.STATUS_VEHICLE_PENDING);	        				        	
+					setStatus(MyGame.STATUS_VEHICLE_PENDING);
 					String msg = "Vehicle [" + index + "] has reached its target.";
 					PanelMsgBoard.Msg(msg);
 				}
 				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
 			}
 			lsnr.Hide_Popup(this);
+			
+			System.out.println("REMOVE HERE"); // for testing remove function
 			removeFirstPath();
 		}
 	}
@@ -831,8 +860,10 @@ public class Vehicle {
 		// System.out.println(observedPath);
 		observedPath = new LinkedList<int[]>(groundTruthPath);
 		// System.out.println("OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
+		
 		groundTruthPath.clear();
 		groundTruthPath.add(hackCoords);
+		
 		// System.out.println("GROUND "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]+" last "+groundTruthPath.getLast()[0]);
 		// System.out.println("THEN OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
 		
