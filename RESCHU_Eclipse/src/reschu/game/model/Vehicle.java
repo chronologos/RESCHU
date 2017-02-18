@@ -266,14 +266,14 @@ public class Vehicle {
 					//HALE to red target ��You cannot assign a HALE to a red target, please reassign��
 					lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
 				}
-			}	
-		}    
-		addPathLast(new int[]{x, y}); 
-		setStatus(MyGame.STATUS_VEHICLE_MOVING);   
+			}
+		}
+		addPathLast(new int[]{x, y});
+		setStatus(MyGame.STATUS_VEHICLE_MOVING);
 		if( g.getElapsedTime() != 0 ) {
 			if( assigned ) lsnr.EVT_GP_SetGP_End_Assigned(index, x, y, getTarget().getName());
 			else lsnr.EVT_GP_SetGP_End_Unassigned(index, x, y);
-		}  	
+		}
 	}
 
 	public  void changeGoal(int[] ex_goal, int x, int y) {
@@ -406,49 +406,11 @@ public class Vehicle {
 		Random rnd = new Random();
 		moveTo(rnd.nextInt(8));
 	}
-
-	/*
-	public void moveHillClimbing() { 
-		if( isStuck ) {
-			moveTo(6);
-			if(--stuckCount <= 0) isStuck = false;
-			return;
-		}
-
-		double presentDistance, d=999999999;
-		Random rnd = new Random();
-		int direction = 8;    
-		boolean stuck = true;
-
-		presentDistance = getDistance(getGroundTruthX(), getGroundTruthY());
-
-		for( int i=0; i<8; i++ ) {
-			direction = rnd.nextInt(8);
-			switch( direction ) {
-			case 0: d = getDistance(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
-			case 1: d = getDistance(getGroundTruthX()-1, getGroundTruthY()); 		break;
-			case 2:	d = getDistance(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
-			case 3: d = getDistance(getGroundTruthX(), getGroundTruthY()-1); 		break;
-			case 4: d = getDistance(getGroundTruthX(), getGroundTruthY()+1); 		break;
-			case 5: d = getDistance(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
-			case 6: d = getDistance(getGroundTruthX()+1, getGroundTruthY()); 		break;
-			case 7: d = getDistance(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
-			}
-			if( d < presentDistance && chkValidMove(direction)) { stuck = false; break; }
-		}
-		if( stuck ) {
-			stuckCount++;
-			if( stuckCount >= 5 ) isStuck = true;
-		}    	
-		else moveTo(direction);
-	}
-	*/
 	
 	// far04 changed uncommented
 	public void moveHillClimbing() {
 		
 		// System.out.println("far moveHillClimbing called");
-		
 		if( isStuck ) {
 			moveTo(6);
 			if(--stuckCount <= 0) isStuck = false;
@@ -463,6 +425,7 @@ public class Vehicle {
 		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
 
 		for( int i=0; i<8; i++ ) {
+			// random number for zigzag moving
 			direction = rnd.nextInt(8);
 			switch( direction ) {
 			case 0: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
@@ -497,9 +460,15 @@ public class Vehicle {
 				}
 				if( d < presentDistance && chkValidMove(direction)) { stuck = false; break; }
 			}
-			if( chkValidMove(direction) ) moveObservedTo(direction);
+			if(chkValidMove(direction)) {
+				moveObservedTo(direction);
+			}
+			// if the real UAV position is out of the border
+			else {}
+			
+			// System.out.println("OBSERVED x = "+getX()+"  y = "+getY());
+			// System.out.println("GROUND x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 		}
-		
 		
 		if( stuck ) {
 			stuckCount++;
@@ -507,26 +476,27 @@ public class Vehicle {
 		}    	
 		else moveTo(direction);
 	}
-/*	
+	
+	/*
 	public void moveHillClimbing() { 
 		
 		System.out.println("moveBestFirst called");
 		
-//		if( isStuck ) {
-//			moveTo(6);
-//			if(--stuckCount <= 0) isStuck = false;
-//			return;
-//		}
+		if( isStuck ) {
+			moveTo(6);
+			if(--stuckCount <= 0) isStuck = false;
+			return;
+		}
 
 		double presentDistance, d=999999999;
-//		Random rnd = new Random();
+		Random rnd = new Random();
 		int direction = 8;    
-//		boolean stuck = true;
+		boolean stuck = true;
 
 		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
 
 		for( int i=0; i<8; i++ ) {
-//			direction = rnd.nextInt(8);
+			direction = rnd.nextInt(8);
 			switch( i ) {
 			case 0: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
 			case 1: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()); 		break;
@@ -570,19 +540,17 @@ public class Vehicle {
 			if( chkValidMove(direction) ) moveObservedTo(direction);
 		}
 		
-		
-//		if( stuck ) {
-//			stuckCount++;
-//			if( stuckCount >= 5 ) isStuck = true;
-//		}    	
-//		else moveTo(direction);
+		if( stuck ) {
+			stuckCount++;
+			if( stuckCount >= 5 ) isStuck = true;
+		}    	
+		else moveTo(direction);
 	}
+	*/	
 	
-*/	
 	public void moveBestFirst() {
 		
 		// System.out.println("moveBestFirst called");
-		
 		int direction=0;
 		double d = 999999999, bestDistance = 999999999;
 
@@ -604,7 +572,7 @@ public class Vehicle {
 		if( chkValidMove(direction) ) moveTo(direction);
 
 		// if vehicle is hijacked we need to move observed location as well
-		if (isHijacked){
+		if (isHijacked) {
 			direction=0;
 			d = 999999999;
 			bestDistance = 999999999;
@@ -623,10 +591,14 @@ public class Vehicle {
 					bestDistance = d; direction = i;
 				}
 			}
-			if(chkValidMove(direction))
-				moveObservedTo(direction);
-			// if the real UAV position is out of the border
-			else {}
+			if(chkValidMove(direction)) moveObservedTo(direction);
+			
+			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
+			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
+			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
+			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
+			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+			System.out.println("\n");
 		}
 	}
 

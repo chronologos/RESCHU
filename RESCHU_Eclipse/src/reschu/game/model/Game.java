@@ -428,6 +428,7 @@ public class Game implements Runnable, ActionListener
 					}
 				}
 				else {
+					// add goal for ghost mission
 					v.addGoal(500, 500);
 				}
 			}
@@ -480,8 +481,8 @@ public class Game implements Runnable, ActionListener
 		for( int i = 0; i < vehicleList.size(); i++) {
 			v = vehicleList.getVehicle(i); 
 			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {
-				v.moveHillClimbing();
-				// v.moveBestFirst();
+				// v.moveHillClimbing();
+				v.moveBestFirst();
 			} // far04 changed from moveBestFirst to hill
 		}
 		vehicle_location_change();
