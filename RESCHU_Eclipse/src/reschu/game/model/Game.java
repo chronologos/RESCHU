@@ -481,9 +481,12 @@ public class Game implements Runnable, ActionListener
 		for( int i = 0; i < vehicleList.size(); i++) {
 			v = vehicleList.getVehicle(i); 
 			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {
+				// far04 changed from moveBestFirst to hill
 				// v.moveHillClimbing();
+				// check if the UAV is already disappeared
+				if(v.isDisappeared) continue;
 				v.moveBestFirst();
-			} // far04 changed from moveBestFirst to hill
+			}
 		}
 		vehicle_location_change();
 

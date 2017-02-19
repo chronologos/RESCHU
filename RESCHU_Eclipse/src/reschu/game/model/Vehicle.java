@@ -32,8 +32,13 @@ public class Vehicle {
 	private boolean isStuck;
 	private boolean intersect;
 	private boolean isHijacked;
+	public boolean isDisappeared;
 	private LinkedList<int[]> observedPath;
-
+	
+	public boolean getHijackStatus () {
+		return isHijacked;
+	}
+	
 	/**
 	 * Set the position of this vehicle (synchronized)
 	 */
@@ -126,8 +131,8 @@ public class Vehicle {
 	 */
 	public synchronized void removeFirstPath() {
 		if(isHijacked) {
-			// groundTruthPath.removeFirst();
-			// observedPath.removeFirst();
+			groundTruthPath.removeFirst();
+			observedPath.removeFirst();
 		}
 		else {
 			groundTruthPath.removeFirst();
@@ -210,6 +215,7 @@ public class Vehicle {
 		stuckCount = 0;
 		isStuck = false;
 		intersect = false;
+		isDisappeared = false;
 	}
 
 	// check if reach a target
@@ -614,8 +620,14 @@ public class Vehicle {
 			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
 			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
-			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
-			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+			if(observedPath.size() > 0)
+				System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
+			else
+				System.out.println("O Path Frist NONE");
+			if(groundTruthPath.size() > 0)
+				System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+			else
+				System.out.println("G Path Frist NONE");
 			System.out.println("\n");
 			// */
 		}
@@ -681,7 +693,7 @@ public class Vehicle {
 			setObservedY(getY()+MySpeed.VELOCITY); break;
 		default:
 			break;
-		}        
+		}
 		payloadCheck(getX(), getY()); //TODO(iantay) is this correct
 	}
 
@@ -843,7 +855,9 @@ public class Vehicle {
 			System.out.println("Uncaught number format exception on y-coordinate from AttackEngine");
 			return;
 		}
-		if (xCoord < 0 || yCoord < 0){
+		// if attack position is "0 0"
+		// it will be considered as fake attack
+		if (xCoord == 0 || yCoord == 0){
 			System.out.println("Fake attack launched.");
 			lsnr.EVT_Hack_Launch_Fake(index);
 			return;

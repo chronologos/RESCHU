@@ -209,16 +209,16 @@ public class UAVMonitor {
 		
 		// System.out.println("Applying rotation!");
 		
-		int[] nextLocation = activeUAV.getFirstPathGround();
-		double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
-		double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
-
-		yDelta *= -1;
+		// int[] nextLocation = activeUAV.getFirstPathGround();
+		// double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
+		// double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
+		// yDelta *= -1;
 
 		// System.out.println("xDelta: " + xDelta);
 		// System.out.println("yDelta : " + yDelta);
 
-		double angleToNorth;
+		// double angleToNorth;
+		/*
 		if (yDelta == 0) {
 			angleToNorth = xDelta > 0 ? Math.PI/2 : - Math.PI/2; 
 		}
@@ -235,7 +235,9 @@ public class UAVMonitor {
 				angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
 			}
 		}
+		*/
 
+		double angleToNorth = 0;
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		System.out.println("Angle for ship to rotate " + angleToNorth);

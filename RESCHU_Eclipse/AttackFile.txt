@@ -1,8 +1,8 @@
 // note that displayed number of vehicle on map starts from 1 so vehicle idx starts from 1 in this file
-// NOTIFY,2,5000
-// ATTACK,2,5000,180 180
+NOTIFY,2,5000
+ATTACK,2,5000,-2 -2
 // NOTIFY,3,40000
-// ATTACK,1,50000,-1 -1
+// ATTACK,1,50000,0 0
 // NOTIFY,3,45000
 
 // FORMAT:
@@ -10,3 +10,6 @@
 // NOTIFY,VEH_NO,TIME
 // or
 // ATTACK,VEH_NO,TIME,NEW_X_TARGET NEW_Y_TARGET
+//
+// if attack position is 0 0
+// it should be considered as fake attack

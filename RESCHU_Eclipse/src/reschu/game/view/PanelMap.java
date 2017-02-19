@@ -58,6 +58,11 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private final int vWidth = MySize.SIZE_VEHICLE_WIDTH_PXL;
 	private final int vHeight = MySize.SIZE_VEHICLE_HEIGHT_PXL;
 	private final int targetsize = MySize.SIZE_TARGET_PXL;
+	
+	private final int pos_min_X = MySize.UAV_POS_MIN_X;
+	private final int pos_min_Y = MySize.UAV_POS_MIN_Y;
+	private final int pos_max_X = MySize.UAV_POS_MAX_X;
+	private final int pos_max_Y = MySize.UAV_POS_MAX_Y;
 
 	private Reschu reschu;
 
@@ -121,6 +126,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		paintMap(g2d);
 		paintHazardArea(g2d);
 		paintTarget(g2d);
+		If_UAV_Disappeared(); // check if UAV is disappeared from map
 		paintVehicles(g2d);
 		paintDrag(g2d);
 		paintText(g2d);
@@ -133,6 +139,25 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// after make mutual reference between Reschu and PanelMap
 		// can call textOverlay.update() every cycle in Reschu
 		// reschu.textOverlay.update();
+	}
+	
+	// check if the ground truth position of an attacked UAV is out of border
+	// if YES, then don't paint that UAV (make it disappear)
+	public void If_UAV_Disappeared() {
+		VehicleList vList = game.getVehicleList();
+		Vehicle v;
+		for (int i=0; i<vList.size(); i++){
+			v = vList.getVehicle(i);
+			if(v.getHijackStatus()) {
+				if((v.getGroundTruthX() <= pos_min_X) || (v.getGroundTruthX() >= pos_max_X)
+						|| (v.getGroundTruthY() <= pos_min_Y) || (v.getGroundTruthY() >= pos_max_Y)) {
+					v.isDisappeared = true;
+					// unassign its original target
+					// v.getTarget().setVisible(false);
+					v.getTarget().setDone();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -242,8 +267,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private void paintTarget(Graphics2D g) {
 		Color clrTarget;
 
-		for( int i = 0; i < map.getListAssignedTarget().size(); i++ ) {        	
-			int[] pos = map.getListAssignedTarget().get(i).getPos();        	
+		for( int i = 0; i < map.getListAssignedTarget().size(); i++ ) {
+			int[] pos = map.getListAssignedTarget().get(i).getPos();
 			if( map.getListAssignedTarget().get(i).isDone() ) {
 				p.paintPolygon(g, pos[0], pos[1], cellsize, targetsize, new Color(0, 0, 0, 250), MyColor.COLOR_TARGET_DONE);
 				p.paintString(g,pos[0]-2, pos[1]+2, cellsize, Color.white, MyFont.fontBold, map.getListAssignedTarget().get(i).getName());
@@ -266,16 +291,19 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				clrTarget = MyColor.COLOR_TARGET_VACANT; 
 			p.paintPolygon(g, pos[0], pos[1], cellsize, targetsize, new Color(0, 0, 0, 250), clrTarget);
 			p.paintString(g, pos[0]-2, pos[1]+2, cellsize, Color.white, MyFont.fontBold, map.getListUnassignedTarget().get(i).getName());
-		} 
+		}
 	}
 
-	public void paintVehicles(Graphics2D g) 
-	{
+	public void paintVehicles(Graphics2D g) {
 		VehicleList vList = game.getVehicleList();
 		Vehicle v;
 
 		for (int i=0; i<vList.size();i++){
 			v = vList.getVehicle(i);
+			
+			// if UAV is disappeared, then the map should not paint that UAV
+			if(v.isDisappeared) continue;
+			
 			Color clrVehicle;
 			if( v.getStatus() == MyGame.STATUS_VEHICLE_PENDING ) clrVehicle = MyColor.COLOR_VEHICLE_PENDING;
 			else clrVehicle = MyColor.COLOR_VEHICLE;
@@ -645,13 +673,17 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		clicked_pos_x = m_ev.getX() / cellsize;
 		clicked_pos_y = m_ev.getY() / cellsize; 
 
-		Vehicle v = game.Vechicle_Location_Check(clicked_pos_x, clicked_pos_y);   
+		Vehicle v = game.Vechicle_Location_Check(clicked_pos_x, clicked_pos_y);
 
 		// Vehicle selected
 		if( v != null 
 				&& !mapSettingMode 
 				&& !vehicleWPAddMode 
-				&& !vehicleWPDelMode) {        	
+				&& !vehicleWPDelMode) {
+			
+			// check if the UAV is disappeared
+			if(v.isDisappeared) return;
+			
 			setSelectedVehicle(v);
 			System.out.println("selected vehicle is " + v.getIndex());
 			lsnr.activateUAVFeed(v.getIndex()-1);
@@ -721,6 +753,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 			// MOVE - GP
 			if( Utils.isLeftClick(m_ev) && gp != null ) {
+				
+				// check if the UAV is disappeared
+				if(gp.getV().isDisappeared) return;
+				
 				setSelectedVehicle(gp.getV());   
 				lsnr.activateUAVFeed(gp.getV().getIndex()-1);
 				repaint();
@@ -764,7 +800,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// Waypoint MOUSE_RIGHT_BUTTON Click
 		if( Utils.isRightClick(m_ev) && !mapSettingMode  ) {  	
 			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
-			if( wp != null ) { 
+			
+			if( wp != null ) {
+				
+				// check if the UAV is disappeared
+				if(wp.getV().isDisappeared) return;
+				
 				setSelectedVehicle(wp.getV());
 				lsnr.activateUAVFeed(wp.getV().getIndex()-1);
 
