@@ -137,6 +137,7 @@ public class AttackNotificationEngine {//implements UserInputListener {
 			invest_dialog.setVisible(true);
 			*/
 			PanelMap.investigatedVehicle = VehicleList.getVehicle(VehicleID);
+			VehicleList.getVehicle(VehicleID).setInvestigateStatus(true);
 		}
 		
 		if(selectedValue == null) {

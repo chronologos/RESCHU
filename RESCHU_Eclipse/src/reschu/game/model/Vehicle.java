@@ -13,7 +13,7 @@ public class Vehicle {
 	public static final String PAYLOAD_ISR = "ISR";
 	public static final String PAYLOAD_COM = "COM";
 
-	private String name; 
+	private String name;
 	private String type;
 	private String payload;
 	private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
@@ -33,10 +33,20 @@ public class Vehicle {
 	private boolean intersect;
 	private boolean isHijacked;
 	public boolean isDisappeared;
+	public boolean isInvestigate;
 	private LinkedList<int[]> observedPath;
 	
 	public boolean getHijackStatus () {
 		return isHijacked;
+	}
+	public void setHijackStatus (boolean b) {
+		isHijacked = b;
+	}
+	public boolean getInvestigateStatus() {
+		return isInvestigate;
+	}
+	public void setInvestigateStatus(boolean b) {
+		isInvestigate = b;
 	}
 	
 	/**
@@ -58,6 +68,15 @@ public class Vehicle {
 	
 	public synchronized LinkedList<int[]> getGroundTruthPath() {
 		return groundTruthPath;
+	}
+	
+	public synchronized LinkedList<int[]> getObservedPath() {
+		return observedPath;
+	}
+	
+	public void resetGroundtoObserved () {
+		groundTruthPath.clear();
+		groundTruthPath.add(observedPath.getFirst());
 	}
 
 	/**
@@ -138,6 +157,9 @@ public class Vehicle {
 			groundTruthPath.removeFirst();
 		}
 	}
+	
+	public synchronized void removeObservedFirstPath() {observedPath.removeFirst();}
+	public synchronized void removeGroundFirstPath() {groundTruthPath.removeFirst();}
 
 	/**
 	 * Returns a map that this vehicle is assigned to 
@@ -617,6 +639,7 @@ public class Vehicle {
 			if(chkValidMove(direction)) moveObservedTo(direction);
 			
 			// /*
+			System.out.println("UAV index = "+index);
 			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
 			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
@@ -698,7 +721,7 @@ public class Vehicle {
 	}
 
 	private void payloadCheck(int pos_x, int pos_y) {
-		if( getPathSize()!=0 && (pos_x==getFirstPathObserved()[0] && pos_y==getFirstPathObserved()[1])) {
+		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if( getPathSize() == 1 && target != null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				if( getPayload() == Vehicle.PAYLOAD_COM ) { 
@@ -716,6 +739,13 @@ public class Vehicle {
 			System.out.println("REMOVE HERE"); // for testing remove function
 			removeFirstPath();
 		}
+	}
+	
+	private boolean positionCheck (int pos_x, int pos_y) {
+		if((pos_x>=getFirstPathObserved()[0]-1 && pos_x<=getFirstPathObserved()[0]+1)
+				&& (pos_y>=getFirstPathObserved()[1]-1 && pos_y<=getFirstPathObserved()[1]+1))
+			return true;
+		else return false;
 	}
 
 	public synchronized boolean chkValidMove(int direction) {
@@ -857,7 +887,7 @@ public class Vehicle {
 		}
 		// if attack position is "0 0"
 		// it will be considered as fake attack
-		if (xCoord == 0 || yCoord == 0){
+		if (xCoord == 0 && yCoord == 0){
 			System.out.println("Fake attack launched.");
 			lsnr.EVT_Hack_Launch_Fake(index);
 			return;

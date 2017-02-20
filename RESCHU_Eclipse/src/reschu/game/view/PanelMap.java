@@ -70,7 +70,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	public synchronized void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
 	
 	public synchronized Vehicle getInvestigatedVehicle() {return investigatedVehicle;}
-	public synchronized void setInvestigatedVehicle(Vehicle v) {investigatedVehicle = v;}
+	public synchronized void setInvestigatedVehicle(Vehicle v) {v.isInvestigate = true;}
 
 	public PanelMap(GUI_Listener l, Game g, String strTitle) {
 		lsnr = l;
@@ -151,6 +151,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if(v.getHijackStatus()) {
 				if((v.getGroundTruthX() <= pos_min_X) || (v.getGroundTruthX() >= pos_max_X)
 						|| (v.getGroundTruthY() <= pos_min_Y) || (v.getGroundTruthY() >= pos_max_Y)) {
+					// record UAV disappear only once
+					if(!v.isDisappeared) {
+						lsnr.EVT_ATTACKED_UAV_DISAPPEAR(v);
+					}
 					v.isDisappeared = true;
 					// unassign its original target
 					// v.getTarget().setVisible(false);
@@ -315,7 +319,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 						MyColor.COLOR_HIGHLIGHT, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
 			}
 			
-			if( investigatedVehicle == v ) {
+			if(investigatedVehicle==v && v.getInvestigateStatus()) {				
 				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
 				if(selectedVehicle != investigatedVehicle) {

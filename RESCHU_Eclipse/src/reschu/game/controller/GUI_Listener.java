@@ -124,4 +124,5 @@ public interface GUI_Listener {
     
     // For Ghost Mission
     public void EVT_Generate_Ghost_Mission(Vehicle v);
+    public void EVT_ATTACKED_UAV_DISAPPEAR(Vehicle v);
 }

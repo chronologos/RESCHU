@@ -72,6 +72,7 @@ public class MyDB {
 	final public static int NEW_TARGET_ASSIGNED			= 82;
 	
 	final public static int GENERATE_GHOST_MISSION		= 85;
+	final public static int ATTACKED_UAV_DISAPPEAR		= 86;
 	
 	final public static int ZOOM_IN						= 90;
 	final public static int ZOOM_OUT					= 91;

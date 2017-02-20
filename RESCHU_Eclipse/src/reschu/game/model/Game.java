@@ -127,7 +127,7 @@ public class Game implements Runnable, ActionListener
 		setVehicle(scenario); 
 		setPayload(); 
 	}
-
+	
 	public void setListener(GUI_Listener l){ lsnr = l; }
 	public DBWriter getDBWriter() {return dbWriter; }
 
@@ -438,12 +438,21 @@ public class Game implements Runnable, ActionListener
 	// immediately change UAV's position, for HOME functions
 	// change current position and reassign a target
 	public void HomeFunction(Vehicle v) {
+		if(v.getHijackStatus()) {
+			v.setHijackStatus(false);
+		}
+		v.setInvestigateStatus(false);
+		v.getTarget().setDone();
+		
     	int x = rnd.nextInt(MySize.width);
     	int y = rnd.nextInt(MySize.height);
     	v.setPos(x, y);
     	
-    	while(v.getPath().size() > 1) {
-    		v.removeFirstPath();
+    	while(v.getObservedPath().size() > 1) {
+    		v.removeObservedFirstPath();
+    	}
+    	while(v.getGroundTruthPath().size() > 1) {
+    		v.removeGroundFirstPath();
     	}
     	
 		for(int i=0; i<map.getListUnassignedTarget().size(); i++) {
@@ -451,6 +460,7 @@ public class Game implements Runnable, ActionListener
 				Target target = map.getListUnassignedTarget().get(i);
 				if(v.getTarget() != target) {
 					v.changeGoal(v.getLastPath(), target.getPos()[0], target.getPos()[1]);
+					// v.resetGroundtoObserved();
 					break;
 				}
 			}
