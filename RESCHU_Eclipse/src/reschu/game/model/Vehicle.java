@@ -73,11 +73,6 @@ public class Vehicle {
 	public synchronized LinkedList<int[]> getObservedPath() {
 		return observedPath;
 	}
-	
-	public void resetGroundtoObserved () {
-		groundTruthPath.clear();
-		groundTruthPath.add(observedPath.getFirst());
-	}
 
 	/**
 	 * Add a waypoint to the path of this vehicle  (synchronized)

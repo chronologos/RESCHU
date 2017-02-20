@@ -448,11 +448,15 @@ public class Game implements Runnable, ActionListener
     	int y = rnd.nextInt(MySize.height);
     	v.setPos(x, y);
     	
-    	while(v.getObservedPath().size() > 1) {
-    		v.removeObservedFirstPath();
+    	if(v.getObservedPath() != null) {
+	    	while(v.getObservedPath().size() > 1) {
+	    		v.removeObservedFirstPath();
+	    	}
     	}
-    	while(v.getGroundTruthPath().size() > 1) {
-    		v.removeGroundFirstPath();
+    	if(v.getGroundTruthPath() != null) {
+	    	while(v.getGroundTruthPath().size() > 1) {
+	    		v.removeGroundFirstPath();
+	    	}
     	}
     	
 		for(int i=0; i<map.getListUnassignedTarget().size(); i++) {
@@ -460,7 +464,6 @@ public class Game implements Runnable, ActionListener
 				Target target = map.getListUnassignedTarget().get(i);
 				if(v.getTarget() != target) {
 					v.changeGoal(v.getLastPath(), target.getPos()[0], target.getPos()[1]);
-					// v.resetGroundtoObserved();
 					break;
 				}
 			}
