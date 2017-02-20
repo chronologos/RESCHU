@@ -361,8 +361,8 @@ class VehiclePanel extends JPanel implements ActionListener
 	
 	// print task message when an UAV reaches a target
 	public void PrintTaskMsg() {
-		JLabel task_msg = new JLabel("<html>TASK<br>Please first set the zoom level to 0<br>And count the number of circular building"
-				+ "<br>in the investigation window<br>Then enter your answer and send it<br>to reassign the UAV</html>");
+		JLabel task_msg = new JLabel("<html>TASK<br>1. Set the zoom level to 3<br>2. Count the number of circular buildings"
+				+ "<br>3. Enter your answer in the message box<br>4. Send your answer to reassign the UAV</html>");
 		task_msg.setVerticalAlignment(SwingConstants.TOP);
 		scrollPane.setViewportView(task_msg);
 	}
