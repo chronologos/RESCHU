@@ -374,8 +374,14 @@ class VehiclePanel extends JPanel implements ActionListener
 		else btnEngage.setEnabled(false);		
 	}
 	
-	public void Update_Damage() {progressBar.setValue((int)Math.round(selectedVehicle.getDamage()));}	
-	public void Update_Payload(Payload p) {txtMission.setText(p.getStatement());}
+	public void Update_Damage() {progressBar.setValue((int)Math.round(selectedVehicle.getDamage()));}
+	
+	// The getStatement function will return exception
+	// Probably because the setStatement related functions is not working well in PanelControl
+	// just comment this out for now
+	public void Update_Payload(Payload p) {
+		// txtMission.setText(p.getStatement());
+	}
 	public void Payload_Clear() {txtMission.setText("");}
 	
     private void insert_grid(GridBagConstraints gbc, Component cmpt,

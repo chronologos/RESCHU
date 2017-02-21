@@ -271,9 +271,8 @@ public class Vehicle {
 			if( !t.isVisible() ) {
 				if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
 					x = target_pos[0]; y = target_pos[1];            		
-					setTarget(getMap().getListUnassignedTarget().get(i)); 
-					//PanelMsgBoard.Msg("Vehicle ["+index+"] is assigned to a target type ["+target.getMission()+"]");
-					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
+					setTarget(getMap().getListUnassignedTarget().get(i));
+					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to target "+this.getTarget().getName()+".");
 					getMap().assignTarget(new int[]{x, y});
 					assigned = true;
 					break;
@@ -294,7 +293,7 @@ public class Vehicle {
 						break;
 					}
 					setTarget(getMap().getListUnassignedTarget().get(i));
-					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
+					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to target "+this.getTarget().getName()+".");
 					getMap().assignTarget(new int[]{x, y});
 					assigned = true;
 					break;	
@@ -339,7 +338,7 @@ public class Vehicle {
 				if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
 					x = new_target_pos[0]; y = new_target_pos[1];            		
 					setTarget(getMap().getListUnassignedTarget().get(i)); 
-					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
+					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to target "+this.getTarget().getName()+".");
 					getMap().assignTarget(new int[]{x, y});
 					assigned = true;
 					break;
@@ -360,7 +359,7 @@ public class Vehicle {
 						break; 
 					}
 					setTarget(getMap().getListUnassignedTarget().get(i)); 
-					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to a target.");
+					PanelMsgBoard.Msg("Vehicle ["+index+"] has been assigned to target "+this.getTarget().getName()+".");
 					getMap().assignTarget(new int[]{x, y});
 					assigned = true;
 					break;	

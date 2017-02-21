@@ -546,8 +546,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 		// System.out.println("XXXXX");
 	}
 
-	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {
-		PanelMsgBoard.Msg("[MISSION(" +v.getIndex()+")] " + p.getStatement());
+	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {		
+		// PanelMsgBoard.Msg("[MISSION(" +v.getIndex()+")] " + p.getStatement());
 		pnlControl.Update_Vehicle_Payload(v, p);
 	}
 
@@ -583,7 +583,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+		String msg = "Vehicle ["+v.getIndex()+"] has engaged in a counting task.";
+		PanelMsgBoard.Msg(msg);
 		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName()); // and this
 	}
 	

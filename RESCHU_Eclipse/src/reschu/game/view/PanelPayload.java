@@ -70,7 +70,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private Animator changing_x;
 	private Animator changing_y;
 
-	private TextRenderer trP14;    
+	private TextRenderer trP14;
 	private TextRenderer trB12;
 	private TextRenderer trB17;
 	private TextRenderer trB20;
@@ -82,7 +82,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private GUI_Listener lsnr;
 	private PayloadList payload_list;
 	private java.awt.event.MouseEvent mouseEvt;
-	private int GL_width,  GL_height;
+	private int GL_width, GL_height;
 
 	private final int bogus_pxl_width_and_height = 600;
 	private int pxl_width = bogus_pxl_width_and_height;	// the width of payload image
@@ -501,7 +501,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		lsnr.Payload_Assigned_From_pnlPayload(v, curPayload);
 	}
 	
-	
+	// this method never be called anywhere
+	/*
 	private void displayText(GLAutoDrawable drawable) {
 
 		if( GL_DEBUG ) System.out.println("GL: displayText called");
@@ -592,13 +593,14 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 				trB24.endRendering();
 			}
 		}
-		/*
+		//
 	    if (penalize) {
 	    textRenderer.setColor(1.0f, 0.2f, 0.3f, 0.9f);
 	    textRenderer.draw("INCORRECT LOCATION", 40, drawable.getHeight() / 2);
 	    }
-		 */
+		//
 	}
+	*/
 	
 
 	private void displayAnimRenderer(GLAutoDrawable drawable, int viewport_x, int viewport_y, float x_off, float y_off) {
@@ -689,7 +691,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		if ( (wcoord[0] <= px + offset && wcoord[0] >= px - offset) 
 				&& (wcoord[1] <= py + offset && wcoord[1] >= py - offset)) {
 			correct = true;
-		} else { 
+		} else {
 			correct = false;
 		}
 		if( GL_DEBUG ) System.out.println("GL: setCorrect(" + correct + ") called");
