@@ -490,7 +490,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	@Override
 	public void Vehicle_Selected_From_pnlMap(int idx) { 
-		System.out.println("Vehicle_Selected_From_pnlMap " + idx);
+		System.out.println("Vehicle Selected From pnlMap " + idx);
 		pnlControl.Show_Vehicle_Status(idx);
 	}
 	
@@ -543,7 +543,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	public void Payload_Finished_From_Msg() {
 		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
-		// System.out.println("XXXXX");
 	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {		
@@ -776,8 +775,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
 	@Override
-	public void EVT_System_GameStart(){ 
-		
+	public void EVT_System_GameStart(){
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario, -1, -1); 
 	}
 	public void EVT_System_GameEnd(){ 
@@ -787,9 +785,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 	/**
 	 * Yves
 	 */
-	public void EVT_VSelect_Map_LBtn(int vIdx) { 
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx, "Vehicle select map Lbtn (trying to enable video feed)", -1, -1);
-		uavMonitor.enableUAVFeed(game.getVehicleList().getVehicle(vIdx-1));
+	public void EVT_VSelect_Map_LBtn(int vIdx) {
+		Vehicle v = game.getVehicleList().getVehicle(vIdx-1);
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx, "Vehicle select map Lbtn (trying to enable video feed)", v.getX(), v.getY());
+		uavMonitor.enableUAVFeed(v);
 	}
 	public void EVT_VSelect_Map_RBtn(int vIdx) { 
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn", -1, -1);

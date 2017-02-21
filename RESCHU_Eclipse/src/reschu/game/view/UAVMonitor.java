@@ -34,7 +34,7 @@ public class UAVMonitor {
 		displayEnabled = true;
 		// System.out.println("uav feed enabled.");
 		if (uav != activeUAV){
-			System.out.println("Active UAV changed to " + activeUAV);
+			System.out.println("Active UAV changed to UAV " + uav.getIndex());
 			zoomLevel = 1; // zoom should be per-vehicle state
 			panning = false;
 			xDistToPan = 0;
@@ -47,13 +47,15 @@ public class UAVMonitor {
 			panelpayload.needToRecenter = true;
 		}
 		activeUAV = uav;
-		//if (activeUAV.getPathSize() > 0) {
-			System.out.println("Recalculating rotation for new UAV");
+		/*
+		if (activeUAV.getPathSize() > 0) {
+			System.out.println("Recalculating rotation for UAV "+activeUAV.getIndex());
 			setRotation();
 			if (activeUAV.getPathSize() > 0) {
 				prevTargetPos = activeUAV.getFirstPathGround();
 			}
-		//}
+		}
+		*/
 	}
 
 	public void disableUAVFeed() {
@@ -158,7 +160,6 @@ public class UAVMonitor {
 				// System.out.println("No waypoint and no panning, setting Y to 0");
 				panelpayload.unsetDisplayY();
 			}
-			
 		}
 		
 		panelpayload.setX(activeUAV.getGroundTruthX());
@@ -206,42 +207,40 @@ public class UAVMonitor {
 			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");
 			panelpayload.setRotateAngle(0);
 		}
-		
-		// System.out.println("Applying rotation!");
-		
-		// int[] nextLocation = activeUAV.getFirstPathGround();
-		// double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
-		// double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
-		// yDelta *= -1;
-
-		// System.out.println("xDelta: " + xDelta);
-		// System.out.println("yDelta : " + yDelta);
-
-		// double angleToNorth;
-		/*
-		if (yDelta == 0) {
-			angleToNorth = xDelta > 0 ? Math.PI/2 : - Math.PI/2; 
-		}
-		else if (yDelta > 0) {
-			angleToNorth = Math.atan(xDelta/yDelta);
-		}
 		else {
-			double posYDelta = -yDelta;
-			if (xDelta >= 0) {
-				angleToNorth = Math.PI - Math.atan(xDelta/posYDelta);
+			System.out.println("Applying rotation");
+			
+			int[] nextLocation = activeUAV.getFirstPathGround();
+			double xDelta = nextLocation[0] - activeUAV.getGroundTruthX();
+			double yDelta = nextLocation[1] - activeUAV.getGroundTruthY();
+			yDelta *= -1;
+	
+			System.out.println("xDelta: " + xDelta);
+			System.out.println("yDelta: " + yDelta);
+			
+			double angleToNorth;
+			
+			if (yDelta == 0) {
+				angleToNorth = xDelta > 0 ? Math.PI/2 : - Math.PI/2; 
+			}
+			else if (yDelta > 0) {
+				angleToNorth = Math.atan(xDelta/yDelta);
 			}
 			else {
-
-				angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
+				double posYDelta = -yDelta;
+				if (xDelta >= 0) {
+					angleToNorth = Math.PI - Math.atan(xDelta/posYDelta);
+				}
+				else {
+					angleToNorth = Math.PI + Math.atan(xDelta/yDelta);
+				}
 			}
+			
+			angleToNorth *= 180;
+			angleToNorth /= Math.PI;
+			System.out.println("Angle for UAV to rotate " + angleToNorth);
+			panelpayload.setRotateAngle((float)angleToNorth);
 		}
-		*/
-
-		double angleToNorth = 0;
-		angleToNorth *= 180;
-		angleToNorth /= Math.PI;
-		System.out.println("Angle for ship to rotate " + angleToNorth);
-		panelpayload.setRotateAngle((float)angleToNorth);
 	}
 
 	// Check if panning will cause	

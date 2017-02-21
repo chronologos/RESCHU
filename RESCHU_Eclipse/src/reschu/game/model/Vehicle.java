@@ -110,7 +110,7 @@ public class Vehicle {
 	/**
 	 * Get the size of a path of this vehicle  (synchronized)
 	 */
-	public synchronized int getPathSize() {return groundTruthPath.size(); }
+	public synchronized int getPathSize() {return groundTruthPath.size();}
 
 	/**
 	 * Get a coordinate of a waypoint of this vehicle  (synchronized)
@@ -729,8 +729,6 @@ public class Vehicle {
 				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
 			}
 			lsnr.Hide_Popup(this);
-			
-			System.out.println("REMOVE HERE"); // for testing remove function
 			removeFirstPath();
 		}
 	}
