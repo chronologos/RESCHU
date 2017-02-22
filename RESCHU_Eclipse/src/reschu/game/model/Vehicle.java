@@ -6,6 +6,7 @@ import java.util.Random;
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
+import reschu.game.view.UAVMonitor;
 
 public class Vehicle { 
 	public static final String TYPE_UAV = "UAV";
@@ -35,6 +36,13 @@ public class Vehicle {
 	public boolean isDisappeared;
 	public boolean isInvestigate;
 	private LinkedList<int[]> observedPath;
+	
+	private UAVMonitor uav_monitor;
+	
+	// for updating UAVMonitor
+	public void setUAVMonitor(UAVMonitor u) {
+		uav_monitor = u;
+	}
 	
 	public boolean getHijackStatus () {
 		return isHijacked;
@@ -730,6 +738,7 @@ public class Vehicle {
 			}
 			lsnr.Hide_Popup(this);
 			removeFirstPath();
+			// uav_monitor.setRotation();
 		}
 	}
 	

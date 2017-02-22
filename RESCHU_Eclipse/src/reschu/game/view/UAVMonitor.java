@@ -19,7 +19,7 @@ public class UAVMonitor {
 	private int xPanOffset;
 	private int yPanOffset;
 	private int[] prevTargetPos;
-
+	
 	public static final int PAN_SPEED = 5;
 	// Initialize UAVMonitor with Prototype object
 	public UAVMonitor(PanelPayload proto) {
@@ -153,7 +153,6 @@ public class UAVMonitor {
 				prevTargetPos = currentTargetPos;
 				panelpayload.needToRotate = true;
 			}
-		
 		}
 		else {
 			if (yDistToPan == 0) {
@@ -171,10 +170,8 @@ public class UAVMonitor {
 		if (yPanOffset != 0) {
 			panelpayload.applyPanY((float)yAdded/zoomLevel);
 		}
-
 		
 		panelpayload.moveCenter();
-
 	}
 
 	// pass direction to prototype based on vector to next way coordinate in UAV's path
@@ -203,6 +200,9 @@ public class UAVMonitor {
 	// Determine angle to next waypoint and provide rotation angle accordingly
 	public void setRotation() {
 		if (!displayEnabled || activeUAV == null) return;
+		
+		activeUAV.setUAVMonitor(this);
+		
 		if (activeUAV.getPathSize() == 0) {
 			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");
 			panelpayload.setRotateAngle(0);

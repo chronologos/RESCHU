@@ -394,7 +394,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 							v.getY()*cellsize + halfcell, 
 							v.getPath().getLast()[0]*cellsize + halfcell, 
 							v.getPath().getLast()[1]*cellsize + halfcell);
-					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
+					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT);
 					else g.setColor(MyColor.COLOR_LINE);
 					g.fillOval(
 							(v.getPath().getLast()[0]-wpsize/cellsize/2)*cellsize, 
