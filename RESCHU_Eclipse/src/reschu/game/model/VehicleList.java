@@ -49,7 +49,7 @@ public class VehicleList {
             v_uuv.setType(v_type);
             v_uuv.setPayload(v_payload);
             //v_uuv.setPos(x, y); 
-            v_uuv.setPos64((double)(x), (double)(y)); //#FAR06
+            v_uuv.setPos64((double)(x), (double)(y)); //far06
             v_uuv.setVelocity(milliseconds);
             v_uuv.setGuiListener(l);
             v_list.addLast(v_uuv);
@@ -60,7 +60,7 @@ public class VehicleList {
             v_uav.setType(v_type);
             v_uav.setPayload(v_payload);
             //v_uav.setPos(x, y);
-            v_uav.setPos64((double)(x), (double)(y)); //#FAR06
+            v_uav.setPos64((double)(x), (double)(y)); //far06
             v_uav.setVelocity(milliseconds);
             v_uav.setGuiListener(l);
             v_list.addLast(v_uav);

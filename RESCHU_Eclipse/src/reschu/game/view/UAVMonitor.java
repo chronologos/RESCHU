@@ -145,7 +145,7 @@ public class UAVMonitor {
 			panelpayload.setDisplayY((int)Math.max(-PAN_SPEED, panelpayload.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
 	
 			int[] currentTargetPos = activeUAV.getFirstPathGround();
-			//if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) { //#FAR06 TODO check!
+			//if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) { //far06 TODO check!
 				// System.out.println("Detected change in waypoint!");
 				setRotation();
 				prevTargetPos = currentTargetPos;

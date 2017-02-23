@@ -17,7 +17,7 @@ public class Vehicle {
 	private String type;
 	private String payload;
 	private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
-	//#FAR06 Use double instead of int for storing vehicle position
+	//far06 Use double instead of int for storing vehicle position
 	private double s64XposGdTruth, s64YposGdTruth, s64XposObs, s64YposObs;
 	private double s64GtAngle = 0, s64ObsAngle = 0;
 	private Target target;
@@ -57,7 +57,7 @@ public class Vehicle {
 	 */
 	public synchronized void setPos(int x, int y) { setGroundTruthX(x); setGroundTruthY(y); }
 	public synchronized void setPos64(double x, double y)
-											{ setGroundTruthX64(x); setGroundTruthY64(y); } //#FAR06
+											{ setGroundTruthX64(x); setGroundTruthY64(y); } //far06
 
 	/**
 	 * Get a path of this vehicle  (synchronized) 
@@ -197,7 +197,7 @@ public class Vehicle {
 		}
 	}*/
 	
-	//#FAR06 reimplement setters and getters for 32bit location
+	//far06 reimplement setters and getters for 32bit location
 	//far?? TODO check why public synchronized is used
 	public synchronized void setGroundTruthX(int x)	{ s64XposGdTruth = x; }
 	public synchronized int  getGroundTruthX()		{ return (int)(s64XposGdTruth); } 
@@ -208,7 +208,7 @@ public class Vehicle {
 	public synchronized void setObservedY(int y)	{ s64YposObs = y; }   
 	public synchronized int  getY()					{ return (int)(isHijacked? s64YposObs : s64YposGdTruth); }
 	
-	//#FAR06 reimplement setters and getters for 64bit location
+	//far06 reimplement setters and getters for 64bit location
 	//far?? TODO check why public synchronized is used
 	public synchronized void 	setGroundTruthX64(double x)	{ s64XposGdTruth = x; }
 	public synchronized double  getGroundTruthX64()			{ return s64XposGdTruth; } 
@@ -258,7 +258,7 @@ public class Vehicle {
 
 	public Vehicle(Map m, Game g) { 
 		//setGroundTruthX(0); setGroundTruthY(0);
-		setGroundTruthX64(0); setGroundTruthY64(0); //#FAR06
+		setGroundTruthX64(0); setGroundTruthY64(0); //far06
 		setTarget(null); 
 		this.g = g;
 		map = m; 
@@ -479,7 +479,7 @@ public class Vehicle {
 				+ Math.pow( (double)(pos_y - getFirstPathObserved()[1]), 2.0 ) );
 	}
 	
-	//#FAR06 Precise distance
+	//far06 Precise distance
 	public double getDistanceGround(double pos_x, double pos_y) {
 		if( getPathSize() == 0) return 0;
 		return Math.sqrt( Math.pow( (pos_x - (double)(getFirstPathGround()[0])), 2.0 ) 
@@ -496,7 +496,7 @@ public class Vehicle {
 		moveTo(rnd.nextInt(8));
 	}
 	
-	//#FAR06 Changing vehicle behavior
+	//far06 Changing vehicle behavior
 	
 	
 	// far04 changed uncommented
@@ -788,7 +788,7 @@ public class Vehicle {
 		}
 	}
 	
-	//#FAR06 Move exact TODO implement
+	//far06 Move exact TODO implement
 	public void movePrecise()
 	{
 		//Get Cartesian distance to goal
@@ -847,14 +847,14 @@ public class Vehicle {
 			setObservedX64(getX64() - Math.cos(s64Angle)*MySpeed.VELOCITY64);
 			setObservedY64(getY64() - Math.sin(s64Angle)*MySpeed.VELOCITY64);
 			setObsAngle64(s64ObsAngle);
-			//#FAR06 TODO implement attack check method
+			//far06 TODO implement attack check method
 			//payloadCheck(getGroundTruthX(), getGroundTruthY());
 		}
 		System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
 		
 	}
 	
-	//#FAR06 TODO implement attack check method
+	//far06 TODO implement attack check method
 	private void attackCheck(int pos_x, int pos_y) {
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if( getPathSize() == 1 && target != null) {
@@ -1002,8 +1002,8 @@ public class Vehicle {
 		// hackData comes in form "NEW_X_TARGET NEW_Y_TARGET"
 		//setObservedX(getX());
 		//setObservedY(getY());
-		setObservedX64(getX64()); //#FAR06
-		setObservedY64(getY64()); //#FAR06
+		setObservedX64(getX64()); //far06
+		setObservedY64(getY64()); //far06
 		String[] coordStrings = hackData.split(" ");
 		if (hackData == null) throw new IllegalArgumentException("Null hackData");
 		if (coordStrings.length != 2) throw new IllegalArgumentException("Wrong number of coordinates in hackdata, must be 2");

@@ -172,11 +172,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private int tileX = 0;
 	private int tileY = 0;
 
-	private float xPos = 0; //#FAR06 improve accuracy // [IMPORTANT] x Coordinate of top left corner of viewport
-	private float yPos = 0; //#FAR06 improve accuracy // y Coordinate of top left corner of viewport
-	private float xPosPrevious = 0; //#FAR06 improve accuracy
-	private float yPosPrevious = 0; //#FAR06 improve accuracy
-	private float centerMoveDist = 0; //#FAR06 improve accuracy
+	private float xPos = 0; //far06 improve accuracy // [IMPORTANT] x Coordinate of top left corner of viewport
+	private float yPos = 0; //far06 improve accuracy // y Coordinate of top left corner of viewport
+	private float xPosPrevious = 0; //far06 improve accuracy
+	private float yPosPrevious = 0; //far06 improve accuracy
+	private float centerMoveDist = 0; //far06 improve accuracy
 
 	private float zoomLevel = 1;
 	private float rotateAngle = 0f; // controls rotation of texture to always show movement as northward
@@ -189,8 +189,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public boolean needToRotate = false;
 	public boolean needToRecenter = false;
 
-	private float displayX; //#FAR06 increase accuracy
-	private float displayY; //#FAR06 increase accuracy
+	private float displayX; //far06 increase accuracy
+	private float displayY; //far06 increase accuracy
 
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
@@ -968,7 +968,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		displayY = 0;
 	}
 
-	public void setDisplayX(float x) { //#FAR06 increase accuracy
+	public void setDisplayX(float x) { //far06 increase accuracy
 		displayX = x;
 	}
 
@@ -1045,7 +1045,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 			uavMonitor.setCoords(); // updates the x and y coordinates as necessary
 			uavMonitor.setVelocity();
-			//#FAR06 tile handler commented
+			//far06 tile handler commented
 //			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
 //
 //			if (tileIncrement != 0) { // New tile
@@ -1123,8 +1123,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 			//			System.out.println("xTileOffset float: " + x1 + "; yTileOffset float: " + y1);
 
-			//if (needToRecenter) recenterViewport(); //#FAR06 TODO double check
-			recenterViewport(); //#FAR06 TODO check
+			//if (needToRecenter) recenterViewport(); //far06 TODO double check
+			recenterViewport(); //far06 TODO check
 
 			if (right == 0) { // very first call to render  
 				right = x2;
@@ -1224,8 +1224,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	}
 
 	public String findKey(float xPos, float yPos) {
-		int tileX = (int)Math.rint(xPos - (xPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //#FAR06 TODO recheck
-		int tileY = (int)Math.rint(yPos - (yPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //#FAR06 TODO recheck
+		int tileX = (int)Math.rint(xPos - (xPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //far06 TODO recheck
+		int tileY = (int)Math.rint(yPos - (yPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //far06 TODO recheck
 		int tileWidth, tileHeight;
 		if (tileX == tiler.getMaxTileX()) {
 			tileWidth = backingImgWidth - tileX;
