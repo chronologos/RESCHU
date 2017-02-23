@@ -40,6 +40,7 @@ public class VehicleList {
     	int x = rnd.nextInt(MySize.width);
     	int y = rnd.nextInt(MySize.height);
     	
+    	
         if(v_type == Vehicle.TYPE_UUV) {
             UUV v_uuv = new UUV(m, g);
             while (m.getCellType(x, y) == MyGame.LAND) { x = rnd.nextInt(MySize.width); y = rnd.nextInt(MySize.height); }            
@@ -47,7 +48,8 @@ public class VehicleList {
             v_uuv.setName(v_name);
             v_uuv.setType(v_type);
             v_uuv.setPayload(v_payload);
-            v_uuv.setPos(x, y); 
+            //v_uuv.setPos(x, y); 
+            v_uuv.setPos64((double)(x), (double)(y)); //#FAR06
             v_uuv.setVelocity(milliseconds);
             v_uuv.setGuiListener(l);
             v_list.addLast(v_uuv);
@@ -57,7 +59,8 @@ public class VehicleList {
             v_uav.setName(v_name);
             v_uav.setType(v_type);
             v_uav.setPayload(v_payload);
-            v_uav.setPos(x, y); 
+            //v_uav.setPos(x, y);
+            v_uav.setPos64((double)(x), (double)(y)); //#FAR06
             v_uav.setVelocity(milliseconds);
             v_uav.setGuiListener(l);
             v_list.addLast(v_uav);
@@ -72,7 +75,8 @@ public class VehicleList {
         v_uav.setName(v.getName()+" GHOST");
         v_uav.setType(v.getType());
         v_uav.setPayload(v.getPayload());
-        v_uav.setPos(v.getX(), v.getY());
+        //v_uav.setPos(v.getX(), v.getY());
+        v_uav.setPos64(v.getX64(), v.getY64()); //fa06
         v_uav.setVelocity(v.getVelocity());
         v_uav.setGuiListener(l);
         return v_uav;

@@ -172,11 +172,11 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private int tileX = 0;
 	private int tileY = 0;
 
-	private int xPos = 0; // [IMPORTANT] x Coordinate of top left corner of viewport
-	private int yPos = 0; // y Coordinate of top left corner of viewport
-	private int xPosPrevious = 0;
-	private int yPosPrevious = 0;
-	private int centerMoveDist = 0;
+	private float xPos = 0; //#FAR06 improve accuracy // [IMPORTANT] x Coordinate of top left corner of viewport
+	private float yPos = 0; //#FAR06 improve accuracy // y Coordinate of top left corner of viewport
+	private float xPosPrevious = 0; //#FAR06 improve accuracy
+	private float yPosPrevious = 0; //#FAR06 improve accuracy
+	private float centerMoveDist = 0; //#FAR06 improve accuracy
 
 	private float zoomLevel = 1;
 	private float rotateAngle = 0f; // controls rotation of texture to always show movement as northward
@@ -189,8 +189,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public boolean needToRotate = false;
 	public boolean needToRecenter = false;
 
-	private int displayX;
-	private int displayY;
+	private float displayX; //#FAR06 increase accuracy
+	private float displayY; //#FAR06 increase accuracy
 
 	public PanelPayload(GUI_Listener e, String strTitle, GLJPanel payloadCanvas, Game g, String tileFileDir, int imageHeight, int imageWidth) {
 		if( GL_DEBUG ){ 
@@ -922,30 +922,30 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 
 
-	public int scaleMapXToViewport(int x) {
-		return (int)(x*(float)backingImgWidth/MySize.width);
+	public float scaleMapXToViewport(double x) {
+		return ((float)(x)*(float)backingImgWidth/((float)(MySize.width)));
 	}
 
-	public int scaleMapYToViewport(int y) {
-		return (int)(y*(float)backingImgHeight/MySize.height);
+	public float scaleMapYToViewport(double y) {
+		return ((float)(y)*(float)backingImgHeight/MySize.height);
 	}
 
 
 	public void moveCenter(){
 		// Update position of viewport center to match distance moved by UAV. Only called by UAVMonitor.
 		if (xPosPrevious != xPos || yPosPrevious != yPos){
-			centreY -= (float)(Math.sqrt(Math.pow(xPos-xPosPrevious, 2) + Math.pow(yPos-yPosPrevious, 2)))/TILE_LENGTH;
-			centreX += (float)(displayX)/(TILE_LENGTH); // ONLY FOR PANNING TODO
+			centreY -= (float)(Math.sqrt(Math.pow(xPos-xPosPrevious, 2) + Math.pow(yPos-yPosPrevious, 2)))/((float)TILE_LENGTH);
+			centreX += (float)(displayX)/((float)(TILE_LENGTH)); // ONLY FOR PANNING TODO
 		}
 
 	}
-	public void setX(int x) {
+	public void setX(float x) {
 		xPosPrevious = xPos;
 		xPos = (int)(scaleMapXToViewport(x) - (float)VIEWPORT_LENGTH/2);
 		// System.out.println("xPos is " + xPos);
 	}
 
-	public void setY(int y) {
+	public void setY(float y) {
 		yPosPrevious = yPos;
 		yPos = (int)(scaleMapYToViewport(y) - (float)VIEWPORT_LENGTH/2);
 		// System.out.println("yPos is " + yPos);
@@ -960,7 +960,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		yDirection = yDir;
 	}
 
-	public void setDisplayY(int y) {
+	public void setDisplayY(float y) {
 		displayY = y;
 	}
 
@@ -968,7 +968,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		displayY = 0;
 	}
 
-	public void setDisplayX(int x) {
+	public void setDisplayX(float x) { //#FAR06 increase accuracy
 		displayX = x;
 	}
 
@@ -976,7 +976,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		displayX = 0;
 	}
 
-	public int getDisplayY() {
+	public float getDisplayY() {
 		return displayY;
 	}
 
@@ -1045,20 +1045,21 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 			uavMonitor.setCoords(); // updates the x and y coordinates as necessary
 			uavMonitor.setVelocity();
-			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
-
-			if (tileIncrement != 0) { // New tile
-				// System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
-				if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
-					System.out.println("[Error] Cannot fetch next tile.");
-				}
-
-				needToRecenter = true;
-
-			}
-			else {
-				// System.out.println("Not switching tiles. TileX is " + tileX + " and TileY is " + tileY);
-			}
+			//#FAR06 tile handler commented
+//			int tileIncrement = t.nextTile(xPos + (int)((float)VIEWPORT_LENGTH/2), yPos + (int)((float)VIEWPORT_LENGTH/2), xDirection, yDirection, tileX, tileY);
+//
+//			if (tileIncrement != 0) { // New tile
+//				// System.out.println("Switching tiles! xPos: " + xPos + "; Tile increment: " + tileIncrement);
+//				if (!getNextImage(tileX, tileY, tileIncrement, drawable, gl)) {
+//					System.out.println("[Error] Cannot fetch next tile.");
+//				}
+//
+//				needToRecenter = true;
+//
+//			}
+//			else {
+//				// System.out.println("Not switching tiles. TileX is " + tileX + " and TileY is " + tileY);
+//			}
 //
 //			if (xPos + TILE_LENGTH >= backingImgWidth - SPEED && xDirection == 1) {
 //				System.out.println("Hit right end of image, reversing!");
@@ -1122,7 +1123,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 
 			//			System.out.println("xTileOffset float: " + x1 + "; yTileOffset float: " + y1);
 
-			if (needToRecenter) recenterViewport();
+			//if (needToRecenter) recenterViewport(); //#FAR06 TODO double check
+			recenterViewport(); //#FAR06 TODO check
 
 			if (right == 0) { // very first call to render  
 				right = x2;
@@ -1191,12 +1193,12 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	}
 
 	
-	public void applyPanX(float xPan) {
-		centreX += (xPan/TILE_LENGTH);
+	public void applyPanX(double xPan) {
+		centreX += (xPan/((double)TILE_LENGTH));
 	}
 	
-	public void applyPanY(float yPan) {
-		centreY += (yPan/TILE_LENGTH);
+	public void applyPanY(double yPan) {
+		centreY += (yPan/((double)TILE_LENGTH));
 	}
 
 	public void recenterViewport() {	
@@ -1208,7 +1210,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		needToRecenter = false;
 	}
 
-	public boolean fetchImage(int xPos, int yPos) {
+	public boolean fetchImage(float xPos, float yPos) {
 		String imgKey = findKey(xPos, yPos);
 		Texture found = subTextures.get(imgKey);
 		if (found == null) {
@@ -1221,9 +1223,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		return true;
 	}
 
-	public String findKey(int xPos, int yPos) {
-		int tileX = xPos - (xPos % (TILE_LENGTH - OVERLAP_LENGTH));
-		int tileY = yPos - (yPos % (TILE_LENGTH - OVERLAP_LENGTH));
+	public String findKey(float xPos, float yPos) {
+		int tileX = (int)Math.rint(xPos - (xPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //#FAR06 TODO recheck
+		int tileY = (int)Math.rint(yPos - (yPos % (TILE_LENGTH - OVERLAP_LENGTH))) ; //#FAR06 TODO recheck
 		int tileWidth, tileHeight;
 		if (tileX == tiler.getMaxTileX()) {
 			tileWidth = backingImgWidth - tileX;

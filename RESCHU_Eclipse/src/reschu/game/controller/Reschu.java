@@ -236,10 +236,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	private void initComponents() throws NumberFormatException, IOException {  
-		double sizeMain[][] = {{TableLayout.FILL, 440, 5, 820, TableLayout.FILL}, 
+		double sizeMain[][] = {{TableLayout.FILL, 440, 5, 820/*+300*/, TableLayout.FILL}, //#FAR06 resize map
 				{370, 110, TableLayout.FILL, 200}};
 		double sizePayload[][] = {{TableLayout.FILL, 0.1}, {TableLayout.FILL}};
-		double sizeMap[][] = {{TableLayout.FILL}, {TableLayout.FILL}};
+		double sizeMap[][] = {{TableLayout.FILL}, {800}};
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new TableLayout(sizeMain));
