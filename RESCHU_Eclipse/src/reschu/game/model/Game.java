@@ -446,8 +446,7 @@ public class Game implements Runnable, ActionListener
 		
     	int x = rnd.nextInt(MySize.width);
     	int y = rnd.nextInt(MySize.height);
-    	// v.setPos(x, y);
-    	v.setPos64((double)(x),(double)(y));
+    	v.setPos((double)(x),(double)(y));
     	
     	if(v.getObservedPath() != null) {
 	    	while(v.getObservedPath().size() > 1) {

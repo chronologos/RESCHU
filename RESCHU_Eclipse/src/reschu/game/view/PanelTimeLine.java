@@ -46,7 +46,6 @@ public class PanelTimeLine extends JPanel
 			add(pnlVehicleIcon[i], "0,"+2*(i+1));
 			add(pnlVehicleTime[i], "2,"+2*(i+1)); 
 		}
-		
 		add(pnlRemainingTime, "2,12");
 	}
 	
@@ -121,6 +120,7 @@ class TimeText extends JPanel
 		*/
 		repaint();
 	}
+	
 	public String setTimeFormat(int time) {
 		String time_min = "" + time/60;
 		String time_sec = "" + time%60;
@@ -131,6 +131,7 @@ class TimeText extends JPanel
 		return time_min + ":" + time_sec;
 	}
 }
+
 class VehicleIcon extends JPanel 
 {
 	private static final long serialVersionUID = -5961320475456746793L;
@@ -187,7 +188,7 @@ class VehicleTime extends JPanel
 	public VehicleTime(Vehicle v) { this.v = v;}
 	public void paint( Graphics g ) {
 		g.clearRect(0, 0, getWidth(), getHeight());
-//		g.setColor(MyColor.COLOR_VEHICLE_TIMELINE);
+		// g.setColor(MyColor.COLOR_VEHICLE_TIMELINE);
 		g.setColor(MyColor.COLOR_VEHICLE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 	

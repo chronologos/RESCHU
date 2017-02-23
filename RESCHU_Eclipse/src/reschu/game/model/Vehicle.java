@@ -16,8 +16,7 @@ public class Vehicle {
 	private String name;
 	private String type;
 	private String payload;
-	private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
-	private double s64XposGdTruth, s64YposGdTruth, s64XposObs, s64YposObs;
+	private double xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
 	private double s64GtAngle = 0, s64ObsAngle = 0;
 	private Target target;
 	private LinkedList<int[]> groundTruthPath = new LinkedList<int[]>();
@@ -54,11 +53,7 @@ public class Vehicle {
 	/**
 	 * Set the position of this vehicle (synchronized)
 	 */
-	public synchronized void setPos(int x, int y) {
-		setGroundTruthX(x);
-		setGroundTruthY(y);
-	}
-	public synchronized void setPos64(double x, double y) {
+	public synchronized void setPos(double x, double y) {
 		setGroundTruthX64(x);
 		setGroundTruthY64(y);
 	}
@@ -170,50 +165,40 @@ public class Vehicle {
 	 */
 	public synchronized Map getMap() { return map; }
 
-	/*
 	public synchronized void setGroundTruthX(int x){ xPosGroundTruth = x; }
-	public synchronized int getGroundTruthX(){ return xPosGroundTruth; } 
+	public synchronized int getGroundTruthX(){ return (int)xPosGroundTruth; }
+	
+	public synchronized void setGroundTruthY(int y){ yPosGroundTruth = y; }
+	public synchronized int getGroundTruthY(){ return (int)yPosGroundTruth; }
 
-	public synchronized void setGroundTruthY(int y){ yPosGroundTruth = y; }   
-	public synchronized int getGroundTruthY(){ return yPosGroundTruth; }
-
-	public synchronized void setObservedX(int x){ xPosObserved = x; }
+	public synchronized void setObservedX(double x){ xPosObserved = x; }
 	public synchronized int getX(){ 
 		if (isHijacked){
-			return xPosObserved;
+			return (int)xPosObserved;
 		}
 		else{
-			return xPosGroundTruth;
+			return (int)xPosGroundTruth;
 		}
 	} 
 
 	public synchronized void setObservedY(int y){ yPosObserved = y; }   
 	public synchronized int getY(){
 		if (isHijacked){
-			return yPosObserved;
+			return (int)yPosObserved;
 		}
 		else{
-			return yPosGroundTruth;
+			return (int)yPosGroundTruth;
 		}
 	}
-	*/
 	
-	public synchronized void setGroundTruthX(int x)	{ s64XposGdTruth = x; }
-	public synchronized int  getGroundTruthX()		{ return (int)(s64XposGdTruth); } 
-	public synchronized void setGroundTruthY(int y)	{ s64YposGdTruth = y; }   
-	public synchronized int  getGroundTruthY()		{ return (int)(s64YposGdTruth); }
-	public synchronized void setObservedX(int x)	{ s64XposObs = x; }
-	public synchronized int  getX()					{ return (int)(isHijacked? s64XposObs : s64XposGdTruth); }
-	public synchronized void setObservedY(int y)	{ s64YposObs = y; }   
-	public synchronized int  getY()					{ return (int)(isHijacked? s64YposObs : s64YposGdTruth); }
-	public synchronized void 	setGroundTruthX64(double x)	{ s64XposGdTruth = x; }
-	public synchronized double  getGroundTruthX64()			{ return s64XposGdTruth; } 
-	public synchronized void 	setGroundTruthY64(double y)	{ s64YposGdTruth = y; }   
-	public synchronized double  getGroundTruthY64()			{ return s64YposGdTruth; }
-	public synchronized void 	setObservedX64(double x)	{ s64XposObs = x; }
-	public synchronized double  getX64()					{ return (isHijacked? s64XposObs : s64XposGdTruth); }
-	public synchronized void 	setObservedY64(double y)	{ s64YposObs = y; }   
-	public synchronized double  getY64()					{ return (isHijacked? s64YposObs : s64YposGdTruth); }
+	public synchronized void 	setGroundTruthX64(double x)	{ xPosGroundTruth = x; }
+	public synchronized double  getGroundTruthX64()			{ return xPosGroundTruth; }
+	public synchronized void 	setGroundTruthY64(double y)	{ yPosGroundTruth = y; }
+	public synchronized double  getGroundTruthY64()			{ return yPosGroundTruth; }
+	public synchronized void 	setObservedX64(double x)	{ xPosObserved = x; }
+	public synchronized double  getX64()					{ return (isHijacked? xPosObserved : xPosGroundTruth); }
+	public synchronized void 	setObservedY64(double y)	{ yPosObserved = y; }
+	public synchronized double  getY64()					{ return (isHijacked? yPosObserved : yPosGroundTruth); }
 	public synchronized void  	setGtAngle64(double a)		{ s64GtAngle  = a; }
 	public synchronized void  	setObsAngle64(double a)		{ s64ObsAngle = a; }
 	public synchronized double  getGtAngle64()				{ return s64GtAngle;  }
@@ -492,8 +477,6 @@ public class Vehicle {
 	
 	// far04 changed uncommented
 	public void moveHillClimbing() {
-		
-		// System.out.println("far moveHillClimbing called");
 		if( isStuck ) {
 			moveTo(6);
 			if(--stuckCount <= 0) isStuck = false;
@@ -504,7 +487,6 @@ public class Vehicle {
 		Random rnd = new Random();
 		int direction = 8;    
 		boolean stuck = true;
-
 		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
 
 		for( int i=0; i<8; i++ ) {
@@ -548,88 +530,15 @@ public class Vehicle {
 			}
 			// if the real UAV position is out of the border
 			else {}
-			
 			// System.out.println("OBSERVED x = "+getX()+"  y = "+getY());
 			// System.out.println("GROUND x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 		}
-		
 		if( stuck ) {
 			stuckCount++;
 			if( stuckCount >= 5 ) isStuck = true;
 		}    	
 		else moveTo(direction);
 	}
-	
-	/*
-	public void moveHillClimbing() { 
-		
-		System.out.println("moveBestFirst called");
-		
-		if( isStuck ) {
-			moveTo(6);
-			if(--stuckCount <= 0) isStuck = false;
-			return;
-		}
-
-		double presentDistance, d=999999999;
-		Random rnd = new Random();
-		int direction = 8;    
-		boolean stuck = true;
-
-		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
-
-		for( int i=0; i<8; i++ ) {
-			direction = rnd.nextInt(8);
-			switch( i ) {
-			case 0: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()-1); 	break;
-			case 1: d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()); 		break;
-			case 2:	d = getDistanceGround(getGroundTruthX()-1, getGroundTruthY()+1); 	break;
-			case 3: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()-1); 		break;
-			case 4: d = getDistanceGround(getGroundTruthX(), getGroundTruthY()+1); 		break;
-			case 5: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()-1); 	break;
-			case 6: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()); 		break;
-			case 7: d = getDistanceGround(getGroundTruthX()+1, getGroundTruthY()+1); 	break;
-			}
-			if( d < presentDistance && chkValidMove(i))
-			{
-				//presentDistance = false;
-				direction = i;
-			}
-		}
-		if( chkValidMove(direction) ) moveTo(direction);
-
-		// if vehicle is hijacked we need to move observed location as well
-		if (isHijacked){
-			direction=0;
-			d = 8;
-			presentDistance = getDistanceObserved(getX(), getY());
-			for( int i=0; i<8; i++ ) {    		
-				switch( i ) {
-				case 0: d = getDistanceObserved(getX()-1, getY()-1); 	break;
-				case 1: d = getDistanceObserved(getX()-1, getY()); 		break;
-				case 2:	d = getDistanceObserved(getX()-1, getY()+1); 	break;
-				case 3: d = getDistanceObserved(getX(), getY()-1); 		break;
-				case 4: d = getDistanceObserved(getX(), getY()+1); 		break;
-				case 5: d = getDistanceObserved(getX()+1, getY()-1); 	break;
-				case 6: d = getDistanceObserved(getX()+1, getY()); 		break;
-				case 7: d = getDistanceObserved(getX()+1, getY()+1); 	break;
-				}
-				if( d < presentDistance && chkValidMove(direction))
-				{
-					//presentDistance = false;
-					direction = i;
-				}
-			}
-			if( chkValidMove(direction) ) moveObservedTo(direction);
-		}
-		
-		if( stuck ) {
-			stuckCount++;
-			if( stuckCount >= 5 ) isStuck = true;
-		}    	
-		else moveTo(direction);
-	}
-	*/	
 	
 	public void moveBestFirst() {
 		
@@ -676,7 +585,7 @@ public class Vehicle {
 			}
 			if(chkValidMove(direction)) moveObservedTo(direction);
 			
-			// /*
+			/*
 			System.out.println("UAV index = "+index);
 			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
 			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
@@ -690,7 +599,7 @@ public class Vehicle {
 			else
 				System.out.println("G Path Frist NONE");
 			System.out.println("\n");
-			// */
+			*/
 		}
 		
 		// print position information for debugging
@@ -758,7 +667,7 @@ public class Vehicle {
 		payloadCheck(getX(), getY()); //TODO(iantay) is this correct
 	}
 
-	private void payloadCheck(int pos_x, int pos_y) {
+	private void payloadCheck(double pos_x, double pos_y) {
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if( getPathSize() == 1 && target != null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
@@ -777,7 +686,6 @@ public class Vehicle {
 		}
 	}
 	
-	//far06 Move exact TODO implement
 	public void movePrecise() {
 		//Get Cartesian distance to goal
 		double s64DeltaX = getGroundTruthX64() - (double)(getFirstPathGround()[0]);
@@ -807,7 +715,6 @@ public class Vehicle {
 		payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
 		if (isHijacked)
 		{
-			System.out.println("what???");
 			//Get Cartesian distance to goal
 			double s64ObsDeltaX = getX64() - (double)(getFirstPathObserved()[0]);
 			double s64ObsDeltaY = getY64() - (double)(getFirstPathObserved()[1]);
@@ -834,11 +741,10 @@ public class Vehicle {
 			//far06 TODO implement attack check method
 			//payloadCheck(getGroundTruthX(), getGroundTruthY());
 		}
-		System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
-		
+		// System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
 	}
 	
-	private boolean positionCheck (int pos_x, int pos_y) {
+	private boolean positionCheck (double pos_x, double pos_y) {
 		if((pos_x>=getFirstPathObserved()[0]-1 && pos_x<=getFirstPathObserved()[0]+1)
 				&& (pos_y>=getFirstPathObserved()[1]-1 && pos_y<=getFirstPathObserved()[1]+1))
 			return true;
@@ -923,15 +829,6 @@ public class Vehicle {
 		lsnr.Vehicle_Damaged_By_Hazard_Area_From_Vehicle(this);
 	}
 
-	//    private void setBuffer(int i) {
-	//    	velocity_buffer += i;
-	//    	if( velocity_buffer >= velocity_scale ) { 
-	//    		velocity += velocity_scale; 
-	//    		velocity_buffer -= velocity_scale;
-	//    		lsnr.EVT_Vehicle_SpeedDecreased(index, velocity);
-	//    	}
-	//    }
-
 	private void updateVisibility(int x, int y) {
 		int[] target_pos;
 		Target t;    	
@@ -997,7 +894,6 @@ public class Vehicle {
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
 		int[] hackCoords = new int[]{xCoord, yCoord};
-		
 		
 		// observedPath = groundTruthPath;
 		// System.out.println(observedPath);

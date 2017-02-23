@@ -308,7 +308,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:S");
 		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
 		String temp_1 = sdf.format(cal.getTime());
-		String temp_2 = "Time   / Invoker / Type / vIdx /   log   / Mouse X / Mouse Y";
+		String temp_2 = "Time   / Invoker / Type / vIdx /     log     / Coordinate X / Coordinate Y";
 		String test = "logs/" + date.format(cal.getTime()) + "rand" +  randstr +  ".txt";
 
 		//For string
@@ -787,7 +787,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 	 */
 	public void EVT_VSelect_Map_LBtn(int vIdx) {
 		Vehicle v = game.getVehicleList().getVehicle(vIdx-1);
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx, "Vehicle select map Lbtn (trying to enable video feed)", v.getX(), v.getY());
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx,
+				"Vehicle ["+v.getIndex()+"] select map Lbtn and its video feed enabled)", v.getX(), v.getY());
 		uavMonitor.enableUAVFeed(v);
 	}
 	public void EVT_VSelect_Map_RBtn(int vIdx) { 
