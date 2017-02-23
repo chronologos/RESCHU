@@ -37,13 +37,6 @@ public class Vehicle {
 	public boolean isInvestigate;
 	private LinkedList<int[]> observedPath;
 	
-	private UAVMonitor uav_monitor;
-	
-	// for updating UAVMonitor
-	public void setUAVMonitor(UAVMonitor u) {
-		uav_monitor = u;
-	}
-	
 	public boolean getHijackStatus () {
 		return isHijacked;
 	}
@@ -738,7 +731,6 @@ public class Vehicle {
 			}
 			lsnr.Hide_Popup(this);
 			removeFirstPath();
-			// uav_monitor.setRotation();
 		}
 	}
 	

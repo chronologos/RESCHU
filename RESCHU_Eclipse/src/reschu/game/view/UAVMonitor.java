@@ -199,10 +199,7 @@ public class UAVMonitor {
 
 	// Determine angle to next waypoint and provide rotation angle accordingly
 	public void setRotation() {
-		if (!displayEnabled || activeUAV == null) return;
-		
-		activeUAV.setUAVMonitor(this);
-		
+		if (!displayEnabled || activeUAV == null) return;		
 		if (activeUAV.getPathSize() == 0) {
 			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");
 			panelpayload.setRotateAngle(0);
@@ -249,7 +246,9 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null) return;
 		xDistToPan = x - PanelPayload.VIEWPORT_LENGTH/2;
 		yDistToPan = y - PanelPayload.VIEWPORT_LENGTH/2;
-		panning = true;
+		
+		// disable panning
+		// panning = true;
 	}
 
 	public boolean isEnabled(){

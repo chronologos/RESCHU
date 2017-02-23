@@ -939,7 +939,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 			centreY -= (float)(Math.sqrt(Math.pow(xPos-xPosPrevious, 2) + Math.pow(yPos-yPosPrevious, 2)))/TILE_LENGTH;
 			centreX += (float)(displayX)/(TILE_LENGTH); // ONLY FOR PANNING TODO
 		}
-
 	}
 	public void setX(int x) {
 		xPosPrevious = xPos;

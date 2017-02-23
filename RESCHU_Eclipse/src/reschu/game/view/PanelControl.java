@@ -367,6 +367,10 @@ class VehiclePanel extends JPanel implements ActionListener
 		scrollPane.setViewportView(task_msg);
 	}
 	
+	public void ClearTaskMsg() {
+		// asd
+	}
+	
 	public String getName() { return name; }	
 	
 	public void chkEngageEnabled() {
