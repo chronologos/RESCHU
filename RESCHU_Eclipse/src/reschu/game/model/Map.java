@@ -14,8 +14,7 @@ public class Map {
 	private LinkedList<Target> listUnassignedTarget = new LinkedList<Target>();
 	private LinkedList<int[]> listHazard = new LinkedList<int[]>();
 
-	Map() {
-	}
+	Map() {}
 
 	Map(int width, int height, Game g, GUI_Listener l) {
 		mapArray = new int[width][height];

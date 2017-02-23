@@ -6,7 +6,6 @@ import java.util.Random;
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
-import reschu.game.view.UAVMonitor;
 
 public class Vehicle { 
 	public static final String TYPE_UAV = "UAV";
@@ -18,6 +17,8 @@ public class Vehicle {
 	private String type;
 	private String payload;
 	private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
+	private double s64XposGdTruth, s64YposGdTruth, s64XposObs, s64YposObs;
+	private double s64GtAngle = 0, s64ObsAngle = 0;
 	private Target target;
 	private LinkedList<int[]> groundTruthPath = new LinkedList<int[]>();
 	private Map map;
@@ -53,7 +54,14 @@ public class Vehicle {
 	/**
 	 * Set the position of this vehicle (synchronized)
 	 */
-	public synchronized void setPos(int x, int y) { setGroundTruthX(x); setGroundTruthY(y); }
+	public synchronized void setPos(int x, int y) {
+		setGroundTruthX(x);
+		setGroundTruthY(y);
+	}
+	public synchronized void setPos64(double x, double y) {
+		setGroundTruthX64(x);
+		setGroundTruthY64(y);
+	}
 
 	/**
 	 * Get a path of this vehicle  (synchronized) 
@@ -162,6 +170,7 @@ public class Vehicle {
 	 */
 	public synchronized Map getMap() { return map; }
 
+	/*
 	public synchronized void setGroundTruthX(int x){ xPosGroundTruth = x; }
 	public synchronized int getGroundTruthX(){ return xPosGroundTruth; } 
 
@@ -187,6 +196,28 @@ public class Vehicle {
 			return yPosGroundTruth;
 		}
 	}
+	*/
+	
+	public synchronized void setGroundTruthX(int x)	{ s64XposGdTruth = x; }
+	public synchronized int  getGroundTruthX()		{ return (int)(s64XposGdTruth); } 
+	public synchronized void setGroundTruthY(int y)	{ s64YposGdTruth = y; }   
+	public synchronized int  getGroundTruthY()		{ return (int)(s64YposGdTruth); }
+	public synchronized void setObservedX(int x)	{ s64XposObs = x; }
+	public synchronized int  getX()					{ return (int)(isHijacked? s64XposObs : s64XposGdTruth); }
+	public synchronized void setObservedY(int y)	{ s64YposObs = y; }   
+	public synchronized int  getY()					{ return (int)(isHijacked? s64YposObs : s64YposGdTruth); }
+	public synchronized void 	setGroundTruthX64(double x)	{ s64XposGdTruth = x; }
+	public synchronized double  getGroundTruthX64()			{ return s64XposGdTruth; } 
+	public synchronized void 	setGroundTruthY64(double y)	{ s64YposGdTruth = y; }   
+	public synchronized double  getGroundTruthY64()			{ return s64YposGdTruth; }
+	public synchronized void 	setObservedX64(double x)	{ s64XposObs = x; }
+	public synchronized double  getX64()					{ return (isHijacked? s64XposObs : s64XposGdTruth); }
+	public synchronized void 	setObservedY64(double y)	{ s64YposObs = y; }   
+	public synchronized double  getY64()					{ return (isHijacked? s64YposObs : s64YposGdTruth); }
+	public synchronized void  	setGtAngle64(double a)		{ s64GtAngle  = a; }
+	public synchronized void  	setObsAngle64(double a)		{ s64ObsAngle = a; }
+	public synchronized double  getGtAngle64()				{ return s64GtAngle;  }
+	public synchronized double  getObsAngle64()				{ return s64ObsAngle; }
 
 	public void setName(String strName) { name = strName; }
 	public String getName() {return name;}
@@ -221,8 +252,9 @@ public class Vehicle {
 
 	public void setGuiListener(GUI_Listener l) {lsnr = l;}
 
-	public Vehicle(Map m, Game g) { 
-		setGroundTruthX(0); setGroundTruthY(0); 
+	public Vehicle(Map m, Game g) {
+		// setGroundTruthX(0); setGroundTruthY(0);
+		setGroundTruthX64(0); setGroundTruthY64(0);
 		setTarget(null); 
 		this.g = g;
 		map = m; 
@@ -440,6 +472,17 @@ public class Vehicle {
 		if( getPathSize() == 0) return 0;
 		return Math.sqrt( Math.pow( (double)(pos_x - getFirstPathObserved()[0]), 2.0 ) 
 				+ Math.pow( (double)(pos_y - getFirstPathObserved()[1]), 2.0 ) );
+	}
+	
+	public double getDistanceGround(double pos_x, double pos_y) {
+		if( getPathSize() == 0) return 0;
+		return Math.sqrt( Math.pow( (pos_x - (double)(getFirstPathGround()[0])), 2.0 ) 
+						+ Math.pow( (pos_y - (double)(getFirstPathGround()[1])), 2.0 ) );
+	}
+	public double getDistanceObserved(double pos_x, double pos_y) {
+		if( getPathSize() == 0) return 0;
+		return Math.sqrt( Math.pow( (pos_x - (double)(getFirstPathObserved()[0])), 2.0 ) 
+						+ Math.pow( (pos_y - (double)(getFirstPathObserved()[1])), 2.0 ) );
 	}
 
 	public void moveRandom(int i) {
@@ -734,6 +777,67 @@ public class Vehicle {
 		}
 	}
 	
+	//far06 Move exact TODO implement
+	public void movePrecise() {
+		//Get Cartesian distance to goal
+		double s64DeltaX = getGroundTruthX64() - (double)(getFirstPathGround()[0]);
+		double s64DeltaY = getGroundTruthY64() - (double)(getFirstPathGround()[1]);
+		//Direction angle
+		//Angle is measured from North, CCW
+		//Range: [-pi, +pi]
+		double s64Angle = 0;
+		
+		//Check proximity
+		if (Math.abs(s64DeltaX) <= MySpeed.VELOCITY64) { s64DeltaX = 0; }
+		if (Math.abs(s64DeltaY) <= MySpeed.VELOCITY64) { s64DeltaY = 0; }
+		//Calculate velocity angle
+		//Angle is measured from east, CCW
+		if ((s64DeltaX != 0) || (s64DeltaY != 0)) {
+			s64Angle = Math.atan2(s64DeltaY,s64DeltaX);
+		}
+		else {
+			s64Angle = 0;
+		}
+		
+		setGroundTruthX64(getGroundTruthX64() - Math.cos(s64Angle)*MySpeed.VELOCITY64);
+		setGroundTruthY64(getGroundTruthY64() - Math.sin(s64Angle)*MySpeed.VELOCITY64);
+		setGtAngle64(s64Angle);
+		
+		//payloadCheck(getGroundTruthX(), getGroundTruthY());
+		payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
+		if (isHijacked)
+		{
+			System.out.println("what???");
+			//Get Cartesian distance to goal
+			double s64ObsDeltaX = getX64() - (double)(getFirstPathObserved()[0]);
+			double s64ObsDeltaY = getY64() - (double)(getFirstPathObserved()[1]);
+			//Direction angle
+			//Angle is measured from North, CCW
+			//Range: [-pi, +pi]
+			double s64ObsAngle = 0;
+			
+			//Check proximity
+			if (Math.abs(s64ObsDeltaX) <= MySpeed.VELOCITY64) { s64ObsDeltaX = 0; }
+			if (Math.abs(s64ObsDeltaY) <= MySpeed.VELOCITY64) { s64ObsDeltaY = 0; }
+			//Calculate velocity angle
+			//Angle is measured from east, CCW
+			if ((s64ObsDeltaX != 0) || (s64ObsDeltaY != 0)) {
+				s64ObsAngle = Math.atan2(s64ObsDeltaY,s64ObsDeltaX);
+			}
+			else {
+				s64ObsAngle = 0;
+			}
+			
+			setObservedX64(getX64() - Math.cos(s64Angle)*MySpeed.VELOCITY64);
+			setObservedY64(getY64() - Math.sin(s64Angle)*MySpeed.VELOCITY64);
+			setObsAngle64(s64ObsAngle);
+			//far06 TODO implement attack check method
+			//payloadCheck(getGroundTruthX(), getGroundTruthY());
+		}
+		System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
+		
+	}
+	
 	private boolean positionCheck (int pos_x, int pos_y) {
 		if((pos_x>=getFirstPathObserved()[0]-1 && pos_x<=getFirstPathObserved()[0]+1)
 				&& (pos_y>=getFirstPathObserved()[1]-1 && pos_y<=getFirstPathObserved()[1]+1))
@@ -858,8 +962,10 @@ public class Vehicle {
 
 	public synchronized void hijack(String hackData) throws IllegalArgumentException{
 		// hackData comes in form "NEW_X_TARGET NEW_Y_TARGET"
-		setObservedX(getX());
-		setObservedY(getY()); 
+		// setObservedX(getX());
+		// setObservedY(getY());
+		setObservedX64(getX64());
+		setObservedY64(getY64());
 		String[] coordStrings = hackData.split(" ");
 		if (hackData == null) throw new IllegalArgumentException("Null hackData");
 		if (coordStrings.length != 2) throw new IllegalArgumentException("Wrong number of coordinates in hackdata, must be 2");

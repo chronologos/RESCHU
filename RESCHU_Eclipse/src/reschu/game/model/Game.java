@@ -446,7 +446,8 @@ public class Game implements Runnable, ActionListener
 		
     	int x = rnd.nextInt(MySize.width);
     	int y = rnd.nextInt(MySize.height);
-    	v.setPos(x, y);
+    	// v.setPos(x, y);
+    	v.setPos64((double)(x),(double)(y));
     	
     	if(v.getObservedPath() != null) {
 	    	while(v.getObservedPath().size() > 1) {
@@ -494,11 +495,9 @@ public class Game implements Runnable, ActionListener
 		for( int i = 0; i < vehicleList.size(); i++) {
 			v = vehicleList.getVehicle(i); 
 			if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {
-				// far04 changed from moveBestFirst to hill
-				// v.moveHillClimbing();
 				// check if the UAV is already disappeared
 				if(v.isDisappeared) continue;
-				v.moveBestFirst();
+				v.movePrecise();
 			}
 		}
 		vehicle_location_change();

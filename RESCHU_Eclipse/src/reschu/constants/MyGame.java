@@ -7,15 +7,17 @@ public class MyGame {
     final static public int SEASHORE = 1;
     final static public int SEA = 2;
 	
-	final static public int STATUS_VEHICLE_STASIS  = 0;
-	final static public int STATUS_VEHICLE_MOVING  = 1;
-	final static public int STATUS_VEHICLE_PENDING = 2;
-	final static public int STATUS_VEHICLE_PAYLOAD = 3;
+	final static public int STATUS_VEHICLE_STASIS   = 0;
+	final static public int STATUS_VEHICLE_MOVING   = 1;
+	final static public int STATUS_VEHICLE_PENDING  = 2;
+	final static public int STATUS_VEHICLE_PAYLOAD  = 3;
+	final static public int STATUS_VEHICLE_ATTACKED = 4;
+	final static public int STATUS_VEHICLE_LOST 	= 5;
  
-    final static public int nHAZARD_AREA = 20; // original 14
+    final static public int nHAZARD_AREA = 18; // original 14
     final static public int nHAZARD_AREA_TUTORIAL = 3;
     
-    final static public int nTARGET_AREA_LAND = 1; // original 8
+    final static public int nTARGET_AREA_LAND = 2; // original 8
     final static public int nTARGET_AREA_LAND_TUTORIAL = 7;
     final static public int nTARGET_AREA_SHORE = 4;
     final static public int nTARGET_AREA_COMM = 0;
