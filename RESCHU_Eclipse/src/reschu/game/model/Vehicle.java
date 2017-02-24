@@ -480,12 +480,12 @@ public class Vehicle {
 	}
 	
 	//far06 Precise distance
-	public double getDistanceGround(double pos_x, double pos_y) {
+	public double getDistanceGround64(double pos_x, double pos_y) {
 		if( getPathSize() == 0) return 0;
 		return Math.sqrt( Math.pow( (pos_x - (double)(getFirstPathGround()[0])), 2.0 ) 
 						+ Math.pow( (pos_y - (double)(getFirstPathGround()[1])), 2.0 ) );
 	}
-	public double getDistanceObserved(double pos_x, double pos_y) {
+	public double getDistanceObserved64(double pos_x, double pos_y) {
 		if( getPathSize() == 0) return 0;
 		return Math.sqrt( Math.pow( (pos_x - (double)(getFirstPathObserved()[0])), 2.0 ) 
 						+ Math.pow( (pos_y - (double)(getFirstPathObserved()[1])), 2.0 ) );
@@ -844,13 +844,14 @@ public class Vehicle {
 				s64ObsAngle = 0;
 			}
 			
-			setObservedX64(getX64() - Math.cos(s64Angle)*MySpeed.VELOCITY64);
-			setObservedY64(getY64() - Math.sin(s64Angle)*MySpeed.VELOCITY64);
+			setObservedX64(getX64() - Math.cos(s64ObsAngle)*MySpeed.VELOCITY64);
+			setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
 			setObsAngle64(s64ObsAngle);
+			
 			//far06 TODO implement attack check method
-			//payloadCheck(getGroundTruthX(), getGroundTruthY());
+			payloadCheck((int)getX64(), (int)getY64());
 		}
-		System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
+		//System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
 		
 	}
 	
@@ -938,16 +939,17 @@ public class Vehicle {
 	}
 
 	public void chkHazardArea() {
-		int damage = 0;
+		double damage = 0;
 		double d;
 		int[] hazard_pos;
+		System.out.println("Checking damage");
 		for(int i=0; i<map.getListHazard().size(); i++ ) {
 			hazard_pos = map.getListHazard().get(i);
 			d = Math.sqrt( 
-					Math.pow( (double)(xPosGroundTruth - hazard_pos[0]), 2.0 ) + 
-					Math.pow( (double)(yPosGroundTruth - hazard_pos[1]), 2.0 ) )
-					* MySize.SIZE_CELL;
-			if(d <= MySize.SIZE_HAZARD_1_PXL ) damage += 50;
+					Math.pow( (double)(s64XposGdTruth - hazard_pos[0]), 2.0 ) + 
+					Math.pow( (double)(s64YposGdTruth - hazard_pos[1]), 2.0 ) )
+					* (double)MySize.SIZE_CELL;
+			if(d <= MySize.SIZE_HAZARD_1_PXL ) damage += 50/d; /*50;*/
 			else if(d < MySize.SIZE_HAZARD_2_PXL && d > MySize.SIZE_HAZARD_1_PXL) damage += 30;
 			else damage += 0;
 
