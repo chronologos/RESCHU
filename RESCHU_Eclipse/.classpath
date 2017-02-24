@@ -2,22 +2,22 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/HAL/Desktop/RESCHU Project/RESCHU2.0/RESCHU2.0/RESCHU/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="RESCHU/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/comm.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/corecomponents-swing-win.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/Jama-1.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/mysql-connector-java-5.1.5-bin.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/TableLayout-bin-jdk1.5-2007-04-21.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/TimingFramework-0.53.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/webrenderer-swing-win.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/webrenderer-swing.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/jogl-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/gluegen-rt-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/jogl-all-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="D:/github/RESCHU/RESCHU_Eclipse/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/comm.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/corecomponents-swing-win.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/Jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/TableLayout-bin-jdk1.5-2007-04-21.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/TimingFramework-0.53.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/webrenderer-swing-win.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/webrenderer-swing.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/jogl-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/RESCHU_elfar/RESCHU_Eclipse/lib/jogl-all.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
