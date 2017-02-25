@@ -76,6 +76,7 @@ public class VehicleList {
         v_uav.setPayload(v.getPayload());
         // v_uav.setPos(v.getX(), v.getY());
         v_uav.setPos64(v.getX64(), v.getY64());
+        v_uav.setGroundTruthPath(v.getGroundTruthPath());
         v_uav.setVelocity(v.getVelocity());
         v_uav.setGuiListener(l);
         return v_uav;

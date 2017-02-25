@@ -79,8 +79,16 @@ public class Vehicle {
 		return groundTruthPath;
 	}
 	
+	public synchronized void setGroundTruthPath(LinkedList<int[]> path_list) {
+		groundTruthPath = path_list;
+	}
+	
 	public synchronized LinkedList<int[]> getObservedPath() {
 		return observedPath;
+	}
+	
+	public synchronized void getObservedPath(LinkedList<int[]> path_list) {
+		observedPath = path_list;
 	}
 
 	/**
@@ -681,8 +689,8 @@ public class Vehicle {
 		default:
 			break;
 		}
-		// payloadCheck(getX(), getY()); //TODO(iantay) is this correct
-		attackCheck(getX(), getY());
+		payloadCheck(getX(), getY()); //TODO(iantay) is this correct
+		// attackCheck(getX(), getY());
 	}
 
 	private void payloadCheck(int pos_x, int pos_y) {
@@ -715,43 +723,37 @@ public class Vehicle {
         double s64OldAngle = 0;
         double s64NewAngle = 0;
         double s64AngleDiff = 0;
-        double s64AngleInc = Math.PI/200.0;
+        double s64AngleInc = Math.PI/50.0;
         //Check proximity
         if (Math.abs(s64DeltaX) <= MySpeed.VELOCITY64) { s64DeltaX = 0; }
         if (Math.abs(s64DeltaY) <= MySpeed.VELOCITY64) { s64DeltaY = 0; }
         //Calculate velocity angle
         //Angle is measured from east, CCW
-        if ((s64DeltaX != 0) || (s64DeltaY != 0))
-        {
+        if ((s64DeltaX != 0) || (s64DeltaY != 0)) {
             double pi = Math.PI;
             s64NewAngle = Math.atan2(s64DeltaY,s64DeltaX);
             s64OldAngle = s64GtAngle;
             s64AngleDiff = s64NewAngle - s64GtAngle;
             s64AngleDiff=(s64AngleDiff > pi)? (s64AngleDiff-2.0*pi):(s64AngleDiff);
             s64AngleDiff=(s64AngleDiff < -pi)? (s64AngleDiff+2.0*pi):(s64AngleDiff);
-            if (s64AngleDiff > 2*s64AngleInc && s64AngleDiff < pi)
-            {
+            if (s64AngleDiff > 2*s64AngleInc && s64AngleDiff < pi) {
                 s64NewAngle = s64GtAngle + s64AngleInc;
             }
-            else if (s64AngleDiff < -2*s64AngleInc && s64AngleDiff > -pi)
-            {
+            else if (s64AngleDiff < -2*s64AngleInc && s64AngleDiff > -pi) {
                 s64NewAngle = s64GtAngle - s64AngleInc;
             }
-            else { /* do nothing */ }
             s64GtAngle = s64NewAngle;
         }
-        else
-        {
+        else {
             s64GtAngle = 0;
-            if(index ==1) {System.out.println("IF3 s64GtAngle=" + s64GtAngle);}
+            if(index == 1) {System.out.println("IF3 s64GtAngle=" + s64GtAngle);}
         }
         
         setGroundTruthX64(getGroundTruthX64() - Math.cos(s64GtAngle)*MySpeed.VELOCITY64);
         setGroundTruthY64(getGroundTruthY64() - Math.sin(s64GtAngle)*MySpeed.VELOCITY64);
         payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
 
-        if (isHijacked)
-        {
+        if (isHijacked) {
             //Get Cartesian distance to goal
             double s64ObsDeltaX = getX64() - (double)(getFirstPathObserved()[0]);
             double s64ObsDeltaY = getY64() - (double)(getFirstPathObserved()[1]);
@@ -765,12 +767,10 @@ public class Vehicle {
             if (Math.abs(s64ObsDeltaY) <= MySpeed.VELOCITY64) { s64ObsDeltaY = 0; }
             //Calculate velocity angle
             //Angle is measured from east, CCW
-            if ((s64ObsDeltaX != 0) || (s64ObsDeltaY != 0))
-            {
+            if ((s64ObsDeltaX != 0) || (s64ObsDeltaY != 0)) {
                 s64ObsAngle = Math.atan2(s64ObsDeltaY,s64ObsDeltaX);
             }
-            else
-            {
+            else {
                 s64ObsAngle = 0;
             }
             
@@ -778,8 +778,22 @@ public class Vehicle {
             setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
             setObsAngle64(s64ObsAngle);
             
-            //far06 TODO implement attack check method
             payloadCheck((int)getX64(), (int)getY64());
+            
+            
+			System.out.println("UAV index = "+index);
+			System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
+			System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
+			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
+			if(observedPath.size() > 0)
+				System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
+			else
+				System.out.println("O Path Frist NONE");
+			if(groundTruthPath.size() > 0)
+				System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+			else
+				System.out.println("G Path Frist NONE");
+			System.out.println("\n");
         }
 	}
 	
@@ -787,7 +801,7 @@ public class Vehicle {
         if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
             if( getPathSize() == 1 && target != null) {
                 // VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
-                if( getPayload() == Vehicle.PAYLOAD_COM ) { 
+                if( getPayload() == Vehicle.PAYLOAD_COM ) {
                     setStatus(MyGame.STATUS_VEHICLE_PENDING);
                 }
                 else {
@@ -798,8 +812,6 @@ public class Vehicle {
                 lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
             }
             lsnr.Hide_Popup(this);
-            
-            System.out.println("REMOVE HERE"); // for testing remove function
             removeFirstPath();
         }
     }

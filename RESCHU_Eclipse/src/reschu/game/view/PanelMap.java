@@ -145,7 +145,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	// if YES, then don't paint that UAV (make it disappear)
 	public void If_UAV_Disappeared() {
 		VehicleList vList = game.getVehicleList();
-		Vehicle v;
+		Vehicle v;		
 		for (int i=0; i<vList.size(); i++){
 			v = vList.getVehicle(i);
 			if(v.getHijackStatus()) {
@@ -319,7 +319,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 						MyColor.COLOR_HIGHLIGHT, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
 			}
 			
-			if(investigatedVehicle==v && v.getInvestigateStatus()) {				
+			if(investigatedVehicle==v && v.getInvestigateStatus()) {
 				p.paintHighlight(g, (int)v.getX64(), (int)v.getY64(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
 				if(selectedVehicle != investigatedVehicle) {
@@ -381,8 +381,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 							if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT); 
 							else g.setColor(MyColor.COLOR_LINE);
 						g.fillOval(
-								(v.getPath().get(j+1)[0]-wpsize/cellsize/2)*cellsize, 
-								(v.getPath().get(j+1)[1]-wpsize/cellsize/2)*cellsize, 
+								(v.getPath().get(j+1)[0]-wpsize/cellsize/2)*cellsize,
+								(v.getPath().get(j+1)[1]-wpsize/cellsize/2)*cellsize,
 								wpsize, wpsize);
 					}
 				}
@@ -392,7 +392,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 					g.drawLine(
 							v.getX()*cellsize + halfcell, 
 							v.getY()*cellsize + halfcell, 
-							v.getPath().getLast()[0]*cellsize + halfcell, 
+							v.getPath().getLast()[0]*cellsize + halfcell,
 							v.getPath().getLast()[1]*cellsize + halfcell);
 					if( selectedVehicle == v ) g.setColor(MyColor.COLOR_HIGHLIGHT);
 					else g.setColor(MyColor.COLOR_LINE);
