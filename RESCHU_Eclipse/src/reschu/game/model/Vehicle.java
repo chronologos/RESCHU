@@ -16,7 +16,8 @@ public class Vehicle {
 	private String name;
 	private String type;
 	private String payload;
-	private double xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
+	private int xPosGroundTruth, yPosGroundTruth, xPosObserved, yPosObserved;
+	private double s64XposGdTruth, s64YposGdTruth, s64XposObs, s64YposObs;
 	private double s64GtAngle = 0, s64ObsAngle = 0;
 	private Target target;
 	private LinkedList<int[]> groundTruthPath = new LinkedList<int[]>();
@@ -53,7 +54,11 @@ public class Vehicle {
 	/**
 	 * Set the position of this vehicle (synchronized)
 	 */
-	public synchronized void setPos(double x, double y) {
+	public synchronized void setPos(int x, int y) {
+		setGroundTruthX(x);
+		setGroundTruthY(y);
+	}
+	public synchronized void setPos64(double x, double y) {
 		setGroundTruthX64(x);
 		setGroundTruthY64(y);
 	}
@@ -165,40 +170,47 @@ public class Vehicle {
 	 */
 	public synchronized Map getMap() { return map; }
 
+	/*
 	public synchronized void setGroundTruthX(int x){ xPosGroundTruth = x; }
-	public synchronized int getGroundTruthX(){ return (int)xPosGroundTruth; }
-	
-	public synchronized void setGroundTruthY(int y){ yPosGroundTruth = y; }
-	public synchronized int getGroundTruthY(){ return (int)yPosGroundTruth; }
-
-	public synchronized void setObservedX(double x){ xPosObserved = x; }
+	public synchronized int getGroundTruthX(){ return xPosGroundTruth; } 
+	public synchronized void setGroundTruthY(int y){ yPosGroundTruth = y; }   
+	public synchronized int getGroundTruthY(){ return yPosGroundTruth; }
+	public synchronized void setObservedX(int x){ xPosObserved = x; }
 	public synchronized int getX(){ 
 		if (isHijacked){
-			return (int)xPosObserved;
+			return xPosObserved;
 		}
 		else{
-			return (int)xPosGroundTruth;
+			return xPosGroundTruth;
 		}
 	} 
-
 	public synchronized void setObservedY(int y){ yPosObserved = y; }   
 	public synchronized int getY(){
 		if (isHijacked){
-			return (int)yPosObserved;
+			return yPosObserved;
 		}
 		else{
-			return (int)yPosGroundTruth;
+			return yPosGroundTruth;
 		}
 	}
+	*/
 	
-	public synchronized void 	setGroundTruthX64(double x)	{ xPosGroundTruth = x; }
-	public synchronized double  getGroundTruthX64()			{ return xPosGroundTruth; }
-	public synchronized void 	setGroundTruthY64(double y)	{ yPosGroundTruth = y; }
-	public synchronized double  getGroundTruthY64()			{ return yPosGroundTruth; }
-	public synchronized void 	setObservedX64(double x)	{ xPosObserved = x; }
-	public synchronized double  getX64()					{ return (isHijacked? xPosObserved : xPosGroundTruth); }
-	public synchronized void 	setObservedY64(double y)	{ yPosObserved = y; }
-	public synchronized double  getY64()					{ return (isHijacked? yPosObserved : yPosGroundTruth); }
+	public synchronized void setGroundTruthX(int x)	{ s64XposGdTruth = x; }
+	public synchronized int  getGroundTruthX()		{ return (int)(s64XposGdTruth); } 
+	public synchronized void setGroundTruthY(int y)	{ s64YposGdTruth = y; }   
+	public synchronized int  getGroundTruthY()		{ return (int)(s64YposGdTruth); }
+	public synchronized void setObservedX(int x)	{ s64XposObs = x; }
+	public synchronized int  getX()					{ return (int)(isHijacked? s64XposObs : s64XposGdTruth); }
+	public synchronized void setObservedY(int y)	{ s64YposObs = y; }   
+	public synchronized int  getY()					{ return (int)(isHijacked? s64YposObs : s64YposGdTruth); }
+	public synchronized void 	setGroundTruthX64(double x)	{ s64XposGdTruth = x; }
+	public synchronized double  getGroundTruthX64()			{ return s64XposGdTruth; } 
+	public synchronized void 	setGroundTruthY64(double y)	{ s64YposGdTruth = y; }   
+	public synchronized double  getGroundTruthY64()			{ return s64YposGdTruth; }
+	public synchronized void 	setObservedX64(double x)	{ s64XposObs = x; }
+	public synchronized double  getX64()					{ return (isHijacked? s64XposObs : s64XposGdTruth); }
+	public synchronized void 	setObservedY64(double y)	{ s64YposObs = y; }   
+	public synchronized double  getY64()					{ return (isHijacked? s64YposObs : s64YposGdTruth); }
 	public synchronized void  	setGtAngle64(double a)		{ s64GtAngle  = a; }
 	public synchronized void  	setObsAngle64(double a)		{ s64ObsAngle = a; }
 	public synchronized double  getGtAngle64()				{ return s64GtAngle;  }
@@ -297,7 +309,7 @@ public class Vehicle {
 				}
 				else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
 					//2008-04-05
-					//UAV to grey target   ��You cannot assign a UAV to a grey target, please reassign��
+					//UAV to grey target
 					lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
 				}
 			}
@@ -306,7 +318,7 @@ public class Vehicle {
 					x = target_pos[0]; y = target_pos[1];
 					if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
 						//2008-04-05
-						//UUV to land target (grey or red) ��You cannot assign a UUV to a land target, please reassign��
+						//UUV to land target (grey or red)
 						lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
 						break;
 					}
@@ -318,7 +330,7 @@ public class Vehicle {
 				}
 				else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, target_pos) ) {
 					//2008-04-05
-					//HALE to red target ��You cannot assign a HALE to a red target, please reassign��
+					//HALE to red target
 					lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
 				}
 			}
@@ -363,7 +375,7 @@ public class Vehicle {
 				}
 				else if(getPayload()!=Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
 					//2008-04-05
-					//UAV to grey target   ��You cannot assign a UAV to a grey target, please reassign��
+					//UAV to grey target
 					lsnr.showMessageOnTopOfMap("You cannot assign a UAV to a grey target, please reassign " + type + " " + index, 5);
 				}
 			}
@@ -372,7 +384,7 @@ public class Vehicle {
 					x = new_target_pos[0]; y = new_target_pos[1];
 					if(type==Vehicle.TYPE_UUV && getMap().getListUnassignedTarget().get(i).getMission() != "SHORE") {
 						//2008-04-05
-						//UUV to land target (grey or red) ��You cannot assign a UUV to a land target, please reassign��
+						//UUV to land target (grey or red)
 						lsnr.showMessageOnTopOfMap("You cannot assign a UUV to a land target, please reassign " + type + " " + index, 5);
 						break; 
 					}
@@ -384,7 +396,7 @@ public class Vehicle {
 				}
 				else if( getPayload()==Vehicle.PAYLOAD_COM && boundaryCheck(x, y, new_target_pos) ) {
 					//2008-04-05
-					//HALE to red target ��You cannot assign a HALE to a red target, please reassign��
+					//HALE to red target
 					lsnr.showMessageOnTopOfMap("You cannot assign a HALE to a red target, please reassign " + type + " " + index, 5);
 				}
 			}	
@@ -477,6 +489,8 @@ public class Vehicle {
 	
 	// far04 changed uncommented
 	public void moveHillClimbing() {
+		
+		// System.out.println("far moveHillClimbing called");
 		if( isStuck ) {
 			moveTo(6);
 			if(--stuckCount <= 0) isStuck = false;
@@ -487,6 +501,7 @@ public class Vehicle {
 		Random rnd = new Random();
 		int direction = 8;    
 		boolean stuck = true;
+
 		presentDistance = getDistanceGround(getGroundTruthX(), getGroundTruthY());
 
 		for( int i=0; i<8; i++ ) {
@@ -530,9 +545,11 @@ public class Vehicle {
 			}
 			// if the real UAV position is out of the border
 			else {}
+			
 			// System.out.println("OBSERVED x = "+getX()+"  y = "+getY());
 			// System.out.println("GROUND x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
 		}
+		
 		if( stuck ) {
 			stuckCount++;
 			if( stuckCount >= 5 ) isStuck = true;
@@ -585,7 +602,7 @@ public class Vehicle {
 			}
 			if(chkValidMove(direction)) moveObservedTo(direction);
 			
-			/*
+			// /*
 			System.out.println("UAV index = "+index);
 			System.out.println("OBSERVED   x = "+getX()+"  y = "+getY());
 			System.out.println("GROUND     x = "+getGroundTruthX()+"  y = "+getGroundTruthY());
@@ -599,7 +616,7 @@ public class Vehicle {
 			else
 				System.out.println("G Path Frist NONE");
 			System.out.println("\n");
-			*/
+			// */
 		}
 		
 		// print position information for debugging
@@ -667,7 +684,7 @@ public class Vehicle {
 		payloadCheck(getX(), getY()); //TODO(iantay) is this correct
 	}
 
-	private void payloadCheck(double pos_x, double pos_y) {
+	private void payloadCheck(int pos_x, int pos_y) {
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if( getPathSize() == 1 && target != null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
@@ -686,6 +703,7 @@ public class Vehicle {
 		}
 	}
 	
+	//far06 Move exact TODO implement
 	public void movePrecise() {
 		//Get Cartesian distance to goal
 		double s64DeltaX = getGroundTruthX64() - (double)(getFirstPathGround()[0]);
@@ -742,9 +760,10 @@ public class Vehicle {
 			//payloadCheck(getGroundTruthX(), getGroundTruthY());
 		}
 		// System.out.println(getGroundTruthX64() + " " + getGroundTruthY64());
+		
 	}
 	
-	private boolean positionCheck (double pos_x, double pos_y) {
+	private boolean positionCheck (int pos_x, int pos_y) {
 		if((pos_x>=getFirstPathObserved()[0]-1 && pos_x<=getFirstPathObserved()[0]+1)
 				&& (pos_y>=getFirstPathObserved()[1]-1 && pos_y<=getFirstPathObserved()[1]+1))
 			return true;
@@ -894,6 +913,7 @@ public class Vehicle {
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
 		int[] hackCoords = new int[]{xCoord, yCoord};
+		
 		
 		// observedPath = groundTruthPath;
 		// System.out.println(observedPath);
