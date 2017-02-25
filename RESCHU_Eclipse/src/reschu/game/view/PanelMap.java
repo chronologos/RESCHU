@@ -315,12 +315,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if(v.getName().contains("GHOST")) clrVehicle = MyColor.COLOR_GHOST_VEHICLE;
 
 			if( selectedVehicle == v ) {
-				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
+				p.paintHighlight(g, (int)v.getX64(), (int)v.getY64(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_HIGHLIGHT, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);        		
 			}
 			
 			if(investigatedVehicle==v && v.getInvestigateStatus()) {				
-				p.paintHighlight(g, v.getX(), v.getY(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
+				p.paintHighlight(g, (int)v.getX64(), (int)v.getY64(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
 						MyColor.COLOR_INVESTIGATE, MyStroke.STROKE_BASIC, MyStroke.STROKE_WIDE);
 				if(selectedVehicle != investigatedVehicle) {
 					investigatedVehicle = null;
@@ -894,7 +894,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if( selectedVehicle.hasWaypoint() ) 
 				drag_from = selectedVehicle.getPathAt(selectedVehicle.getPathSize()-2); // coord
 			else 
-				drag_from = new int[]{selectedVehicle.getX(), selectedVehicle.getY()}; // coord
+				drag_from = new int[]{(int)selectedVehicle.getX64(), (int)selectedVehicle.getY64()}; // coord
 			drag_to = new int[]{mm_ev.getX(), mm_ev.getY()}; // pxl
 
 			int w = MySize.SIZE_CELL;
