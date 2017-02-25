@@ -162,7 +162,7 @@ public class Vehicle {
 	 */
 	public synchronized void removeFirstPath() {
 		if(isHijacked) {
-			groundTruthPath.removeFirst();
+			// groundTruthPath.removeFirst();
 			observedPath.removeFirst();
 		}
 		else {
@@ -780,20 +780,19 @@ public class Vehicle {
             
             payloadCheck((int)getX64(), (int)getY64());
             
-            
-			System.out.println("UAV index = "+index);
-			System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
-			System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
-			System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
-			if(observedPath.size() > 0)
-				System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
-			else
-				System.out.println("O Path Frist NONE");
-			if(groundTruthPath.size() > 0)
-				System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
-			else
-				System.out.println("G Path Frist NONE");
-			System.out.println("\n");
+    		System.out.println("UAV index = "+index);
+    		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
+    		System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
+    		System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
+    		if(observedPath.size() > 0)
+    			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
+    		else
+    			System.out.println("O Path Frist NONE");
+    		if(groundTruthPath.size() > 0)
+    			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+    		else
+    			System.out.println("G Path Frist NONE");
+    		System.out.println("\n");
         }
 	}
 	
@@ -817,8 +816,7 @@ public class Vehicle {
     }
 	
 	private boolean positionCheck (int pos_x, int pos_y) {
-		if((pos_x>=getFirstPathObserved()[0]-1 && pos_x<=getFirstPathObserved()[0]+1)
-				&& (pos_y>=getFirstPathObserved()[1]-1 && pos_y<=getFirstPathObserved()[1]+1))
+		if(pos_x==getFirstPathObserved()[0] && pos_y==getFirstPathObserved()[1])
 			return true;
 		else return false;
 	}

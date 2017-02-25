@@ -542,6 +542,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	public void Payload_Finished_From_Msg() {
+		pnlControl.ClearTaskMsg(pnlMap.selectedVehicle.getIndex());
 		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
 	}
 
@@ -585,7 +586,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		}
 		String msg = "Vehicle ["+v.getIndex()+"] has engaged in a counting task.";
 		PanelMsgBoard.Msg(msg);
-		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName()); // and this
+		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
 	}
 	
 	// vehicle home function

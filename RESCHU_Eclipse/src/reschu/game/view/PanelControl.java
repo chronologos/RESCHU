@@ -112,6 +112,10 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 		pnlVehicle[idx-1].PrintTaskMsg();
 	}
 	
+	public void ClearTaskMsg (int idx) {
+		pnlVehicle[idx-1].ClearTaskMsg();
+	}
+	
 	public void chkEngageEnabled() {
 		pnlGeneral.chkEngageEnabled();
 		for(int i=0; i<pnlVehicle.length; i++) pnlVehicle[i].chkEngageEnabled();
@@ -368,7 +372,9 @@ class VehiclePanel extends JPanel implements ActionListener
 	}
 	
 	public void ClearTaskMsg() {
-		// asd
+		JLabel task_msg = new JLabel();
+		task_msg.setVerticalAlignment(SwingConstants.TOP);
+		scrollPane.setViewportView(task_msg);
 	}
 	
 	public String getName() { return name; }	
