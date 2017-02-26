@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.Timer; 
 
 import reschu.constants.*;
@@ -21,8 +22,8 @@ import reschu.game.view.PanelMsgBoard;
 
 public class Game implements Runnable, ActionListener
 {       
-    static public int TIME_TOTAL_GAME = 8 * 60 * MySpeed.SPEED_CLOCK ; 
-    private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target    
+    static public int TIME_TOTAL_GAME = 600 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
+    private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target
 
     private int nTargetAreaTotal = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL; 
     final private int[] DB_BY_PIXEL 
@@ -57,6 +58,8 @@ public class Game implements Runnable, ActionListener
     private boolean[] targetVisibilityPool;
     private int targetVisibilityPool_index;
     private int score;
+    private static int finished_task   = 0;
+    private static int detected_attack = 0;
 
     private Random rnd = new Random();
 
@@ -479,10 +482,10 @@ public class Game implements Runnable, ActionListener
             lsnr.gameEnd();         
 
             // TEMPORARY SOLUTION
-            FrameEnd frmEnd = new FrameEnd(lsnr);
+            FrameEnd frmEnd = new FrameEnd(lsnr, this);
             frmEnd.setSize(400,300);
             frmEnd.setLocation(300,300);
-            frmEnd.setVisible(true);    
+            frmEnd.setVisible(true);
         }
 
         vehicleColorFlashFlag = !vehicleColorFlashFlag;
@@ -565,5 +568,25 @@ public class Game implements Runnable, ActionListener
     } 
     public static double getDistance(int x1, int y1, int x2, int y2) {
         return Math.sqrt( Math.pow((double)(x2 - x1), 2.0) + Math.pow((double)(y2 - y1), 2.0) );
+    }
+    
+    // finished target number increment by 1
+    public static void AddFinishedTask() {
+    	finished_task ++;
+    }
+    
+    // get total finished target number
+    public static int GetTotalTask() {
+    	return finished_task;
+    }
+    
+    // detected attack number increment by 1
+    public static void AddDetectedAttack() {
+    	detected_attack ++;
+    }
+    
+    // get total detected attack number
+    public static int GetDetectedAttack() {
+    	return detected_attack;
     }
 }

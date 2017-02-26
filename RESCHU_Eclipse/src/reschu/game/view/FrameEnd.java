@@ -14,6 +14,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,29 +25,35 @@ import javax.swing.border.TitledBorder;
 
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
-
+import reschu.game.model.Game;
 
 public class FrameEnd extends JFrame {
 	private static final long serialVersionUID = 1490485040395748916L;
-	//private Gui_Listener lsnr;
+	// private Gui_Listener lsnr;
+	private Game game;
 	private TitledBorder bdrTitle;
-	private JButton btnStart;
+	private JButton btnEnd;
 	private ImageIcon imgIcon;
-	private JLabel lblHAL;  
+	private JLabel lblHAL;
+	private JLabel lblThank, lblDamage, lblTask, lblAttack, lblTotal;
 	
-	public FrameEnd(GUI_Listener l) {
-		//lsnr = l;
+	private int total_damage;
+	private int total_task;
+	private int total_attack;
+	
+	public FrameEnd(GUI_Listener l, Game g) {
 		super("RESCHU Security-Aware");
-		
 		setAlwaysOnTop(true);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) { 
-				System.exit(0); 
+				System.exit(0);
 			}
-		});		
+		});
 		setLayout(new GridLayout(0,1));
 		setResizable(false);
 		
+		// lsnr = l;
+		game = g;
 		bdrTitle = BorderFactory.createTitledBorder(MyGame.VERSION_INFO);		 
 		JPanel pnl = new JPanel();
 		pnl.setBorder(bdrTitle);
@@ -56,18 +64,40 @@ public class FrameEnd extends JFrame {
         } catch (IOException e) {}	
 		imgIcon = new ImageIcon(img);
 		lblHAL = new JLabel("", imgIcon, JLabel.CENTER);
+		
+		total_damage = game.getVehicleList().getTotalDamage();
+		total_task = game.GetTotalTask();
+		total_attack = game.GetDetectedAttack();
+		
+		lblThank  = new JLabel("Thank you for your participation!");
+		lblDamage = new JLabel("Total UAV damage is "+total_damage);
+		lblTask   = new JLabel("Total tasks done is "+total_task);
+		lblAttack = new JLabel("Total detect attack "+total_attack);
+		lblTotal  = new JLabel("Your Total score is "+(100-total_damage+total_task+total_attack));
         		
-		btnStart = new JButton("THANKS FOR YOUR PARTICIPATION");
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){ 
-				if( e.getSource() == btnStart ) 
+		btnEnd = new JButton("EXIT");
+		btnEnd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				if( e.getSource() == btnEnd )
 					System.exit(0);}
-		});		
+		});
+		
+		pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));
 		pnl.add(lblHAL);
-		pnl.add(btnStart);
+		pnl.add(lblThank);
+		pnl.add(lblDamage);
+		pnl.add(lblTask);
+		pnl.add(lblAttack);
+		pnl.add(lblTotal);
+		pnl.add(Box.createGlue());
+		pnl.add(btnEnd);
+		lblHAL.setAlignmentX(CENTER_ALIGNMENT);
+		lblThank.setAlignmentX(CENTER_ALIGNMENT);
+		lblDamage.setAlignmentX(CENTER_ALIGNMENT);
+		lblTask.setAlignmentX(CENTER_ALIGNMENT);
+		lblAttack.setAlignmentX(CENTER_ALIGNMENT);
+		lblTotal.setAlignmentX(CENTER_ALIGNMENT);
+		btnEnd.setAlignmentX(CENTER_ALIGNMENT);
 		add(pnl);
-	} 
-	
-	
-	
+	}
 }

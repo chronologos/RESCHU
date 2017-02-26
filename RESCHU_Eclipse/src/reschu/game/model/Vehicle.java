@@ -746,7 +746,6 @@ public class Vehicle {
         }
         else {
             s64GtAngle = 0;
-            if(index == 1) {System.out.println("IF3 s64GtAngle=" + s64GtAngle);}
         }
         
         setGroundTruthX64(getGroundTruthX64() - Math.cos(s64GtAngle)*MySpeed.VELOCITY64);
@@ -816,7 +815,8 @@ public class Vehicle {
     }
 	
 	private boolean positionCheck (int pos_x, int pos_y) {
-		if(pos_x==getFirstPathObserved()[0] && pos_y==getFirstPathObserved()[1])
+		if((pos_x>=getFirstPathObserved()[0]-1) && (pos_x<=getFirstPathObserved()[0]+1)
+				&& (pos_y>=getFirstPathObserved()[1]-1) && (pos_y<=getFirstPathObserved()[1]+1))
 			return true;
 		else return false;
 	}
@@ -895,7 +895,7 @@ public class Vehicle {
 		}
 		// We don't decrease the speed of a vehicle anymore
 		// setBuffer(damage);	
-		vDamage += (double)(damage)/100;
+		vDamage += (double)(damage)/100; // originally 100, could be changed to 50?
 		lsnr.Vehicle_Damaged_By_Hazard_Area_From_Vehicle(this);
 	}
 

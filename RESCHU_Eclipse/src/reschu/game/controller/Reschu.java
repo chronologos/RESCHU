@@ -413,7 +413,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 	@Override
 	public void gameEnd() { 
-		PanelMsgBoard.Msg("YOUR TOTAL SCORE: " + game.getScore()); 
+		// PanelMsgBoard.Msg("YOUR TOTAL SCORE: " + game.getScore()); 
 		EVT_System_GameEnd();
 		game.stop();
 		Thread.currentThread().interrupt();
@@ -535,6 +535,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		v.setStatus(MyGame.STATUS_VEHICLE_STASIS);
 		game.AutoTargetAssign(v);
 		game.clearCurrentPayloadVehicle();
+		game.AddFinishedTask();
 		pnlMap.setEnabled(true);
 		pnlControl.setEnabled(true);    	
 		pnlPayloadControls.setEnabled(false);
