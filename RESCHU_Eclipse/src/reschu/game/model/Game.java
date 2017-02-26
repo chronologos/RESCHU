@@ -30,7 +30,7 @@ public class Game implements Runnable, ActionListener
 	private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target    
 
 	private int nTargetAreaTotal = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL; 
-	final private int[] DB_BY_PIXEL 
+	final private int[] DB_BY_PIXEL //FAR Each element defines seashore boundary pixel at row(i)
 	= new int[]{480,480,470,470,470, 470,460,460,450,450,
 			450,440,440,430,430, 430,420,410,410,410,
 			410,410,410,410,410, 410,410,420,420,420,
@@ -40,9 +40,9 @@ public class Game implements Runnable, ActionListener
 			480,490,490,490,490, 500,500,500,510,510,
 			510,510,510,520,520, 520,520,520,520,530,
 			530,540,550,550,560, 560,570,570,580,580,
-			590,590,590,600};
+			590,590,590,600,600, 610,610,620,620};
 
-	private int[] DB = new int[MySize.height];
+	private int[] DB = new int[MySize.height]; //FAR Database of seashore locations, filled in runtime
 
 	static public Calendar cal = Calendar.getInstance();
 
@@ -529,7 +529,9 @@ public class Game implements Runnable, ActionListener
 		//if( elapsedTime % MySpeed.SPEED_CLOCK_AUTO_TARGET_ASSIGN_UPDATE == 0) { AutoTargetAssignAll(); }
 
 		// Check Vehicle - Hazard Area
+		//FAR07 TODO check
 		if( elapsedTime % MySpeed.SPEED_CLOCK_DAMAGE_CHECK == 0 ) for(int i=0; i<vehicleList.size(); i++) vehicleList.getVehicle(i).chkHazardArea();
+		
 	}
 
 	public void setTargetUsed(String name, boolean isUsed) {

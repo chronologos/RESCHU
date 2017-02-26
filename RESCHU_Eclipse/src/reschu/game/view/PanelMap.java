@@ -98,7 +98,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		btnEmpty = new JButton(); btnEmpty.setEnabled(false);
 
 		this.setSize(mapWidth , mapHeight);
-		img = Toolkit.getDefaultToolkit().getImage("Pictures/Map/map.jpg");  // load the map
+		img = Toolkit.getDefaultToolkit().getImage("Pictures/Map/map_980x980_0.jpg");  // load the map
 
 		this.add(btnEmpty);
 		this.addMouseListener(this);
