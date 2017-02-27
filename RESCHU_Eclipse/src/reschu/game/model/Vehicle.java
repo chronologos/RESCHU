@@ -895,7 +895,7 @@ public class Vehicle {
 		}
 		// We don't decrease the speed of a vehicle anymore
 		// setBuffer(damage);	
-		vDamage += (double)(damage)/100; // originally 100, could be changed to 50?
+		vDamage += (double)(damage)/50; // originally 100, could be changed to 50?
 		lsnr.Vehicle_Damaged_By_Hazard_Area_From_Vehicle(this);
 	}
 
