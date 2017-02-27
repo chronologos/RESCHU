@@ -4,8 +4,8 @@ public class MySize {
 	
 	final static public int SIZE_CELL = 2;
 	final static public int SIZE_HALF_CELL = SIZE_CELL / 2;
-	final static public int MAP_HEIGHT_PXL = 810;
-	final static public int MAP_WIDTH_PXL = 810;
+	final static public int MAP_HEIGHT_PXL = 980; // was 810
+	final static public int MAP_WIDTH_PXL = 980; // was 810
 	final static public int OFFSET_HEIGHT = 0;	// far03 was 20
 	final static public int OFFSET_WIDTH = 0;	// far03 was 10
 	final static public int UAV_POS_MIN_X = 0;
