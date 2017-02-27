@@ -777,7 +777,7 @@ public class Vehicle {
             setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
             setObsAngle64(s64ObsAngle);
             
-            payloadCheck((int)getX64(), (int)getY64());
+            // payloadCheck((int)getX64(), (int)getY64());
             
     		System.out.println("UAV index = "+index);
     		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());

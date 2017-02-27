@@ -29,7 +29,7 @@ import reschu.game.model.Game;
 
 public class FrameEnd extends JFrame {
 	private static final long serialVersionUID = 1490485040395748916L;
-	// private Gui_Listener lsnr;
+	private GUI_Listener lsnr;
 	private Game game;
 	private TitledBorder bdrTitle;
 	private JButton btnEnd;
@@ -40,6 +40,23 @@ public class FrameEnd extends JFrame {
 	private int total_damage;
 	private int total_task;
 	private int total_attack;
+	private int final_score;
+	
+	public int GetTotalDamage() {
+		return total_damage;
+	}
+	
+	public int GetTotalTask() {
+		return total_task;
+	}
+	
+	public int GetTotalAttack() {
+		return total_attack;
+	}
+	
+	public int GetFinalScore() {
+		return final_score;
+	}
 	
 	public FrameEnd(GUI_Listener l, Game g) {
 		super("RESCHU Security-Aware");
@@ -68,12 +85,13 @@ public class FrameEnd extends JFrame {
 		total_damage = game.getVehicleList().getTotalDamage();
 		total_task = game.GetTotalTask();
 		total_attack = game.GetDetectedAttack();
+		final_score = (100-total_damage+total_task+total_attack);
 		
 		lblThank  = new JLabel("Thank you for your participation!");
 		lblDamage = new JLabel("Total UAV damage is "+total_damage);
 		lblTask   = new JLabel("Total tasks done is "+total_task);
 		lblAttack = new JLabel("Total detect attack "+total_attack);
-		lblTotal  = new JLabel("Your Total score is "+(100-total_damage+total_task+total_attack));
+		lblTotal  = new JLabel("Your Total score is "+final_score);
         		
 		btnEnd = new JButton("EXIT");
 		btnEnd.addActionListener(new ActionListener() {

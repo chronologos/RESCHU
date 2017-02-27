@@ -94,7 +94,8 @@ public interface GUI_Listener {
     public void EVT_HazardArea_Generated(int[] pos);  
     public void EVT_HazardArea_Disappeared(int[] pos);  
     public void EVT_System_GameStart();
-    public void EVT_System_GameEnd();    
+    public void EVT_System_GameEnd();
+    public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int total);
 
     /**
      * For Yves

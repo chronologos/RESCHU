@@ -413,7 +413,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 	@Override
 	public void gameEnd() { 
-		// PanelMsgBoard.Msg("YOUR TOTAL SCORE: " + game.getScore()); 
+		// PanelMsgBoard.Msg("YOUR TOTAL SCORE: " + game.getScore());
 		EVT_System_GameEnd();
 		game.stop();
 		Thread.currentThread().interrupt();
@@ -610,6 +610,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Object selectedValue = home_mode.getValue();
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
+			// add detected attack
+			game.AddDetectedAttack();
+			
 			if(compact)
 				EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
 			else
@@ -782,8 +785,19 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	public void EVT_System_GameEnd(){ 
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Game End. user=" + _username + ". scenario="+ _scenario + ". total_damage=" + game.getVehicleList().getTotalDamage(), -1, -1); 
+				"Game End. user =" + _username + ". scenario ="+ _scenario, -1, -1);
 	}
+	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int total) {
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Total UAV damage is "+damage, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Total tasks done is "+task, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Total detect attack "+attack, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Your Total score is 100 - "+damage+"(damage) - "+task+"(task) + "+attack+"(attack) = "+total, -1, -1);
+	}
+	
 	/**
 	 * Yves
 	 */

@@ -478,14 +478,14 @@ public class Game implements Runnable, ActionListener
                 getDBWriter().ScoreTable_SetScore(Reschu._username, getScore());
                 getDBWriter().UserTable_SetGameFinish(Reschu._username);
             }
-
-            lsnr.gameEnd();         
-
+            
+            lsnr.gameEnd();
             // TEMPORARY SOLUTION
             FrameEnd frmEnd = new FrameEnd(lsnr, this);
             frmEnd.setSize(400,300);
             frmEnd.setLocation(300,300);
             frmEnd.setVisible(true);
+            lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetTotalAttack(), frmEnd.GetFinalScore());
         }
 
         vehicleColorFlashFlag = !vehicleColorFlashFlag;
