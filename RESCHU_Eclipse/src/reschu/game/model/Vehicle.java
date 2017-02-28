@@ -87,7 +87,7 @@ public class Vehicle {
 		return observedPath;
 	}
 	
-	public synchronized void getObservedPath(LinkedList<int[]> path_list) {
+	public synchronized void setObservedPath(LinkedList<int[]> path_list) {
 		observedPath = path_list;
 	}
 
@@ -127,12 +127,18 @@ public class Vehicle {
 	/**
 	 * Get the size of a path of this vehicle  (synchronized)
 	 */
-	public synchronized int getPathSize() {return groundTruthPath.size();}
+	public synchronized int getPathSize() {
+		if(isHijacked) return observedPath.size();
+		else return groundTruthPath.size();
+	}
 
 	/**
 	 * Get a coordinate of a waypoint of this vehicle  (synchronized)
 	 */
-	public synchronized int[] getPathAt(int idx) {return groundTruthPath.get(idx);}
+	public synchronized int[] getPathAt(int idx) {
+		if(isHijacked) return observedPath.get(idx);
+		else return groundTruthPath.get(idx);
+	}
 
 	/**
 	 * Remove a waypoint in the path of this vehicle  (synchronized)
@@ -150,7 +156,8 @@ public class Vehicle {
 	 * Get a coordinate at the first path of this vehicle  (synchronized)
 	 */
 	public synchronized int[] getFirstPathGround() {return groundTruthPath.getFirst(); }
-	public synchronized int[] getFirstPathObserved() {return observedPath == null ? groundTruthPath.getFirst() : observedPath.getFirst();}
+	// public synchronized int[] getFirstPathObserved() {return observedPath == null ? groundTruthPath.getFirst() : observedPath.getFirst();}
+	public synchronized int[] getFirstPathObserved() {return isHijacked ? observedPath.getFirst() : groundTruthPath.getFirst();}
 
 	/**
 	 * Get a coordinate at the last path of this vehicle  (synchronized)
@@ -778,7 +785,7 @@ public class Vehicle {
             setObsAngle64(s64ObsAngle);
             
             // payloadCheck((int)getX64(), (int)getY64());
-            
+            /*
     		System.out.println("UAV index = "+index);
     		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
     		System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
@@ -792,6 +799,7 @@ public class Vehicle {
     		else
     			System.out.println("G Path Frist NONE");
     		System.out.println("\n");
+    		*/
         }
 	}
 	
@@ -964,18 +972,9 @@ public class Vehicle {
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
 		int[] hackCoords = new int[]{xCoord, yCoord};
-		
-		
-		// observedPath = groundTruthPath;
-		// System.out.println(observedPath);
 		observedPath = new LinkedList<int[]>(groundTruthPath);
-		// System.out.println("OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
-		
 		groundTruthPath.clear();
 		groundTruthPath.add(hackCoords);
-		
-		// System.out.println("GROUND "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]+" last "+groundTruthPath.getLast()[0]);
-		// System.out.println("THEN OBSERVE "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]+" last "+observedPath.getLast()[0]);
 		
 		// System.out.println("Hack complete, getX currently returns " + getX());		
 		// groundTruthPath.addFirst(hackCoords);

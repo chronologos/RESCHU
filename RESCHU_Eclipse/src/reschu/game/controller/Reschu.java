@@ -611,8 +611,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
 			// add detected attack
-			game.AddDetectedAttack();
-			
 			if(compact)
 				EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
 			else
@@ -787,15 +785,19 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Game End. user =" + _username + ". scenario ="+ _scenario, -1, -1);
 	}
-	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int total) {
+	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int wrong, int lost, int total) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total UAV damage is "+damage, -1, -1);
+				"Total UAV damage is   "+damage, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total tasks done is "+task, -1, -1);
+				"Total tasks done is   "+task, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total detect attack "+attack, -1, -1);
+				"Total detected attack "+attack, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Your Total score is 100 - "+damage+"(damage) - "+task+"(task) + "+attack+"(attack) = "+total, -1, -1);
+				"Total wrong detects   "+wrong, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Total disappeared UAV "+wrong, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Your Total score is 100 - "
+				+damage+"(damage) + 3*"+task+"(task) + 5*"+attack+"(attack) - 5*"+wrong+"(wrong) - 10*"+lost+"(lost) = "+total, -1, -1);
 	}
 	
 	/**

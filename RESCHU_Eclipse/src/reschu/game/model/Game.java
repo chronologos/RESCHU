@@ -60,6 +60,7 @@ public class Game implements Runnable, ActionListener
     private int score;
     private static int finished_task   = 0;
     private static int detected_attack = 0;
+    private static int wrong_detect = 0;
 
     private Random rnd = new Random();
 
@@ -436,16 +437,27 @@ public class Game implements Runnable, ActionListener
     // immediately change UAV's position, for HOME functions
     // change current position and reassign a target
     public void HomeFunction(Vehicle v) {
-        if(v.getHijackStatus()) {
-            v.setHijackStatus(false);
-        }
+        if(v.getHijackStatus()) AddDetectedAttack();
+        else AddWrongDetect();
+        v.setHijackStatus(false);
         v.setInvestigateStatus(false);
         v.getTarget().setDone();
         
         int x = rnd.nextInt(MySize.width);
         int y = rnd.nextInt(MySize.height);
-        // v.setPos(x, y);
         v.setPos64((double)(x),(double)(y));
+        
+        // print all waypoints in Observed and GroundTruth for debugging
+        /*
+        if(v.getGroundTruthPath() != null) {
+        	for(int i=0; i<v.getGroundTruthPath().size(); i++)
+        		System.out.println("GD "+v.getGroundTruthPath().get(i)[0]+", "+v.getGroundTruthPath().get(i)[1]);
+        }
+        if(v.getObservedPath() != null) {
+        	for(int i=0; i<v.getObservedPath().size(); i++)
+        		System.out.println("OB "+v.getObservedPath().get(i)[0]+", "+v.getObservedPath().get(i)[1]);
+        }
+        */
         
         if(v.getObservedPath() != null) {
             while(v.getObservedPath().size() > 1) {
@@ -485,7 +497,8 @@ public class Game implements Runnable, ActionListener
             frmEnd.setSize(400,300);
             frmEnd.setLocation(300,300);
             frmEnd.setVisible(true);
-            lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetTotalAttack(), frmEnd.GetFinalScore());
+            lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetTotalAttack(),
+            		frmEnd.GetTotalWrong(), frmEnd.GetTotalLostUAV(), frmEnd.GetFinalScore());
         }
 
         vehicleColorFlashFlag = !vehicleColorFlashFlag;
@@ -588,5 +601,15 @@ public class Game implements Runnable, ActionListener
     // get total detected attack number
     public static int GetDetectedAttack() {
     	return detected_attack;
+    }
+    
+    // detected attack number increment by 1
+    public static void AddWrongDetect() {
+    	wrong_detect ++;
+    }
+    
+    // get total detected attack number
+    public static int GetWrongDetect() {
+    	return wrong_detect;
     }
 }

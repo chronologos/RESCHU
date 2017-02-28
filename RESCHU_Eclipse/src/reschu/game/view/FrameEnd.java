@@ -35,11 +35,13 @@ public class FrameEnd extends JFrame {
 	private JButton btnEnd;
 	private ImageIcon imgIcon;
 	private JLabel lblHAL;
-	private JLabel lblThank, lblDamage, lblTask, lblAttack, lblTotal;
+	private JLabel lblThank, lblDamage, lblTask, lblAttack, lblWrong, lblLost, lblTotal;
 	
 	private int total_damage;
 	private int total_task;
 	private int total_attack;
+	private int total_wrong;
+	private int total_lost;
 	private int final_score;
 	
 	public int GetTotalDamage() {
@@ -52,6 +54,14 @@ public class FrameEnd extends JFrame {
 	
 	public int GetTotalAttack() {
 		return total_attack;
+	}
+	
+	public int GetTotalWrong() {
+		return total_wrong;
+	}
+	
+	public int GetTotalLostUAV() {
+		return total_lost;
 	}
 	
 	public int GetFinalScore() {
@@ -85,12 +95,15 @@ public class FrameEnd extends JFrame {
 		total_damage = game.getVehicleList().getTotalDamage();
 		total_task = game.GetTotalTask();
 		total_attack = game.GetDetectedAttack();
-		final_score = (100-total_damage+total_task+total_attack);
+		total_wrong = game.GetWrongDetect();
+		final_score = (100-total_damage+3*total_task+5*total_attack-5*total_wrong-10*total_lost);
 		
 		lblThank  = new JLabel("Thank you for your participation!");
 		lblDamage = new JLabel("Total UAV damage is "+total_damage);
 		lblTask   = new JLabel("Total tasks done is "+total_task);
 		lblAttack = new JLabel("Total detect attack "+total_attack);
+		lblWrong  = new JLabel("Total wrong detect  "+total_wrong);
+		lblLost   = new JLabel("Total disappear UAV "+total_lost);
 		lblTotal  = new JLabel("Your Total score is "+final_score);
         		
 		btnEnd = new JButton("EXIT");
@@ -106,6 +119,8 @@ public class FrameEnd extends JFrame {
 		pnl.add(lblDamage);
 		pnl.add(lblTask);
 		pnl.add(lblAttack);
+		pnl.add(lblWrong);
+		pnl.add(lblLost);
 		pnl.add(lblTotal);
 		pnl.add(Box.createGlue());
 		pnl.add(btnEnd);
@@ -114,6 +129,8 @@ public class FrameEnd extends JFrame {
 		lblDamage.setAlignmentX(CENTER_ALIGNMENT);
 		lblTask.setAlignmentX(CENTER_ALIGNMENT);
 		lblAttack.setAlignmentX(CENTER_ALIGNMENT);
+		lblWrong.setAlignmentX(CENTER_ALIGNMENT);
+		lblLost.setAlignmentX(CENTER_ALIGNMENT);
 		lblTotal.setAlignmentX(CENTER_ALIGNMENT);
 		btnEnd.setAlignmentX(CENTER_ALIGNMENT);
 		add(pnl);
