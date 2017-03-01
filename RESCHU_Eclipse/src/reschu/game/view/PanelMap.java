@@ -520,7 +520,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			popMenu.removeAll();
 			mnuItemSetGoal = new JMenuItem("Set the goal"); 
 			mnuItemAddWP = new JMenuItem("Add waypoint");
-			mnuItemDelWP = new JMenuItem("Delete waypoint"); 	    	
+			mnuItemDelWP = new JMenuItem("Delete waypoint");
 
 			mnuItemSetGoal.addActionListener(this);
 			mnuItemAddWP.addActionListener(this);
@@ -663,12 +663,12 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		if( evt.getSource() == mnuItemEngage ) { 
 			if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
-			else lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
+			else lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle);
+			// original was lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
+			// however, using lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle); would be more convenient
 		}
 		repaint();
 	}
-
-
 
 	// MouseListener interface
 	public void mouseClicked(MouseEvent m_ev) {   
