@@ -519,7 +519,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		else { // if(mapSettingMode && !vehicleWPAddMode) 
 			popMenu.removeAll();
 			mnuItemSetGoal = new JMenuItem("Set the goal"); 
-			mnuItemAddWP = new JMenuItem("Add waypoint"); 
+			mnuItemAddWP = new JMenuItem("Add waypoint");
 			mnuItemDelWP = new JMenuItem("Delete waypoint"); 	    	
 
 			mnuItemSetGoal.addActionListener(this);

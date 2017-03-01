@@ -13,21 +13,21 @@ import java.util.HashMap;
 public class AttackEngine {
 	public static final String ATTACK_FILENAME = "AttackFile.txt";
 	// USAGE NOTE
-	// AttackFile.txt should specify attack in the format: vehicle number,attack time 
-	// where vehicle number is int and attack time is time in milliseconds after game starts
+	// AttackFile.txt should specify attack in the format: vIdx number,attack time 
+	// where vIdx number is int and attack time is time in milliseconds after game starts
 	
-	public Map<Integer, String> hackData; // Map Vehicles to their hacked coordinates
-	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
+	public Map<Integer, String> hackData; // Map vIdxs to their hacked coordinates
+	public Map<String, Integer> timerTovIdx; // Map Timers to vIdxs
 
-	public AttackEngine(final VehicleList vehicleList) throws FileNotFoundException {
+	public AttackEngine(final VehicleList vehicle_list) throws FileNotFoundException {
 		String line, location, action;
 		Timer nextTimer;
 		int delay;
-		int vehicle;
+		int vIdx;
 		
 		File attackFile = new File(ATTACK_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
-		timerToVehicle = new HashMap<String, Integer>();
+		timerTovIdx = new HashMap<String, Integer>();
 		hackData = new HashMap<Integer, String>();
 		
 		class Hack extends TimerTask {	
@@ -38,9 +38,11 @@ public class AttackEngine {
 
 			@Override 
 			public void run() {
-				int vehicle = timerToVehicle.get(timerName);
+				int vIdx = timerTovIdx.get(timerName);
 				try {
-					vehicleList.getVehicle(vehicle).hijack(hackData.get(vehicle));
+					if(!vehicle_list.getVehicle(vIdx).getHijackStatus() && !vehicle_list.getVehicle(vIdx).getLostStatus()) {
+						vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
+					}
 				}
 				catch(IllegalArgumentException e) {
 					System.out.println("Hack data file has illegal hack coordinates");
@@ -52,21 +54,21 @@ public class AttackEngine {
 			// Parse AttackFile
 			// NOTIFY,VEH_NO,TIME 
 			// ATTACK,VEH_NO,TIME,NEW_X_TARGET NEW_Y_TARGET
-			while ((line = br.readLine()) != null){  
+			while ((line = br.readLine()) != null){
 				if (!line.startsWith("//")){
 					String[] attackParams = line.split(",");
 					action = attackParams[0];
 					if (!action.equals("ATTACK")){
 						continue;
 					}
-					vehicle = Integer.parseInt(attackParams[1]) - 1;
+					vIdx = Integer.parseInt(attackParams[1]) - 1;
 					delay = Integer.parseInt(attackParams[2]);
 					location = attackParams[3];
-					hackData.put(vehicle, location);
-					String timerName = "HackTimer" + vehicle;// TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
+					hackData.put(vIdx, location);
+					String timerName = "HackTimer" + vIdx;// TEMP : IN FUTURE, SAME vIdx CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);
 					nextTimer.schedule(new Hack(timerName), delay);
-					timerToVehicle.put(timerName, vehicle);
+					timerTovIdx.put(timerName, vIdx);
 				}
 			}
 		} catch (NumberFormatException e) {
@@ -75,6 +77,6 @@ public class AttackEngine {
 		} catch (IOException e) {
 			System.out.println("Illegal non-numeric values in hacking input file");
 			e.printStackTrace();
-		} 
+		}
 	}
 }

@@ -367,17 +367,15 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	@Override
 	public void gameStart() {
-		if (!tutorial()){
+		if (!tutorial()) {
 			try {
-				attackNotificationEngine = new AttackNotificationEngine(this);
+				attackNotificationEngine = new AttackNotificationEngine(this, game);
 				attackEngine = new AttackEngine(game.getVehicleList());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		
-	}
-		
-		
+
 		// screen resolution check for Java WebStart. 
 		//    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
 		//    		setVisible(false);
@@ -402,11 +400,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 			JOptionPane.showMessageDialog(null,	
 					"Train for as long as you want and close the window " +
 							"when you are done to proceed to the main experiment. ", "Message", 1);
-
 		}
 		
 		new Thread(game).start();
-
 		// enable panels which are initially disabled
 		pnlMap.setEnabled(true); 
 	}

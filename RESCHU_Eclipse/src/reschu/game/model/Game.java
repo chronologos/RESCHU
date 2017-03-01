@@ -474,7 +474,9 @@ public class Game implements Runnable, ActionListener
             if( map.getListUnassignedTarget().get(i).isVisible() ) {
                 Target target = map.getListUnassignedTarget().get(i);
                 if(v.getTarget() != target) {
-                    v.changeGoal(v.getLastPath(), target.getPos()[0], target.getPos()[1]);
+                	// when a UAV already arrived a target, then the operator click HOME button
+                	if(v.getGroundTruthPath().size() == 0) AutoTargetAssign(v);
+                	else v.changeGoal(v.getLastPath(), target.getPos()[0], target.getPos()[1]);
                     break;
                 }
             }

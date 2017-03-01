@@ -19,7 +19,7 @@ import reschu.game.view.PanelMsgBoard;
 import reschu.game.view.PanelMap;
 import reschu.game.model.VehicleList;
 
-public class AttackNotificationEngine {//implements UserInputListener {
+public class AttackNotificationEngine {
 
 	public static final String ATTACK_NOTIFICATIONS_FILENAME = "AttackFile.txt";
 	public Map<Integer, Integer> hackData; // Map Vehicles to the notification times
@@ -30,12 +30,12 @@ public class AttackNotificationEngine {//implements UserInputListener {
 	private JDialog optionDialog;
 	private int prevIdx = -1;
 
-	public AttackNotificationEngine(GUI_Listener l) throws FileNotFoundException {
+	public AttackNotificationEngine(GUI_Listener l, Game g) throws FileNotFoundException {
 		lsnr = l;
 		String line;  
 		Timer nextTimer;
 		int delay;
-		int vehicle;
+		int vIdx;
 		String action;
 		
 		File attackFile = new File(ATTACK_NOTIFICATIONS_FILENAME);
@@ -51,9 +51,11 @@ public class AttackNotificationEngine {//implements UserInputListener {
 
 			@Override 
 			public void run() {
-				int vehicle = timerToVehicle.get(timerName);
+				int vIdx = timerToVehicle.get(timerName);
 				try {
-					launchHackWarning(vehicle);
+					if(!g.getVehicleList().getVehicle(vIdx).getHijackStatus() && !g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
+						launchHackWarning(vIdx);
+					}
 				}
 				catch(IllegalArgumentException e) {
 					System.out.println("Hack data file has illegal hack coordinates");
@@ -69,13 +71,13 @@ public class AttackNotificationEngine {//implements UserInputListener {
 					if (!action.equals("NOTIFY")){
 						continue;
 					}
-					vehicle = Integer.parseInt(attackParams[1]) - 1;
+					vIdx = Integer.parseInt(attackParams[1]) - 1;
 					delay = Integer.parseInt(attackParams[2]);
-					hackData.put(vehicle, delay);
-					String timerName = "HackTimer" + vehicle;// TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
+					hackData.put(vIdx, delay);
+					String timerName = "HackTimer" + vIdx;// TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);
 					nextTimer.schedule(new Hack(timerName), delay);
-					timerToVehicle.put(timerName, vehicle);
+					timerToVehicle.put(timerName, vIdx);
 				}
 			}
 		} catch (NumberFormatException e) {
@@ -112,6 +114,7 @@ public class AttackNotificationEngine {//implements UserInputListener {
 		}
 		hackPaneOpen = false;
 	}
+	
 	public int displayNotification(int VehicleID) {
 		int dispayVehicleID = VehicleID + 1;
 		Object[] options = {"Investigate", "Ignore"};

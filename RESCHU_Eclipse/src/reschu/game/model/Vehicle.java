@@ -50,6 +50,12 @@ public class Vehicle {
 	public void setInvestigateStatus(boolean b) {
 		isInvestigate = b;
 	}
+	public boolean getLostStatus () {
+		return isDisappeared;
+	}
+	public void setLostStatus (boolean b) {
+		isDisappeared = b;
+	}
 	
 	/**
 	 * Set the position of this vehicle (synchronized)
@@ -155,14 +161,14 @@ public class Vehicle {
 	/**
 	 * Get a coordinate at the first path of this vehicle  (synchronized)
 	 */
-	public synchronized int[] getFirstPathGround() {return groundTruthPath.getFirst(); }
+	public synchronized int[] getFirstPathGround() {return groundTruthPath.getFirst();}
 	// public synchronized int[] getFirstPathObserved() {return observedPath == null ? groundTruthPath.getFirst() : observedPath.getFirst();}
 	public synchronized int[] getFirstPathObserved() {return isHijacked ? observedPath.getFirst() : groundTruthPath.getFirst();}
 
 	/**
 	 * Get a coordinate at the last path of this vehicle  (synchronized)
 	 */
-	public synchronized int[] getLastPath() {return groundTruthPath.getLast(); }
+	public synchronized int[] getLastPath() {return groundTruthPath.getLast();}
 
 	/**
 	 * Remove the first waypoint of path of this vehicle  (synchronized)
@@ -246,10 +252,10 @@ public class Vehicle {
 	public void setVelocity(int milliseconds) { velocity = milliseconds; }
 	public int getVelocity() {return velocity;}
 
-	public void setTarget(Target t) {target = t;}    
+	public void setTarget(Target t) {target = t;}
 	public Target getTarget() { return target; }
 
-	public void setStatus(int i) { status = i; }    
+	public void setStatus(int i) { status = i; }
 	public int getStatus() { return status; }
 
 	public void setIntersect(boolean b) { intersect = b; }
@@ -358,7 +364,7 @@ public class Vehicle {
 		}
 	}
 
-	public  void changeGoal(int[] ex_goal, int x, int y) {
+	public void changeGoal(int[] ex_goal, int x, int y) {
 		if( x < 0 || x > MySize.width || y < 0 || y > MySize.height ) return;
 
 		int[] ex_target_pos, new_target_pos;
