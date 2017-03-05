@@ -390,7 +390,7 @@ public class Scenario4  extends TutorialModel{
                     	   	   checkCorrect(type==MyDB.VEHICLE_ARRIVES_TO_TARGET && vIdx == 1);
                     	   	   break;
                        case 16:
-                               checkCorrect(type==MyDB.PAYLOAD_ENGAGED && vIdx == 1);
+                               checkCorrect(type==MyDB.PAYLOAD_ENGAGED_FROM_PNLMAP && vIdx == 1);
                                break;
                        case 18:
                                checkCorrect( (type==MyDB.PAYLOAD_FINISHED_CORRECT || type==MyDB.PAYLOAD_FINISHED_INCORRECT) && vIdx ==1);

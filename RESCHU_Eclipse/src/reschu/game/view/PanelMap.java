@@ -820,7 +820,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// Menu - Goal point set (either adding or changing)
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleGoalMode && !vehicleWPAddMode && !vehicleWPChangeMode && !vehicleWPDelMode ) {
 			if( getSelectedVehicle().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
-				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 10);
+				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 5);
 			}
 			else if( getSelectedVehicle().getPath().size() == 0 ) {
 				getSelectedVehicle().addGoal(clicked_pos_x, clicked_pos_y);
@@ -834,7 +834,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// DRAG - GOAL CHANGE
 		if( Utils.isLeftClick(m_ev) && !vehicleWPAddMode && vehicleGoalChangeMode && !vehicleWPDelMode ) {
 			if( getSelectedVehicle().isAssignededTarget(clicked_pos_x, clicked_pos_y) ) {
-				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 10);
+				lsnr.showMessageOnTopOfMap("You cannot assign a vehicle to a target that is already assigned to another vehicle", 5);
 			}
 			else if( getSelectedVehicle().getPath().size() == 0 ) 
 				getSelectedVehicle().addGoal(new_GP_x, new_GP_y);
