@@ -351,7 +351,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void vehicleLocationChanged(){
 		// TODO: Do I really want to repaint the whole map here?
-		pnlMap.repaint(); 
+		pnlMap.repaint();
 	}
 	
 	@Override

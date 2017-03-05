@@ -22,7 +22,7 @@ import reschu.game.view.PanelMsgBoard;
 
 public class Game implements Runnable, ActionListener
 {       
-    static public int TIME_TOTAL_GAME = 180 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
+    static public int TIME_TOTAL_GAME = 300 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
     private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target
 
     private int nTargetAreaTotal = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL; 

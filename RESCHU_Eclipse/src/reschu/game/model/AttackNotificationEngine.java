@@ -53,7 +53,7 @@ public class AttackNotificationEngine {
 			public void run() {
 				int vIdx = timerToVehicle.get(timerName);
 				try {
-					if(g.getVehicleList().getVehicle(vIdx).getHijackStatus() && !g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
+					if(!g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
 						launchHackWarning(vIdx);
 					}
 				}
