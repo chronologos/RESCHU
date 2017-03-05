@@ -793,7 +793,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total disappeared UAV "+wrong, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Your Total score is 100 - "
-				+damage+"(damage) + 3*"+task+"(task) + 5*"+attack+"(attack) - 5*"+wrong+"(wrong) - 10*"+lost+"(lost) = "+total, -1, -1);
+				+damage+"(damage) + 5*"+task+"(task) + 5*"+attack+"(attack) - 5*"+wrong+"(wrong) - 10*"+lost+"(lost) = "+total, -1, -1);
 	}
 	
 	/**

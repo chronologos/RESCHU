@@ -96,7 +96,8 @@ public class FrameEnd extends JFrame {
 		total_task = game.GetTotalTask();
 		total_attack = game.GetDetectedAttack();
 		total_wrong = game.GetWrongDetect();
-		final_score = (100-total_damage+3*total_task+5*total_attack-5*total_wrong-10*total_lost);
+		total_lost = game.getVehicleList().getTotalLost();
+		final_score = (100-total_damage+5*total_task+5*total_attack-5*total_wrong-10*total_lost);
 		
 		lblThank  = new JLabel("Thank you for your participation!");
 		lblDamage = new JLabel("Total UAV damage is "+total_damage);

@@ -559,7 +559,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	}
 
 	public synchronized void setClear() {
-		//selectedVehicle = null;
+		// selectedVehicle = null;
 		mapSettingMode = false;
 		vehicleGoalMode = false;
 		vehicleGoalChangeMode = false;    	

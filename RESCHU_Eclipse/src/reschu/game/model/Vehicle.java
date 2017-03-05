@@ -736,7 +736,7 @@ public class Vehicle {
         double s64OldAngle = 0;
         double s64NewAngle = 0;
         double s64AngleDiff = 0;
-        double s64AngleInc = Math.PI/2000.0;
+        double s64AngleInc = Math.PI/1000.0;
         //Check proximity
         if (Math.abs(s64DeltaX) <= MySpeed.VELOCITY64) { s64DeltaX = 0; }
         if (Math.abs(s64DeltaY) <= MySpeed.VELOCITY64) { s64DeltaY = 0; }

@@ -131,4 +131,13 @@ public class VehicleList {
     	}
     	return total_damage;
     }
+    
+    // calculate total lost UAV amount
+    public int getTotalLost() {
+    	int TotalLost = 0;
+    	for(int i=0; i<size(); i++) {
+    		if(getVehicle(i).isDisappeared) TotalLost ++;
+    	}
+    	return TotalLost;
+    }
 }

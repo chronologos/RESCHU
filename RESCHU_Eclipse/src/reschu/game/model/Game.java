@@ -22,7 +22,7 @@ import reschu.game.view.PanelMsgBoard;
 
 public class Game implements Runnable, ActionListener
 {       
-    static public int TIME_TOTAL_GAME = 600 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
+    static public int TIME_TOTAL_GAME = 180 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
     private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target
 
     private int nTargetAreaTotal = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL; 
@@ -496,7 +496,7 @@ public class Game implements Runnable, ActionListener
             lsnr.gameEnd();
             // TEMPORARY SOLUTION
             FrameEnd frmEnd = new FrameEnd(lsnr, this);
-            frmEnd.setSize(400,300);
+            frmEnd.setSize(400,400);
             frmEnd.setLocation(300,300);
             frmEnd.setVisible(true);
             lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetTotalAttack(),
