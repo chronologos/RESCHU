@@ -250,7 +250,7 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {  		
 		if( e.getSource() == btnEngage ) {
 			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
-			else lsnr.Vehicle_Engage_From_pnlControl(v);
+			else lsnr.Vehicle_Engage_From_pnlCompact(v);
 		}
 		if( e.getSource() == btnHome ) {
 			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
@@ -413,7 +413,7 @@ class VehiclePanel extends JPanel implements ActionListener
     	//if( e.getSource() == btnDelWP){ if( selectedVehicle.hasWaypoint() ) lsnr.Vehicle_WP_Del_From_pnlControl(selectedVehicle);}
     	if( e.getSource() == btnEngage ) {
     		if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
-    		else lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle);
+    		else lsnr.Vehicle_Engage_From_pnlUAV(selectedVehicle);
     	}
     	if( e.getSource() == btnHome ) {
     		if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();

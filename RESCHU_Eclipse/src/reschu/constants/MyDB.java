@@ -26,9 +26,11 @@ public class MyDB {
 	final public static int TARGET_DISAPPEARED			= 33;
 	
 	final public static int PAYLOAD_ENGAGED_AND_FINISHED= 41;
-	final public static int PAYLOAD_ENGAGED				= 42;
-	final public static int PAYLOAD_FINISHED_CORRECT	= 43;
-	final public static int PAYLOAD_FINISHED_INCORRECT	= 44;
+	final public static int PAYLOAD_FINISHED_CORRECT	= 42;
+	final public static int PAYLOAD_FINISHED_INCORRECT	= 43;
+	final public static int PAYLOAD_ENGAGED_FROM_PNLMAP	= 44;
+	final public static int PAYLOAD_ENGAGED_FROM_PNLCOMPACT	= 45;
+	final public static int PAYLOAD_ENGAGED_FROM_PNLUAV	= 46;
 	
 	final public static int VEHICLE_DAMAGED				= 51;
 	final public static int VEHICLE_SPEED_DECREASED		= 52;

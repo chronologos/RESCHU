@@ -54,7 +54,8 @@ public interface GUI_Listener {
     public void Vehicle_Goal_From_pnlControl(Vehicle v);
     public void Vehicle_WP_Add_From_pnlControl(Vehicle v);
     public void Vehicle_WP_Del_From_pnlControl(Vehicle v);
-    public void Vehicle_Engage_From_pnlControl(Vehicle v);
+    public void Vehicle_Engage_From_pnlCompact(Vehicle v);
+    public void Vehicle_Engage_From_pnlUAV(Vehicle v);
     public void Vehicle_Go_Home(Vehicle v, boolean compact) throws UserDefinedException;
     public void EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord);
     public void EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord);
@@ -83,7 +84,9 @@ public interface GUI_Listener {
     public void EVT_Target_BecameVisible(String targetName, int[] targetPos);  
     public void EVT_Target_Disappeared(String targetName, int[] targetPos); 
     public void EVT_Payload_EngagedAndFinished_COMM(int vIdx, String targetName);  
-    public void EVT_Payload_Engaged(int vIdx, String targetName);  
+    public void EVT_Payload_Engaged_pnlMap(int vIdx, String targetName);
+    public void EVT_Payload_Engaged_pnlCompact(int vIdx, String targetName);
+    public void EVT_Payload_Engaged_pnlUAV(int vIdx, String targetName);
     public void EVT_Payload_Finished_Correct(int vIdx, String targetName);  
     public void EVT_Payload_Finished_Incorrect(int vIdx, String targetName);  
     public void EVT_Vehicle_Damaged(int vIdx, int haX, int haY);	//  Not gonna use this.

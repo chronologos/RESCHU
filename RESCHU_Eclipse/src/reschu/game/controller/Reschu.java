@@ -503,17 +503,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlControl.Show_Vehicle_Status(0);
 		uavMonitor.disableUAVFeed();
 	}
-	
-	@Override
-	public void Vehicle_Engage_From_pnlMap(Vehicle v) { 
-		try {
-			Engage(v);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
-	}
 
 	// Events From pnlPayload
 	/**
@@ -539,8 +528,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	public void Payload_Finished_From_Msg() {
-		pnlControl.ClearTaskMsg(pnlMap.selectedVehicle.getIndex());
-		Payload_Finished_From_pnlPayload(pnlMap.selectedVehicle);
+		Vehicle v = pnlMap.selectedVehicle;
+		if(v.isEngaged) {
+			pnlControl.ClearTaskMsg(pnlMap.selectedVehicle.getIndex());
+			Payload_Finished_From_pnlPayload(v);
+			v.isEngaged = false;
+		}
 	}
 
 	public void Payload_Assigned_From_pnlPayload(Vehicle v, Payload p) {		
@@ -572,18 +565,35 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void Vehicle_Goal_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.setGoal(v);}
 	public void Vehicle_WP_Add_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.addWP(v);}
 	public void Vehicle_WP_Del_From_pnlControl(Vehicle v) { pnlMap.setClear(); pnlMap.delWP(v);}
-	public void Vehicle_Engage_From_pnlControl(Vehicle v) { 
+	
+	@Override
+	public void Vehicle_Engage_From_pnlMap(Vehicle v) {
+		Vehicle_Engage_Task(v);
+		EVT_Payload_Engaged_pnlMap(v.getIndex(), v.getTarget().getName());
+	}
+	
+	public void Vehicle_Engage_From_pnlCompact(Vehicle v) { 
+		Vehicle_Engage_Task(v);
+		EVT_Payload_Engaged_pnlCompact(v.getIndex(), v.getTarget().getName());
+	}
+	
+	public void Vehicle_Engage_From_pnlUAV(Vehicle v) { 
+		Vehicle_Engage_Task(v);
+		EVT_Payload_Engaged_pnlUAV(v.getIndex(), v.getTarget().getName());
+	}
+	
+	// integrate all engage functions
+	public void Vehicle_Engage_Task(Vehicle v) {
+		v.isEngaged = true;
 		pnlControl.PrintTaskMsg(v.getIndex());
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		try {
 			Engage(v);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String msg = "Vehicle ["+v.getIndex()+"] has engaged in a counting task.";
 		PanelMsgBoard.Msg(msg);
-		EVT_Payload_Engaged(v.getIndex(), v.getTarget().getName());
 	}
 	
 	// vehicle home function
@@ -630,9 +640,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlControl.setEnabled(false);    	
 		pnlPayloadControls.setEnabled(true);
 		v.setStatus(MyGame.STATUS_VEHICLE_PAYLOAD);
-		game.setCurrentPayloadVehicle(v); 
+		game.setCurrentPayloadVehicle(v);
 		pnlPayload.setPayload(v); // this is the important line
-	}    
+	}
 
 	// DB
 	private void Write(int invoker, int type, int vIdx, String log, int X, int Y) {
@@ -735,8 +745,14 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_Payload_EngagedAndFinished_COMM(int vIdx, String targetName){
 		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_AND_FINISHED, vIdx, "Payload Engaged and Finished. COMM", -1, -1);
 	}
-	public void EVT_Payload_Engaged(int vIdx, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED, vIdx, "Payload Engaged to Target[" + targetName + "]", -1, -1);
+	public void EVT_Payload_Engaged_pnlMap(int vIdx, String targetName){
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLMAP, vIdx, "Payload Engaged to Target[" + targetName + "] from Map", -1, -1);
+	}
+	public void EVT_Payload_Engaged_pnlCompact(int vIdx, String targetName){
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLCOMPACT, vIdx, "Payload Engaged to Target[" + targetName + "] from Compact Panel", -1, -1);
+	}
+	public void EVT_Payload_Engaged_pnlUAV(int vIdx, String targetName){
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLUAV, vIdx, "Payload Engaged to Target[" + targetName + "] from UAV panel", -1, -1);
 	}
 	public void EVT_Payload_Finished_Correct(int vIdx, String targetName){
 		play(WAVPlayer.CORRECT);

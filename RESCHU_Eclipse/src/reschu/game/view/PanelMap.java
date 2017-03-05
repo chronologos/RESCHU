@@ -663,9 +663,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 		if( evt.getSource() == mnuItemEngage ) { 
 			if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
-			else lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle);
-			// original was lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
-			// however, using lsnr.Vehicle_Engage_From_pnlControl(selectedVehicle); would be more convenient
+			else lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
 		}
 		repaint();
 	}

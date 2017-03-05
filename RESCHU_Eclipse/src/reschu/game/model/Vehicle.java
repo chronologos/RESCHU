@@ -36,6 +36,7 @@ public class Vehicle {
 	private boolean isHijacked;
 	public boolean isDisappeared;
 	public boolean isInvestigate;
+	public boolean isEngaged;
 	private LinkedList<int[]> observedPath;
 	
 	public boolean getHijackStatus () {
@@ -276,7 +277,7 @@ public class Vehicle {
 		setTarget(null); 
 		this.g = g;
 		map = m; 
-		setStatus(MyGame.STATUS_VEHICLE_STASIS); 
+		setStatus(MyGame.STATUS_VEHICLE_STASIS);
 		vDamage = 0;
 		// velocity_scale = MySpeed.SPEED_TIMER;
 		// velocity_buffer = 0;
@@ -284,6 +285,9 @@ public class Vehicle {
 		isStuck = false;
 		intersect = false;
 		isDisappeared = false;
+		isHijacked = false;
+		isInvestigate = false;
+		isEngaged = false;
 	}
 
 	// check if reach a target
