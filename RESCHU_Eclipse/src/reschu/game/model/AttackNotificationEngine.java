@@ -128,7 +128,7 @@ public class AttackNotificationEngine {
 		Object selectedValue = hackPane.getValue();
 		// System.out.println("selected value: " + selectedValue);
 		optionDialog.dispose();
-		PanelMsgBoard.Msg("Possible cyber attack under UAV " + dispayVehicleID);
+		PanelMsgBoard.Msg("Possible cyber attack under UAV ["+dispayVehicleID+"]");
 
 		if(selectedValue == "Investigate") {
 			// the method of generating a dialog window with options

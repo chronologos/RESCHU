@@ -154,11 +154,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 					// record UAV disappear only once
 					if(!v.isDisappeared) {
 						lsnr.EVT_ATTACKED_UAV_DISAPPEAR(v);
+						v.isDisappeared = true;
+						PanelMsgBoard.Msg("Vehicle ["+v.getIndex()+"] is lost due to cyber attack.");
+						v.getTarget().setDone();
 					}
-					v.isDisappeared = true;
-					// unassign its original target
-					// v.getTarget().setVisible(false);
-					v.getTarget().setDone();
 				}
 			}
 		}
