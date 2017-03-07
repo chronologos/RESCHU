@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import reschu.constants.MyGame;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
 // import reschu.game.controller.Reschu;
@@ -21,7 +22,7 @@ import reschu.game.model.VehicleList;
 
 public class AttackNotificationEngine {
 
-	public static final String ATTACK_NOTIFICATIONS_FILENAME = "AttackFile.txt";
+	public static final String ATTACK_NOTIFICATIONS_FILENAME = MyGame.AttackFile;
 	public Map<Integer, Integer> hackData; // Map Vehicles to the notification times
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
 	private GUI_Listener lsnr;

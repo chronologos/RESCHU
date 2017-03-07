@@ -475,7 +475,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				popMenu.remove(mnuItemAddWP);
 				popMenu.remove(mnuItemDelWP);
 			} else {
-				mnuItemSetGoal.setText("Change the goal");
+				mnuItemSetGoal.setText("Change the target");
 				mnuItemSetGoal.setEnabled(true);
 				mnuItemAddWP.setEnabled(true);
 				if( v.hasWaypoint() ) mnuItemDelWP.setEnabled(true);

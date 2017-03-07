@@ -7,11 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import reschu.constants.MyGame;
+
 import java.util.Map;
 import java.util.HashMap;
 
 public class AttackEngine {
-	public static final String ATTACK_FILENAME = "AttackFile.txt";
+	public static final String ATTACK_FILENAME = MyGame.AttackFile;
 	// USAGE NOTE
 	// AttackFile.txt should specify attack in the format: vIdx number,attack time 
 	// where vIdx number is int and attack time is time in milliseconds after game starts
