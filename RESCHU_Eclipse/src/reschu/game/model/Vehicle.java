@@ -977,7 +977,7 @@ public class Vehicle {
 			return;
 		}
 		isHijacked = true;
-		System.out.println("Launching hack");
+		System.out.println("Launching hack "+xCoord+" "+yCoord);
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		

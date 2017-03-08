@@ -21,6 +21,7 @@ public class AttackEngine {
 	
 	public Map<Integer, String> hackData; // Map vIdxs to their hacked coordinates
 	public Map<String, Integer> timerTovIdx; // Map Timers to vIdxs
+	public Map<Integer, String> timerToLoc;
 
 	public AttackEngine(final VehicleList vehicle_list) throws FileNotFoundException {
 		String line, location, action;
@@ -32,19 +33,24 @@ public class AttackEngine {
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
 		timerTovIdx = new HashMap<String, Integer>();
 		hackData = new HashMap<Integer, String>();
+		timerToLoc = new HashMap<Integer, String>();
 		
 		class Hack extends TimerTask {	
 			String timerName;
-			public Hack(String timerName) {
+			Integer delay;
+			public Hack(String timerName, Integer delay) {
 				this.timerName = timerName;
+				this.delay = delay;
 			}
 
 			@Override 
 			public void run() {
 				int vIdx = timerTovIdx.get(timerName);
+				String location = timerToLoc.get(delay);
 				try {
 					if(!vehicle_list.getVehicle(vIdx).getHijackStatus() && !vehicle_list.getVehicle(vIdx).getLostStatus()) {
-						vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
+						// vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
+						vehicle_list.getVehicle(vIdx).hijack(location);
 					}
 				}
 				catch(IllegalArgumentException e) {
@@ -70,7 +76,8 @@ public class AttackEngine {
 					hackData.put(vIdx, location);
 					String timerName = "HackTimer" + vIdx;// TEMP : IN FUTURE, SAME vIdx CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);
-					nextTimer.schedule(new Hack(timerName), delay);
+					timerToLoc.put(delay, location);
+					nextTimer.schedule(new Hack(timerName, delay), delay);
 					timerTovIdx.put(timerName, vIdx);
 				}
 			}
