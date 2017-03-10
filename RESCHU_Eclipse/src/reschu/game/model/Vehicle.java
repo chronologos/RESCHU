@@ -35,8 +35,9 @@ public class Vehicle {
 	private boolean intersect;
 	private boolean isHijacked;
 	public boolean isDisappeared;
-	public boolean isInvestigate;
+	public boolean isInvestigated;
 	public boolean isEngaged;
+	public boolean isNotified;
 	private LinkedList<int[]> observedPath;
 	
 	public boolean getHijackStatus () {
@@ -46,10 +47,10 @@ public class Vehicle {
 		isHijacked = b;
 	}
 	public boolean getInvestigateStatus() {
-		return isInvestigate;
+		return isInvestigated;
 	}
 	public void setInvestigateStatus(boolean b) {
-		isInvestigate = b;
+		isInvestigated = b;
 	}
 	public boolean getLostStatus () {
 		return isDisappeared;
@@ -286,8 +287,9 @@ public class Vehicle {
 		intersect = false;
 		isDisappeared = false;
 		isHijacked = false;
-		isInvestigate = false;
+		isInvestigated = false;
 		isEngaged = false;
+		isNotified = false;
 	}
 
 	// check if reach a target

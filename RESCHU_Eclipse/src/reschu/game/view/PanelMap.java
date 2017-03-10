@@ -25,7 +25,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	private Map map;    
 	private GUI_Listener lsnr; 
 	private JPopupMenu popMenu; 
-	private JMenuItem mnuItemSetGoal, mnuItemAddWP, mnuItemDelWP, mnuItemSubmit, mnuItemCancel, mnuItemPrev, mnuItemNext, mnuItemInstantDelWP, mnuItemEngage;
+	private JMenuItem mnuItemSetGoal, mnuItemAddWP, mnuItemDelWP, mnuItemSubmit, mnuItemCancel,
+						mnuItemPrev, mnuItemNext, mnuItemInstantDelWP, mnuItemEngage, mnuItemHackYes, mnuItemHackNo;
 	private boolean mapSettingMode, vehicleGoalMode, vehicleWPAddMode, vehicleWPDelMode, vehicleWPChangeMode, vehicleGoalChangeMode, WPRightClickedMode;
 	public static Vehicle selectedVehicle, investigatedVehicle;
 	public boolean vehicleWPAddPrevMode, vehicleWPAddNextMode;    
@@ -70,7 +71,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	public synchronized void setSelectedVehicle(Vehicle v) {selectedVehicle = v;}
 	
 	public synchronized Vehicle getInvestigatedVehicle() {return investigatedVehicle;}
-	public synchronized void setInvestigatedVehicle(Vehicle v) {v.isInvestigate = true;}
+	public synchronized void setInvestigatedVehicle(Vehicle v) {v.isInvestigated = true;}
 
 	public PanelMap(GUI_Listener l, Game g, String strTitle) {
 		lsnr = l;
@@ -312,6 +313,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			else clrVehicle = MyColor.COLOR_VEHICLE;
 			
 			if(v.getName().contains("GHOST")) clrVehicle = MyColor.COLOR_GHOST_VEHICLE;
+			if(v.isNotified) clrVehicle = MyColor.COLOR_VEHICLE_NOTIFIED;
 
 			if( selectedVehicle == v ) {
 				p.paintHighlight(g, (int)v.getX64(), (int)v.getY64(), cellsize, halfcell, MySize.SIZE_HIGHLIGHT_PXL, rulersize/3,
@@ -465,10 +467,8 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	}
 
 	// POPUP
-	private void showPopup(Component invoker, int x, int y, Vehicle v)
-	{    	
+	private void showPopup(Component invoker, int x, int y, Vehicle v) {
 		setPopupMenu();
-
 		if( !mapSettingMode && !vehicleWPAddMode ) {
 			if( !v.hasGoal() ) {
 				mnuItemSetGoal.setEnabled(true);
@@ -481,7 +481,11 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				if( v.hasWaypoint() ) mnuItemDelWP.setEnabled(true);
 				else popMenu.remove(mnuItemDelWP);
 			}
-		}    	
+			if(v.isNotified) {
+				mnuItemHackYes.setEnabled(true);
+				mnuItemHackNo.setEnabled(true);
+			}
+		}
 		popMenu.show(this, x, y);
 		repaint(x, y, popMenu.getWidth(), popMenu.getHeight());
 	}
@@ -490,8 +494,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		if( popMenu.isShowing() && selectedVehicle == v ) popMenu.setVisible(false);
 	}
 
-	private void setPopupMenu()
-	{    
+	private void setPopupMenu() {    
 		if( mapSettingMode && vehicleWPAddMode ) {
 			popMenu.removeAll();
 			mnuItemSubmit = new JMenuItem("Submit");
@@ -509,17 +512,25 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if( vehicleWPAddPrevMode ) popMenu.add(mnuItemPrev);
 			if( vehicleWPAddNextMode ) popMenu.add(mnuItemNext);
 		}
-		else if( WPRightClickedMode ) { // When the user clicked a waypoint with the mouse-RIGHT-button    		
+		// When the user clicked a waypoint with the mouse-RIGHT-button
+		else if( WPRightClickedMode ) {
 			popMenu.removeAll();
 			mnuItemInstantDelWP = new JMenuItem("Delete waypoint");
 			mnuItemInstantDelWP.addActionListener(this);
 			popMenu.add(mnuItemInstantDelWP); 	    	
 		}
-		else { // if(mapSettingMode && !vehicleWPAddMode) 
+		// if(mapSettingMode && !vehicleWPAddMode)
+		else {
 			popMenu.removeAll();
 			mnuItemSetGoal = new JMenuItem("Set the goal"); 
 			mnuItemAddWP = new JMenuItem("Add waypoint");
 			mnuItemDelWP = new JMenuItem("Delete waypoint");
+			
+			// add confirm / deny hacking choices
+			mnuItemHackYes = new JMenuItem("YES Hacked");
+			mnuItemHackNo = new JMenuItem("NOT Hacked");
+			mnuItemHackYes.addActionListener(this);
+			mnuItemHackNo.addActionListener(this);
 
 			mnuItemSetGoal.addActionListener(this);
 			mnuItemAddWP.addActionListener(this);
@@ -527,14 +538,16 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 			if(selectedVehicle.getStatus()!=MyGame.STATUS_VEHICLE_PENDING) popMenu.add(mnuItemSetGoal);
 			popMenu.add(mnuItemAddWP);
-			//popMenu.add(mnuItemDelWP);   DELETED THIS AFTER A DISCUSSION WITH CARL (MAR 3rd)
 
 			if(selectedVehicle.getStatus()==MyGame.STATUS_VEHICLE_PENDING) {
 				mnuItemEngage = new JMenuItem("Engage");
 				mnuItemEngage.addActionListener(this);
 				popMenu.add(mnuItemEngage);
 			}
-
+			if(getSelectedVehicle().isNotified) {
+				popMenu.add(mnuItemHackYes);
+				popMenu.add(mnuItemHackNo);
+			}
 		}
 		popMenu.addPopupMenuListener(this);
 	}
@@ -663,6 +676,14 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		if( evt.getSource() == mnuItemEngage ) { 
 			if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
 			else lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
+		}
+		if( evt.getSource() == mnuItemHackYes ) {
+			lsnr.EVT_UAV_DECIDED_HACKED(selectedVehicle);
+		}
+		if( evt.getSource() == mnuItemHackNo ) {
+			selectedVehicle.isNotified = false;
+			selectedVehicle.isInvestigated = false;
+			lsnr.EVT_UAV_DECIDED_NOT_HACKED(selectedVehicle);
 		}
 		repaint();
 	}

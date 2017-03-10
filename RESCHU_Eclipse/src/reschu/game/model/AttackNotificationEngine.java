@@ -117,7 +117,7 @@ public class AttackNotificationEngine {
 	}
 	
 	public int displayNotification(int VehicleID) {
-		int dispayVehicleID = VehicleID + 1;
+		int dispayVehicleID = VehicleID + 1;		
 		Object[] options = {"Investigate", "Ignore"};
 		hackPane = new JOptionPane("Possible cyber attack under UAV " + dispayVehicleID, JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[1]); 
 		// hackPane.setInitialValue(options[1]);

@@ -19,6 +19,7 @@ public class MyColor {
     final static public Color COLOR_TARGET_INVISIBLE      = new Color(130,130,130,150);
     final static public Color COLOR_TARGET_INVISIBLE_OCCUPIED = new Color(50,50,50,150);
     final static public Color COLOR_VEHICLE_COMM_BOUNDARY = new Color(50,250,50,50);
-    static public Color COLOR_VEHICLE_PENDING 			  = new Color(128,224,255,150);
+    static public Color COLOR_VEHICLE_PENDING 	  = new Color(128,224,255,150);
     final static public Color COLOR_GHOST_VEHICLE		  = new Color(0,0,128,255);
+    final static public Color COLOR_VEHICLE_NOTIFIED	  = new Color(255,128,0,255);
 }

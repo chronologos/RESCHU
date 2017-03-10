@@ -491,7 +491,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	@Override
-	public void Vechicle_Selected_From_Investigate(int idx){
+	public void Vechicle_Selected_From_Investigate(int idx) {
 		pnlControl.Show_Vehicle_Status(idx+1); // TODO why doesn't it work without +1?
 		pnlMap.setSelectedVehicle(game.getVehicleList().getVehicle(idx));
 	}
@@ -601,7 +601,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	// vehicle home function
 	// from compact panel
-	public void Vehicle_Go_Home(Vehicle v, boolean compact) throws UserDefinedException {
+	public void Vehicle_Go_Home(Vehicle v, int source) throws UserDefinedException {
 		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		// create a dialog
@@ -611,30 +611,30 @@ public class Reschu extends JFrame implements GUI_Listener {
 		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
 		invest_dialog.setVisible(true);
 		// write to log file
-		if(compact)
-			EVT_Home_From_Compact(v.getIndex(), v.getX(), v.getY());
-		else
-			EVT_Home_From_UAV_Panel(v.getIndex(), v.getX(), v.getY());
+		if(source == 0) EVT_Home_From_Compact(v.getIndex(), v.getX(), v.getY());
+		if(source == 1) EVT_Home_From_UAV_Panel(v.getIndex(), v.getX(), v.getY());
+		if(source == 2) EVT_Home_From_Right_Click(v.getIndex(), v.getX(), v.getY());
 		// choose YES or NO
 		Object selectedValue = home_mode.getValue();
 		invest_dialog.dispose();
 		if(selectedValue == "Yes") {
 			// add detected attack
-			if(compact)
-				EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
-			else
-				EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
-			
+			if(source == 0) EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
+			if(source == 1) EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
+			if(source == 2) {
+				EVT_Home_From_Right_Click_Yes(v.getIndex(), v.getX(), v.getY());
+				v.isNotified = false;
+				v.isInvestigated = false;
+			}
 			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
 			game.HomeFunction(v);
 			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
 			EVT_New_Target_Assgined(v.getIndex(), v.getX(), v.getY(), v.getTarget());
 		}
 		else {
-			if(compact)
-				EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
-			else
-				EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
+			if(source == 0) EVT_Home_From_Compact_No(v.getIndex(), v.getX(), v.getY());
+			if(source == 1) EVT_Home_From_UAV_Panel_No(v.getIndex(), v.getX(), v.getY());
+			if(source == 2) EVT_Home_From_Right_Click_No(v.getIndex(), v.getX(), v.getY());
 		}
 	}
 	
@@ -843,12 +843,13 @@ public class Reschu extends JFrame implements GUI_Listener {
 
     public void EVT_Hack_Notification_Launch(int vIdx) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_LAUNCHED, vIdx, "Hack Notification Launched", -1, -1);
+    	game.getVehicleList().getVehicle(vIdx-1).isNotified = true;
     }
     public void EVT_Hack_Notification_Ignore(int vIdx) {
     	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_IGNORED, vIdx, "Hack Notification Ignored", -1, -1);
     }
     public void EVT_Hack_Notification_Investigate(int vIdx) {
-    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);    	
+    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);
     }
     public void EVT_Hack_Notification_Missed(int vIdx) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_MISSED, vIdx, "Hack Notification Missed", -1, -1);
@@ -861,6 +862,9 @@ public class Reschu extends JFrame implements GUI_Listener {
     public void EVT_Home_From_UAV_Panel(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL, vIdx, "Home button clicked from UAV panel", xCoord, yCoord);
     }
+    public void EVT_Home_From_Right_Click(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_RIGHT_CLICK, vIdx, "Home button clicked from right click", xCoord, yCoord);
+    }
     public void EVT_Home_From_Compact_Yes(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_COMPACT_YES, vIdx, "Home button clicked from compact panel comfirmed", xCoord, yCoord);
     }
@@ -872,6 +876,12 @@ public class Reschu extends JFrame implements GUI_Listener {
     }
     public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_UAV_PANEL_NO, vIdx, "Home button clicked from UAV panel denied", xCoord, yCoord);
+    }
+    public void EVT_Home_From_Right_Click_Yes(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_RIGHT_CLICK_YES, vIdx, "Home button clicked from right click comfirmed", xCoord, yCoord);
+    }
+    public void EVT_Home_From_Right_Click_No(int vIdx, int xCoord, int yCoord) {
+    	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_RIGHT_CLICK_NO, vIdx, "Home button clicked from right click denied", xCoord, yCoord);
     }
     public void	EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord) {
     	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_ADDED, vIdx, "Additional UAV "+vIdx+" is added", xCoord, yCoord);
@@ -892,6 +902,19 @@ public class Reschu extends JFrame implements GUI_Listener {
     public void EVT_ATTACKED_UAV_DISAPPEAR(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.ATTACKED_UAV_DISAPPEAR, v.getIndex(),
     			"Attacked UAV "+v.getIndex()+" disappear because its ground truth location is out of border", v.getX(), v.getY());
+    }
+    public void EVT_UAV_DECIDED_NOT_HACKED(Vehicle v) {
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_NOT_HACKED_DECIDED, v.getIndex(),
+    			"UAV "+v.getIndex()+" is considered NOT being attacked from pop menu", v.getX(), v.getY());
+    }
+    public void EVT_UAV_DECIDED_HACKED(Vehicle v) {
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_HACKED_DECIDED, v.getIndex(),
+    			"UAV "+v.getIndex()+" is considered being attacked from pop menu", v.getX(), v.getY());
+    	try {
+			Vehicle_Go_Home(v, 2);
+		} catch (UserDefinedException e) {
+			e.printStackTrace();
+		}
     }
 	
 	// main and play function

@@ -64,14 +64,19 @@ public class MyDB {
 	
 	final public static int HOME_FROM_COMPACT			= 70;
 	final public static int HOME_FROM_UAV_PANEL			= 71;
-	final public static int HOME_FROM_COMPACT_YES		= 72;
-	final public static int HOME_FROM_COMPACT_NO		= 73;
-	final public static int HOME_FROM_UAV_PANEL_YES		= 74;
-	final public static int HOME_FROM_UAV_PANEL_NO		= 75;
+	final public static int HOME_FROM_RIGHT_CLICK		= 72;
+	final public static int HOME_FROM_COMPACT_YES		= 73;
+	final public static int HOME_FROM_COMPACT_NO		= 74;
+	final public static int HOME_FROM_UAV_PANEL_YES		= 75;
+	final public static int HOME_FROM_UAV_PANEL_NO		= 76;
+	final public static int HOME_FROM_RIGHT_CLICK_YES	= 77;
+	final public static int HOME_FROM_RIGHT_CLICK_NO	= 78;
+	final public static int UAV_NOT_HACKED_DECIDED		= 79;
+	final public static int UAV_HACKED_DECIDED			= 80;
 	
-	final public static int VEHICLE_ADDED				= 80;
-	final public static int VEHICLE_DELETED				= 81;
-	final public static int NEW_TARGET_ASSIGNED			= 82;
+	final public static int VEHICLE_ADDED				= 81;
+	final public static int VEHICLE_DELETED				= 82;
+	final public static int NEW_TARGET_ASSIGNED			= 83;
 	
 	final public static int GENERATE_GHOST_MISSION		= 85;
 	final public static int ATTACKED_UAV_DISAPPEAR		= 86;

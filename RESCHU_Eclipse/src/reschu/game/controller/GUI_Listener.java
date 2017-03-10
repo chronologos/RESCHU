@@ -56,7 +56,7 @@ public interface GUI_Listener {
     public void Vehicle_WP_Del_From_pnlControl(Vehicle v);
     public void Vehicle_Engage_From_pnlCompact(Vehicle v);
     public void Vehicle_Engage_From_pnlUAV(Vehicle v);
-    public void Vehicle_Go_Home(Vehicle v, boolean compact) throws UserDefinedException;
+    public void Vehicle_Go_Home(Vehicle v, int source) throws UserDefinedException;
     public void EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord);
     public void EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord);
     
@@ -121,10 +121,15 @@ public interface GUI_Listener {
     // For Home (Emergency) Mode
     public void EVT_Home_From_Compact(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_UAV_Panel(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_Right_Click(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_Compact_Yes(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_Compact_No(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_UAV_Panel_Yes(int vIdx, int xCoord, int yCoord);
     public void EVT_Home_From_UAV_Panel_No(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_Right_Click_Yes(int vIdx, int xCoord, int yCoord);
+    public void EVT_Home_From_Right_Click_No(int vIdx, int xCoord, int yCoord);
+    public void EVT_UAV_DECIDED_NOT_HACKED(Vehicle v);
+    public void EVT_UAV_DECIDED_HACKED(Vehicle v);
     
     // For Ghost Mission
     public void EVT_Generate_Ghost_Mission(Vehicle v);

@@ -256,9 +256,8 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 			if(v.getPayload()==Vehicle.PAYLOAD_COM) v.COM_Payload();
 			else {
 				try {
-					lsnr.Vehicle_Go_Home(v, true);
+					lsnr.Vehicle_Go_Home(v, 0);
 				} catch (UserDefinedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -419,9 +418,8 @@ class VehiclePanel extends JPanel implements ActionListener
     		if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
 			else {
 				try {
-					lsnr.Vehicle_Go_Home(selectedVehicle, false);
+					lsnr.Vehicle_Go_Home(selectedVehicle, 1);
 				} catch (UserDefinedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
