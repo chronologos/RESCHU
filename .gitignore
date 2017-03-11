@@ -4,3 +4,6 @@ Code Backups
 *.pdf
 RESCHU_Eclipse/logs
 RESCHU_Eclipse/PayloadText.txt
+RESCHU_Eclipse/AttackFile.txt
+RESCHU_Eclipse/AttackFile_practice.txt
+RESCHU_Eclipse/AttackFile_pilot_test.txt

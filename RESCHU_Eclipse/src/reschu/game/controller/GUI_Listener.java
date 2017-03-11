@@ -91,11 +91,12 @@ public interface GUI_Listener {
     public void EVT_Payload_Finished_Incorrect(int vIdx, String targetName);  
     public void EVT_Vehicle_Damaged(int vIdx, int haX, int haY);	//  Not gonna use this.
     public void EVT_Vehicle_SpeedDecreased(int vIdx, int curSpeed);  
-    public void EVT_Vehicle_ArrivesToTarget(int vIdx, String targetname, int x, int y);  
+    public void EVT_Vehicle_ArrivesToTarget(int vIdx, String targetname, int x, int y);
+    public void EVT_Hacked_Vehicle_Target(int vIdx, String targetName, int x, int y);
     public void EVT_Vehicle_IntersectHazardArea(int vIdx, int[] threat);
     public void EVT_Vehicle_EscapeHazardArea(int vIdx);
-    public void EVT_HazardArea_Generated(int[] pos);  
-    public void EVT_HazardArea_Disappeared(int[] pos);  
+    public void EVT_HazardArea_Generated(int[] pos);
+    public void EVT_HazardArea_Disappeared(int[] pos);
     public void EVT_System_GameStart();
     public void EVT_System_GameEnd();
     public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int wrong, int lost, int total);

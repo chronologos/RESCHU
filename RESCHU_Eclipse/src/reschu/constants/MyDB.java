@@ -35,8 +35,9 @@ public class MyDB {
 	final public static int VEHICLE_DAMAGED				= 51;
 	final public static int VEHICLE_SPEED_DECREASED		= 52;
 	final public static int VEHICLE_ARRIVES_TO_TARGET	= 53;
-	final public static int VEHICLE_INTERSECT_HAZARDAREA= 54;
-	final public static int VEHICLE_ESCAPE_HAZARDAREA	= 55;
+	final public static int HACKED_UAV_ARRIVES_TARGET	= 54;
+	final public static int VEHICLE_INTERSECT_HAZARDAREA= 55;
+	final public static int VEHICLE_ESCAPE_HAZARDAREA	= 56;
 	
 	final public static int HAZARDAREA_GENERATED		= 61;
 	final public static int HAZARDAREA_DISAPPEARED		= 62; 

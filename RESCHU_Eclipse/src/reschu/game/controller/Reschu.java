@@ -774,7 +774,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	public void EVT_Vehicle_ArrivesToTarget(int vIdx, String targetName, int x, int y){
 		play(WAVPlayer.VEHICLE_ARRIVE);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_ARRIVES_TO_TARGET, vIdx, "Arrives To Target[" + targetName + "]", x, y);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_ARRIVES_TO_TARGET, vIdx, "UAV ["+vIdx+"] arrives to target ["+targetName+"]", x, y);
+	}
+	public void EVT_Hacked_Vehicle_Target(int vIdx, String targetName, int x, int y) {
+		play(WAVPlayer.VEHICLE_ARRIVE);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACKED_UAV_ARRIVES_TARGET, vIdx, "Hacked UAV ["+vIdx+"] arrives to target ["+targetName+"]", x, y);
 	}
 	public void EVT_Vehicle_IntersectHazardArea(int vIdx, int[] threat) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_INTERSECT_HAZARDAREA, vIdx, "Intersect with a HazardArea", threat[0], threat[1]);
@@ -916,11 +920,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 			e.printStackTrace();
 		}
     }
-	
-	// main and play function
 	private void play(String arg) {
 		new WAVPlayer(arg).start();
 	}
+	
+	// main function
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run () {

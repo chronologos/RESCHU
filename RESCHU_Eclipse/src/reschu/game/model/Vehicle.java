@@ -709,12 +709,11 @@ public class Vehicle {
 			break;
 		}
 		payloadCheck(getX(), getY()); //TODO(iantay) is this correct
-		// attackCheck(getX(), getY());
 	}
 
 	private void payloadCheck(int pos_x, int pos_y) {
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
-			if( getPathSize() == 1 && target != null) {
+			if(getPathSize()==1 && target!=null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				if( getPayload() == Vehicle.PAYLOAD_COM ) { 
 					setStatus(MyGame.STATUS_VEHICLE_PENDING);
@@ -742,7 +741,7 @@ public class Vehicle {
         double s64OldAngle = 0;
         double s64NewAngle = 0;
         double s64AngleDiff = 0;
-        double s64AngleInc = Math.PI/1000.0;
+        double s64AngleInc = Math.PI/500.0; // original 1000 or 2000
         //Check proximity
         if (Math.abs(s64DeltaX) <= MySpeed.VELOCITY64) { s64DeltaX = 0; }
         if (Math.abs(s64DeltaY) <= MySpeed.VELOCITY64) { s64DeltaY = 0; }
@@ -795,8 +794,8 @@ public class Vehicle {
             setObservedX64(getX64() - Math.cos(s64ObsAngle)*MySpeed.VELOCITY64);
             setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
             setObsAngle64(s64ObsAngle);
+            // TargetCheckHacked((int)getX64(), (int)getY64());
             
-            // payloadCheck((int)getX64(), (int)getY64());
             /*
     		System.out.println("UAV index = "+index);
     		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
@@ -815,23 +814,30 @@ public class Vehicle {
         }
 	}
 	
-    private void attackCheck(int pos_x, int pos_y) {
-        if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
-            if( getPathSize() == 1 && target != null) {
-                // VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
-                if( getPayload() == Vehicle.PAYLOAD_COM ) {
-                    setStatus(MyGame.STATUS_VEHICLE_PENDING);
-                }
-                else {
-                    setStatus(MyGame.STATUS_VEHICLE_PENDING);
-                    String msg = "Vehicle [" + index + "] has reached its target.";
-                    PanelMsgBoard.Msg(msg);
-                }
-                lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
-            }
-            lsnr.Hide_Popup(this);
-            removeFirstPath();
-        }
+    private void TargetCheckHacked(int pos_x, int pos_y) {
+		if(getPathSize()==1 && positionCheck(pos_x, pos_y) && target!=null) {
+			setStatus(MyGame.STATUS_VEHICLE_PENDING);
+			String msg = "Vehicle [" + index + "] has reached its target.";
+			PanelMsgBoard.Msg(msg);
+			lsnr.EVT_Hacked_Vehicle_Target(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
+		}
+		
+		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
+			if(getPathSize()==1 && target!=null) {
+				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
+				if( getPayload() == Vehicle.PAYLOAD_COM ) { 
+					setStatus(MyGame.STATUS_VEHICLE_PENDING);
+				}
+				else {
+					setStatus(MyGame.STATUS_VEHICLE_PENDING);
+					String msg = "Vehicle [" + index + "] has reached its target.";
+					PanelMsgBoard.Msg(msg);
+				}
+				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
+			}
+			lsnr.Hide_Popup(this);
+			removeFirstPath();
+		}
     }
 	
 	private boolean positionCheck (int pos_x, int pos_y) {

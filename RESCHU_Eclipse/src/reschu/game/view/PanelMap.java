@@ -38,7 +38,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 	//  private Image backbuffer;
 	//  private Graphics2D backg;
-	private Image img; 
+	private Image img;
 	private Game game;
 	private JButton btnEmpty;
 	private PaintComponent p;
