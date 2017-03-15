@@ -81,11 +81,16 @@ class TimeText extends JPanel
 				break;
 			}
 		 */		
-		p1 = getWidth() / 120; 
-		p2 = 30*getWidth() / 120; 
-		p3 = 60*getWidth() / 120; 
-		p4 = 90*getWidth() / 120;
-		p5 = 119*getWidth() / 120;
+		// p1 = getWidth() / 120; 
+		// p2 = 30*getWidth() / 120; 
+		// p3 = 60*getWidth() / 120; 
+		// p4 = 90*getWidth() / 120;
+		// p5 = 119*getWidth() / 120;
+		p1 = 1;
+		p2 = 59*getWidth() / 240; 
+		p3 = 117*getWidth() / 240; 
+		p4 = 175*getWidth() / 240;
+		p5 = 233*getWidth() / 240;
 		
 		g.setColor(new Color(238,238,238));
 		g.fillRect(0,0,getWidth(),getHeight());
@@ -97,11 +102,12 @@ class TimeText extends JPanel
 		g.drawString(setTimeFormat(t3), p3-10, 10);
 		g.drawString(setTimeFormat(t4), p4-10, 10);
 		g.drawString(setTimeFormat(t5), p5-10, 10);
-		*/ 
-		g.drawString("T+300", p2-20, 10);
-		g.drawString("T+600", p3-20, 10);
-		g.drawString("T+900", p4-20, 10);
-		g.drawString("T+1200", p5-40, 10);
+		*/
+		g.drawString("T(s)", p1, 10);
+		g.drawString("T+120", p2-20, 10);
+		g.drawString("T+240", p3-20, 10);
+		g.drawString("T+360", p4-20, 10);
+		g.drawString("T+480", p5-25, 10);
 	}
 	
 	public void refresh(int milliseconds) {
@@ -182,7 +188,7 @@ class VehicleTime extends JPanel
 {
 	private static final long serialVersionUID = 4435452374430336399L;
 	private Vehicle v;
-	private int p1, p2, p3, p4, p5;
+	private int p0, p1, p2, p3, p4, p5, p6, p7, p8;
     protected LinkedList<int[]> pathList = new LinkedList<int[]>(); // TUPLE<DISTANCE/VELOCITY, PATH_TYPE> PATH_TYPE={WP:0, GP:1, GP(COMM):2}  
 	
 	public VehicleTime(Vehicle v) { this.v = v;}
@@ -193,21 +199,35 @@ class VehicleTime extends JPanel
 		g.fillRect(0, 0, getWidth(), getHeight());
 	
 		// Vertical Line
+		/*
 		p1 = getWidth() / 120;
 		p2 = 30*getWidth() / 120;
 		p3 = 60*getWidth() / 120;
-		p4 = 90*getWidth() / 120;				
+		p4 = 90*getWidth() / 120;
 		p5 = 119*getWidth() / 120;
+		*/
+		p0 = 1;
+		p1 = 30*getWidth() / 240;
+		p2 = 59*getWidth() / 240;
+		p3 = 88*getWidth() / 240;
+		p4 = 117*getWidth() / 240;
+		p5 = 146*getWidth() / 240;
+		p6 = 175*getWidth() / 240;
+		p7 = 204*getWidth() / 240;
+		p8 = 233*getWidth() / 240;
 		
 		g.setColor(new Color(100,100,100));
 		g.drawLine(0, 0, getWidth()-1, 0);
-		g.drawLine(0, getHeight()-1, getWidth()-1, getHeight()-1); 
+		g.drawLine(0, getHeight()-1, getWidth()-1, getHeight()-1);
+		g.drawLine(p0, 0, p0, getHeight());
 		g.drawLine(p1, 0, p1, getHeight());
 		g.drawLine(p2, 0, p2, getHeight());
 		g.drawLine(p3, 0, p3, getHeight());
 		g.drawLine(p4, 0, p4, getHeight());
 		g.drawLine(p5, 0, p5, getHeight());
-		
+		g.drawLine(p6, 0, p6, getHeight());
+		g.drawLine(p7, 0, p7, getHeight());
+		g.drawLine(p8, 0, p8, getHeight());
 
 		for( int i=0; i<pathList.size(); i++ ) 
 			if( pathList.get(i)[0] < 120 ){
@@ -222,6 +242,7 @@ class VehicleTime extends JPanel
 				else g.fillRect(pathList.get(i)[0]*getWidth()/120, 0, 3, getHeight());
 			}
 	}
+	
 	public void setPathList() {
 		pathList.clear(); 
 		int flag;
@@ -230,13 +251,13 @@ class VehicleTime extends JPanel
 				 if( i == v.getPathSize()-2 ) flag = 1; else flag = 0;		 
 				 pathList.add(new int[]{
 						 (int)Math.round(
-								 getD(v.getPath().get(0)[0], v.getPath().get(0)[1], v.getX(), v.getY()) * (v.getVelocity()/1000.0) ), flag});
+								 getD(v.getPath().get(0)[0], v.getPath().get(0)[1], v.getX(), v.getY()) * (v.getVelocity()/200.0) ), flag});
 			 }
 			 else {
 				 if( i == v.getPathSize()-2 ) flag = 1; else flag = 0;
 				 pathList.add(new int[]{pathList.getLast()[0]+
 						 (int)Math.round(
-								 getD(v.getPath().get(i+1)[0], v.getPath().get(i+1)[1], v.getPath().get(i)[0], v.getPath().get(i)[1]) * (v.getVelocity()/1000.0) ), flag});
+								 getD(v.getPath().get(i+1)[0], v.getPath().get(i+1)[1], v.getPath().get(i)[0], v.getPath().get(i)[1]) * (v.getVelocity()/200.0) ), flag});
 			 }
 		} 
 	}
@@ -265,7 +286,7 @@ class RemainingTime extends JPanel
 		g.setColor(new Color(100,100,100,255));
 		g.drawRect(0,0,getWidth()-1,getHeight()-1);
 		g.setColor(new Color(150,150,150,100));
-		g.fillRect(0,0,current_time*getWidth()/600,getHeight());
+		g.fillRect(0,0,current_time*getWidth()/MySpeed.TOTAL_SECOND,getHeight());
 		g.setColor(new Color(0,0,0,255));
 		g.drawString("REMAINS     " + setTimeFormat(remaining_time), getWidth()/3, getHeight()/2+5);
 		

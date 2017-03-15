@@ -22,7 +22,7 @@ import reschu.game.view.PanelMsgBoard;
 
 public class Game implements Runnable, ActionListener
 {       
-    static public int TIME_TOTAL_GAME = 900 * MySpeed.SPEED_CLOCK ; // original 8*60 = 480
+    static public int TIME_TOTAL_GAME = MySpeed.TOTAL_SECOND * MySpeed.SPEED_CLOCK ;
     private double PROBABILITY_TARGET_VISIBILITY; // The higher, the more visible target
 
     private int nTargetAreaTotal = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL; 
@@ -441,6 +441,7 @@ public class Game implements Runnable, ActionListener
         else AddWrongDetect();
         v.setHijackStatus(false);
         v.setInvestigateStatus(false);
+        v.setNotifiedStatus(false);
         v.getTarget().setDone();
         
         int x = rnd.nextInt(MySize.width);
@@ -503,8 +504,6 @@ public class Game implements Runnable, ActionListener
             		frmEnd.GetTotalWrong(), frmEnd.GetTotalLostUAV(), frmEnd.GetFinalScore());
         }
 
-        vehicleColorFlashFlag = !vehicleColorFlashFlag;
-
         for( int i = 0; i < vehicleList.size(); i++) {
             v = vehicleList.getVehicle(i); 
             if( v.getPath().size() != 0 && (elapsedTime % v.getVelocity() == 0) ) {
@@ -518,6 +517,7 @@ public class Game implements Runnable, ActionListener
         // Update pnlControl's "ENGAGE" button
         if( elapsedTime % MySpeed.SPEED_CLOCK == 0 ) lsnr.clockTick(elapsedTime);
 
+        vehicleColorFlashFlag = !vehicleColorFlashFlag;
         // Pending Vehicle's Flashing Color
         if( vehicleColorFlashFlag ) MyColor.COLOR_VEHICLE_PENDING = new Color(128,224,255,255);
         else MyColor.COLOR_VEHICLE_PENDING = new Color(228,124,155,255);

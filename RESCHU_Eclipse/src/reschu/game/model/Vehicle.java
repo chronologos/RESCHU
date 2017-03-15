@@ -58,6 +58,12 @@ public class Vehicle {
 	public void setLostStatus (boolean b) {
 		isDisappeared = b;
 	}
+	public boolean getNotifiedStatus () {
+		return isNotified;
+	}
+	public void setNotifiedStatus (boolean b) {
+		isNotified = b;
+	}
 	
 	/**
 	 * Set the position of this vehicle (synchronized)
@@ -815,13 +821,14 @@ public class Vehicle {
 	}
 	
     private void TargetCheckHacked(int pos_x, int pos_y) {
+    	/*
 		if(getPathSize()==1 && positionCheck(pos_x, pos_y) && target!=null) {
 			setStatus(MyGame.STATUS_VEHICLE_PENDING);
 			String msg = "Vehicle [" + index + "] has reached its target.";
 			PanelMsgBoard.Msg(msg);
 			lsnr.EVT_Hacked_Vehicle_Target(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
 		}
-		
+		*/
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if(getPathSize()==1 && target!=null) {
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
@@ -836,7 +843,7 @@ public class Vehicle {
 				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
 			}
 			lsnr.Hide_Popup(this);
-			removeFirstPath();
+			// removeFirstPath();
 		}
     }
 	

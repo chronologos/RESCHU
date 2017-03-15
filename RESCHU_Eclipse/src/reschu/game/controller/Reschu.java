@@ -621,11 +621,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 			// add detected attack
 			if(source == 0) EVT_Home_From_Compact_Yes(v.getIndex(), v.getX(), v.getY());
 			if(source == 1) EVT_Home_From_UAV_Panel_Yes(v.getIndex(), v.getX(), v.getY());
-			if(source == 2) {
-				EVT_Home_From_Right_Click_Yes(v.getIndex(), v.getX(), v.getY());
-				v.isNotified = false;
-				v.isInvestigated = false;
-			}
+			if(source == 2) EVT_Home_From_Right_Click_Yes(v.getIndex(), v.getX(), v.getY());
 			EVT_Vehicle_Deleted(v.getIndex(), v.getX(), v.getY());
 			game.HomeFunction(v);
 			EVT_Vehicle_Added(v.getIndex(), v.getX(), v.getY());
