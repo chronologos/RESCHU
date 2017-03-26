@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 import reschu.game.controller.Reschu;
+import reschu.game.model.VehicleList;
 
 public class PanelMsgBoard extends JPanel implements ActionListener
 {	
@@ -80,7 +81,21 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     
     public void actionPerformed(ActionEvent e) {
     	if( e.getSource() == btnSend || e.getSource() == txtChat ) {
-    		Msg("(Operator) " + txtChat.getText()); txtChat.setText("");
+    		Msg("[Operator Input] "+txtChat.getText());
+    		
+    		VehicleList vlist = reschu.game.getVehicleList();
+    		for(int i=0; i<vlist.size(); i++) {
+    			if(vlist.getVehicle(i).isEngaged) {
+		    		if(vlist.getVehicle(i).getTarget().getTaskAnswer() == Integer.parseInt(txtChat.getText())) {
+		    			System.out.println("YES INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    		}
+		    		else {
+		    			System.out.println("NO  INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    		}
+    			}
+    		}
+    		
+    		txtChat.setText("");
     	}
     	if (e.getSource() == btnSend) {
     		reschu.Payload_Finished_From_Msg();

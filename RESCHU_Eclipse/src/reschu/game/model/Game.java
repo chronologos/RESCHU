@@ -117,7 +117,7 @@ public class Game implements Runnable, ActionListener
         else {    
             map.setHazardArea(rnd);
             try {
-                map.setTargetArea_DataBase(rnd);
+                map.setTargetArea_DataBase();
                 // map.setTargetArea(rnd);
             } catch(UserDefinedException e) {
                 e.printStackTrace();
@@ -294,6 +294,7 @@ public class Game implements Runnable, ActionListener
     }
     */
     // set all cell type to LAND for new Target Data Base
+    // /*
     private void setMap() {
         for(int i=0; i<MySize.height; i++) {
             for(int j=0; j<MySize.width; j++) {
@@ -301,6 +302,7 @@ public class Game implements Runnable, ActionListener
             }
         }
     }
+    // */
     
     @Override
     public void run() {     
@@ -542,7 +544,7 @@ public class Game implements Runnable, ActionListener
         try {
             if( elapsedTime % MySpeed.SPEED_CLOCK_TARGET_AREA_UPDATE == 0 ) { 
                 map.garbageTargetCollect(); 
-                map.setTargetArea_DataBase(rnd);
+                map.setTargetArea_DataBase();
                 // map.setTargetArea(rnd);
             }
         } catch (UserDefinedException ex) {

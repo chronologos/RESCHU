@@ -529,13 +529,18 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	public void Payload_Finished_From_Msg() {
 		Vehicle v = pnlMap.selectedVehicle;
-		if(v.isEngaged) {
-			pnlControl.ClearTaskMsg(pnlMap.selectedVehicle.getIndex());
-			Payload_Finished_From_pnlPayload(v);
-			v.isEngaged = false;
+		if(v != null) {
+			if(v.isEngaged) {
+				pnlControl.ClearTaskMsg(pnlMap.selectedVehicle.getIndex());
+				Payload_Finished_From_pnlPayload(v);
+				v.isEngaged = false;
+			}
+			else {
+				showMessageOnTopOfMap("Please first click \"Engage\" to engage the UAV to a task", 5);
+			}
 		}
 		else {
-			showMessageOnTopOfMap("Please click \"Engage\" to engage UAV to a task first", 5);
+			showMessageOnTopOfMap("Please fisrt select corresponding UAV and click \"Engage\" to engage the UAV", 5);
 		}
 	}
 

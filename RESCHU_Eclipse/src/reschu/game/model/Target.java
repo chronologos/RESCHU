@@ -43,8 +43,8 @@ public class Target {
 	public void setType(String t) { type = t; }	
 	public void setName(String i) { name = i; }	
 	
-	public int[] getPos() { return pos; }
-	public String getMission() {return mission; }
+	public int[] getPos() {return pos;}
+	public String getMission() {return mission;}
 	public String getType() {return type;}
 	public String getName() {return name;}
 	
@@ -53,6 +53,9 @@ public class Target {
     
     public void setVisible(boolean v) {visible = v;}
     public boolean isVisible() {return visible;}
+    
+    public int getRequireZoom() {return req_zoom;}
+    public int getTaskAnswer() {return task_ans;}
     
     static public boolean isTargetType(String s) {
     	if( s.equals(MISSION_LAND) || s.equals(MISSION_SHORE) ) return true;

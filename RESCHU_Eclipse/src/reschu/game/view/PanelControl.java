@@ -20,7 +20,6 @@ import reschu.game.model.Payload;
 import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
-
 public class PanelControl extends JPanel implements ChangeListener, ActionListener 
 { 
 	private static final long serialVersionUID = 6768850931538883107L;
@@ -284,8 +283,7 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
     }
 }
 
-class VehiclePanel extends JPanel implements ActionListener
-{ 
+class VehiclePanel extends JPanel implements ActionListener { 
 	private static final long serialVersionUID = 4435452374430336399L;	
 	private GridBagLayout grid_bag_layout = new GridBagLayout();	
 	private Vehicle selectedVehicle;
@@ -364,8 +362,9 @@ class VehiclePanel extends JPanel implements ActionListener
 	
 	// print task message when an UAV reaches a target
 	public void PrintTaskMsg() {
-		JLabel task_msg = new JLabel("<html>TASK<br>1. Set the zoom level to 3<br>2. Count the number of road intersections"
-				+ "<br>3. Enter your answer in the message box<br>4. Send your answer to reassign the UAV</html>");
+		JLabel task_msg = new JLabel("<html>TASK<br>1. Set the zoom level to "+selectedVehicle.getTarget().getRequireZoom()
+				+ "<br>2. Count the number of road intersections"
+				+ "<br>3. Enter your answer into the message box<br>4. Click \"Send\" to reassign the UAV</html>");
 		task_msg.setVerticalAlignment(SwingConstants.TOP);
 		scrollPane.setViewportView(task_msg);
 	}
