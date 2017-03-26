@@ -520,7 +520,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 		v.setStatus(MyGame.STATUS_VEHICLE_STASIS);
 		game.AutoTargetAssign(v);
 		game.clearCurrentPayloadVehicle();
-		game.AddFinishedTask();
 		pnlMap.setEnabled(true);
 		pnlControl.setEnabled(true);    	
 		pnlPayloadControls.setEnabled(false);
@@ -805,19 +804,22 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Game End. user =" + _username + ". scenario ="+ _scenario, -1, -1);
 	}
-	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int attack, int wrong, int lost, int total) {
+	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int wrong_task, int attack, int wrong_attack, int lost, int total) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total UAV damage is   "+damage, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total tasks done is   "+task, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+				"Total wrong tasks is  "+wrong_task, -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total detected attack "+attack, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total wrong detects   "+wrong, -1, -1);
+				"Total wrong detects   "+wrong_attack, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total disappeared UAV "+lost, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Your Total score is 100 - "
-				+damage+"(damage) + 5*"+task+"(task) + 5*"+attack+"(attack) - 5*"+wrong+"(wrong) - 10*"+lost+"(lost) = "+total, -1, -1);
+				+damage+"(damage) + 5*"+task+"(correct task) - 5*"+wrong_task+"(wrong task) + 10*"
+				+attack+"(correct attack) - 10*"+wrong_attack+"(wrong attack) - 20*"+lost+"(lost) = "+total, -1, -1);
 	}
 	
 	/**

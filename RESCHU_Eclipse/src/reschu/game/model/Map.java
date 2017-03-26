@@ -225,12 +225,7 @@ public class Map {
 				if (++cnt >= limit) {
 					throw new UserDefinedException("setTargetArea(shore) try limit exceed");
 				}
-			} while (!(getCellType(x, y) == MyGame.SEASHORE && chkOkayToAdd(x, y))); // @change
-																						// yale
-																						// 2008-06-29
-																						// ||
-																						// !chkOkayToAdd(x,y)
-																						// );
+			} while (!(getCellType(x, y) == MyGame.SEASHORE && chkOkayToAdd(x, y)));
 			Target t = new Target(g.getEmptyTargetName(), chkTargetOffset(x, y), "SHORE", "UUV",
 					g.getTargetVisibility());
 			addTarget(t);

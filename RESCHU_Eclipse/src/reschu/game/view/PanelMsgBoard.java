@@ -87,10 +87,12 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     		for(int i=0; i<vlist.size(); i++) {
     			if(vlist.getVehicle(i).isEngaged) {
 		    		if(vlist.getVehicle(i).getTarget().getTaskAnswer() == Integer.parseInt(txtChat.getText())) {
-		    			System.out.println("YES INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    			// System.out.println("RIGHT INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    			reschu.game.AddCorrectTask();
 		    		}
 		    		else {
-		    			System.out.println("NO  INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    			// System.out.println("WRONG INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+		    			reschu.game.AddWrongTask();
 		    		}
     			}
     		}

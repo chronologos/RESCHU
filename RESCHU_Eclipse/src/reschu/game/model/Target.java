@@ -34,7 +34,7 @@ public class Target {
 		type=t;
 		done = false;
 		visible = v;
-		req_zoom = 0;
+		req_zoom = 3;
 		task_ans = 0;
 	}
 	

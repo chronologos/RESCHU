@@ -27,4 +27,7 @@ public class MyGame {
     final static public String AttackFile = "AttackFile.txt";
     // final static public String AttackFile = "AttackFile_practice.txt";
     // final static public String AttackFile = "AttackFile_pilot_test.txt";
+    
+    // final static public boolean TargetDataBase = true;
+    final static public boolean TargetDataBase = false;
 }

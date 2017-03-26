@@ -61,6 +61,7 @@ public class Game implements Runnable, ActionListener
     private static int finished_task   = 0;
     private static int detected_attack = 0;
     private static int wrong_detect = 0;
+    private static int wrong_task = 0;
 
     private Random rnd = new Random();
 
@@ -106,7 +107,8 @@ public class Game implements Runnable, ActionListener
         targetVisibilityPool = new boolean[nTargetAreaTotal];
         setTargetVisibility();
 
-        setMap();
+        if(MyGame.TargetDataBase) setMap_TargetDataBase();
+        else setMap();
 
         // normalize randomizer
         if (Reschu.tutorial()) {
@@ -117,8 +119,8 @@ public class Game implements Runnable, ActionListener
         else {    
             map.setHazardArea(rnd);
             try {
-                map.setTargetArea_DataBase();
-                // map.setTargetArea(rnd);
+            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase();
+            	else map.setTargetArea(rnd);
             } catch(UserDefinedException e) {
                 e.printStackTrace();
             }
@@ -284,7 +286,6 @@ public class Game implements Runnable, ActionListener
         br.close();
     }
 
-    /*
     private void setMap() {
         for(int i=0; i<MySize.height; i++) {
             for(int j=0; j<DB[i]; j++) map.setCellType(j, i, MyGame.LAND);
@@ -292,20 +293,18 @@ public class Game implements Runnable, ActionListener
             for(int j=DB[i]+1; j<MySize.width; j++) map.setCellType(j, i, MyGame.SEA);
         }
     }
-    */
+    
     // set all cell type to LAND for new Target Data Base
-    // /*
-    private void setMap() {
+    private void setMap_TargetDataBase() {
         for(int i=0; i<MySize.height; i++) {
             for(int j=0; j<MySize.width; j++) {
             	map.setCellType(j, i, MyGame.LAND);
             }
         }
     }
-    // */
     
     @Override
-    public void run() {     
+    public void run() {
         AutoTargetAssignAll();
         tmr_clock.start();
 
@@ -362,7 +361,7 @@ public class Game implements Runnable, ActionListener
                 int w_y = v.getPath().get(v.getPathSize()-1)[1];
                 for( int m=-w; m<w; m++)        
                     for( int n=-w; n<w; n++)
-                        if( w_x == x+m && w_y == y+n) return new StructSelectedPoint(v, w_x, w_y, 0); // 0 = no meaning             
+                        if( w_x == x+m && w_y == y+n) return new StructSelectedPoint(v, w_x, w_y, 0); // 0 = no meaning
             }
         }
         return null;
@@ -513,8 +512,8 @@ public class Game implements Runnable, ActionListener
             frmEnd.setSize(400,400);
             frmEnd.setLocation(300,300);
             frmEnd.setVisible(true);
-            lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetTotalAttack(),
-            		frmEnd.GetTotalWrong(), frmEnd.GetTotalLostUAV(), frmEnd.GetFinalScore());
+            lsnr.EVT_RECORD_FINAL_SCORE(frmEnd.GetTotalDamage(), frmEnd.GetTotalTask(), frmEnd.GetWrongTask(),
+            		frmEnd.GetTotalAttack(), frmEnd.GetWrongAttack(), frmEnd.GetTotalLost(), frmEnd.GetFinalScore());
         }
 
         for( int i = 0; i < vehicleList.size(); i++) {
@@ -544,8 +543,8 @@ public class Game implements Runnable, ActionListener
         try {
             if( elapsedTime % MySpeed.SPEED_CLOCK_TARGET_AREA_UPDATE == 0 ) { 
                 map.garbageTargetCollect(); 
-                map.setTargetArea_DataBase();
-                // map.setTargetArea(rnd);
+            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase();
+            	else map.setTargetArea(rnd);
             }
         } catch (UserDefinedException ex) {
             ex.printStackTrace();
@@ -600,14 +599,24 @@ public class Game implements Runnable, ActionListener
         return Math.sqrt( Math.pow((double)(x2 - x1), 2.0) + Math.pow((double)(y2 - y1), 2.0) );
     }
     
-    // finished target number increment by 1
-    public static void AddFinishedTask() {
+    // correctly finished target number increment by 1
+    public static void AddCorrectTask() {
     	finished_task ++;
     }
     
-    // get total finished target number
-    public static int GetTotalTask() {
+    // get total correctly finished target number
+    public static int GetCorrectTask() {
     	return finished_task;
+    }
+    
+    // incorrectly finished target number increment by 1
+    public static void AddWrongTask() {
+    	wrong_task ++;
+    }
+    
+    // get total incorrectly finished target number
+    public static int GetWrongTask() {
+    	return wrong_task;
     }
     
     // detected attack number increment by 1
