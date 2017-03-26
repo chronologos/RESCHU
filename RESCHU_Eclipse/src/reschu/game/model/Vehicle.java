@@ -991,7 +991,11 @@ public class Vehicle {
 			lsnr.EVT_Hack_Launch_Fake(index);
 			return;
 		}
+		
+		// real attack if attack position is NOT "0 0"
 		isHijacked = true;
+		
+		
 		System.out.println("Launching hack "+xCoord+" "+yCoord);
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);

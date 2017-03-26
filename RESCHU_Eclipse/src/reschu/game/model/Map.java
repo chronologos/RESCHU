@@ -249,6 +249,38 @@ public class Map {
 			addTarget(t);
 		}
 	}
+	
+	// set target area based on pre-defined database
+	public void setTargetArea_DataBase(Random rnd) throws UserDefinedException {
+		int nTotalTarget = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL;
+		int nTotalTargetNeed = nTotalTarget - getTargetSize("LAND");
+		int count = 0;
+
+		for (int i=0; i<nTotalTargetNeed; i++) {
+			int x, y;
+			do {
+				// x = rnd.nextInt(MySize.width);
+				// y = rnd.nextInt(MySize.height);
+				MyTargetBase.addTargetIndex();
+				x = MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex())[0];
+				y = MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex())[1];
+				count ++;
+				
+				System.out.println("TARGET = "+x+" "+y+" "+count+" "+MyTargetBase.getTargetIndex()+" "+MyTargetBase.getTargetBaseSize());
+				
+				if(MyTargetBase.getTargetIndex())
+				
+				if (count >= MyTargetBase.getTargetBaseSize()) {
+					count = 0;
+					MyTargetBase.resetTargetIndex();
+					throw new UserDefinedException("Target index exceeds limit");
+				}
+			} while (!(getCellType(x, y) != MyGame.SEA && chkOkayToAdd(x, y)));
+			Target t = new Target(g.getEmptyTargetName(), chkTargetOffset(x, y), "LAND", "UAV",
+					g.getTargetVisibility(), MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex())[2], MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex())[3]);
+			addTarget(t);
+		}
+	}
 
 	private int[] chkTargetOffset(int x, int y) {
 		int offset = 10;
@@ -273,13 +305,14 @@ public class Map {
 	}
 
 	public void garbageTargetCollect() {
-		for (int i = 0; i < getListAssignedTarget().size(); i++)
+		for (int i = 0; i < getListAssignedTarget().size(); i++) {
 			if (getListAssignedTarget().get(i).isDone()) {
 				Target t = getListAssignedTarget().get(i);
 				lsnr.EVT_Target_Disappeared(t.getName(), t.getPos());
 				g.setTargetUsed(t.getName(), false);
 				getListAssignedTarget().remove(i);
 			}
+		}
 	}
 
 	// @TEMPORARY SOLUTION JUST FOR TUTORIAL BY CARL

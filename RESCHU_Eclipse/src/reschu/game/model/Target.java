@@ -10,9 +10,33 @@ public class Target {
 	private boolean done;
 	private String name;
 	private boolean visible;
+	
+	private int req_zoom;
+	private int task_ans;
 	 
-	Target() {}		
-	Target(String s, int[] p, String m, String t, boolean v) { name=s; pos = p; mission = m; type=t; done = false; visible = v;}
+	Target() {}
+	Target(String s, int[] p, String m, String t, boolean v, int r, int a) {
+		name = s;
+		pos = p;
+		mission = m;
+		type=t;
+		done = false;
+		visible = true;
+		// visible = v;
+		// for counting task data base
+		req_zoom = r;
+		task_ans = a;
+	}
+	Target(String s, int[] p, String m, String t, boolean v) {
+		name = s;
+		pos = p;
+		mission = m;
+		type=t;
+		done = false;
+		visible = v;
+		req_zoom = 0;
+		task_ans = 0;
+	}
 	
 	public void setPos(int[] p) { pos = p; }
 	public void setMission(String m) { mission = m; }

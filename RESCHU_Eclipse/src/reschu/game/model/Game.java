@@ -117,7 +117,8 @@ public class Game implements Runnable, ActionListener
         else {    
             map.setHazardArea(rnd);
             try {
-                map.setTargetArea(rnd);
+                map.setTargetArea_DataBase(rnd);
+                // map.setTargetArea(rnd);
             } catch(UserDefinedException e) {
                 e.printStackTrace();
             }
@@ -283,13 +284,23 @@ public class Game implements Runnable, ActionListener
         br.close();
     }
 
+    /*
     private void setMap() {
         for(int i=0; i<MySize.height; i++) {
             for(int j=0; j<DB[i]; j++) map.setCellType(j, i, MyGame.LAND);
             map.setCellType(DB[i], i, MyGame.SEASHORE);
             for(int j=DB[i]+1; j<MySize.width; j++) map.setCellType(j, i, MyGame.SEA);
         }
-    }     
+    }
+    */
+    // set all cell type to LAND for new Target Data Base
+    private void setMap() {
+        for(int i=0; i<MySize.height; i++) {
+            for(int j=0; j<MySize.width; j++) {
+            	map.setCellType(j, i, MyGame.LAND);
+            }
+        }
+    }
     
     @Override
     public void run() {     
@@ -531,7 +542,8 @@ public class Game implements Runnable, ActionListener
         try {
             if( elapsedTime % MySpeed.SPEED_CLOCK_TARGET_AREA_UPDATE == 0 ) { 
                 map.garbageTargetCollect(); 
-                map.setTargetArea(rnd);
+                map.setTargetArea_DataBase(rnd);
+                // map.setTargetArea(rnd);
             }
         } catch (UserDefinedException ex) {
             ex.printStackTrace();
@@ -551,11 +563,12 @@ public class Game implements Runnable, ActionListener
     }
 
     public String getEmptyTargetName() {
-        for( int i=0; i<nTargetAreaTotal; i++ )
+        for( int i=0; i<nTargetAreaTotal; i++ ) {
             if( !targetNamePool[i].isUsed() ) {
                 targetNamePool[i].setUsed(true);
                 return targetNamePool[i].getName();
             }
+        }
         return "X"; // MAKE SURE THIS NEVER HAPPENS!! IT SHOULDN'T HAPPEN!
     }
 
