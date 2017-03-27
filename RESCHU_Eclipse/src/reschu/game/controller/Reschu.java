@@ -842,7 +842,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	
 	public void EVT_Hack_Launch(int vIdx, int xCoord, int yCoord) {
-		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked", xCoord, yCoord);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked with Smarter Attacker", xCoord, yCoord);
 	}
 	public void EVT_Hack_Launch_Fake(int vIdx) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack", -1, -1);

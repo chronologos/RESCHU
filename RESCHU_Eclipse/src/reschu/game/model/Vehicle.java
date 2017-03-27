@@ -2,6 +2,7 @@ package reschu.game.model;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
@@ -948,8 +949,8 @@ public class Vehicle {
 					lsnr.EVT_Target_BecameVisible(t.getName(), t.getPos());
 					break;
 				}
-			}	
-		}   
+			}
+		}
 	}
 
 	public void COM_Payload() {
@@ -995,13 +996,15 @@ public class Vehicle {
 		// real attack if attack position is NOT "0 0"
 		isHijacked = true;
 		
-		
-		System.out.println("Launching hack "+xCoord+" "+yCoord);
+		System.out.println("Launching hack with smarter attacker");
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
 		int[] hackCoords = new int[]{xCoord, yCoord};
 		observedPath = new LinkedList<int[]>(groundTruthPath);
+		
+		// CreateSmarterGoundPath();
+		
 		groundTruthPath.clear();
 		groundTruthPath.add(hackCoords);
 		
@@ -1018,5 +1021,55 @@ public class Vehicle {
 
 	public void endHijack() {
 		isHijacked = false;
+	}
+	
+	public void CreateSmarterGoundPath() {
+		groundTruthPath.clear();
+		int[] ini_point = new int[]{getX(), getY()};
+		int[] end_point;
+		double angle = ThreadLocalRandom.current().nextInt(45, 315+1)/180.0*Math.PI;
+		
+		/*
+		for(int i=0; i<observedPath.size(); i++) {
+			int[] point = CreateMatchedPoint(ini_point[0], ini_point[1], observedPath.get(i)[0], observedPath.get(i)[1], angle);
+			groundTruthPath.add(point);
+			
+			System.out.println("INIT POINT = "+ini_point[0]+" "+ini_point[1]);
+			System.out.println("OBS  POINT = "+observedPath.get(i)[0]+" "+observedPath.get(i)[1]);
+			System.out.println("NEW  POINT = "+point[0]+" "+point[1]);
+		}
+		*/
+		
+		end_point = GenerateEndPoint(ini_point[0], ini_point[1], observedPath.getFirst()[0], observedPath.getFirst()[1], angle);
+		groundTruthPath.add(end_point);
+		
+		System.out.println("END  POINT = "+end_point[0]+" "+end_point[1]);
+	}
+	
+	public int[] CreateMatchedPoint(double x0, double y0, double x1, double y1, double angle) {
+		double theta = Math.atan2((x1-x0), (y1-y0));
+		double length = Math.hypot((x1-x0), (y1-y0));
+		
+		double new_theta = theta + angle;
+		if(new_theta > 2*Math.PI) new_theta -= 2*Math.PI;
+		if(new_theta < -2*Math.PI) new_theta += 2*Math.PI;
+		double x2 = x0 + Math.sin(new_theta)*length;
+		double y2 = y0 + Math.cos(new_theta)*length;
+		
+		System.out.println("ANGLE = "+theta+" NEW ANGLE = "+new_theta);
+		
+		int[] new_point = new int[]{(int)x2, (int)y2};
+		return new_point;
+	}
+	
+	public int[] GenerateEndPoint(double x0, double y0, double x1, double y1, double angle) {
+		double theta = Math.atan2((x1-x0), (y1-y0));		
+		double new_theta = theta + angle;
+		if(new_theta > 2*Math.PI) new_theta -= 2*Math.PI;
+		if(new_theta < -2*Math.PI) new_theta += 2*Math.PI;
+		double x2 = x0 + Math.sin(new_theta)*1000;
+		double y2 = y0 + Math.cos(new_theta)*1000;
+		int[] new_point = new int[]{(int)x2, (int)y2};
+		return new_point;
 	}
 }
