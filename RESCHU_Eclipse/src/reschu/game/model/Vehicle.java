@@ -40,6 +40,8 @@ public class Vehicle {
 	public boolean isEngaged;
 	public boolean isNotified;
 	private LinkedList<int[]> observedPath;
+	private int[] HackLocation;
+	private double HackAngle;
 	
 	public boolean getHijackStatus () {
 		return isHijacked;
@@ -112,6 +114,9 @@ public class Vehicle {
 	public synchronized void addPath(int idx, int[] e) {
 		if (isHijacked){
 			observedPath.add(idx, e);
+			// add waypoint for smarter attacker
+			int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
+			groundTruthPath.add(idx, temp);
 		} else {
 			groundTruthPath.add(idx, e);
 		}
@@ -123,6 +128,9 @@ public class Vehicle {
 	public synchronized void addPathLast(int[] e) { 
 		if (isHijacked){
 			observedPath.addLast(e);
+			// add waypoint for smarter attacker
+			int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
+			groundTruthPath.add(observedPath.size()-1, temp);
 		} else {
 			groundTruthPath.addLast(e);
 		}
@@ -134,6 +142,15 @@ public class Vehicle {
 	public synchronized void setPath(int idx, int[] e) { 
 		if (isHijacked){
 			observedPath.set(idx, e);
+			// set waypoint for smarter attacker
+			int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
+			groundTruthPath.set(idx, temp);
+			// set end point for smarter attacker
+			if(idx == getPathSize()-1) {
+				temp = GenerateEndPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
+				groundTruthPath.set(getPathSize(), temp);
+				// System.out.println("SIZE = "+getPathSize()+" IDX = "+idx);
+			}
 		} else {
 			groundTruthPath.set(idx, e);
 		}
@@ -158,6 +175,10 @@ public class Vehicle {
 		if(isHijacked) return observedPath.get(idx);
 		else return groundTruthPath.get(idx);
 	}
+	
+	public synchronized int[] getGroundPathAt(int idx) {
+		return groundTruthPath.get(idx);
+	}
 
 	/**
 	 * Remove a waypoint in the path of this vehicle  (synchronized)
@@ -165,10 +186,17 @@ public class Vehicle {
 	public synchronized void removePathAt(int idx) {
 		if(isHijacked) {
 			observedPath.remove(idx);
+			// remove waypoint for smarter attacker
+			removeGroundPathAt(idx);
 		}
 		else {
 			groundTruthPath.remove(idx);
 		}
+	}
+	
+	// basically for smarter attacker use
+	public synchronized void removeGroundPathAt(int idx) {
+		groundTruthPath.remove(idx);
 	}
 
 	/**
@@ -186,13 +214,8 @@ public class Vehicle {
 	 * Remove the first waypoint of path of this vehicle  (synchronized)
 	 */
 	public synchronized void removeFirstPath() {
-		if(isHijacked) {
-			// groundTruthPath.removeFirst();
-			observedPath.removeFirst();
-		}
-		else {
-			groundTruthPath.removeFirst();
-		}
+		if(isHijacked) observedPath.removeFirst();
+		else groundTruthPath.removeFirst();
 	}
 	
 	public synchronized void removeObservedFirstPath() {observedPath.removeFirst();}
@@ -467,16 +490,16 @@ public class Vehicle {
 	}
 
 	public void delWaypoint(int x, int y) {
-		for( int i=0; i<getPathSize()-1; i++ ) {
-			if( getPathAt(i)[0] == x && getPathAt(i)[1] == y ) {
+		for(int i=0; i<getPathSize()-1; i++) {
+			if(getPathAt(i)[0]==x && getPathAt(i)[1]==y) {
 				removePathAt(i);
 			}
 		}
 	}
 
 	public void delWaypoint(int[] coordinate) {
-		for( int i=0; i<getPathSize()-1; i++ ) {
-			if( getPathAt(i) == coordinate ) {
+		for(int i=0; i<getPathSize()-1; i++) {
+			if(getPathAt(i) == coordinate) {
 				removePathAt(i);
 			}
 		}
@@ -485,11 +508,17 @@ public class Vehicle {
 	public void changeWaypoint( int ex_x, int ex_y, int new_x, int new_y ) {
 		if( new_x < 0 || new_x > MySize.width || new_y < 0 || new_y > MySize.height ) return;
 
-		for( int i=0; i<getPathSize()-1; i++ )
+		for(int i=0; i<getPathSize()-1; i++) {
 			if( getPathAt(i)[0] == ex_x && getPathAt(i)[1] == ex_y ) {
 				getPathAt(i)[0] = new_x; getPathAt(i)[1] = new_y;
+				if(isHijacked) {
+					// set waypoint for smarter attacker
+					int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], new_x, new_y, HackAngle);
+					groundTruthPath.set(i, temp);
+				}
 			}
-	} 
+		}
+	}
 
 	public boolean hasGoal() { if( getPathSize() == 0 ) return false; return true; }
 
@@ -1016,21 +1045,22 @@ public class Vehicle {
 	
 	public void CreateSmarterGoundPath() {
 		groundTruthPath.clear();
-		int[] ini_point = new int[]{getX(), getY()};
+		HackLocation = new int[]{getX(), getY()};
 		int[] end_point;
-		double angle = ThreadLocalRandom.current().nextInt(45, 315+1)/180.0*Math.PI;
-		angle = 0.5;
+		int sign = 0;
+		while(sign == 0) sign = ThreadLocalRandom.current().nextInt(-1, 1+1);
+		HackAngle = sign*ThreadLocalRandom.current().nextInt(30, 60)/180.0*Math.PI;
+		// System.out.println("ANGLE = "+HackAngle+" SIGN = "+sign);
 
 		for(int i=0; i<observedPath.size(); i++) {
-			int[] point = CreateMatchedPoint(ini_point[0], ini_point[1], observedPath.get(i)[0], observedPath.get(i)[1], angle);
+			int[] point = CreateMatchedPoint(HackLocation[0], HackLocation[1], observedPath.get(i)[0], observedPath.get(i)[1], HackAngle);
 			groundTruthPath.add(point);
-			
-			// System.out.println("INIT POINT = "+ini_point[0]+" "+ini_point[1]);
+			// System.out.println("INIT POINT = "+HackLocation[0]+" "+HackLocation[1]);
 			// System.out.println("OBS  POINT = "+observedPath.get(i)[0]+" "+observedPath.get(i)[1]);
 			// System.out.println("NEW  POINT = "+point[0]+" "+point[1]);
 		}
 
-		end_point = GenerateEndPoint(ini_point[0], ini_point[1], observedPath.getLast()[0], observedPath.getLast()[1], angle);
+		end_point = GenerateEndPoint(HackLocation[0], HackLocation[1], observedPath.getLast()[0], observedPath.getLast()[1], HackAngle);
 		groundTruthPath.add(end_point);
 		// System.out.println("END  POINT = "+end_point[0]+" "+end_point[1]);
 	}

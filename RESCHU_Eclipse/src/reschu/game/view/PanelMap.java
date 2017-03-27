@@ -604,26 +604,30 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 	// ActionListener interface
 	public void actionPerformed(ActionEvent evt) {
+		// set the goal
 		if( evt.getSource() == mnuItemSetGoal) { 
 			Vehicle v = getSelectedVehicle();
 			setClear();
 			setGoal(v);
 			lsnr.EVT_GP_SetGP_Start(v.getIndex());
 		}
+		// add wayppint
 		if( evt.getSource() == mnuItemAddWP) { 
 			Vehicle v = getSelectedVehicle();
 			if(v!=null) {
 				setClear();
-				addWP(v); 
+				addWP(v);
 				lsnr.EVT_WP_AddWP_Start(v.getIndex());
 			}
 		}
+		// delete waypoint
 		if( evt.getSource() == mnuItemDelWP) {
 			Vehicle v = getSelectedVehicle();
 			setClear();
 			delWP(v);  
 			lsnr.EVT_WP_DeleteWP_Start(v.getIndex());
 		}
+		// submit
 		if( evt.getSource() == mnuItemSubmit) { 
 			repaint();
 			if(vehicleWPAddMode) {
@@ -633,6 +637,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			setClear();
 			// System.out.println("Vehicle deselected by adding waypoint"); 
 		}
+		// cancel
 		if( evt.getSource() == mnuItemCancel) {
 			repaint();
 			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
@@ -643,6 +648,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			setClear();			
 			// System.out.println("Vehicle deselected by adding waypoint"); 	     
 		}
+		// waypoint previous
 		if( evt.getSource() == mnuItemPrev) {
 			int idx;		
 			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
@@ -654,6 +660,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			}
 			showPopup(this, clicked_pos_x*cellsize, clicked_pos_y*cellsize, game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
 		}
+		// waypoint next
 		if( evt.getSource() == mnuItemNext) {
 			int idx;
 			getSelectedVehicle().delWaypoint(just_added_WP[0], just_added_WP[1]);
@@ -665,6 +672,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			}
 			showPopup(this, clicked_pos_x*cellsize, clicked_pos_y*cellsize, game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
 		}
+		// delete waypoint
 		if( evt.getSource() == mnuItemInstantDelWP ) {
 			Vehicle v = getSelectedVehicle();
 			if(v!=null) {
@@ -673,13 +681,16 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				lsnr.EVT_WP_DeleteWP_End(selectedVehicle.getIndex(), wp.getX(), wp.getY());
 			} else System.out.println("Error: couldn't delete waypoint");
 		}
+		// engage
 		if( evt.getSource() == mnuItemEngage ) { 
 			if( selectedVehicle.getPayload()==Vehicle.PAYLOAD_COM ) selectedVehicle.COM_Payload();
 			else lsnr.Vehicle_Engage_From_pnlMap(selectedVehicle);
 		}
+		// YES hacked
 		if( evt.getSource() == mnuItemHackYes ) {
 			lsnr.EVT_UAV_DECIDED_HACKED(selectedVehicle);
 		}
+		// NOT hacked
 		if( evt.getSource() == mnuItemHackNo ) {
 			selectedVehicle.isNotified = false;
 			selectedVehicle.isInvestigated = false;
