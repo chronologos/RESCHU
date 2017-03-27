@@ -603,7 +603,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 	}
 
 	// ActionListener interface
-	public void actionPerformed(ActionEvent evt) {		
+	public void actionPerformed(ActionEvent evt) {
 		if( evt.getSource() == mnuItemSetGoal) { 
 			Vehicle v = getSelectedVehicle();
 			setClear();
