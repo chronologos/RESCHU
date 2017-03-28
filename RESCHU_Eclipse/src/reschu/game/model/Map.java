@@ -246,7 +246,7 @@ public class Map {
 	}
 	
 	// set target area based on pre-defined database
-	public void setTargetArea_DataBase() throws UserDefinedException {
+	public void setTargetArea_DataBase(Random rnd) throws UserDefinedException {
 		int nTotalTarget = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL;
 		int nTotalTargetNeed = nTotalTarget - getTargetSize("LAND");
 		int count = 0;
@@ -260,7 +260,10 @@ public class Map {
 					MyTargetBase.resetTargetIndex();
 					count = 0;
 				}
-				temp_t = MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex());
+				// temp_t = MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex());
+				int index = rnd.nextInt(MyTargetBase.getTargetBaseSize());
+				temp_t = MyTargetBase.getTargetInfo(index);
+				System.out.println("INDEX = "+index);
 				// System.out.println("TARGET = "+temp_t[0]+" "+temp_t[1]+" "+count+" "+MyTargetBase.getTargetIndex()+" "+MyTargetBase.getTargetBaseSize());
 				
 				if (count >= MyTargetBase.getTargetBaseSize()) {
@@ -270,6 +273,8 @@ public class Map {
 			
 			Target t = new Target(g.getEmptyTargetName(), chkTargetOffset(temp_t[0], temp_t[1]), "LAND", "UAV",
 					g.getTargetVisibility(), temp_t[2], temp_t[3]);
+			
+			System.out.println("TARGET = "+t.getPos()[0]+" "+t.getPos()[1]);
 			addTarget(t);
 		}
 	}

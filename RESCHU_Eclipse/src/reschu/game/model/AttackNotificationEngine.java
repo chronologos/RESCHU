@@ -25,6 +25,7 @@ public class AttackNotificationEngine {
 	public static final String ATTACK_NOTIFICATIONS_FILENAME = MyGame.AttackFile;
 	public Map<Integer, Integer> hackData; // Map Vehicles to the notification times
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
+	public Map<String, Integer> delayToVehicle; // Map delay time to vehicles
 	private GUI_Listener lsnr;
 	private boolean hackPaneOpen = false; // track as instance variable so that new pane can close old one
 	private JOptionPane hackPane;
@@ -42,6 +43,7 @@ public class AttackNotificationEngine {
 		File attackFile = new File(ATTACK_NOTIFICATIONS_FILENAME);
 		BufferedReader br = new BufferedReader(new FileReader(attackFile)); 
 		timerToVehicle = new HashMap<String, Integer>();
+		delayToVehicle = new HashMap<String, Integer>();
 		hackData = new HashMap<Integer, Integer>();
 		
 		class Hack extends TimerTask {	
@@ -53,9 +55,19 @@ public class AttackNotificationEngine {
 			@Override 
 			public void run() {
 				int vIdx = timerToVehicle.get(timerName);
+				int delay = delayToVehicle.get(timerName);
 				try {
-					if(!g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
-						launchHackWarning(vIdx);
+					if(!(g.getVehicleList().getVehicle(vIdx).getEngageStatus() || g.getVehicleList().getVehicle(vIdx).getPath().size()==0)) {
+						if(!g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
+							launchHackWarning(vIdx);
+						}
+					}
+					else {
+						Timer nTimer = new Timer(timerName);
+						nTimer.schedule(new Hack(timerName), delay+20000);
+						
+						System.out.println("RESCHEDULE delay+20000 = "+(delay+20000));
+						delayed but no new notification?!
 					}
 				}
 				catch(IllegalArgumentException e) {
@@ -79,6 +91,7 @@ public class AttackNotificationEngine {
 					nextTimer = new Timer(timerName);
 					nextTimer.schedule(new Hack(timerName), delay);
 					timerToVehicle.put(timerName, vIdx);
+					delayToVehicle.put(timerName, delay);
 				}
 			}
 		} catch (NumberFormatException e) {

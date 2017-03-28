@@ -48,9 +48,15 @@ public class AttackEngine {
 				int vIdx = timerTovIdx.get(timerName);
 				String location = timerToLoc.get(delay);
 				try {
-					if(!vehicle_list.getVehicle(vIdx).getHijackStatus() && !vehicle_list.getVehicle(vIdx).getLostStatus()) {
-						// vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
-						vehicle_list.getVehicle(vIdx).hijack(location);
+					if(!(vehicle_list.getVehicle(vIdx).getEngageStatus() || vehicle_list.getVehicle(vIdx).getPath().size()==0)) {
+						if(!vehicle_list.getVehicle(vIdx).getHijackStatus() && !vehicle_list.getVehicle(vIdx).getLostStatus()) {
+							// vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
+							vehicle_list.getVehicle(vIdx).hijack(location);
+						}
+					}
+					else {
+						Timer nTimer = new Timer(timerName);
+						nTimer.schedule(new Hack(timerName, delay+20000), delay+20000);
 					}
 				}
 				catch(IllegalArgumentException e) {
@@ -74,7 +80,7 @@ public class AttackEngine {
 					delay = Integer.parseInt(attackParams[2]);
 					location = attackParams[3];
 					hackData.put(vIdx, location);
-					String timerName = "HackTimer" + vIdx;// TEMP : IN FUTURE, SAME vIdx CAN APPEAR IN MULTIPLE LINES
+					String timerName = "HackTimer" + vIdx; // TEMP: IN FUTURE, SAME vIdx CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);
 					timerToLoc.put(delay, location);
 					nextTimer.schedule(new Hack(timerName, delay), delay);

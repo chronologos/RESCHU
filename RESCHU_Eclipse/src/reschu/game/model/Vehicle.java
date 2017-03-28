@@ -55,6 +55,12 @@ public class Vehicle {
 	public void setInvestigateStatus(boolean b) {
 		isInvestigated = b;
 	}
+	public boolean getEngageStatus () {
+		return isEngaged;
+	}
+	public void setEngageStatus (boolean b) {
+		isEngaged = b;
+	}
 	public boolean getLostStatus () {
 		return isDisappeared;
 	}
@@ -811,7 +817,7 @@ public class Vehicle {
         // payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
         payloadCheck((int)(getX64()), (int)(getY64()));
         
-        if(getIndex() == 1) System.out.println("X = "+getX64()+" Y = "+getY64());
+        // if(getIndex() == 1) System.out.println("X = "+getX64()+" Y = "+getY64());
 
         if (isHijacked) {
             //Get Cartesian distance to goal
@@ -1062,7 +1068,8 @@ public class Vehicle {
 			// System.out.println("NEW  POINT = "+point[0]+" "+point[1]);
 		}
 
-		end_point = GenerateEndPoint(HackLocation[0], HackLocation[1], observedPath.getLast()[0], observedPath.getLast()[1], HackAngle);
+		if(observedPath.size() == 0) end_point = GenerateNewEndPoint(HackLocation[0], HackLocation[1]);
+		else end_point = GenerateEndPoint(HackLocation[0], HackLocation[1], observedPath.getLast()[0], observedPath.getLast()[1], HackAngle);
 		groundTruthPath.add(end_point);
 		// System.out.println("END  POINT = "+end_point[0]+" "+end_point[1]);
 	}
@@ -1090,6 +1097,19 @@ public class Vehicle {
 		double x2 = x0 + Math.sin(new_theta)*1000;
 		double y2 = y0 + Math.cos(new_theta)*1000;
 		int[] new_point = new int[]{(int)x2, (int)y2};
+		return new_point;
+	}
+	
+	public int[] GenerateNewEndPoint(double x0, double y0) {
+		int[] new_point;
+		if(x0 < 245) {
+			if(y0 < 245) new_point = new int[]{-100, -100};
+			else new_point = new int[]{-100, 600};
+		}
+		else {
+			if(y0 < 245) new_point = new int[]{600, -100};
+			else new_point = new int[]{600, 600};
+		}
 		return new_point;
 	}
 }

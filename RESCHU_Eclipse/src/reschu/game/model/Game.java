@@ -119,7 +119,7 @@ public class Game implements Runnable, ActionListener
         else {    
             map.setHazardArea(rnd);
             try {
-            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase();
+            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase(rnd);
             	else map.setTargetArea(rnd);
             } catch(UserDefinedException e) {
                 e.printStackTrace();
@@ -543,7 +543,7 @@ public class Game implements Runnable, ActionListener
         try {
             if( elapsedTime % MySpeed.SPEED_CLOCK_TARGET_AREA_UPDATE == 0 ) { 
                 map.garbageTargetCollect(); 
-            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase();
+            	if(MyGame.TargetDataBase) map.setTargetArea_DataBase(rnd);
             	else map.setTargetArea(rnd);
             }
         } catch (UserDefinedException ex) {

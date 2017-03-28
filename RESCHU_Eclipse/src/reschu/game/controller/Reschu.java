@@ -191,7 +191,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 			out.println(line2);
 			out.close();
 		}
-
 	}
 	public void restartPayloadText() throws IOException{
 

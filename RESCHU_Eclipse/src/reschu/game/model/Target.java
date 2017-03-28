@@ -19,7 +19,7 @@ public class Target {
 		name = s;
 		pos = p;
 		mission = m;
-		type=t;
+		type = t;
 		done = false;
 		visible = true;
 		// visible = v;
@@ -31,7 +31,7 @@ public class Target {
 		name = s;
 		pos = p;
 		mission = m;
-		type=t;
+		type = t;
 		done = false;
 		visible = v;
 		req_zoom = 3;

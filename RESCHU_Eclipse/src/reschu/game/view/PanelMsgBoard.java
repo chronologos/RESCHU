@@ -97,7 +97,6 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 		    		}
     			}
     		}
-    		
     		txtChat.setText("");
     	}
     	if (e.getSource() == btnSend) {
