@@ -187,7 +187,6 @@ public class Reschu extends JFrame implements GUI_Listener {
 			out.close();
 		}
 		else{
-
 			out.println(line1);
 			out.println(line2);
 			out.close();

@@ -92,8 +92,8 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 		    		}
 		    		else {
 		    			// System.out.println("WRONG INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
-		    			// reschu.game.AddWrongTask();
-		    			reschu.game.AddCorrectTask();
+		    			reschu.game.AddWrongTask();
+		    			// reschu.game.AddCorrectTask();
 		    		}
     			}
     		}

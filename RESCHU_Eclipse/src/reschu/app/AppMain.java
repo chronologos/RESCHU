@@ -23,7 +23,7 @@ public class AppMain implements ActionListener
 	final private boolean WRITE_TO_DATABASE = false;
 	
 	private String _username;
-	private int _gamemode = MyGameMode.TUTORIAL_MODE;
+	private int _gamemode = MyGameMode.ADMINISTRATOR_MODE;
 	private int _scenario;
 
 	private int _scenario1;			
@@ -92,8 +92,10 @@ public class AppMain implements ActionListener
 		JPanel pnl = new JPanel();
 		JPanel pnlInside = new JPanel();
 		
-		String[] scenarios = {"None", "Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5", "Scenario 6"};
-		String[] gamemodes = {"Tutorial", "Demo"};
+		// String[] scenarios = {"None", "Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5", "Scenario 6"};
+		// String[] gamemodes = {"Tutorial", "Demo"};
+		String[] scenarios = {"None", "Low Taskload", "High Taskload"};
+		String[] gamemodes = {"Experiment"};
 				
 		border = BorderFactory.createTitledBorder("");
 		
@@ -101,7 +103,7 @@ public class AppMain implements ActionListener
 		lblGameMode = new JLabel("Mode");
 		lblScenario = new JLabel("Scenario"); 
 		_btnStart = new JButton("START"); 
-		_btnStart.addActionListener(this);		
+		_btnStart.addActionListener(this);
 		_cmbBoxGameMode = new JComboBox(gamemodes);
 		_cmbBoxGameMode.addActionListener(this);
 		_cmbBoxScenario = new JComboBox(scenarios);	
@@ -113,18 +115,16 @@ public class AppMain implements ActionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+					
+		imgIcon = new ImageIcon(img);  //HERE
+		lblHAL = null; 
+		lblHAL = new JLabel("", imgIcon, JLabel.CENTER);
 		
-			
-			imgIcon = new ImageIcon(img);  //HERE
-			lblHAL = null; 
-			lblHAL = new JLabel("", imgIcon, JLabel.CENTER);
-       		
- 
 		_frmLogin = new JFrame("RESCHU");
 		_frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frmLogin.setLayout(new GridLayout(0,1));
-		_frmLogin.setResizable(false);		
-		_frmLogin.add(pnl);		
+		_frmLogin.setResizable(false);
+		_frmLogin.add(pnl);
 		_frmLogin.setLocation(300,300);
 		_frmLogin.setAlwaysOnTop(true);
 		_frmLogin.setVisible(true);        
@@ -139,7 +139,7 @@ public class AppMain implements ActionListener
 		pnlInside.add(lblGameMode, "1,3");
 		pnlInside.add(_cmbBoxGameMode, "3,3");
 		pnlInside.add(lblScenario, "1,5");
-		pnlInside.add(_cmbBoxScenario, "3,5");	
+		pnlInside.add(_cmbBoxScenario, "3,5");
 		pnlInside.add(_btnStart, "1,7, 3,7");
 
 		_btnStart.setEnabled(false);					
@@ -157,8 +157,9 @@ public class AppMain implements ActionListener
 		if( ev.getSource() == _cmbBoxGameMode ) {
 			_gamemode = _cmbBoxGameMode.getSelectedIndex();
 			switch(_gamemode) {
-				case 0: _gamemode = MyGameMode.TUTORIAL_MODE; break;
-				case 1: _gamemode = MyGameMode.ADMINISTRATOR_MODE; break;
+				// case 0: _gamemode = MyGameMode.TUTORIAL_MODE; break;
+				// case 1: _gamemode = MyGameMode.ADMINISTRATOR_MODE; break;
+				case 0: _gamemode = MyGameMode.ADMINISTRATOR_MODE; break;
 			}
 		}
 		if( ev.getSource() == _cmbBoxScenario ) {  
