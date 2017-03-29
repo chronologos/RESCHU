@@ -48,7 +48,7 @@ public class AttackEngine {
 				int vIdx = timerTovIdx.get(timerName);
 				String location = timerToLoc.get(delay);
 				try {
-					Vehicle v = vehicle_list.getVehicle(vIdx);
+					Vehicle v = vehicle_list.getVehicle(vIdx);					
 					if(!v.getLostStatus()) {
 						if(!v.getHijackStatus()) {
 							if(!(v.getEngageStatus() || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
@@ -59,7 +59,7 @@ public class AttackEngine {
 								nTimer.schedule(new Hack(timerName, delay), 5000);
 								System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
 							}
-						} engage status should be all UAVs
+						}
 						else {
 							Timer nTimer = new Timer(timerName);
 							nTimer.schedule(new Hack(timerName, delay), 5000);

@@ -57,8 +57,13 @@ public class AttackNotificationEngine {
 				int delay = delayToVehicle.get(timerName);
 				try {
 					Vehicle v = g.getVehicleList().getVehicle(vIdx);
+					Boolean engage = false;
+					for(int i=0; i<g.getVehicleList().size(); i++) {
+						if(g.getVehicleList().getVehicle(i).getEngageStatus()) engage = true;
+					}
+					
 					if(!v.getLostStatus()) {
-						if(!(v.getEngageStatus() || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
+						if(!(engage || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
 							launchHackWarning(vIdx);
 							System.out.println("Launching Hacking Notification for UAV "+(vIdx+1));
 						}
