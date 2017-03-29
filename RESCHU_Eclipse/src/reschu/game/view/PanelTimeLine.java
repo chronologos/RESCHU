@@ -13,8 +13,7 @@ import reschu.game.model.VehicleList;
 
 import info.clearthought.layout.TableLayout;
 
-public class PanelTimeLine extends JPanel
-{
+public class PanelTimeLine extends JPanel {
 	private static final long serialVersionUID = 7243933752530455674L; 
 	private VehicleIcon[] pnlVehicleIcon;
 	private VehicleTime[] pnlVehicleTime;	
@@ -25,7 +24,8 @@ public class PanelTimeLine extends JPanel
 	private int current_time;
 	
 	public PanelTimeLine(Game g, VehicleList vl) {		 
-		double size[][] = {{30, 5, TableLayout.FILL, 5}, {10, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 6}};
+		// double size[][] = {{30, 5, TableLayout.FILL, 5}, {10, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 6}};
+		double size[][] = {{30, 5, TableLayout.FILL, 5}, {10, 3, 20, 3, 20, 3, 20, 3, 20, 3, 20, 3, 20, 3, 24, 3}};
 		bdrTitle = BorderFactory.createTitledBorder("Time Line");
 		setBorder(bdrTitle);  
 		setLayout(new TableLayout(size));
@@ -44,9 +44,9 @@ public class PanelTimeLine extends JPanel
 			pnlVehicleIcon[i] = new VehicleIcon(vl.getVehicle(i));
 			pnlVehicleTime[i] = new VehicleTime(vl.getVehicle(i));
 			add(pnlVehicleIcon[i], "0,"+2*(i+1));
-			add(pnlVehicleTime[i], "2,"+2*(i+1)); 
+			add(pnlVehicleTime[i], "2,"+2*(i+1));
 		}
-		add(pnlRemainingTime, "2,12");
+		add(pnlRemainingTime, "2,14");
 	}
 	
 	public void refresh(int milliseconds) {
@@ -61,8 +61,7 @@ public class PanelTimeLine extends JPanel
 	} 
 }
 
-class TimeText extends JPanel
-{ 
+class TimeText extends JPanel { 
 	private static final long serialVersionUID = 6191134278259404128L;
 	private int p1, p2, p3, p4, p5;
 	//private int current_time;
@@ -138,8 +137,7 @@ class TimeText extends JPanel
 	}
 }
 
-class VehicleIcon extends JPanel 
-{
+class VehicleIcon extends JPanel {
 	private static final long serialVersionUID = -5961320475456746793L;
 	private Vehicle v;
 	private Color vColor;
@@ -184,8 +182,7 @@ class VehicleIcon extends JPanel
 	}
 }
 
-class VehicleTime extends JPanel
-{
+class VehicleTime extends JPanel {
 	private static final long serialVersionUID = 4435452374430336399L;
 	private Vehicle v;
 	private int p0, p1, p2, p3, p4, p5, p6, p7, p8;
@@ -265,8 +262,7 @@ class VehicleTime extends JPanel
 	public void refresh(int milliseconds) { setPathList(); repaint(); }
 }
 
-class RemainingTime extends JPanel
-{ 
+class RemainingTime extends JPanel { 
 	private static final long serialVersionUID = -9112337331887745204L;
 	private int current_time = 0;
 	private int remaining_time = 0;

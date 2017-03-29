@@ -20,8 +20,7 @@ import reschu.game.model.Payload;
 import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
-public class PanelControl extends JPanel implements ChangeListener, ActionListener 
-{ 
+public class PanelControl extends JPanel implements ChangeListener, ActionListener { 
 	private static final long serialVersionUID = 6768850931538883107L;
 	private JTabbedPane tabbedPane; 
 	private VehiclePanel[] pnlVehicle;
@@ -33,10 +32,8 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 	private boolean[] colorFlag;
 	private boolean eventFromMap;
 	
-	public PanelControl(GUI_Listener l, Game g, String strTitle) 
-	{
+	public PanelControl(GUI_Listener l, Game g, String strTitle) {
 		Vehicle v;
-		
 		game = g;	
 		lsnr = l;
 		colorFlag = new boolean[game.getVehicleList().size()];
@@ -153,9 +150,12 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 				}
 				// below: i+1 because 0-th tab is for "all"
 				if(colorFlag[i]) {
-					tabbedPane.setForegroundAt(i+1, MyColor.COLOR_HIGHLIGHT_TAB);
-					pnlVehicle[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
-					pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
+					// tabbedPane.setForegroundAt(i+1, MyColor.COLOR_HIGHLIGHT_TAB);
+					// pnlVehicle[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
+					// pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
+					tabbedPane.setForegroundAt(i+1, Color.RED);
+					pnlVehicle[i].getEngageBtn().setForeground(Color.RED);
+					pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(Color.RED);
 				}
 				else {
 					tabbedPane.setForegroundAt(i+1, Color.BLACK);
@@ -167,14 +167,16 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 	}
 }
 
-class VehicleGeneralPanel extends JPanel{
+class VehicleGeneralPanel extends JPanel {
 	private static final long serialVersionUID = -8910858184513488565L;
 	private VehicleCompactInfo[] infoList;
 	private Game game;
 	
 	public VehicleGeneralPanel(GUI_Listener l, Game g) {
-		double size[][] = {{TableLayout.FILL},{52,52,52,52,52}};
-		setLayout(new TableLayout(size));
+		double size_1[][] = {{TableLayout.FILL},{51,51,51}};
+		double size_2[][] = {{TableLayout.FILL},{51,51,51,51,51,51}};
+		if(g.getScenario()==1) setLayout(new TableLayout(size_1));
+		else setLayout(new TableLayout(size_2));
 		game = g; 
 		infoList = new VehicleCompactInfo[game.getVehicleList().size()];
 		for( int i=0; i<g.getVehicleList().size(); i++ ) {

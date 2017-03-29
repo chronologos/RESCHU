@@ -1,0 +1,5 @@
+Main Class:
+reschu.app.AppMain
+
+VM arguments:
+-Xms512M -Xmx2048M

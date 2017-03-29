@@ -75,6 +75,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 	/** Interactive Tutorial Mode? */
 	public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
+	// return if scenario is low taskload
+	public static boolean low_taskload() {return _scenario == 1;}
 	/** Training Mode? */
 	public static boolean train() { return _gamemode == MyGameMode.TRAIN_MODE; }
 	/** Replay Mode? */
@@ -797,7 +799,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	public void EVT_System_GameEnd(){ 
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Game End. user =" + _username + ". scenario ="+ _scenario, -1, -1);
+				"Game End. user =" + _username + ". scenario = "+ _scenario, -1, -1);
 	}
 	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int wrong_task, int attack, int wrong_attack, int lost, int total) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 

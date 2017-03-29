@@ -199,7 +199,8 @@ public class Map {
 		int nTargetAreaLand = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_LAND_TUTORIAL : MyGame.nTARGET_AREA_LAND;
 		int nLandTargetNeed = nTargetAreaLand - getTargetSize("LAND");
 		int nShoreTargetNeed = MyGame.nTARGET_AREA_SHORE - getTargetSize("SHORE");
-		int nCommTargetNeed = MyGame.nTARGET_AREA_COMM - getTargetSize("COMM");
+		int LowHighTaskTarget = (Reschu.low_taskload()) ? MyGame.nTARGET_AREA_COMM : MyGame.nTARGET_AREA_MORE;
+		int nCommTargetNeed = LowHighTaskTarget - getTargetSize("COMM");
 
 		int cnt = 0;
 		final int limit = 100000;
@@ -247,7 +248,8 @@ public class Map {
 	
 	// set target area based on pre-defined database
 	public void setTargetArea_DataBase(Random rnd) throws UserDefinedException {
-		int nTotalTarget = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL : MyGame.nTARGET_AREA_TOTAL;
+		int nTotalTarget = (Reschu.tutorial()) ? MyGame.nTARGET_AREA_TOTAL_TUTORIAL :
+			(Reschu.low_taskload()? MyGame.nTARGET_AREA_TOTAL : MyGame.nTARGET_AREA_TOTAL_HIGH);		
 		int nTotalTargetNeed = nTotalTarget - getTargetSize("LAND");
 		int count = 0;
 
