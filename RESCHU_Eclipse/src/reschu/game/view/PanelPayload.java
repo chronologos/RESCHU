@@ -161,10 +161,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public Animator a;
 	public int numCalls;
 	public long startTime;
-	// public static final int TILE_LENGTH = 12000;
 	public static final int TILE_LENGTH = 4000;
-	// public static final int TILE_LENGTH = 563;
-	// public static final int TILE_LENGTH = 5500;
 	public static final int VIEWPORT_LENGTH = 400;
 	public static final int OVERLAP_LENGTH = 100;
 	public static final int SPEED = 1; // no.of pixels moved in each call to display, leads to movement speed of roughly 500 pixels/sec

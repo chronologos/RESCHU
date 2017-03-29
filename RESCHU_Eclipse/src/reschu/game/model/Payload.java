@@ -60,7 +60,7 @@ public class Payload {
 		*/
 		return name;
 	//	return MyURL.URL_PAYLOAD + filename;
-		}
+	}
 	public String getVehicleType() {return vehicleType;}
 	public String getTargetType() {return targetType;}
 	public int[] getLocation() {return location;}
