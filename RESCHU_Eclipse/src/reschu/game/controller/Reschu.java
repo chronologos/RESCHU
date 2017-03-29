@@ -810,7 +810,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 				"Total wrong tasks is  "+wrong_task, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total detected attack "+attack, -1, -1);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1,
 				"Total wrong detects   "+wrong_attack, -1, -1);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
 				"Total disappeared UAV "+lost, -1, -1);

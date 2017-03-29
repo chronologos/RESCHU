@@ -1083,8 +1083,8 @@ public class Vehicle {
 		if(new_theta < -2*Math.PI) new_theta += 2*Math.PI;
 		double x2 = x0 + Math.sin(new_theta)*length;
 		double y2 = y0 + Math.cos(new_theta)*length;
-		
 		// System.out.println("ANGLE = "+theta+" NEW ANGLE = "+new_theta);
+		
 		int[] new_point = new int[]{(int)x2, (int)y2};
 		return new_point;
 	}

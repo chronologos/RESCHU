@@ -265,7 +265,8 @@ public class Map {
 				// temp_t = MyTargetBase.getTargetInfo(MyTargetBase.getTargetIndex());
 				int index = rnd.nextInt(MyTargetBase.getTargetBaseSize());
 				temp_t = MyTargetBase.getTargetInfo(index);
-				System.out.println("INDEX = "+index);
+				
+				// System.out.println("INDEX = "+index);
 				// System.out.println("TARGET = "+temp_t[0]+" "+temp_t[1]+" "+count+" "+MyTargetBase.getTargetIndex()+" "+MyTargetBase.getTargetBaseSize());
 				
 				if (count >= MyTargetBase.getTargetBaseSize()) {
@@ -276,7 +277,7 @@ public class Map {
 			Target t = new Target(g.getEmptyTargetName(), chkTargetOffset(temp_t[0], temp_t[1]), "LAND", "UAV",
 					g.getTargetVisibility(), temp_t[2], temp_t[3]);
 			
-			System.out.println("TARGET = "+t.getPos()[0]+" "+t.getPos()[1]);
+			// System.out.println("TARGET = "+t.getPos()[0]+" "+t.getPos()[1]);
 			addTarget(t);
 		}
 	}
