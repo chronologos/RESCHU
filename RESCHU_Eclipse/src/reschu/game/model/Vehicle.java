@@ -1024,7 +1024,7 @@ public class Vehicle {
 		// real attack if attack position is NOT "0 0"
 		isHijacked = true;
 		
-		System.out.println("Launching hack with smarter attacker");
+		System.out.println("Launching hack with smarter attacker for UAV "+index);
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		
@@ -1111,5 +1111,17 @@ public class Vehicle {
 			else new_point = new int[]{600, 600};
 		}
 		return new_point;
+	}
+	
+	public double TargetDistance() {
+		if(getTarget() == null) {
+			if(getHijackStatus()) return 1000.0;
+			else return -1.0;
+		}
+		else {
+			double distance = Math.hypot((getTarget().getPos()[0]-getX64()), (getTarget().getPos()[1]-getY64()));
+			System.out.println("DISTANCE = "+distance);
+			return distance;
+		}
 	}
 }

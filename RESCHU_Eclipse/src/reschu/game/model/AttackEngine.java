@@ -48,16 +48,23 @@ public class AttackEngine {
 				int vIdx = timerTovIdx.get(timerName);
 				String location = timerToLoc.get(delay);
 				try {
-					if(!(vehicle_list.getVehicle(vIdx).getEngageStatus() || vehicle_list.getVehicle(vIdx).getPath().size()==0)) {
-						if(!vehicle_list.getVehicle(vIdx).getHijackStatus() && !vehicle_list.getVehicle(vIdx).getLostStatus()) {
-							// vehicle_list.getVehicle(vIdx).hijack(hackData.get(vIdx));
-							vehicle_list.getVehicle(vIdx).hijack(location);
+					Vehicle v = vehicle_list.getVehicle(vIdx);
+					if(!v.getLostStatus()) {
+						if(!v.getHijackStatus()) {
+							if(!(v.getEngageStatus() || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
+								v.hijack(location);
+							}
+							else {
+								Timer nTimer = new Timer(timerName);
+								nTimer.schedule(new Hack(timerName, delay), 5000);
+								System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
+							}
+						} engage status should be all UAVs
+						else {
+							Timer nTimer = new Timer(timerName);
+							nTimer.schedule(new Hack(timerName, delay), 5000);
+							System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
 						}
-					}
-					else {
-						Timer nTimer = new Timer(timerName);
-						nTimer.schedule(new Hack(timerName, delay), 10000);
-						System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
 					}
 				}
 				catch(IllegalArgumentException e) {

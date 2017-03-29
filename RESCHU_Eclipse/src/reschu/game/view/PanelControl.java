@@ -163,7 +163,7 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 					pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(Color.BLACK);
 				}
 			} 
-		}	
+		}
 	}
 }
 

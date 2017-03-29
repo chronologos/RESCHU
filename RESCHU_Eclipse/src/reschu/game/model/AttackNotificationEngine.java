@@ -56,15 +56,17 @@ public class AttackNotificationEngine {
 				int vIdx = timerToVehicle.get(timerName);
 				int delay = delayToVehicle.get(timerName);
 				try {
-					if(!(g.getVehicleList().getVehicle(vIdx).getEngageStatus() || g.getVehicleList().getVehicle(vIdx).getPath().size()==0)) {
-						if(!g.getVehicleList().getVehicle(vIdx).getLostStatus()) {
+					Vehicle v = g.getVehicleList().getVehicle(vIdx);
+					if(!v.getLostStatus()) {
+						if(!(v.getEngageStatus() || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
 							launchHackWarning(vIdx);
+							System.out.println("Launching Hacking Notification for UAV "+(vIdx+1));
 						}
-					}
-					else {
-						Timer nTimer = new Timer(timerName);
-						nTimer.schedule(new Hack(timerName), 30000);
-						System.out.println("Reschedule Notification for UAV "+(vIdx+1));
+						else {
+							Timer nTimer = new Timer(timerName);
+							nTimer.schedule(new Hack(timerName), 20000);
+							System.out.println("Reschedule Notification for UAV "+(vIdx+1));
+						}
 					}
 				}
 				catch(IllegalArgumentException e) {
