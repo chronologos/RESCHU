@@ -152,10 +152,14 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 					colorFlag[i] = false;
 				}
 				// below: i+1 because 0-th tab is for "all"
-				if( colorFlag[i] )
+				if(colorFlag[i]) {
 					tabbedPane.setForegroundAt(i+1, MyColor.COLOR_HIGHLIGHT_TAB);
-				else
+					pnlVehicle[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
+				}
+				else {
 					tabbedPane.setForegroundAt(i+1, Color.BLACK);
+					pnlVehicle[i].getEngageBtn().setForeground(Color.BLACK);
+				}
 			} 
 		}	
 	}
@@ -358,6 +362,10 @@ class VehiclePanel extends JPanel implements ActionListener {
         add(pnlStatus, "1,0");
 		//insert_grid(gbc, pnlVehicle, 0, 0, 1, 1, 0, 0, 0); add(pnlVehicle);
 		//insert_grid(gbc, pnlStatus, 1, 0, 1, 1, 0.9, 0, 0); add(pnlStatus); 
+	}
+	
+	public JButton getEngageBtn() {
+		return btnEngage;
 	}
 	
 	// print task message when an UAV reaches a target
