@@ -64,7 +64,7 @@ public class AttackNotificationEngine {
 					else {
 						Timer nTimer = new Timer(timerName);
 						nTimer.schedule(new Hack(timerName), 30000);
-						System.out.println("RESCHEDULE Notification");
+						System.out.println("Reschedule Notification for UAV "+(vIdx+1));
 					}
 				}
 				catch(IllegalArgumentException e) {

@@ -155,10 +155,12 @@ public class PanelControl extends JPanel implements ChangeListener, ActionListen
 				if(colorFlag[i]) {
 					tabbedPane.setForegroundAt(i+1, MyColor.COLOR_HIGHLIGHT_TAB);
 					pnlVehicle[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
+					pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(MyColor.COLOR_HIGHLIGHT_TAB);
 				}
 				else {
 					tabbedPane.setForegroundAt(i+1, Color.BLACK);
 					pnlVehicle[i].getEngageBtn().setForeground(Color.BLACK);
+					pnlGeneral.getCompactPanel()[i].getEngageBtn().setForeground(Color.BLACK);
 				}
 			} 
 		}	
@@ -182,6 +184,7 @@ class VehicleGeneralPanel extends JPanel{
 	}
 	public void chkEngageEnabled() { for(int i=0; i<infoList.length; i++) infoList[i].chkEngageEnabled(); }
 	public void Update_Damage(Vehicle v) {infoList[v.getIndex()-1].Update_Damage();}
+	public VehicleCompactInfo[] getCompactPanel() {return infoList;}
 }
 
 class VehicleCompactInfo extends JPanel implements ActionListener {
@@ -239,11 +242,13 @@ class VehicleCompactInfo extends JPanel implements ActionListener {
 		insert_grid(gbc, btnEngage, 3, 0, 1, 1, 0.05, 1.0, 0); add(btnEngage);
 	}
 	
+	public JButton getEngageBtn() {
+		return btnEngage;
+	}
+	
 	public void chkEngageEnabled() {
 		repaint();
-		
 		iconV.chkEngageEnabled();
-	
 		if( v.getStatus() == MyGame.STATUS_VEHICLE_PENDING ) 
 			btnEngage.setEnabled(true); 
 		else 

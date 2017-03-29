@@ -57,7 +57,7 @@ public class AttackEngine {
 					else {
 						Timer nTimer = new Timer(timerName);
 						nTimer.schedule(new Hack(timerName, delay), 10000);
-						System.out.println("RESCHEDULE Hacking");
+						System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
 					}
 				}
 				catch(IllegalArgumentException e) {
