@@ -21,7 +21,6 @@ import reschu.game.view.PanelMap;
 import reschu.game.model.VehicleList;
 
 public class AttackNotificationEngine {
-
 	public static final String ATTACK_NOTIFICATIONS_FILENAME = MyGame.AttackFile;
 	public Map<Integer, Integer> hackData; // Map Vehicles to the notification times
 	public Map<String, Integer> timerToVehicle; // Map Timers to Vehicles
@@ -64,16 +63,14 @@ public class AttackNotificationEngine {
 					}
 					else {
 						Timer nTimer = new Timer(timerName);
-						nTimer.schedule(new Hack(timerName), delay+20000);
-						
-						System.out.println("RESCHEDULE delay+20000 = "+(delay+20000));
-						delayed but no new notification?!
+						nTimer.schedule(new Hack(timerName), 30000);
+						System.out.println("RESCHEDULE Notification");
 					}
 				}
 				catch(IllegalArgumentException e) {
 					System.out.println("Hack data file has illegal hack coordinates");
 				}
-			}			
+			}
 		};
 
 		try {
@@ -87,7 +84,7 @@ public class AttackNotificationEngine {
 					vIdx = Integer.parseInt(attackParams[1]) - 1;
 					delay = Integer.parseInt(attackParams[2]);
 					hackData.put(vIdx, delay);
-					String timerName = "HackTimer" + vIdx;// TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
+					String timerName = "HackTimer" + vIdx; // TEMP : IN FUTURE, SAME VEHICLE CAN APPEAR IN MULTIPLE LINES
 					nextTimer = new Timer(timerName);
 					nextTimer.schedule(new Hack(timerName), delay);
 					timerToVehicle.put(timerName, vIdx);

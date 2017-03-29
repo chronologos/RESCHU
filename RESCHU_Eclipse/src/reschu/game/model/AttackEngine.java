@@ -56,7 +56,8 @@ public class AttackEngine {
 					}
 					else {
 						Timer nTimer = new Timer(timerName);
-						nTimer.schedule(new Hack(timerName, delay+20000), delay+20000);
+						nTimer.schedule(new Hack(timerName, delay), 10000);
+						System.out.println("RESCHEDULE Hacking");
 					}
 				}
 				catch(IllegalArgumentException e) {
