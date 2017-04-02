@@ -274,8 +274,10 @@ public class Map {
 				}
 			} while (!(getCellType(temp_t[0], temp_t[1])!=MyGame.SEA && chkOkayToAdd(temp_t[0], temp_t[1])));
 			
+			int[] target_ans = new int[3];
+			for(int j=3; j<temp_t.length; j++) target_ans[j-3] = temp_t[j];
 			Target t = new Target(g.getEmptyTargetName(), chkTargetOffset(temp_t[0], temp_t[1]), "LAND", "UAV",
-					g.getTargetVisibility(), temp_t[2], temp_t[3]);
+					g.getTargetVisibility(), temp_t[2], target_ans);
 			
 			// System.out.println("TARGET = "+t.getPos()[0]+" "+t.getPos()[1]);
 			addTarget(t);

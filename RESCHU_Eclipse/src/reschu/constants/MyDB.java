@@ -86,4 +86,7 @@ public class MyDB {
 	final public static int ZOOM_OUT					= 91;
 	final public static int ZOOM_MAX					= 92;
 	final public static int ZOOM_MIN					= 93;
+	
+	final public static int CORRECT_TASK_ANSWER			= 130;
+	final public static int INCORRECT_TASK_ANSWER		= 131;
 }

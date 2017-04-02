@@ -51,7 +51,7 @@ public class AttackEngine {
 					Vehicle v = vehicle_list.getVehicle(vIdx);					
 					if(!v.getLostStatus()) {
 						if(!v.getHijackStatus()) {
-							if(!(v.getEngageStatus() || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
+							if(!(v.getEngageStatus() || (v.getPath().size()==0 && v.getTarget()!=null) || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
 								v.hijack(location);
 							}
 							else {

@@ -30,10 +30,12 @@ public class MyGame {
     
     final static public double MIN_HACK_DISTANCE = 50.0;
     
-    // final static public String AttackFile = (Reschu.low_taskload())? "AttackFile_Low.txt" : "AttackFile_High.txt";
-    final static public String AttackFile = (Reschu.low_taskload())? "AttackFile_Practice_Low.txt" : "AttackFile_Practice_High.txt";
+    final static public String AttackFile = (Reschu.low_taskload())? "AttackFile_Low.txt" : "AttackFile_High.txt";
+    // final static public String AttackFile = (Reschu.low_taskload())? "AttackFile_Practice_Low.txt" : "AttackFile_Practice_High.txt";
     // final static public String AttackFile = (Reschu.low_taskload())? "AttackFile_Test_Low.txt" : "AttackFile_Test_High.txt";
     
     final static public boolean TargetDataBase = true;
     // final static public boolean TargetDataBase = false;
+    
+    final static public int TOTAL_SECOND = 300; // total time (in second) for one experiment
 }

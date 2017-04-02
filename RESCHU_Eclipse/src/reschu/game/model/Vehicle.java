@@ -136,7 +136,8 @@ public class Vehicle {
 			observedPath.addLast(e);
 			// add waypoint for smarter attacker
 			int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
-			groundTruthPath.add(observedPath.size()-1, temp);
+			// groundTruthPath.add(groundTruthPath.size()-1, temp);
+			groundTruthPath.set(groundTruthPath.size()-1, temp);
 		} else {
 			groundTruthPath.addLast(e);
 		}
@@ -153,9 +154,9 @@ public class Vehicle {
 			groundTruthPath.set(idx, temp);
 			// set end point for smarter attacker
 			if(idx == getPathSize()-1) {
-				temp = GenerateEndPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
-				groundTruthPath.set(getPathSize(), temp);
-				// System.out.println("SIZE = "+getPathSize()+" IDX = "+idx);
+				temp = GenerateEndPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);	
+				// temp = GenerateNewEndPoint(getGroundTruthX64(), getGroundTruthY64());
+				groundTruthPath.set(groundTruthPath.size()-1, temp);
 			}
 		} else {
 			groundTruthPath.set(idx, e);
@@ -759,7 +760,12 @@ public class Vehicle {
 	private void payloadCheck(int pos_x, int pos_y) {		
 		if(getPathSize()!=0 && positionCheck(pos_x, pos_y)) {
 			if(getPathSize()==1 && target!=null) {
-				if(isHijacked) return;
+				if(isHijacked) {
+					int g_size = getGroundPathSize();
+					for(int i=0; i<g_size-1; i++) removeGroundFirstPath();
+					updateHackedEndPoint();
+					return;
+				}
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				if( getPayload() == Vehicle.PAYLOAD_COM ) { 
 					setStatus(MyGame.STATUS_VEHICLE_PENDING);
@@ -770,6 +776,7 @@ public class Vehicle {
 					PanelMsgBoard.Msg(msg);
 				}
 				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
+				// removeFirstPath();
 			}
 			lsnr.Hide_Popup(this);
 			removeFirstPath();
@@ -820,46 +827,48 @@ public class Vehicle {
         // if(getIndex() == 1) System.out.println("X = "+getX64()+" Y = "+getY64());
 
         if (isHijacked) {
-            //Get Cartesian distance to goal
-            double s64ObsDeltaX = getX64() - (double)(getFirstPathObserved()[0]);
-            double s64ObsDeltaY = getY64() - (double)(getFirstPathObserved()[1]);
-            //Direction angle
-            //Angle is measured from North, CCW
-            //Range: [-pi, +pi]
-            double s64ObsAngle = 0;
-            
-            //Check proximity
-            if (Math.abs(s64ObsDeltaX) <= MySpeed.VELOCITY64) { s64ObsDeltaX = 0; }
-            if (Math.abs(s64ObsDeltaY) <= MySpeed.VELOCITY64) { s64ObsDeltaY = 0; }
-            //Calculate velocity angle
-            //Angle is measured from east, CCW
-            if ((s64ObsDeltaX != 0) || (s64ObsDeltaY != 0)) {
-                s64ObsAngle = Math.atan2(s64ObsDeltaY,s64ObsDeltaX);
-            }
-            else {
-                s64ObsAngle = 0;
-            }
-            
-            setObservedX64(getX64() - Math.cos(s64ObsAngle)*MySpeed.VELOCITY64);
-            setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
-            setObsAngle64(s64ObsAngle);
-            
-            payloadCheckHacked((int)getGroundTruthX64(), (int)getGroundTruthY64());
-            /*
-    		System.out.println("UAV index = "+index);
-    		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
-    		System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
-    		System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
-    		if(observedPath.size() > 0)
-    			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
-    		else
-    			System.out.println("O Path Frist NONE");
-    		if(groundTruthPath.size() > 0)
-    			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
-    		else
-    			System.out.println("G Path Frist NONE");
-    		System.out.println("\n");
-    		*/
+        	if(getPathSize() != 0) {
+	            //Get Cartesian distance to goal
+	            double s64ObsDeltaX = getX64() - (double)(getFirstPathObserved()[0]);
+	            double s64ObsDeltaY = getY64() - (double)(getFirstPathObserved()[1]);
+	            //Direction angle
+	            //Angle is measured from North, CCW
+	            //Range: [-pi, +pi]
+	            double s64ObsAngle = 0;
+	            
+	            //Check proximity
+	            if (Math.abs(s64ObsDeltaX) <= MySpeed.VELOCITY64) { s64ObsDeltaX = 0; }
+	            if (Math.abs(s64ObsDeltaY) <= MySpeed.VELOCITY64) { s64ObsDeltaY = 0; }
+	            //Calculate velocity angle
+	            //Angle is measured from east, CCW
+	            if ((s64ObsDeltaX != 0) || (s64ObsDeltaY != 0)) {
+	                s64ObsAngle = Math.atan2(s64ObsDeltaY,s64ObsDeltaX);
+	            }
+	            else {
+	                s64ObsAngle = 0;
+	            }
+	            
+	            setObservedX64(getX64() - Math.cos(s64ObsAngle)*MySpeed.VELOCITY64);
+	            setObservedY64(getY64() - Math.sin(s64ObsAngle)*MySpeed.VELOCITY64);
+	            setObsAngle64(s64ObsAngle);
+	            
+	            payloadCheckHacked((int)getGroundTruthX64(), (int)getGroundTruthY64());
+	            /*
+	    		System.out.println("UAV index = "+index);
+	    		System.out.println("OBSERVED   x = "+getX64()+"  y = "+getY64());
+	    		System.out.println("GROUND     x = "+getGroundTruthX64()+"  y = "+getGroundTruthY64());
+	    		System.out.println("O Path Size  = "+observedPath.size()+"  G Path Size = "+groundTruthPath.size());
+	    		if(observedPath.size() > 0)
+	    			System.out.println("O Path First = "+observedPath.getFirst()[0]+" "+observedPath.getFirst()[1]);
+	    		else
+	    			System.out.println("O Path Frist NONE");
+	    		if(groundTruthPath.size() > 0)
+	    			System.out.println("G Path First = "+groundTruthPath.getFirst()[0]+" "+groundTruthPath.getFirst()[1]);
+	    		else
+	    			System.out.println("G Path Frist NONE");
+	    		System.out.println("\n");
+	    		*/
+        	}
         }
 	}
 	
@@ -1069,8 +1078,13 @@ public class Vehicle {
 		}
 
 		if(observedPath.size() == 0) end_point = GenerateNewEndPoint(HackLocation[0], HackLocation[1]);
-		else end_point = GenerateEndPoint(HackLocation[0], HackLocation[1], observedPath.getLast()[0], observedPath.getLast()[1], HackAngle);
+		else {
+			end_point = GenerateEndPoint(HackLocation[0], HackLocation[1], observedPath.getLast()[0], observedPath.getLast()[1], HackAngle);
+			// end_point = GenerateNewEndPoint(HackLocation[0], HackLocation[1]);
+		}
 		groundTruthPath.add(end_point);
+		// System.out.println("OBS SIZE = "+getPathSize());
+		// System.out.println("GND SIZE = "+groundTruthPath.size());
 		// System.out.println("END  POINT = "+end_point[0]+" "+end_point[1]);
 	}
 	
@@ -1102,21 +1116,25 @@ public class Vehicle {
 	
 	public int[] GenerateNewEndPoint(double x0, double y0) {
 		int[] new_point;
-		if(x0 < 245) {
-			if(y0 < 245) new_point = new int[]{-100, -100};
-			else new_point = new int[]{-100, 600};
+		if(x0 < y0) {
+			if(x0+y0 < 490) new_point = new int[]{-100, (int)y0};
+			else new_point = new int[]{(int)x0, 600};
 		}
 		else {
-			if(y0 < 245) new_point = new int[]{600, -100};
-			else new_point = new int[]{600, 600};
+			if(x0+y0 < 490) new_point = new int[]{(int)x0, -100};
+			else new_point = new int[]{600, (int)y0};
 		}
 		return new_point;
 	}
 	
+	public void updateHackedEndPoint() {
+		int[] update_point = GenerateNewEndPoint(getGroundTruthX64(), getGroundTruthY64());
+		groundTruthPath.set(groundTruthPath.size()-1, update_point);
+	}
+	
 	public double TargetDistance() {
 		if(getTarget() == null) {
-			if(getHijackStatus()) return 1000.0;
-			else return -1.0;
+			return 1000.0;
 		}
 		else {
 			double distance = Math.hypot((getTarget().getPos()[0]-getX64()), (getTarget().getPos()[1]-getY64()));

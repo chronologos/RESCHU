@@ -282,7 +282,7 @@ class RemainingTime extends JPanel {
 		g.setColor(new Color(100,100,100,255));
 		g.drawRect(0,0,getWidth()-1,getHeight()-1);
 		g.setColor(new Color(150,150,150,100));
-		g.fillRect(0,0,current_time*getWidth()/MySpeed.TOTAL_SECOND,getHeight());
+		g.fillRect(0,0,current_time*getWidth()/MyGame.TOTAL_SECOND,getHeight());
 		g.setColor(new Color(0,0,0,255));
 		g.drawString("REMAINS     " + setTimeFormat(remaining_time), getWidth()/3, getHeight()/2+5);
 		

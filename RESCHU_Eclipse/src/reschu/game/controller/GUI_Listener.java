@@ -135,4 +135,8 @@ public interface GUI_Listener {
     // For Ghost Mission
     public void EVT_Generate_Ghost_Mission(Vehicle v);
     public void EVT_ATTACKED_UAV_DISAPPEAR(Vehicle v);
+    
+    // For performance statistics
+	public void EVT_Correct_Task(int vIdx, String name, String ans, int input);
+	public void EVT_Incorrect_Task(int vIdx, String name, String ans, int input);
 }

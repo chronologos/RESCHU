@@ -12,10 +12,10 @@ public class Target {
 	private boolean visible;
 	
 	private int req_zoom;
-	private int task_ans;
+	private int[] task_ans;
 	 
 	Target() {}
-	Target(String s, int[] p, String m, String t, boolean v, int r, int a) {
+	Target(String s, int[] p, String m, String t, boolean v, int r, int[] a) {
 		name = s;
 		pos = p;
 		mission = m;
@@ -35,7 +35,7 @@ public class Target {
 		done = false;
 		visible = v;
 		req_zoom = 3;
-		task_ans = 0;
+		task_ans = new int[]{0};
 	}
 	
 	public void setPos(int[] p) { pos = p; }
@@ -55,7 +55,22 @@ public class Target {
     public boolean isVisible() {return visible;}
     
     public int getRequireZoom() {return req_zoom;}
-    public int getTaskAnswer() {return task_ans;}
+    public int[] getTaskAnswerList() {return task_ans;}
+    public String getTaskAnswer() {
+    	String temp = "";
+    	for(int i=0; i<task_ans.length; i++) {
+    		temp += task_ans[i];
+    		if(i != task_ans.length-1) temp += ", ";
+    	}
+    	return temp;
+    }
+    public boolean checkAnswer(int input) {
+    	boolean ans = false;
+    	for(int i=0; i<task_ans.length; i++) {
+    		if(input == task_ans[i]) ans = true;
+    	}
+    	return ans;
+    }
     
     static public boolean isTargetType(String s) {
     	if( s.equals(MISSION_LAND) || s.equals(MISSION_SHORE) ) return true;

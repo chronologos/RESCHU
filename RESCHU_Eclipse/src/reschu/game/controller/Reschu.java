@@ -793,6 +793,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 			checkIntersect(vIdx+1);
 		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
+	public void EVT_Correct_Task(int vIdx, String name, String ans, int input) {
+		Write(MyDB.INVOKER_USER, MyDB.CORRECT_TASK_ANSWER, vIdx, "Correct! Target "+name+" answer is "+ans+", operator respond is "+input, -1, -1);
+	}
+	public void EVT_Incorrect_Task(int vIdx, String name, String ans, int input) {
+		Write(MyDB.INVOKER_USER, MyDB.INCORRECT_TASK_ANSWER, vIdx, "Incorrect! Target "+name+" answer is "+ans+", operator respond is "+input, -1, -1);
+	}
 	@Override
 	public void EVT_System_GameStart(){
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario, -1, -1); 

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 import reschu.game.controller.Reschu;
+import reschu.game.model.Vehicle;
 import reschu.game.model.VehicleList;
 
 public class PanelMsgBoard extends JPanel implements ActionListener
@@ -86,14 +87,15 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     		VehicleList vlist = reschu.game.getVehicleList();
     		for(int i=0; i<vlist.size(); i++) {
     			if(vlist.getVehicle(i).isEngaged) {
-		    		if(vlist.getVehicle(i).getTarget().getTaskAnswer() == Integer.parseInt(txtChat.getText())) {
-		    			// System.out.println("RIGHT INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
+    				Vehicle v = vlist.getVehicle(i);
+    				int input = Integer.parseInt(txtChat.getText());
+		    		if(v.getTarget().checkAnswer(input)) {
 		    			reschu.game.AddCorrectTask();
+		    			reschu.EVT_Correct_Task(v.getIndex(), v.getTarget().getName(), v.getTarget().getTaskAnswer(), input);
 		    		}
 		    		else {
-		    			// System.out.println("WRONG INPUT = "+Integer.parseInt(txtChat.getText())+" ANS = "+vlist.getVehicle(i).getTarget().getTaskAnswer());
 		    			reschu.game.AddWrongTask();
-		    			// reschu.game.AddCorrectTask();
+		    			reschu.EVT_Incorrect_Task(v.getIndex(), v.getTarget().getName(), v.getTarget().getTaskAnswer(), input);
 		    		}
     			}
     		}

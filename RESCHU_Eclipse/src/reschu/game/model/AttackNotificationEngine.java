@@ -63,9 +63,9 @@ public class AttackNotificationEngine {
 					}
 					
 					if(!v.getLostStatus()) {
-						if(!(engage || v.getPath().size()==0 || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
-							launchHackWarning(vIdx);
+						if(!(engage || (v.getPath().size()==0 && v.getTarget()!=null) || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
 							System.out.println("Launching Hacking Notification for UAV "+(vIdx+1));
+							launchHackWarning(vIdx);
 						}
 						else {
 							Timer nTimer = new Timer(timerName);
