@@ -103,8 +103,8 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private double rotate_angle;
 	private double CAMERA_ANGLE;
 
-	private int zoom_count = 3;
-	public static int ZOOMMAX = 6;
+	private int zoom_count = 4;
+	public static int ZOOMMAX = 8;
 	public static int ZOOMMIN = 0;
 	
 	private Vehicle v;
@@ -783,7 +783,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 //			//zoomLevel = 1/((1/zoomLevel) - 1);
 //			nextZoomLevel = 1/((1/nextZoomLevel) - 1);
 //		}
-		if (nextZoomLevel >= 2f/1.2f/1.2f) {
+		if (nextZoomLevel >= 2f/1.2f/1.2f/1.2f) {
 			//zoomLevel ++;
 			nextZoomLevel = nextZoomLevel / 1.2f;
 			zoom_count++;
@@ -813,7 +813,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	public int zoom_out() { //far01 zooming fn
 
 		//if (zoomLevel <= 1) {
-		if (nextZoomLevel <= (2f*1.2f*1.2f)) {
+		if (nextZoomLevel <= (2f*1.2f*1.2f*1.2f)) {
 			//zoomLevel ++;
 			nextZoomLevel = nextZoomLevel * 1.2f;
 			zoom_count--;

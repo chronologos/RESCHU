@@ -21,7 +21,7 @@ public class TextOverlay implements GLEventListener {
 	private int y_dist = 0;
 	private int max_x = 200;
 	private int max_y = 200;
-	private int zoom_count = 3; //far01 zooming
+	private int zoom_count = 4;
 
 	public static TextRenderer zoom_bar;
 	
@@ -142,9 +142,10 @@ public class TextOverlay implements GLEventListener {
 
 		trB17.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 		trB17.setColor(0.9f, 0.9f, 0.9f, 0.9f);
-		trB17.draw("[+]", (drawable.getSurfaceWidth() * 0 / 10) + 41, drawable.getSurfaceHeight() / 4 + 147);
-		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 140);
+		trB17.draw("[+]", (drawable.getSurfaceWidth() * 0 / 10) + 41, drawable.getSurfaceHeight() / 4 + 162);
+		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 155);
 		
+		trB17.draw(" 4 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 142);
 		trB17.draw(" 3 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 127);
 		trB17.draw(" 2 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 112);
 		trB17.draw(" 1 |", (drawable.getSurfaceWidth() * 0 / 10) + 25, drawable.getSurfaceHeight() / 4 + 97);
@@ -152,7 +153,9 @@ public class TextOverlay implements GLEventListener {
 		trB17.draw("-1 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 67);
 		trB17.draw("-2 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 52);
 		trB17.draw("-3 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 37);
+		trB17.draw("-4 |", (drawable.getSurfaceWidth() * 0 / 10) + 24, drawable.getSurfaceHeight() / 4 + 22);
 		
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 142);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 127);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 112);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 97);
@@ -160,14 +163,15 @@ public class TextOverlay implements GLEventListener {
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 67);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 52);
 		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 37);
+		trB17.draw("|", (drawable.getSurfaceWidth() * 0 / 10) + 55, drawable.getSurfaceHeight() / 4 + 22);
 		
-		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 36);
-		trB17.draw("[-]", (drawable.getSurfaceWidth() * 0 / 10) + 42, drawable.getSurfaceHeight() / 4 + 16);
+		trB17.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 21);
+		trB17.draw("[-]", (drawable.getSurfaceWidth() * 0 / 10) + 42, drawable.getSurfaceHeight() / 4 + 1);
 		trB17.endRendering();
 
 		trB20.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 		trB20.setColor(0.0f, 1.0f, 0.0f, 1.0f);
-		trB20.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 46 + 15 * zoom_count);
+		trB20.draw("_", (drawable.getSurfaceWidth() * 0 / 10) + 47, drawable.getSurfaceHeight() / 4 + 31 + 15 * zoom_count);
 		trB20.setColor(0.9f, 0.9f, 0.9f, 0.9f);
 		trB20.endRendering();
 	}
