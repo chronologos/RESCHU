@@ -1138,7 +1138,6 @@ public class Vehicle {
 		}
 		else {
 			double distance = Math.hypot((getTarget().getPos()[0]-getX64()), (getTarget().getPos()[1]-getY64()));
-			System.out.println("DISTANCE = "+distance);
 			return distance;
 		}
 	}

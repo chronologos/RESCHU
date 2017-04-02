@@ -50,6 +50,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public static String _username;
 	public static int _scenario;		
 	public static int _gamemode;		// the game has several modes. see reschu.constant.MyGameMode
+	public static int _practice;		// whether in practice mode or experiment mode
 	public static boolean _database; 	// if set to false, we don't write to database
 
 	public JPanel pnlMapContainer, pnlPayloadContainer;
@@ -75,8 +76,10 @@ public class Reschu extends JFrame implements GUI_Listener {
 
 	/** Interactive Tutorial Mode? */
 	public static boolean tutorial() { return _gamemode == MyGameMode.TUTORIAL_MODE; }
-	// return if scenario is low taskload
-	public static boolean low_taskload() {return _scenario == 1;}
+	// return true if scenario is low taskload
+	public static boolean low_taskload() {return _scenario == MyGameMode.LOW_TASKLOAD;}
+	// return true if is in practice mode
+	public static boolean practice_mode() {return _practice == MyGameMode.PRACTICE_MODE;}
 	/** Training Mode? */
 	public static boolean train() { return _gamemode == MyGameMode.TRAIN_MODE; }
 	/** Replay Mode? */
@@ -96,10 +99,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public Reschu(int gamemode, int scenario, String username, AppMain main, boolean database) throws NumberFormatException, IOException {
+	public Reschu(int gamemode, int scenario, int practice, String username, AppMain main, boolean database) throws NumberFormatException, IOException {
 		super("RESCHU Security-Aware");
 		_gamemode = gamemode;
 		_scenario = scenario;
+		_practice = practice;
 		_username = username;
 		_database = database;      
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
@@ -936,7 +940,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run () {
 				try {
-					new Reschu(1, 1, "administartor_0", new AppMain(), false).setVisible(true);
+					new Reschu(1, 1, 0, "administartor_0", new AppMain(), false).setVisible(true);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

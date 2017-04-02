@@ -25,11 +25,10 @@ public class AppMain implements ActionListener
 	private String _username;
 	private int _gamemode = MyGameMode.ADMINISTRATOR_MODE;
 	private int _scenario;
-
-	private int _scenario1;			
+	private int _practice;
 	private JFrame _frmLogin;
 	private JButton _btnStart;
-	private JComboBox _cmbBoxGameMode, _cmbBoxScenario;	 
+	private JComboBox _cmbBoxGameMode, _cmbBoxScenario, _cmbBoxPractice;
 	private Reschu reschu;
 	
 	/**
@@ -45,7 +44,7 @@ public class AppMain implements ActionListener
         reschu.dispose();
         reschu = null;
         
-        initRESCHU(_username, _scenario);
+        initRESCHU(_username, _scenario, _practice);
     }
     	
     /**
@@ -55,10 +54,10 @@ public class AppMain implements ActionListener
     }
     
     // for debugging mode
-    public void initRESCHU_public(String username, int scenario) {
+    public void initRESCHU_public(String username, int scenario, int practice) {
     	_gamemode = 1;
     	try {
-			initRESCHU(username,  scenario);
+			initRESCHU(username,  scenario, practice);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,15 +67,16 @@ public class AppMain implements ActionListener
 		}
     }
     
-	private void initRESCHU(String username, int scenario) throws NumberFormatException, IOException 
+	private void initRESCHU(String username, int scenario, int practice) throws NumberFormatException, IOException 
 	{	  
 		// Setting _scenario again seems counter-intuitive here. 
 		// Since we are differentiating between administrators and subjects,
 		// we need to update the scenario number here again.
 		_scenario = scenario;
+		_practice = practice;
 	    
 		// Create an instance of Reschu (JFrame)
-		reschu = new Reschu(_gamemode, scenario, _username, this, WRITE_TO_DATABASE);		      
+		reschu = new Reschu(_gamemode, _scenario, _practice, _username, this, WRITE_TO_DATABASE);		      
 		reschu.pack(); 
 		reschu.setVisible(true); 
 		reschu.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -87,27 +87,31 @@ public class AppMain implements ActionListener
 		TitledBorder border; 
 		ImageIcon imgIcon;
 		
-		JLabel lblHAL, lblGameMode, lblScenario;  
+		JLabel lblHAL, lblGameMode, lblScenario, lblPractice;  
 		
 		JPanel pnl = new JPanel();
 		JPanel pnlInside = new JPanel();
 		
 		// String[] scenarios = {"None", "Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5", "Scenario 6"};
 		// String[] gamemodes = {"Tutorial", "Demo"};
-		String[] scenarios = {"None", "Low Taskload", "High Taskload"};
+		String[] scenarios = {"Scenario 1", "Scenario 2"};
 		String[] gamemodes = {"Experiment"};
+		String[] practices = {"Practice", "Experiment"};
 				
 		border = BorderFactory.createTitledBorder("");
 		
 		lblHAL = new JLabel();
 		lblGameMode = new JLabel("Mode");
-		lblScenario = new JLabel("Scenario"); 
+		lblScenario = new JLabel("Scenario");
+		lblPractice = new JLabel("Mode");
 		_btnStart = new JButton("START"); 
 		_btnStart.addActionListener(this);
 		_cmbBoxGameMode = new JComboBox(gamemodes);
 		_cmbBoxGameMode.addActionListener(this);
 		_cmbBoxScenario = new JComboBox(scenarios);	
 		_cmbBoxScenario.addActionListener(this);
+		_cmbBoxPractice = new JComboBox(practices);
+		_cmbBoxPractice.addActionListener(this);
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File("Pictures/HAL/HAL.png"));
@@ -136,13 +140,15 @@ public class AppMain implements ActionListener
 					
 		pnlInside.setLayout(new TableLayout(sizeInside));
 		pnlInside.setBorder(border);
-		pnlInside.add(lblGameMode, "1,3");
-		pnlInside.add(_cmbBoxGameMode, "3,3");
-		pnlInside.add(lblScenario, "1,5");
-		pnlInside.add(_cmbBoxScenario, "3,5");
+		// pnlInside.add(lblGameMode, "1,3");
+		// pnlInside.add(_cmbBoxGameMode, "3,3");
+		pnlInside.add(lblScenario, "1,3");
+		pnlInside.add(_cmbBoxScenario, "3,3");
+		pnlInside.add(lblPractice, "1,5");
+		pnlInside.add(_cmbBoxPractice, "3,5");
 		pnlInside.add(_btnStart, "1,7, 3,7");
 
-		_btnStart.setEnabled(false);					
+		_btnStart.setEnabled(true);					
 		
 		pnl.setLayout(new TableLayout(sizeMain));
 		pnl.setBorder(border);
@@ -150,7 +156,7 @@ public class AppMain implements ActionListener
 		pnl.add(lblHAL, "1,1, 3,1");
 		pnl.add(pnlInside, "2,2");
  
-		_frmLogin.setSize(400,370);
+		_frmLogin.setSize(400,375);
 	}
 
 	public void actionPerformed(ActionEvent ev) {
@@ -164,11 +170,14 @@ public class AppMain implements ActionListener
 		}
 		if( ev.getSource() == _cmbBoxScenario ) {  
 			_scenario = _cmbBoxScenario.getSelectedIndex();
-			_btnStart.setEnabled(true);			
+			// _btnStart.setEnabled(true);
+		}
+		if( ev.getSource() == _cmbBoxPractice ) {  
+			_practice = _cmbBoxPractice.getSelectedIndex();
 		}
 		if( ev.getSource() == _btnStart ) {
 			try {
-				initRESCHU(_username, _scenario);
+				initRESCHU(_username, _scenario, _practice);
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

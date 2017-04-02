@@ -180,14 +180,14 @@ public class Game implements Runnable, ActionListener
     public void setVehicle(int scenario) {
         try {
             switch( scenario ) {
-            case 1:
+            case 0:
                 vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 if( !Reschu.tutorial() ) vehicleList.addVehicle(2, Vehicle.TYPE_UAV, "Fire Scout B", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 if( !Reschu.tutorial() ) vehicleList.addVehicle(3, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 // if( !Reschu.tutorial() ) vehicleList.addVehicle(4, Vehicle.TYPE_UAV, "Fire Scout D", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);            
                 // if( !Reschu.tutorial() ) vehicleList.addVehicle(5, Vehicle.TYPE_UAV, "Fire Scout E", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 break;
-            case 2:
+            case 1:
             	vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 if( !Reschu.tutorial() ) vehicleList.addVehicle(2, Vehicle.TYPE_UAV, "Fire Scout B", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 if( !Reschu.tutorial() ) vehicleList.addVehicle(3, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
@@ -200,6 +200,7 @@ public class Game implements Runnable, ActionListener
                 // if( !Reschu.tutorial() ) vehicleList.addVehicle(4, Vehicle.TYPE_UUV, "Talisman B", Vehicle.PAYLOAD_ISR, 1000/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 // if( !Reschu.tutorial() ) vehicleList.addVehicle(5, Vehicle.TYPE_UAV, "Fire Scout C", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 break;
+            /*
             case 3:
                 vehicleList.addVehicle(1, Vehicle.TYPE_UAV, "Fire Scout A", Vehicle.PAYLOAD_ISR, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);
                 vehicleList.addVehicle(2, Vehicle.TYPE_UAV, "Global Hawk A", Vehicle.PAYLOAD_COM, 500/MySpeed.SPEED_CONTROL, rnd, map, lsnr, this);            
@@ -239,6 +240,7 @@ public class Game implements Runnable, ActionListener
             default:
                 vehicleList.addVehicle(1, Vehicle.TYPE_UAV, Vehicle.TYPE_UAV+"_1", "ISR", 500, rnd, map, lsnr, this);
                 break;
+            */
             }
         } catch (UserDefinedException e) {e.printStackTrace();}
     }
