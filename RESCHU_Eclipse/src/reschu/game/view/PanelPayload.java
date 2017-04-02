@@ -771,84 +771,23 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
     }
 	 */
 	
-	public int zoom_in() { //far01 zooming fn
-		//if (zoom_count == 3 ) {
-        //    return;}
-		//if (zoomLevel >= 1) {
-//		if (nextZoomLevel >= 1) {
-//			//zoomLevel ++;
-//			nextZoomLevel ++;
-//		}
-//		else {
-//			//zoomLevel = 1/((1/zoomLevel) - 1);
-//			nextZoomLevel = 1/((1/nextZoomLevel) - 1);
-//		}
-		if (nextZoomLevel >= 2f/1.2f/1.2f/1.2f) {
-			//zoomLevel ++;
+	public int zoom_in() {
+		if (zoom_count < ZOOMMAX) {
 			nextZoomLevel = nextZoomLevel / 1.2f;
 			zoom_count++;
 		}
-		else {
-
-		}
-		//System.out.println("new zoom is" + zoomLevel);
-		//System.out.println("new zoom level is" + nextZoomLevel);
-		//zoom_count = zoom_count + 1;
 		return zoom_count;
-		/*
-    	if (!isEnabled() || zoom_count == 3 || (changing_view != null && changing_view.isRunning())) {
-            return;
-        }
-        zoom_count = zoom_count + 1;
-        if (v.getType() == Vehicle.TYPE_UAV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
-        } else if (v.getType() == Vehicle.TYPE_UUV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off - 5);
-        }
-        changing_view.setAcceleration(0.4f);
-        changing_view.start();
-		 */
 	}
 
-	public int zoom_out() { //far01 zooming fn
-
-		//if (zoomLevel <= 1) {
-		if (nextZoomLevel <= (2f*1.2f*1.2f*1.2f)) {
-			//zoomLevel ++;
+	public int zoom_out() {
+		if (zoom_count > ZOOMMIN) {
 			nextZoomLevel = nextZoomLevel * 1.2f;
 			zoom_count--;
 		}
-		else {
-
-		}
-//		if (nextZoomLevel >= 1) {
-//			//	zoomLevel = 1/((1/zoomLevel) + 1);
-//			nextZoomLevel = 1/((1/nextZoomLevel) + 1);
-//		}
-//		else {
-//
-//		}
-		//System.out.println("zoom is" + zoomLevel);
-		//System.out.println("zoom is " + nextZoomLevel);
 		return zoom_count;
-		/*
-        if (!isEnabled() || zoom_count == 0 || (changing_view != null && changing_view.isRunning())) {
-            return;
-        }
-        zoom_count = zoom_count - 1;
-        if (v.getType() == Vehicle.TYPE_UAV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
-        } else if (v.getType() == Vehicle.TYPE_UUV) {
-            changing_view = PropertySetter.createAnimator(500, this, "Zoom", zoom_angle_off, zoom_angle_off + 5);
-        }
-        changing_view.setAcceleration(0.4f);
-        changing_view.start();
-		 */
 	}
 	
-	public int getZoomCount() {
-		return zoom_count;
-	}
+	public int getZoomCount() { return zoom_count; }
 
 	// PopupMenu implementation
 	public JPopupMenu getPopMenu() { return popMenu; }   
