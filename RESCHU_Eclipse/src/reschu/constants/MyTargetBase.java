@@ -25,8 +25,7 @@ public class MyTargetBase {
 											  {78, 251, 3, 14, 15, 16},
 											  {68, 218, 3, 7, 8, 9},
 											  {66, 159, 3, 14, 15, 16},
-											  {52, 100, 3, 13, 14, 15}
-											  };
+											  {52, 100, 3, 13, 14, 15}};
 	static public int TargetIndex = 0;
 	
 	static public int[][] getTargetBase() {

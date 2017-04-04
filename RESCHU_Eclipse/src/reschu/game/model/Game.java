@@ -118,13 +118,14 @@ public class Game implements Runnable, ActionListener
             map.setTargetArea_TEMPORARY_FOR_TUTORIAL_BY_CARL(rnd);
         }
         else {    
-            map.setHazardArea(rnd);
+            // map.setHazardArea(rnd);
             try {
             	if(MyGame.TargetDataBase) map.setTargetArea_DataBase(rnd);
             	else map.setTargetArea(rnd);
             } catch(UserDefinedException e) {
                 e.printStackTrace();
             }
+            map.setHazardArea(rnd);
         }
 
         setVehicle(scenario); 
