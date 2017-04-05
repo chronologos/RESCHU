@@ -821,9 +821,8 @@ public class Vehicle {
         
         setGroundTruthX64(getGroundTruthX64() - Math.cos(s64GtAngle)*MySpeed.VELOCITY64);
         setGroundTruthY64(getGroundTruthY64() - Math.sin(s64GtAngle)*MySpeed.VELOCITY64);
-        // payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
         payloadCheck((int)(getX64()), (int)(getY64()));
-        
+        // payloadCheck((int)(getGroundTruthX64()), (int)(getGroundTruthY64()));
         // if(getIndex() == 1) System.out.println("X = "+getX64()+" Y = "+getY64());
 
         if (isHijacked) {

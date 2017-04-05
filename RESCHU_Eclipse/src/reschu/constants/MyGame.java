@@ -37,5 +37,5 @@ public class MyGame {
     final static public boolean TargetDataBase = true;
     // final static public boolean TargetDataBase = false;
     
-    final static public int TOTAL_SECOND = 300; // total time (in second) for one experiment
+    final static public int TOTAL_SECOND = 900; // total time (in second) for one experiment
 }

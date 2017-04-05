@@ -1,7 +1,10 @@
 package reschu.constants;
 
 public class MyTargetBase {
-	final static public int[][] TargetBase = {{40, 452, 1, 7, 8, 9},
+	final static public int[][] TargetBase = {{34, 460, -1, 9, 10, 11},
+											  //{},
+											  //{},
+											  {40, 452, 1, 7, 8, 9},
 											  {89, 47, 0, 12, 13, 14},
 											  {137, 32, -1, 12, 13, 14},
 											  {341, 445, 2, 13, 14, 15},
