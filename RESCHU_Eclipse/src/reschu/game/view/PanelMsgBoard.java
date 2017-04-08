@@ -86,7 +86,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     		VehicleList vlist = reschu.game.getVehicleList();
     		
     		// for generating target data base via directly setting the location of UAV 1
-    		// /*
+    		/*
     		int[] temp = new int[2];
     		String text = txtChat.getText();
     		String[] elements = text.split(" ");
@@ -94,7 +94,7 @@ public class PanelMsgBoard extends JPanel implements ActionListener
     		temp[1] = Integer.parseInt(elements[1]);
     		// System.out.println("TEXT = "+temp[0]+" "+temp[1]);
     		vlist.getVehicle(0).setPos64((double)temp[0], (double)temp[1]);
-    		// */
+    		*/
     		
     		for(int i=0; i<vlist.size(); i++) {
     			if(vlist.getVehicle(i).isEngaged) {
