@@ -139,4 +139,6 @@ public interface GUI_Listener {
     // For performance statistics
 	public void EVT_Correct_Task(int vIdx, String name, String ans, int input);
 	public void EVT_Incorrect_Task(int vIdx, String name, String ans, int input);
+	public void EVT_Correctly_Hack_Detected(Vehicle v);
+	public void EVT_Incorrectly_Hack_Detected(Vehicle v);
 }

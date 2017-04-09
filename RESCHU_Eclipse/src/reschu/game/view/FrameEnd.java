@@ -107,13 +107,13 @@ public class FrameEnd extends JFrame {
 		
 		lblThank   = new JLabel("Thank you for your participation!");
 		lblDamage  = new JLabel("Total UAV damage is "+total_damage);
-		lblTask    = new JLabel("Total tasks finished correctly is   "+total_task);
+		lblTask    = new JLabel("Total tasks finished correctly is "+total_task);
 		lblWTask   = new JLabel("Total tasks finished incorrectly is "+wrong_task);
 		lblAttack  = new JLabel("Total attacks detected correctly is "+total_attack);
-		lblWAttack = new JLabel("Total attacks detected incorrectly  "+wrong_attack);
+		lblWAttack = new JLabel("Total attacks detected incorrectly "+wrong_attack);
 		lblLost    = new JLabel("Total disappeared UAVs "+total_lost);
 		lblTotal   = new JLabel("Your final score is "+final_score);
-        		
+        
 		btnEnd = new JButton("EXIT");
 		btnEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){

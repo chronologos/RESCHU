@@ -75,6 +75,9 @@ public class MyDB {
 	final public static int UAV_NOT_HACKED_DECIDED		= 79;
 	final public static int UAV_HACKED_DECIDED			= 80;
 	
+	final public static int CORRECT_HACKING_DETECT		= 87;
+	final public static int INCORRECT_HACKING_DETECT	= 88;
+	
 	final public static int VEHICLE_ADDED				= 81;
 	final public static int VEHICLE_DELETED				= 82;
 	final public static int NEW_TARGET_ASSIGNED			= 83;

@@ -649,7 +649,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 
 	// DB
-	private void Write(int invoker, int type, int vIdx, String log, int X, int Y) {
+	public void Write(int invoker, int type, int vIdx, String log, int X, int Y) {
 		if (!MyLogging.WRITE_TO_DISK) {
 			return;
 		}
@@ -918,8 +918,20 @@ public class Reschu extends JFrame implements GUI_Listener {
     			"Attacked UAV "+v.getIndex()+" disappear because its ground truth location is out of border", v.getX(), v.getY());
     }
     public void EVT_UAV_DECIDED_NOT_HACKED(Vehicle v) {
-    	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_NOT_HACKED_DECIDED, v.getIndex(),
+    	Write(MyDB.INVOKER_USER, MyDB.UAV_NOT_HACKED_DECIDED, v.getIndex(),
     			"UAV "+v.getIndex()+" is considered NOT being attacked from pop menu", v.getX(), v.getY());
+    	if(v.getHijackStatus()) EVT_Incorrectly_Hack_Detected(v);
+    	else EVT_Correctly_Hack_Detected(v);
+    }
+    public void EVT_Correctly_Hack_Detected(Vehicle v) {
+		game.AddDetectedAttack();
+		Write(MyDB.INVOKER_USER, MyDB.CORRECT_HACKING_DETECT, v.getIndex(),
+    			"Correct hacking detected for UAV "+v.getIndex(), v.getX(), v.getY());
+    }
+    public void EVT_Incorrectly_Hack_Detected(Vehicle v) {
+		game.AddWrongDetect();
+		Write(MyDB.INVOKER_USER, MyDB.INCORRECT_HACKING_DETECT, v.getIndex(),
+    			"Incorrect hacking detected for UAV "+v.getIndex(), v.getX(), v.getY());
     }
     public void EVT_UAV_DECIDED_HACKED(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_HACKED_DECIDED, v.getIndex(),

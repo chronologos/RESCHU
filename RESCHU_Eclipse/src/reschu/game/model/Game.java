@@ -43,7 +43,7 @@ public class Game implements Runnable, ActionListener
 
     static public Calendar cal = Calendar.getInstance();
 
-    private VehicleList vehicleList;
+    private static VehicleList vehicleList;
     private PayloadList payloadList;
 
     public Map map;
@@ -462,8 +462,9 @@ public class Game implements Runnable, ActionListener
     // immediately change UAV's position, for HOME functions
     // change current position and reassign a target
     public void HomeFunction(Vehicle v) {
-        if(v.getHijackStatus()) AddDetectedAttack();
-        else AddWrongDetect();
+        if(v.getHijackStatus()) lsnr.EVT_Correctly_Hack_Detected(v);
+        else lsnr.EVT_Incorrectly_Hack_Detected(v);
+        
         v.setHijackStatus(false);
         v.setInvestigateStatus(false);
         v.setNotifiedStatus(false);
@@ -649,6 +650,9 @@ public class Game implements Runnable, ActionListener
     
     // get total detected attack number
     public static int GetWrongDetect() {
+    	for(int i=0; i<vehicleList.size(); i++) {
+    		if(VehicleList.getVehicle(i).getNotifiedStatus()) AddWrongDetect();
+    	}
     	return wrong_detect;
     }
 }
