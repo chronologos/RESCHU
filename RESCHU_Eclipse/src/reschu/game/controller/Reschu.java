@@ -303,7 +303,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		// Disable the map panel until the game starts
 		pnlMap.setEnabled(false); 
 
-		//Prepare file for saving
+		// Prepare file for saving
 
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:S");
@@ -312,15 +312,15 @@ public class Reschu extends JFrame implements GUI_Listener {
 		String temp_2 = "Time   / Invoker / Type / vIdx /     log     / Coordinate X / Coordinate Y";
 		String test = "logs/" + date.format(cal.getTime()) + "rand" +  randstr +  ".txt";
 
-		//For string
+		// For string
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(test)));
 			out.println(temp_1);
 			out.println(temp_2);
 			out.close();
 		} catch (IOException e) {
-			System.out.println("Warning: File NOT correctly written to.  Reschu:Write()");
-			//exception handling left as an exercise for the reader
+			System.out.println("Warning: File NOT correctly written to Reschu:Write()");
+			// exception handling left as an exercise for the reader
 		}
 	}
 
@@ -377,13 +377,14 @@ public class Reschu extends JFrame implements GUI_Listener {
 			}
 		}
 
-		// screen resolution check for Java WebStart. 
-		//    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
-		//    		setVisible(false);
-		//    		JOptionPane.showMessageDialog(null,	
-		//					"You need a minimum screen resolution of 1280 x 1024. Please try again.", "Message", 1);
-		//    		System.exit(0);
-		//    	}
+		// screen resolution check for Java WebStart
+		/*
+    	if( getHeight() < MySize.MAP_HEIGHT_PXL ) {
+    		setVisible(false);
+    		JOptionPane.showMessageDialog(null,	"You need a minimum screen resolution of 1280 x 1024. Please try again.", "Message", 1);
+    		System.exit(0);
+    	}
+    	*/
 
 		if( train() ) {
 			// enables the "close" function when Training mode            
@@ -405,7 +406,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 		
 		new Thread(game).start();
 		// enable panels which are initially disabled
-		pnlMap.setEnabled(true); 
+		pnlMap.setEnabled(true);
+		EVT_System_GameStart();
 	}
 
 	@Override
@@ -453,7 +455,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
 		
 		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMAX) {
-			zoomMax();
+			EVT_Click_ZoomMax();
 		}
 	}
 	@Override
@@ -462,17 +464,17 @@ public class Reschu extends JFrame implements GUI_Listener {
 		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
 		
 		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMIN) {
-			zoomMin();
+			EVT_Click_ZoomMin();
 		}
 	}
 	
 	@Override
-	public void zoomMax() {
-		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MAX, -1, "Clicked Zoom In, reached Zoom Max", -1, -1);
+	public void EVT_Click_ZoomMax() {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MAX, -1, "Clicked Zoom In, reached Zoom Max");
 	}
 	@Override
-	public void zoomMin() {
-		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min", -1, -1);
+	public void EVT_Click_ZoomMin() {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min");
 	}
 	
 	@Override
@@ -611,7 +613,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		// create a dialog
 		Object[] options = {"Yes", "No"};
-		JOptionPane home_mode = new JOptionPane("Let UAV "+v.getIndex()+" go home", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+		JOptionPane home_mode = new JOptionPane("Let UAV["+v.getIndex()+"] go home", JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
 		home_mode.setVisible(true);
 		JDialog invest_dialog = home_mode.createDialog(home_mode.getParent(), "Emergent State");
 		invest_dialog.setVisible(true);
@@ -675,6 +677,25 @@ public class Reschu extends JFrame implements GUI_Listener {
 					tutorial.event(type, vIdx, target);
 		}
 	}
+	
+	public void Write(int invoker, int type, int vIdx, String log) {
+		if (!MyLogging.WRITE_TO_DISK) {
+			return;
+		}
+		Calendar cal = Calendar.getInstance();
+		String temp = Now() + ",   " + invoker  + ",   " + type  + ",   " + vIdx  + ",   " + log;
+		SimpleDateFormat date = new SimpleDateFormat("EEE,MMM d,yyyy");
+		String test = "logs/" + date.format(cal.getTime()) + "rand" + randstr + ".txt";
+
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(test,true)));
+			out.println(temp);
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Warning: File NOT correctly written to.  Reschu:Write()");
+			//exception handling left as an exercise for the reader
+		}
+	}
 
 	private static String Now() {
 		//Needs to be updated to get high resolution timing, to ms
@@ -685,93 +706,93 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 
 	public void EVT_WP_AddWP_Start(int vIdx){
-		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_START, vIdx, "WP add start", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_START, vIdx, "Waypoint adding start");
 	}
 	public void EVT_WP_AddWP_End(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_END, vIdx, "WP add end", mouseCoordX, mouseCoordY); 
+		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_END, vIdx, "Waypoint adding end", mouseCoordX, mouseCoordY); 
 	}
 	public void EVT_WP_AddWP_Cancel(int vIdx) {
-		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_CANCEL, vIdx, "WP add canceled", -1, -1); 
+		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_CANCEL, vIdx, "Waypoint adding cancel"); 
 	}
 	public void EVT_WP_MoveWP_Start(int vIdx, int mouseCoordX, int mouseCoordY){
-		Write(MyDB.INVOKER_USER, MyDB.WP_MOVE_START, vIdx, "WP move start", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.WP_MOVE_START, vIdx, "Waypoint moving start", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_WP_MoveWP_End(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.WP_MOVE_END, vIdx, "WP move end", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.WP_MOVE_END, vIdx, "Waypoint moving end", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_WP_DeleteWP_Start(int vIdx){
-		Write(MyDB.INVOKER_USER, MyDB.WP_DELETE_START, vIdx, "WP delete start", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.WP_DELETE_START, vIdx, "Waypoint deleting start");
 	}
 	public void EVT_WP_DeleteWP_End(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.WP_DELETE_END, vIdx, "WP delete end", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.WP_DELETE_END, vIdx, "Waypoint deleting end", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_GP_SetGP_by_System(int vIdx, String targetName){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.GP_SET_BY_SYSTEM, vIdx, "Goal set by system; assigned to target[" + targetName + "]", -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.GP_SET_BY_SYSTEM, vIdx, "Goal set by system, UAV["+vIdx+"] is assigned to target["+targetName+"]");
 	}
 	public void EVT_GP_SetGP_Start(int vIdx){
-		Write(MyDB.INVOKER_USER, MyDB.GP_SET_START, vIdx, "Goal set start", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.GP_SET_START, vIdx, "Goal setting start");
 	}
 	public void EVT_GP_SetGP_End_Assigned(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_ASSIGNED, vIdx, "Goal set end; assigned to target[" + targetName +"]", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_ASSIGNED, vIdx, "Goal setting end, UAV["+vIdx+"] is assigned to target["+targetName+"]", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_GP_SetGP_End_Unassigned(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_UNASSIGNED, vIdx, "Goal set end. no assign", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_UNASSIGNED, vIdx, "Goal setting end, no assignment", mouseCoordX, mouseCoordY);
 	}
     public void EVT_GP_SetGP_Cancel(int vIdx) {
-    	Write(MyDB.INVOKER_USER, MyDB.GP_SET_CANCEL, vIdx, "Goal set canceled", -1, -1); 
+    	Write(MyDB.INVOKER_USER, MyDB.GP_SET_CANCEL, vIdx, "Goal set canceled"); 
     }
 	public void EVT_GP_ChangeGP_Start(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_START, vIdx, "Goal change start from Target[" + targetName + "]", mouseCoordX, mouseCoordY);    	
+		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_START, vIdx, "Goal changing start from Target["+targetName+"]", mouseCoordX, mouseCoordY);    	
 	}
 	public void EVT_GP_ChangeGP_End_Assigned(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){    	
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_ASSIGNED, vIdx, "Goal change end. target[" + targetName + "] assigned", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_ASSIGNED, vIdx, "Goal changing end, target["+targetName+"] assigned", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_GP_ChangeGP_End_Unassigned(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_UNASSIGNED, vIdx, "Goal change end; target unassigned", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_UNASSIGNED, vIdx, "Goal changing end, target unassigned", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_Target_Generated(String targetName, int[] targetPos, boolean visibility){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_GENERATED, -1, "Target[" + targetName + "] generated (visibile=" + visibility + ")", targetPos[0], targetPos[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_GENERATED, -1, "Target["+targetName+"] generated (visibile = "+visibility+")", targetPos[0], targetPos[1]);
 	}
 	public void EVT_Target_BecameVisible(String targetName, int[] targetPos){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_BECAME_VISIBLE, -1, "Target[" + targetName +"] became visible", targetPos[0], targetPos[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_BECAME_VISIBLE, -1, "Target["+targetName+"] became visible", targetPos[0], targetPos[1]);
 	}
 	public void EVT_Target_Disappeared(String targetName, int[] targetPos){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_DISAPPEARED, -1, "Target[" + targetName + "] disappeared" , targetPos[0], targetPos[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.TARGET_DISAPPEARED, -1, "Target["+targetName+"] disappeared" , targetPos[0], targetPos[1]);
 	}
 	public void EVT_Payload_EngagedAndFinished_COMM(int vIdx, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_AND_FINISHED, vIdx, "Payload Engaged and Finished. COMM", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_AND_FINISHED, vIdx, "Payload Engaged and Finished. COMM");
 	}
 	public void EVT_Payload_Engaged_pnlMap(int vIdx, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLMAP, vIdx, "Payload Engaged to Target[" + targetName + "] from Map", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLMAP, vIdx, "Payload Engaged to Target[" + targetName + "] from Map");
 	}
 	public void EVT_Payload_Engaged_pnlCompact(int vIdx, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLCOMPACT, vIdx, "Payload Engaged to Target[" + targetName + "] from Compact Panel", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLCOMPACT, vIdx, "Payload Engaged to Target[" + targetName + "] from Compact Panel");
 	}
 	public void EVT_Payload_Engaged_pnlUAV(int vIdx, String targetName){
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLUAV, vIdx, "Payload Engaged to Target[" + targetName + "] from UAV panel", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_ENGAGED_FROM_PNLUAV, vIdx, "Payload Engaged to Target[" + targetName + "] from UAV panel");
 	}
 	public void EVT_Payload_Finished_Correct(int vIdx, String targetName){
 		play(WAVPlayer.CORRECT);
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_FINISHED_CORRECT, vIdx, "Payload Finished; CORRECT", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_FINISHED_CORRECT, vIdx, "Payload Finished correctly");
 	}
 	public void EVT_Payload_Finished_Incorrect(int vIdx, String targetName){
 		play(WAVPlayer.INCORRECT);
-		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_FINISHED_INCORRECT, vIdx, "Payload Finished. INCORRECT", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.PAYLOAD_FINISHED_INCORRECT, vIdx, "Payload Finished incorrectly");
 	}
 	public void EVT_Vehicle_Damaged(int vIdx,int haX, int haY){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_DAMAGED, vIdx, "Damaged with a HazardArea", haX, haY);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_DAMAGED, vIdx, "UAV["+vIdx+"] damaged with a HazardArea", haX, haY);
 	}
 	public void EVT_Vehicle_SpeedDecreased(int vIdx, int curSpeed){
 		play(WAVPlayer.PENALIZED);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_SPEED_DECREASED, vIdx, "Speed Decreased to (" + curSpeed + ")", -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_SPEED_DECREASED, vIdx, "Speed Decreased to ("+curSpeed+")");
 	}
 	public void EVT_Vehicle_ArrivesToTarget(int vIdx, String targetName, int x, int y){
 		play(WAVPlayer.VEHICLE_ARRIVE);
@@ -782,51 +803,50 @@ public class Reschu extends JFrame implements GUI_Listener {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.HACKED_UAV_ARRIVES_TARGET, vIdx, "Hacked UAV ["+vIdx+"] arrives to target ["+targetName+"]", x, y);
 	}
 	public void EVT_Vehicle_IntersectHazardArea(int vIdx, int[] threat) {
-		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_INTERSECT_HAZARDAREA, vIdx, "Intersect with a HazardArea", threat[0], threat[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_INTERSECT_HAZARDAREA, vIdx, "UAV["+vIdx+"] intersects with a HazardArea", threat[0], threat[1]);
 	}
 	public void EVT_Vehicle_EscapeHazardArea(int vIdx) {
-		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_ESCAPE_HAZARDAREA, vIdx, "Escape from a HazardArea", -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.VEHICLE_ESCAPE_HAZARDAREA, vIdx, "UAV["+vIdx+"] Escape from a HazardArea");
 	}
 	public void EVT_HazardArea_Generated(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_GENERATED, -1, "HazardArea Generated", pos[0], pos[1]);
 	}
 	public void EVT_HazardArea_Disappeared(int[] pos) {
 		for( int vIdx=0; vIdx<game.getVehicleList().size(); vIdx++ ) 
 			checkIntersect(vIdx+1);
-		// Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HAZARDAREA_DISAPPEARED, -1, "HazardArea Disappeared", pos[0], pos[1]);    	
 	}
 	public void EVT_Correct_Task(int vIdx, String name, String ans, int input) {
-		Write(MyDB.INVOKER_USER, MyDB.CORRECT_TASK_ANSWER, vIdx, "Correct! Target "+name+" answer is "+ans+", operator respond is "+input, -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.CORRECT_TASK_ANSWER, vIdx, "Correct! Target "+name+" answer is "+ans+", operator respond is "+input);
 	}
 	public void EVT_Incorrect_Task(int vIdx, String name, String ans, int input) {
-		Write(MyDB.INVOKER_USER, MyDB.INCORRECT_TASK_ANSWER, vIdx, "Incorrect! Target "+name+" answer is "+ans+", operator respond is "+input, -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.INCORRECT_TASK_ANSWER, vIdx, "Incorrect! Target "+name+" answer is "+ans+", operator respond is "+input);
 	}
 	@Override
 	public void EVT_System_GameStart(){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario, -1, -1); 
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario); 
 	}
-	public void EVT_System_GameEnd(){ 
-		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Game End. user =" + _username + ". scenario = "+ _scenario, -1, -1);
+	public void EVT_System_GameEnd(){
+		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Game End. user =" + _username + ". scenario = "+ _scenario);
 	}
 	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int wrong_task, int attack, int wrong_attack, int lost, int total) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total UAV damage is   "+damage, -1, -1);
+				"Total UAV damage is "+damage);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total tasks done is   "+task, -1, -1);
+				"Total tasks finished correctly is "+task);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total wrong tasks is  "+wrong_task, -1, -1);
+				"Total tasks finished incorrectly is "+wrong_task);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total detected attack "+attack, -1, -1);
+				"Total attacks detected correctly is "+attack);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1,
-				"Total wrong detects   "+wrong_attack, -1, -1);
+				"Total attacks detected incorrectly "+wrong_attack);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
-				"Total disappeared UAV "+lost, -1, -1);
+				"Total number of disappeared UAVs is "+lost);
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Your Total score is 100 - "
-				+damage+"(damage) + 5*"+task+"(correct task) - 5*"+wrong_task+"(wrong task) + 10*"
-				+attack+"(correct attack) - 10*"+wrong_attack+"(wrong attack) - 20*"+lost+"(lost) = "+total, -1, -1);
+				+damage+"(damage) + 5*"+task+"(correct task) - 5*"+wrong_task+"(incorrect task) + 10*"
+				+attack+"(correct detect) - 10*"+wrong_attack+"(incorrect detect) - 20*"+lost+"(lost) = "+total);
 	}
 	
 	/**
@@ -898,44 +918,44 @@ public class Reschu extends JFrame implements GUI_Listener {
     	Write(MyDB.INVOKER_USER, MyDB.HOME_FROM_RIGHT_CLICK_NO, vIdx, "Home button clicked from right click denied", xCoord, yCoord);
     }
     public void	EVT_Vehicle_Added(int vIdx, int xCoord, int yCoord) {
-    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_ADDED, vIdx, "Additional UAV "+vIdx+" is added", xCoord, yCoord);
+    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_ADDED, vIdx, "Additional UAV["+vIdx+"] is added", xCoord, yCoord);
     }
     public void	EVT_Vehicle_Deleted(int vIdx, int xCoord, int yCoord) {
-    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_DELETED, vIdx, "UAV "+vIdx+" is going home (deleted)", xCoord, yCoord);
+    	Write(MyDB.INVOKER_USER, MyDB.VEHICLE_DELETED, vIdx, "UAV["+vIdx+"] is going home (deleted)", xCoord, yCoord);
     }
     public void EVT_New_Target_Assgined(int vIdx, int xCoord, int yCoord, Target t) {
     	Write(MyDB.INVOKER_USER, MyDB.NEW_TARGET_ASSIGNED, vIdx,
-    			"UAV "+vIdx+" is assigned to target "+t.getName()+" at the position of "+t.getPos()[0]+", "+t.getPos()[1], xCoord, yCoord);
+    			"UAV["+vIdx+"] is assigned to target "+t.getName()+" at the position of "+t.getPos()[0]+", "+t.getPos()[1], xCoord, yCoord);
     }
     // For Ghost Mission
     public void EVT_Generate_Ghost_Mission(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.GENERATE_GHOST_MISSION, v.getIndex(),
-    			"UAV "+v.getIndex()+" is under attck, generate its ghost mission", v.getX(), v.getY());
+    			"UAV["+v.getIndex()+"] is under attck, generate its ghost mission", v.getX(), v.getY());
     	// game.AddGhostUAV(v);
     }
     public void EVT_ATTACKED_UAV_DISAPPEAR(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.ATTACKED_UAV_DISAPPEAR, v.getIndex(),
-    			"Attacked UAV "+v.getIndex()+" disappear because its ground truth location is out of border", v.getX(), v.getY());
+    			"Attacked UAV["+v.getIndex()+"] disappear because its ground truth location is out of border", v.getX(), v.getY());
     }
     public void EVT_UAV_DECIDED_NOT_HACKED(Vehicle v) {
     	Write(MyDB.INVOKER_USER, MyDB.UAV_NOT_HACKED_DECIDED, v.getIndex(),
-    			"UAV "+v.getIndex()+" is considered NOT being attacked from pop menu", v.getX(), v.getY());
+    			"UAV["+v.getIndex()+"] is considered NOT being attacked from pop menu", v.getX(), v.getY());
     	if(v.getHijackStatus()) EVT_Incorrectly_Hack_Detected(v);
     	else EVT_Correctly_Hack_Detected(v);
     }
     public void EVT_Correctly_Hack_Detected(Vehicle v) {
 		game.AddDetectedAttack();
 		Write(MyDB.INVOKER_USER, MyDB.CORRECT_HACKING_DETECT, v.getIndex(),
-    			"Correct hacking detected for UAV "+v.getIndex(), v.getX(), v.getY());
+    			"Correct hacking detected for UAV["+v.getIndex()+"]", v.getX(), v.getY());
     }
     public void EVT_Incorrectly_Hack_Detected(Vehicle v) {
 		game.AddWrongDetect();
 		Write(MyDB.INVOKER_USER, MyDB.INCORRECT_HACKING_DETECT, v.getIndex(),
-    			"Incorrect hacking detected for UAV "+v.getIndex(), v.getX(), v.getY());
+    			"Incorrect hacking detected for UAV["+v.getIndex()+"]", v.getX(), v.getY());
     }
     public void EVT_UAV_DECIDED_HACKED(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_HACKED_DECIDED, v.getIndex(),
-    			"UAV "+v.getIndex()+" is considered being attacked from pop menu", v.getX(), v.getY());
+    			"UAV["+v.getIndex()+"] is considered being attacked from pop menu", v.getX(), v.getY());
     	try {
 			Vehicle_Go_Home(v, 2);
 		} catch (UserDefinedException e) {

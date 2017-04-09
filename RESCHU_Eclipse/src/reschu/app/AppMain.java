@@ -29,6 +29,7 @@ public class AppMain implements ActionListener
 	private JFrame _frmLogin;
 	private JButton _btnStart;
 	private JComboBox _cmbBoxGameMode, _cmbBoxScenario, _cmbBoxPractice;
+	private JTextField _cmbTextUserID;
 	private Reschu reschu;
 	
 	/**
@@ -87,7 +88,7 @@ public class AppMain implements ActionListener
 		TitledBorder border; 
 		ImageIcon imgIcon;
 		
-		JLabel lblHAL, lblGameMode, lblScenario, lblPractice;  
+		JLabel lblHAL, lblGameMode, lblScenario, lblPractice, lblUserId;  
 		
 		JPanel pnl = new JPanel();
 		JPanel pnlInside = new JPanel();
@@ -101,11 +102,14 @@ public class AppMain implements ActionListener
 		border = BorderFactory.createTitledBorder("");
 		
 		lblHAL = new JLabel();
+		lblUserId = new JLabel("User ID");
 		lblGameMode = new JLabel("Mode");
 		lblScenario = new JLabel("Scenario");
 		lblPractice = new JLabel("Mode");
 		_btnStart = new JButton("START"); 
 		_btnStart.addActionListener(this);
+		_cmbTextUserID = new JTextField();
+		_cmbTextUserID.addActionListener(this);
 		_cmbBoxGameMode = new JComboBox(gamemodes);
 		_cmbBoxGameMode.addActionListener(this);
 		_cmbBoxScenario = new JComboBox(scenarios);	
@@ -134,19 +138,21 @@ public class AppMain implements ActionListener
 		_frmLogin.setVisible(true);        
         
 		double sizeMain[][] = {{TableLayout.FILL, 50, 238, 50, TableLayout.FILL}, 
-				{10, 194, 130, TableLayout.FILL}};				
+				{10, 194, 150, TableLayout.FILL}};				
 		double sizeInside[][] = {{TableLayout.FILL, 60, 10, 140, TableLayout.FILL}, 
-				{TableLayout.FILL, 25, 3, 25, 3, 25, 10, 25, TableLayout.FILL}};
+				{TableLayout.FILL, 10, 0, 25, 3, 25, 3, 25, 10, 25, TableLayout.FILL}};
 					
 		pnlInside.setLayout(new TableLayout(sizeInside));
 		pnlInside.setBorder(border);
 		// pnlInside.add(lblGameMode, "1,3");
 		// pnlInside.add(_cmbBoxGameMode, "3,3");
-		pnlInside.add(lblScenario, "1,3");
-		pnlInside.add(_cmbBoxScenario, "3,3");
-		pnlInside.add(lblPractice, "1,5");
-		pnlInside.add(_cmbBoxPractice, "3,5");
-		pnlInside.add(_btnStart, "1,7, 3,7");
+		pnlInside.add(lblUserId, "1,3");
+		pnlInside.add(_cmbTextUserID, "3, 3");
+		pnlInside.add(lblScenario, "1,5");
+		pnlInside.add(_cmbBoxScenario, "3,5");
+		pnlInside.add(lblPractice, "1,7");
+		pnlInside.add(_cmbBoxPractice, "3,7");
+		pnlInside.add(_btnStart, "1,9, 3,9");
 
 		_btnStart.setEnabled(true);					
 		
@@ -156,7 +162,7 @@ public class AppMain implements ActionListener
 		pnl.add(lblHAL, "1,1, 3,1");
 		pnl.add(pnlInside, "2,2");
  
-		_frmLogin.setSize(400,375);
+		_frmLogin.setSize(400, 400);
 	}
 
 	public void actionPerformed(ActionEvent ev) {
@@ -174,6 +180,9 @@ public class AppMain implements ActionListener
 		}
 		if( ev.getSource() == _cmbBoxPractice ) {  
 			_practice = _cmbBoxPractice.getSelectedIndex();
+		}
+		if( !_cmbTextUserID.getText().equals("") ) {  
+			_username = _cmbTextUserID.getText();
 		}
 		if( ev.getSource() == _btnStart ) {
 			try {

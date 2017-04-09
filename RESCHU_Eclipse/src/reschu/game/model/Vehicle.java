@@ -1032,7 +1032,7 @@ public class Vehicle {
 		// real attack if attack position is NOT "0 0"
 		isHijacked = true;
 		
-		System.out.println("Launching hack with smarter attacker for UAV "+index);
+		System.out.println("Launching hack with smarter attacker for UAV["+index+"]");
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);
 		

@@ -698,31 +698,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	 * Called when submit in the popup menu is clicked or the submit button is clicked. 
 	 */
 	public void checkCorrect() {
-		if (correct) {
-			// PanelMsgBoard.Msg("CORRECT! SCORE!");
-			// g.addScore(1);
-			// lsnr.EVT_Payload_Finished_Correct(v.getIndex(), v.getTarget().getName());
-		} else {
-			// PanelMsgBoard.Msg("INCORRECT! NO SCORE!");
-			// lsnr.EVT_Payload_Finished_Incorrect(v.getIndex(), v.getTarget().getName());
-			/*
-			 * This chuck of code was written for penalizing users when they clicked 
-			 * the wrong target. As for now (May 10, 2008) RESCHU just disregards 
-			 * the wrong target selection and gets you out. So, there's no more meaning
-			 * to penalize.
-			 * -yale
-        penalize = true;
-        new Thread(new Runnable() {
-	        public void run() {
-		        try {
-		        	Thread.sleep(5000);
-		        } catch (InterruptedException e) {}
-		    	penalize = false;
-		    	}
-	        }).start();
-			 */
-		}
-
 		lsnr.Payload_Finished_From_pnlPayload(v);
 		lsnr.Payload_Submit(false); // T3
 		initAnimRenderer(); 

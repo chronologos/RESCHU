@@ -64,13 +64,13 @@ public class AttackNotificationEngine {
 					
 					if(!v.getLostStatus()) {
 						if(!(engage || (v.getPath().size()==0 && v.getTarget()!=null) || v.TargetDistance()<=MyGame.MIN_HACK_DISTANCE)) {
-							System.out.println("Launching Hacking Notification for UAV "+(vIdx+1));
+							System.out.println("Launching Hacking Notification for UAV["+(vIdx+1)+"]");
 							launchHackWarning(vIdx);
 						}
 						else {
 							Timer nTimer = new Timer(timerName);
 							nTimer.schedule(new Hack(timerName), 20000);
-							System.out.println("Reschedule Notification for UAV "+(vIdx+1));
+							System.out.println("Reschedule Notification for UAV["+(vIdx+1)+"]");
 						}
 					}
 				}

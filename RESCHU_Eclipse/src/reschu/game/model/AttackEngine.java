@@ -57,13 +57,13 @@ public class AttackEngine {
 							else {
 								Timer nTimer = new Timer(timerName);
 								nTimer.schedule(new Hack(timerName, delay), 5000);
-								System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
+								System.out.println("Reschedule Hacking for UAV["+(vIdx+1)+"]");
 							}
 						}
 						else {
 							Timer nTimer = new Timer(timerName);
 							nTimer.schedule(new Hack(timerName, delay), 5000);
-							System.out.println("Reschedule Hacking for UAV "+(vIdx+1));
+							System.out.println("Reschedule Hacking for UAV["+(vIdx+1)+"]");
 						}
 					}
 				}

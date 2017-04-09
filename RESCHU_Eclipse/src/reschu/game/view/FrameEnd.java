@@ -111,7 +111,7 @@ public class FrameEnd extends JFrame {
 		lblWTask   = new JLabel("Total tasks finished incorrectly is "+wrong_task);
 		lblAttack  = new JLabel("Total attacks detected correctly is "+total_attack);
 		lblWAttack = new JLabel("Total attacks detected incorrectly "+wrong_attack);
-		lblLost    = new JLabel("Total disappeared UAVs "+total_lost);
+		lblLost    = new JLabel("Total number of disappeared UAVs is "+total_lost);
 		lblTotal   = new JLabel("Your final score is "+final_score);
         
 		btnEnd = new JButton("EXIT");

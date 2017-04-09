@@ -49,7 +49,7 @@ public class UAVMonitor {
 		activeUAV = uav;
 		/*
 		if (activeUAV.getPathSize() > 0) {
-			System.out.println("Recalculating rotation for UAV "+activeUAV.getIndex());
+			System.out.println("Recalculating rotation for UAV["+activeUAV.getIndex()+"]");
 			setRotation();
 			if (activeUAV.getPathSize() > 0) {
 				prevTargetPos = activeUAV.getFirstPathGround();

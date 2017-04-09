@@ -325,7 +325,6 @@ public class Game implements Runnable, ActionListener
 
         if( Reschu.expermient() ) {
             lsnr.EVT_System_GameStart();
-
             // below DBwrites are different from writing to the user's table.
             // we record the login info to the USER table, 
             // which contains infos of all the users
