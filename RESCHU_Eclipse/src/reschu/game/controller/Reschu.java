@@ -826,10 +826,32 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	@Override
 	public void EVT_System_GameStart(){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Game Start. username=" + _username + ", scenario="+ _scenario); 
+		if(_scenario == 0) {
+			if(_practice == 0)
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Simulation (practice) Start, operator ID = "+_username+", scenario = Low Taskload");
+			else
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Simulation (experiment) Start, operator ID = "+_username+", scenario = Low Taskload");
+		}
+		else {
+			if(_practice == 0)
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Simulation (practice) Start, operator ID = "+_username+", scenario = High Taskload");
+			else
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_START, -1, "Simulation (experiment) Start, operator ID = "+_username+", scenario = High Taskload");
+		}
 	}
 	public void EVT_System_GameEnd(){
-		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Game End. user =" + _username + ". scenario = "+ _scenario);
+		if(_scenario == 0) {
+			if(_practice == 0)
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Simulation (practice) End, operator ID = "+_username+", scenario = Low Taskload");
+			else
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Simulation (experiment) End, operator ID = "+_username+", scenario = Low Taskload");
+		}
+		else {
+			if(_practice == 0)
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Simulation (practice) End, operator ID = "+_username+", scenario = High Taskload");
+			else
+				Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, "Simulation (experiment) End, operator ID = "+_username+", scenario = High Taskload");
+		}
 	}
 	public void EVT_RECORD_FINAL_SCORE(int damage, int task, int wrong_task, int attack, int wrong_attack, int lost, int total) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.SYSTEM_GAME_END, -1, 
