@@ -766,8 +766,9 @@ public class Vehicle {
 					updateHackedEndPoint();
 					return;
 				}
+				if(isNotified) return;
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
-				if( getPayload() == Vehicle.PAYLOAD_COM ) { 
+				if( getPayload() == Vehicle.PAYLOAD_COM ) {
 					setStatus(MyGame.STATUS_VEHICLE_PENDING);
 				}
 				else {
