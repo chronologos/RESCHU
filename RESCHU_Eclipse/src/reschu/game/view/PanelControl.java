@@ -354,7 +354,7 @@ class VehiclePanel extends JPanel implements ActionListener {
 		scrollPane = new JScrollPane(txtMission);
 		scrollPane.setAutoscrolls(true);
 		scrollPane.remove(scrollPane.getHorizontalScrollBar());
-		btnEngage = new JButton("Engage");
+		btnEngage = new JButton("ENGAGE");
 		btnEngage.addActionListener(this);
 		progressBar = new JProgressBar(0, 100);
         progressBar.setValue(0);
@@ -480,13 +480,15 @@ class VehicleIcon2 extends JPanel
 	    	g.setColor(color); 
 	    	g.setFont(font);
 	    	g.drawString(str, x , y );
-	}	
+	}
 	
 	public void chkEngageEnabled() {		
 		if( v.getStatus() == MyGame.STATUS_VEHICLE_PENDING ) {  
-			colorFlag = !colorFlag; 
-			if( colorFlag ) vColor = MyColor.COLOR_VEHICLE; 
-			else vColor = MyColor.COLOR_VEHICLE_PENDING;
+			colorFlag = !colorFlag;
+			if(!v.isNotified) {
+				if( colorFlag ) vColor = MyColor.COLOR_VEHICLE; 
+				else vColor = MyColor.COLOR_VEHICLE_PENDING;
+			}
 		}
 		else { vColor = MyColor.COLOR_VEHICLE; }
 		repaint();

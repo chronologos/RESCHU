@@ -542,7 +542,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if(selectedVehicle.getStatus()==MyGame.STATUS_VEHICLE_PENDING) {
 				mnuItemEngage = new JMenuItem("Engage");
 				mnuItemEngage.addActionListener(this);
-				popMenu.add(mnuItemEngage);
+				if(!getSelectedVehicle().isNotified) popMenu.add(mnuItemEngage);
 			}
 			if(getSelectedVehicle().isNotified) {
 				popMenu.add(mnuItemHackYes);
