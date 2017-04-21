@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
-
 import reschu.game.view.UAVMonitor;
 
 public class Vehicle { 
