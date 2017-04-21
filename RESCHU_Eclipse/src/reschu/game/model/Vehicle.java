@@ -8,6 +8,8 @@ import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
 
+import reschu.game.view.UAVMonitor;
+
 public class Vehicle { 
 	public static final String TYPE_UAV = "UAV";
 	public static final String TYPE_UUV = "UUV";
@@ -765,7 +767,7 @@ public class Vehicle {
 					for(int i=0; i<g_size-1; i++) removeGroundFirstPath();
 					updateHackedEndPoint();
 					return;
-				}
+				}				
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				if( getPayload() == Vehicle.PAYLOAD_COM ) {
 					setStatus(MyGame.STATUS_VEHICLE_PENDING);

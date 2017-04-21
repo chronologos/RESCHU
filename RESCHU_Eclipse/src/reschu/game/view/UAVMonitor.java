@@ -242,10 +242,12 @@ public class UAVMonitor {
 		}
 		*/
 		
+		/*
 		double angleToNorth = activeUAV.getGtAngle64();
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		panelpayload.setRotateAngle((float)(angleToNorth-90.0));
+		*/
 	}
 
 	// Check if panning will cause	

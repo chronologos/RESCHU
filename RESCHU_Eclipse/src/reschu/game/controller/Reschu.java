@@ -881,34 +881,34 @@ public class Reschu extends JFrame implements GUI_Listener {
 		uavMonitor.enableUAVFeed(v);
 	}
 	public void EVT_VSelect_Map_RBtn(int vIdx) { 
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn");
 	}
 	public void EVT_VSelect_Tab(int vIdx) {
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_TAB, vIdx, "Vehicle select tab", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_TAB, vIdx, "Vehicle select tab");
 	}
 	public void EVT_VSelect_Tab_All() { 
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_DESELECT_TAB, -1, "Vehicle deselect tab", -1, -1);
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_DESELECT_TAB, -1, "Vehicle deselect tab");
 	}
 	
 	public void EVT_Hack_Launch(int vIdx, int xCoord, int yCoord) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked with Smarter Attacker", xCoord, yCoord);
 	}
 	public void EVT_Hack_Launch_Fake(int vIdx) {
-		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack", -1, -1);
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack");
 	}
 
     public void EVT_Hack_Notification_Launch(int vIdx) {
-    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_LAUNCHED, vIdx, "Hack Notification Launched", -1, -1);
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_LAUNCHED, vIdx, "Hack Notification Launched");
     	game.getVehicleList().getVehicle(vIdx-1).isNotified = true;
     }
     public void EVT_Hack_Notification_Ignore(int vIdx) {
-    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_IGNORED, vIdx, "Hack Notification Ignored", -1, -1);
+    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_IGNORED, vIdx, "Hack Notification Ignored");
     }
     public void EVT_Hack_Notification_Investigate(int vIdx) {
-    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated", -1, -1);
+    	Write(MyDB.INVOKER_USER, MyDB.HACK_NOTIFICATION_INVESTIGATED, vIdx, "Hack Notification Investigated");
     }
     public void EVT_Hack_Notification_Missed(int vIdx) {
-    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_MISSED, vIdx, "Hack Notification Missed", -1, -1);
+    	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_MISSED, vIdx, "Hack Notification Missed");
     }
     
     // For Home (Emergency) Mode

@@ -718,7 +718,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			if(v.isDisappeared) return;
 			
 			setSelectedVehicle(v);
-			System.out.println("selected vehicle is " + v.getIndex());
+			// System.out.println("selected vehicle is " + v.getIndex());
 			lsnr.activateUAVFeed(v.getIndex()-1);
 			lsnr.Vehicle_Selected_From_pnlMap(v.getIndex());
 			if( Utils.isLeftClick(m_ev) ){
