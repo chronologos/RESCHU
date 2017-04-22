@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import reschu.constants.*;
 import reschu.game.controller.GUI_Listener;
 import reschu.game.view.PanelMsgBoard;
-import reschu.game.view.UAVMonitor;
 
 public class Vehicle { 
 	public static final String TYPE_UAV = "UAV";
@@ -25,7 +24,7 @@ public class Vehicle {
 	private LinkedList<int[]> groundTruthPath = new LinkedList<int[]>();
 	private Map map;
 	private int index;
-	private int velocity; 
+	private int velocity;
 	private GUI_Listener lsnr;
 	private int status;
 	private double vDamage;

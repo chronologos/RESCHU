@@ -594,6 +594,9 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	// integrate all engage functions
 	public void Vehicle_Engage_Task(Vehicle v) {
+		pnlPayload.setRotateAngle(0);
+		System.out.println("Done");
+		
 		v.isEngaged = true;
 		pnlControl.PrintTaskMsg(v.getIndex());
 		pnlControl.Show_Vehicle_Status(v.getIndex());

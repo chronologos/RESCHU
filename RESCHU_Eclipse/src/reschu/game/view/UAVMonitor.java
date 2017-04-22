@@ -198,7 +198,7 @@ public class UAVMonitor {
 	}
 
 	// Determine angle to next waypoint and provide rotation angle accordingly
-	public void setRotation() {
+	public void setRotation() {		
 		if (!displayEnabled || activeUAV == null) return;		
 		if (activeUAV.getPathSize() == 0) {
 			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");

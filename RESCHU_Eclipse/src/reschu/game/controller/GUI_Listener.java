@@ -4,7 +4,6 @@ import reschu.game.model.Payload;
 import reschu.game.model.UserDefinedException;
 import reschu.game.model.Vehicle;
 
-
 public interface GUI_Listener {
     
     /** Creates a new instance of Gui_Listener */

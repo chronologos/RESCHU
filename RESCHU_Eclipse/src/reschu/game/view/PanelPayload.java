@@ -434,7 +434,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		new_x_off = new_y_off = 0;
 		x_dist = y_dist = 0;
 		rotate_angle = 0;
-		zoom_count = 6; //far01 Zoom level
+		zoom_count = 6;
 		min_x = max_x = 0;
 		min_y = max_y = 0;
 		//penalize = false;
@@ -931,21 +931,19 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	/**
 	 * This method rotates the texture that is displayed by render.
 	 */
-	public void applyRotate(GL2 gl) {
-
+	public void applyRotate(GL2 gl) {		
 		gl.glMatrixMode(GL2.GL_TEXTURE); 
 		gl.glLoadIdentity();
 		// this line specifies that the texture matrix is to be rotated
 		// rather than the vertices of the object.
-		gl.glTranslated(centreX, centreY,0.0);
+		gl.glTranslated(centreX, centreY, 0.0);
 		// by default rotation is not at the center
-		// so we translate, rotate and translate back.
+		// so we translate, rotate and translate back
 		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
 		gl.glTranslated(-centreX,-centreY,0.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW); 
 		needToRotate = false;
 	}
-
 
 	@Override
 	public void display(GLAutoDrawable drawable) {
