@@ -609,8 +609,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 		PanelMsgBoard.Msg(msg);
 	}
 	
+	public void RotateCameraNorth() {
+		pnlPayload.setRotateAngle(0);
+	}
+	
 	// vehicle home function
-	// from compact panel
 	public void Vehicle_Go_Home(Vehicle v, int source) throws UserDefinedException {
 		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());

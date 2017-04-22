@@ -765,18 +765,16 @@ public class Vehicle {
 					for(int i=0; i<g_size-1; i++) removeGroundFirstPath();
 					updateHackedEndPoint();
 					return;
-				}				
+				}
+				
+				// if a UAV is still in notified status, then it should not be engaged
+				if(isNotified) return;
+				
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
-				if( getPayload() == Vehicle.PAYLOAD_COM ) {
-					setStatus(MyGame.STATUS_VEHICLE_PENDING);
-				}
-				else {
-					setStatus(MyGame.STATUS_VEHICLE_PENDING);
-					String msg = "Vehicle [" + index + "] has reached its target.";
-					PanelMsgBoard.Msg(msg);
-				}
+				setStatus(MyGame.STATUS_VEHICLE_PENDING);				
+				String msg = "Vehicle [" + index + "] has reached its target.";
+				PanelMsgBoard.Msg(msg);
 				lsnr.EVT_Vehicle_ArrivesToTarget(index, getTarget().getName(), getTarget().getPos()[0], getTarget().getPos()[1]);
-				// removeFirstPath();
 			}
 			lsnr.Hide_Popup(this);
 			removeFirstPath();

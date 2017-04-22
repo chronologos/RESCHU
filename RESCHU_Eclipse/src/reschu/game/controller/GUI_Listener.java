@@ -24,6 +24,7 @@ public interface GUI_Listener {
     public void EVT_Click_ZoomMax();
     public void EVT_Click_ZoomMin();
     public void submitPayload();	// For T3
+    public void RotateCameraNorth();
         
     public void showMessageOnTopOfMap(String msg, int duration);
     
