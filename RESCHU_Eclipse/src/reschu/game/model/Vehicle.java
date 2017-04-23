@@ -766,10 +766,8 @@ public class Vehicle {
 					updateHackedEndPoint();
 					return;
 				}
-				
 				// if a UAV is still in notified status, then it should not be engaged
 				if(isNotified) return;
-				
 				// VEHICLE ARRIVED TO ITS GOAL WHERE THE PLACE IS THE ONE OF UNASSIGNED_TARGETS
 				setStatus(MyGame.STATUS_VEHICLE_PENDING);				
 				String msg = "Vehicle [" + index + "] has reached its target.";

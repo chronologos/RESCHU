@@ -194,8 +194,9 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null) return;		
 		// if (activeUAV.getPathSize() == 0) {
 		if(activeUAV.isEngaged) {
-			System.out.println("This UAV has engaged to counting task, setting to north-facing");
+			// System.out.println("This UAV has engaged to counting task, setting to north-facing");
 			panelpayload.setRotateAngle(0);
+			
 			return;
 		}
 		
