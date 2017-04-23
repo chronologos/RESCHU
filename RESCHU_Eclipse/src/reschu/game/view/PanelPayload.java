@@ -182,7 +182,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 	private MapTileCreator tiler;
 	private String tileFileDir;
 
-	private float nextZoomLevel = 2; //far03
+	private float nextZoomLevel = 2;
 	public boolean needToRotate = false;
 	public boolean needToRecenter = false;
 

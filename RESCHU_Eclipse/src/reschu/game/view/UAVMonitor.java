@@ -47,15 +47,6 @@ public class UAVMonitor {
 			panelpayload.needToRecenter = true;
 		}
 		activeUAV = uav;
-		/*
-		if (activeUAV.getPathSize() > 0) {
-			System.out.println("Recalculating rotation for UAV["+activeUAV.getIndex()+"]");
-			setRotation();
-			if (activeUAV.getPathSize() > 0) {
-				prevTargetPos = activeUAV.getFirstPathGround();
-			}
-		}
-		*/
 	}
 
 	public void disableUAVFeed() {
@@ -147,18 +138,19 @@ public class UAVMonitor {
 			panelpayload.setDisplayY((int)Math.max(-PAN_SPEED, panelpayload.getDisplayY() -1)); // Limit max upward speed to PAN_SPEED
 	
 			int[] currentTargetPos = activeUAV.getFirstPathGround();
-			// if (currentTargetPos[0] != prevTargetPos[0] || currentTargetPos[1] != prevTargetPos[1]) {
-				// System.out.println("Detected change in waypoint!");
-				setRotation();
-				prevTargetPos = currentTargetPos;
+			setRotation();
+			prevTargetPos = currentTargetPos;
+			// if a NOT hacked but NOTIFIED UAV arrives its target, the camera scene should not rotate
+			if(!(activeUAV.isNotified && activeUAV.TargetDistance()<=1)) {
 				panelpayload.needToRotate = true;
-			// }
+			}
 		}
 		else {
 			if (yDistToPan == 0) {
 				// System.out.println("No waypoint and no panning, setting Y to 0");
 				panelpayload.unsetDisplayY();
 			}
+			setRotation();
 		}
 		
 		panelpayload.setX((float)activeUAV.getGroundTruthX64());
@@ -200,9 +192,11 @@ public class UAVMonitor {
 	// Determine angle to next waypoint and provide rotation angle accordingly
 	public void setRotation() {		
 		if (!displayEnabled || activeUAV == null) return;		
-		if (activeUAV.getPathSize() == 0) {
-			System.out.println("This UAV has reached its target, setting rotation angle to 0 for north-facing");
+		// if (activeUAV.getPathSize() == 0) {
+		if(activeUAV.isEngaged) {
+			System.out.println("This UAV has engaged to counting task, setting to north-facing");
 			panelpayload.setRotateAngle(0);
+			return;
 		}
 		
 		/*
