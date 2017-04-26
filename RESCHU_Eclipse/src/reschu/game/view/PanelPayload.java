@@ -947,9 +947,10 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		gl.glTranslated(centreX, centreY, 0.0);
 		// by default rotation is not at the center
 		// so we translate, rotate and translate back
-		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
 		
-		// System.out.println("angle = "+rotateAngle);
+		// for generating target data base via directly setting the location of UAV 1
+		// gl.glRotatef(0, 0.0f, 0.0f, 1.0f);
+		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
 		
 		gl.glTranslated(-centreX,-centreY,0.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW); 
@@ -1178,12 +1179,6 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		right = centreX + (x2 - x1)*(0.25f * zoomLevel);
 		top = centreY - (y2 - y1)*(0.25f * zoomLevel);
 		bottom = centreY + (y2 - y1)*(0.25f * zoomLevel);
-		//left = 0;
-		//right = 1;
-		//bottom = 1;
-		//top = 0;
-
-		// System.out.println("left is" + left + "right is" + right);
 		gl.glTexCoord2f(right, top);
 		gl.glVertex3f(1.0f, 1.0f, 0);
 		gl.glTexCoord2f(left, top);

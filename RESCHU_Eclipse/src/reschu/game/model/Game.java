@@ -650,7 +650,7 @@ public class Game implements Runnable, ActionListener
     // get total detected attack number
     public static int GetWrongDetect() {
     	for(int i=0; i<vehicleList.size(); i++) {
-    		if(VehicleList.getVehicle(i).getNotifiedStatus()) AddWrongDetect();
+    		if(VehicleList.getVehicle(i).getNotifiedStatus() && !VehicleList.getVehicle(i).isDisappeared) AddWrongDetect();
     	}
     	return wrong_detect;
     }

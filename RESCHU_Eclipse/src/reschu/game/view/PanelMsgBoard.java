@@ -68,7 +68,6 @@ public class PanelMsgBoard extends JPanel implements ActionListener
 	
     private void insert_grid(GridBagConstraints gbc, Component cmpt,
     		int x, int y, int width, int height, double percent_x, double percent_y, int ins) {
-    	
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = x;
         gbc.gridy = y;

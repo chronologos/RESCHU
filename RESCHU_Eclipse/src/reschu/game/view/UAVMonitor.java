@@ -141,7 +141,7 @@ public class UAVMonitor {
 			setRotation();
 			prevTargetPos = currentTargetPos;
 			// if a NOT hacked but NOTIFIED UAV arrives its target, the camera scene should not rotate
-			if(!(activeUAV.isNotified && activeUAV.TargetDistance()<=1)) {
+			if(!(activeUAV.isNotified && activeUAV.TargetDistance()<=1 && !activeUAV.getHijackStatus())) {
 				panelpayload.needToRotate = true;
 			}
 		}
