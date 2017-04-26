@@ -151,6 +151,7 @@ public class UAVMonitor {
 				panelpayload.unsetDisplayY();
 			}
 			setRotation();
+			panelpayload.needToRotate = true;
 		}
 		
 		panelpayload.setX((float)activeUAV.getGroundTruthX64());
@@ -194,9 +195,7 @@ public class UAVMonitor {
 		if (!displayEnabled || activeUAV == null) return;		
 		// if (activeUAV.getPathSize() == 0) {
 		if(activeUAV.isEngaged) {
-			// System.out.println("This UAV has engaged to counting task, setting to north-facing");
 			panelpayload.setRotateAngle(0);
-			
 			return;
 		}
 		
@@ -237,13 +236,10 @@ public class UAVMonitor {
 		}
 		*/
 		
-		// need to figure out what is happening here
-		// /*
 		double angleToNorth = activeUAV.getGtAngle64();
 		angleToNorth *= 180;
 		angleToNorth /= Math.PI;
 		panelpayload.setRotateAngle((float)(angleToNorth-90.0));
-		// */
 	}
 
 	// Check if panning will cause	

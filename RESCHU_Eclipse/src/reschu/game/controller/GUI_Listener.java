@@ -23,6 +23,8 @@ public interface GUI_Listener {
     public void zoomOut();
     public void EVT_Click_ZoomMax();
     public void EVT_Click_ZoomMin();
+    public void EVT_Click_ZoomIn(int zoom);
+    public void EVT_Click_ZoomOut(int zoom);
     public void submitPayload();	// For T3
     public void RotateCameraNorth();
         

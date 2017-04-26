@@ -448,11 +448,13 @@ public class Reschu extends JFrame implements GUI_Listener {
 		return;
 		//pnlPayload.pan_down(); }
 	}
+	
 	// zoom functions, need to improve
 	@Override
 	public void zoomIn() {
 		zoomLevel = pnlPayload.zoom_in();
-		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
+		payloadTextOverlay.setZoomLevel(zoomLevel);
+		EVT_Click_ZoomIn(zoomLevel);
 		
 		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMAX) {
 			EVT_Click_ZoomMax();
@@ -461,7 +463,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void zoomOut() {
 		zoomLevel = pnlPayload.zoom_out();
-		payloadTextOverlay.setZoomLevel(zoomLevel); //far01
+		payloadTextOverlay.setZoomLevel(zoomLevel);
+		EVT_Click_ZoomOut(zoomLevel);
 		
 		if(pnlPayload.getZoomCount() == pnlPayload.ZOOMMIN) {
 			EVT_Click_ZoomMin();
@@ -475,6 +478,14 @@ public class Reschu extends JFrame implements GUI_Listener {
 	@Override
 	public void EVT_Click_ZoomMin() {
 		Write(MyDB.INVOKER_USER, MyDB.ZOOM_MIN, -1, "Clicked Zoom Out, reached Zoom Min");
+	}
+	@Override
+	public void EVT_Click_ZoomIn(int zoom) {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_IN, -1, "Clicked Zoom In, zoom level = "+zoom);
+	}
+	@Override
+	public void EVT_Click_ZoomOut(int zoom) {
+		Write(MyDB.INVOKER_USER, MyDB.ZOOM_OUT, -1, "Clicked Zoom Out, zoom level = "+zoom);
 	}
 	
 	@Override
@@ -614,6 +625,8 @@ public class Reschu extends JFrame implements GUI_Listener {
 	
 	// vehicle home function
 	public void Vehicle_Go_Home(Vehicle v, int source) throws UserDefinedException {
+		// if a UAV is already disappeared, then it should not be sent home
+		if(v.isDisappeared) return;
 		// transfer to UAV status window
 		pnlControl.Show_Vehicle_Status(v.getIndex());
 		// create a dialog

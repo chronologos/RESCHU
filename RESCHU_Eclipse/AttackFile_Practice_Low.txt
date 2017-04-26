@@ -1,8 +1,8 @@
 // note that displayed number of vehicle on map starts from 1 so vehicle idx starts from 1 in this file
-NOTIFY,2,10000
+NOTIFY,2,12000
 ATTACK,2,10000,0 0
 NOTIFY,1,220000
-ATTACK,1,200000,500 -100
+ATTACK,1,200000,500 500
 NOTIFY,3,350000
 ATTACK,3,330000,0 0
 NOTIFY,2,490000

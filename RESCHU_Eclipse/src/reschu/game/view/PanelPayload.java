@@ -207,9 +207,17 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		this.tileFileDir = tileFileDir;
 		glCanvas.setSize(VIEWPORT_LENGTH, VIEWPORT_LENGTH);
 	}
+	
+	public GLJPanel getGLJPanel() {
+		return glCanvas;
+	}
 
 	public void setUAVMonitor(UAVMonitor uavMonitor) {
 		this.uavMonitor = uavMonitor;
+	}
+	
+	public float getRotateAngle() {
+		return rotateAngle;
 	}
 
 	private void initTextRenderers() {
@@ -940,6 +948,9 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		// by default rotation is not at the center
 		// so we translate, rotate and translate back
 		gl.glRotatef(rotateAngle, 0.0f, 0.0f, 1.0f);
+		
+		// System.out.println("angle = "+rotateAngle);
+		
 		gl.glTranslated(-centreX,-centreY,0.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW); 
 		needToRotate = false;
@@ -1158,7 +1169,7 @@ public class PanelPayload extends MyCanvas implements GLEventListener {
 		gl.glEnable(GL.GL_TEXTURE_2D);
 		gl.glLoadIdentity();
 		CurrentTexture.bind(gl);
-		applyZoom();	
+		applyZoom();
 		//rotateAngle += 0.2f;
 		//if (xPos % 10 == 0) applyRotate(gl);
 		if (needToRotate) applyRotate(gl);
