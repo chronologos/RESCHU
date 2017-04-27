@@ -659,6 +659,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				clicked_pos_y = (int) getMousePosition().getY() / cellsize - 30;
 			}
 			showPopup(this, clicked_pos_x*cellsize, clicked_pos_y*cellsize, game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
+			lsnr.EVT_WP_AddWP_Prev(selectedVehicle.getIndex());
 		}
 		// waypoint next
 		if( evt.getSource() == mnuItemNext) {
@@ -671,6 +672,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				clicked_pos_y = (int) getMousePosition().getY() / cellsize - 30;
 			}
 			showPopup(this, clicked_pos_x*cellsize, clicked_pos_y*cellsize, game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
+			lsnr.EVT_WP_AddWP_Next(selectedVehicle.getIndex());
 		}
 		// delete waypoint
 		if( evt.getSource() == mnuItemInstantDelWP ) {
@@ -722,7 +724,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			lsnr.activateUAVFeed(v.getIndex()-1);
 			lsnr.Vehicle_Selected_From_pnlMap(v.getIndex());
 			if( Utils.isLeftClick(m_ev) ){
-				lsnr.EVT_VSelect_Map_LBtn(v.getIndex());        		        		
+				lsnr.EVT_VSelect_Map_LBtn(v.getIndex());
 			}
 			else if( Utils.isRightClick(m_ev) ) {
 				lsnr.EVT_VSelect_Map_RBtn(v.getIndex());

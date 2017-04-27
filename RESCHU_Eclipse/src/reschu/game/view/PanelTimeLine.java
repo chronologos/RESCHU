@@ -102,11 +102,11 @@ class TimeText extends JPanel {
 		g.drawString(setTimeFormat(t4), p4-10, 10);
 		g.drawString(setTimeFormat(t5), p5-10, 10);
 		*/
-		g.drawString("T(s)", p1, 10);
-		g.drawString("T+120", p2-20, 10);
-		g.drawString("T+240", p3-20, 10);
-		g.drawString("T+360", p4-20, 10);
-		g.drawString("T+480", p5-25, 10);
+		g.drawString("0", p1, 10);
+		g.drawString("2 mins", p2-20, 10);
+		g.drawString("4 mins", p3-20, 10);
+		g.drawString("6 mins", p4-20, 10);
+		g.drawString("8 mins", p5-25, 10);
 	}
 	
 	public void refresh(int milliseconds) {

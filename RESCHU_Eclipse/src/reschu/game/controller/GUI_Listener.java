@@ -75,6 +75,8 @@ public interface GUI_Listener {
     public void EVT_WP_DeleteWP_Start(int vIdx); 
     public void EVT_WP_DeleteWP_End(int vIdx, int mouseCoordX, int mouseCoordY); 
     public void EVT_WP_AddWP_Cancel(int vIdx);
+    public void EVT_WP_AddWP_Prev(int vIdx);
+    public void EVT_WP_AddWP_Next(int vIdx);
     public void EVT_GP_SetGP_by_System(int vIdx, String targetName);  
     public void EVT_GP_SetGP_Start(int vIdx);  
     public void EVT_GP_SetGP_End_Assigned(int vIdx, int mouseCoordX, int mouseCoordY, String targetName); 

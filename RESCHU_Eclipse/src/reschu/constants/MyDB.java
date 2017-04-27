@@ -11,6 +11,8 @@ public class MyDB {
 	final public static int WP_DELETE_START				= 15;
 	final public static int WP_DELETE_END				= 16;
 	final public static int WP_ADD_CANCEL				= 17;
+	final public static int WP_ADD_PREV					= 18;
+	final public static int WP_ADD_NEXT					= 19;
 	
 	final public static int GP_SET_BY_SYSTEM			= 21;
 	final public static int GP_SET_START				= 22;

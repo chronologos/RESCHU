@@ -2,7 +2,7 @@ package reschu.constants;
 
 import reschu.game.controller.Reschu;
 
-public class MyGame { 
+public class MyGame {
 	final static public String VERSION_INFO = "RESCHU VER 2.0.0";	
     
     final static public int LAND = 0;

@@ -733,6 +733,12 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_WP_AddWP_Cancel(int vIdx) {
 		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_CANCEL, vIdx, "Waypoint adding cancel"); 
 	}
+	public void EVT_WP_AddWP_Prev(int vIdx) {
+		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_PREV, vIdx, "Waypoint adding set to Prev"); 
+	}
+	public void EVT_WP_AddWP_Next(int vIdx) {
+		Write(MyDB.INVOKER_USER, MyDB.WP_ADD_NEXT, vIdx, "Waypoint adding set to Next"); 
+	}
 	public void EVT_WP_MoveWP_Start(int vIdx, int mouseCoordX, int mouseCoordY){
 		Write(MyDB.INVOKER_USER, MyDB.WP_MOVE_START, vIdx, "Waypoint moving start", mouseCoordX, mouseCoordY);
 	}
@@ -749,28 +755,28 @@ public class Reschu extends JFrame implements GUI_Listener {
 	}
 	public void EVT_GP_SetGP_by_System(int vIdx, String targetName){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_SYSTEM, MyDB.GP_SET_BY_SYSTEM, vIdx, "Goal set by system, UAV["+vIdx+"] is assigned to target["+targetName+"]");
+		Write(MyDB.INVOKER_SYSTEM, MyDB.GP_SET_BY_SYSTEM, vIdx, "Goal set by system, UAV["+vIdx+"] is assigned to Target["+targetName+"]");
 	}
 	public void EVT_GP_SetGP_Start(int vIdx){
-		Write(MyDB.INVOKER_USER, MyDB.GP_SET_START, vIdx, "Goal setting start");
+		Write(MyDB.INVOKER_USER, MyDB.GP_SET_START, vIdx, "Goal setting start by right click UAV["+vIdx+"]");
 	}
 	public void EVT_GP_SetGP_End_Assigned(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_ASSIGNED, vIdx, "Goal setting end, UAV["+vIdx+"] is assigned to target["+targetName+"]", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_ASSIGNED, vIdx, "Goal setting end, UAV["+vIdx+"] is assigned to Target["+targetName+"]", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_GP_SetGP_End_Unassigned(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
 		Write(MyDB.INVOKER_USER, MyDB.GP_SET_END_UNASSIGNED, vIdx, "Goal setting end, no assignment", mouseCoordX, mouseCoordY);
 	}
     public void EVT_GP_SetGP_Cancel(int vIdx) {
-    	Write(MyDB.INVOKER_USER, MyDB.GP_SET_CANCEL, vIdx, "Goal set canceled"); 
+    	Write(MyDB.INVOKER_USER, MyDB.GP_SET_CANCEL, vIdx, "Goal set canceled");
     }
 	public void EVT_GP_ChangeGP_Start(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){
 		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_START, vIdx, "Goal changing start from Target["+targetName+"]", mouseCoordX, mouseCoordY);    	
 	}
 	public void EVT_GP_ChangeGP_End_Assigned(int vIdx, int mouseCoordX, int mouseCoordY, String targetName){    	
 		checkIntersect(vIdx);
-		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_ASSIGNED, vIdx, "Goal changing end, target["+targetName+"] assigned", mouseCoordX, mouseCoordY);
+		Write(MyDB.INVOKER_USER, MyDB.GP_CHANGE_END_ASSIGNED, vIdx, "Goal changing end, Target["+targetName+"] assigned", mouseCoordX, mouseCoordY);
 	}
 	public void EVT_GP_ChangeGP_End_Unassigned(int vIdx, int mouseCoordX, int mouseCoordY){
 		checkIntersect(vIdx);
@@ -895,26 +901,26 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public void EVT_VSelect_Map_LBtn(int vIdx) {
 		Vehicle v = game.getVehicleList().getVehicle(vIdx-1);
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_LBTN, vIdx,
-				"Vehicle ["+v.getIndex()+"] select map Lbtn and its video feed enabled)", v.getX(), v.getY());
+				"Vehicle ["+v.getIndex()+"] select from map by Lbtn", v.getX(), v.getY());
 		uavMonitor.enableUAVFeed(v);
 	}
 	public void EVT_VSelect_Map_RBtn(int vIdx) { 
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle select map Rbtn");
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_MAP_RBTN, vIdx, "Vehicle ["+vIdx+"] select from map by Rbtn");
 	}
 	public void EVT_VSelect_Tab(int vIdx) {
-		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_TAB, vIdx, "Vehicle select tab");
+		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_SELECT_TAB, vIdx, "Vehicle ["+vIdx+"] select from panel tab");
 	}
-	public void EVT_VSelect_Tab_All() { 
+	public void EVT_VSelect_Tab_All() {
 		Write(MyDB.INVOKER_USER, MyDB.YVES_VEHICLE_DESELECT_TAB, -1, "Vehicle deselect tab");
 	}
 	
+	// For UAV hacking event
 	public void EVT_Hack_Launch(int vIdx, int xCoord, int yCoord) {
 		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED, vIdx, "Vehicle Hacked with Smarter Attacker", xCoord, yCoord);
 	}
 	public void EVT_Hack_Launch_Fake(int vIdx) {
-		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack");
+		Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_LAUNCHED_FAKE, vIdx, "Fake Vehicle Hack launched");
 	}
-
     public void EVT_Hack_Notification_Launch(int vIdx) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.HACK_NOTIFICATION_LAUNCHED, vIdx, "Hack Notification Launched");
     	game.getVehicleList().getVehicle(vIdx-1).isNotified = true;
@@ -970,7 +976,7 @@ public class Reschu extends JFrame implements GUI_Listener {
     // For Ghost Mission
     public void EVT_Generate_Ghost_Mission(Vehicle v) {
     	Write(MyDB.INVOKER_SYSTEM, MyDB.GENERATE_GHOST_MISSION, v.getIndex(),
-    			"UAV["+v.getIndex()+"] is under attck, generate its ghost mission", v.getX(), v.getY());
+    			"UAV["+v.getIndex()+"] is under attck", v.getX(), v.getY());
     	// game.AddGhostUAV(v);
     }
     public void EVT_ATTACKED_UAV_DISAPPEAR(Vehicle v) {
