@@ -62,7 +62,7 @@ public class FrameEnd extends JFrame {
 	}
 	
 	public int GetWrongAttack() {
-		return wrong_task;
+		return wrong_attack;
 	}
 	
 	public int GetTotalLost() {
