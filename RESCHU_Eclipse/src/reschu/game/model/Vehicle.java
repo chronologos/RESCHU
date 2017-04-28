@@ -317,7 +317,7 @@ public class Vehicle {
 		setGroundTruthX64(0); setGroundTruthY64(0);
 		setTarget(null); 
 		this.g = g;
-		map = m; 
+		map = m;
 		setStatus(MyGame.STATUS_VEHICLE_STASIS);
 		vDamage = 0;
 		// velocity_scale = MySpeed.SPEED_TIMER;
@@ -1020,14 +1020,13 @@ public class Vehicle {
 		// if attack position is "0 0"
 		// it will be considered as fake attack
 		if (xCoord == 0 && yCoord == 0){
-			System.out.println("Fake attack launched.");
+			System.out.println("Fake attack launched");
 			lsnr.EVT_Hack_Launch_Fake(index);
 			return;
 		}
 		
 		// real attack if attack position is NOT "0 0"
 		isHijacked = true;
-		
 		System.out.println("Launching hack with smarter attacker for UAV["+index+"]");
 		lsnr.EVT_Hack_Launch(index, xCoord, yCoord);
 		lsnr.EVT_Generate_Ghost_Mission(this);
