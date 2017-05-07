@@ -123,7 +123,8 @@ public class Vehicle {
 			// add waypoint for smarter attacker
 			int[] temp = CreateMatchedPoint(HackLocation[0], HackLocation[1], e[0], e[1], HackAngle);
 			groundTruthPath.add(idx, temp);
-		} else {
+		}
+		else {
 			groundTruthPath.add(idx, e);
 		}
 	}

@@ -64,11 +64,11 @@ public class Reschu extends JFrame implements GUI_Listener {
 	public UAVMonitor uavMonitor;
 	public AttackNotificationEngine attackNotificationEngine;
 	public AttackEngine attackEngine;
-	public TextOverlay payloadTextOverlay; //far01 pass zoom level to textoverlay
+	public TextOverlay payloadTextOverlay;
 
 	public Game game;
 	private double origin_time;
-	private int zoomLevel; //far01
+	private int zoomLevel;
 	private TitledBorder bdrTitle;  
 	private Tutorial tutorial; 
 	public String filename;
