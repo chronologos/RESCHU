@@ -475,7 +475,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				popMenu.remove(mnuItemAddWP);
 				popMenu.remove(mnuItemDelWP);
 			} else {
-				mnuItemSetGoal.setText("Change the target");
+				mnuItemSetGoal.setText("Change target");
 				mnuItemSetGoal.setEnabled(true);
 				mnuItemAddWP.setEnabled(true);
 				if( v.hasWaypoint() ) mnuItemDelWP.setEnabled(true);
@@ -522,7 +522,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		// if(mapSettingMode && !vehicleWPAddMode)
 		else {
 			popMenu.removeAll();
-			mnuItemSetGoal = new JMenuItem("Set the goal"); 
+			mnuItemSetGoal = new JMenuItem("Set goal"); 
 			mnuItemAddWP = new JMenuItem("Add waypoint");
 			mnuItemDelWP = new JMenuItem("Delete waypoint");
 			
@@ -756,19 +756,18 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		if(!TABLETOP) {
 			// Add a waypoint
-			if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPAddMode ) {  
+			if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPAddMode ) {				
 				int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);        	
 				just_added_WP = new int[]{clicked_pos_x, clicked_pos_y, idx};	        
 				setWPNextPrev(idx);	        
-				showPopup(this, m_ev.getX(), m_ev.getY(), game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));        	
+				showPopup(this, m_ev.getX(), m_ev.getY(), game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
 			}
 		}
 
 		// Delete a waypoint
-		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode  && wp!=null) {  
+		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode && wp!=null) {  
 			getSelectedVehicle().delWaypoint(wp.getX(), wp.getY());
 			setClear();
-			// System.out.println("Vehicle deselected by deleting waypoint");
 		} 
 		repaint();
 	}
@@ -808,7 +807,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			}
 
 			// MOVE - WP
-			if( wp != null && Utils.isLeftClick(m_ev) && !vehicleWPDelMode) {        	
+			if( wp != null && Utils.isLeftClick(m_ev) && !vehicleWPDelMode && !vehicleWPAddMode) {        	
 				setSelectedVehicle(wp.getV());
 				lsnr.activateUAVFeed(wp.getV().getIndex()-1);
 
@@ -823,7 +822,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 	}
 
-	public void mouseReleased(MouseEvent m_ev) { 
+	public void mouseReleased(MouseEvent m_ev) {
 		if( eventDisabled ) return;
 		int clicked_pos_x, clicked_pos_y;
 		clicked_pos_x = m_ev.getX() / cellsize;
@@ -833,11 +832,10 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		new_WP_y = new_GP_y = clicked_pos_y; 
 
 		// Waypoint MOUSE_RIGHT_BUTTON Click
-		if( Utils.isRightClick(m_ev) && !mapSettingMode  ) {  	
+		if( Utils.isRightClick(m_ev) && !mapSettingMode) {  	
 			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
 			
-			if( wp != null ) {
-				
+			if( wp != null ) {				
 				// check if the UAV is disappeared
 				if(wp.getV().isDisappeared) return;
 				
@@ -847,7 +845,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				WPRightClickedMode = true;
 				showPopup(this, m_ev.getX(), m_ev.getY(), getSelectedVehicle());
 				WPRightClickedMode = false;
-			}            
+			}
 		}
 
 		// Menu - Goal point set (either adding or changing)
@@ -882,6 +880,11 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 
 		// Menu - Add WP
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && !vehicleGoalMode && vehicleWPAddMode && !vehicleWPChangeMode && !vehicleWPDelMode ) {
+			
+			// avoid the waypoint bug which will lock the whole map
+			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
+			if(wp != null) return;
+			
 			int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);        	
 			just_added_WP = new int[]{clicked_pos_x, clicked_pos_y, idx};	        
 			setWPNextPrev(idx);	        
