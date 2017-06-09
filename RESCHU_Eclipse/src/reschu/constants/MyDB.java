@@ -44,8 +44,8 @@ public class MyDB {
 	final public static int HAZARDAREA_GENERATED		= 61;
 	final public static int HAZARDAREA_DISAPPEARED		= 62; 
 		
-	final public static int SYSTEM_GAME_START			= 91;
-	final public static int SYSTEM_GAME_END				= 92;
+	final public static int SYSTEM_GAME_START			= 141;
+	final public static int SYSTEM_GAME_END				= 142;
 	
 	final public static int YVES_VEHICLE_SELECT_TAB		= 101;
 	final public static int YVES_VEHICLE_DESELECT_TAB	= 102;

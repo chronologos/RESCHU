@@ -740,7 +740,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				&&  !vehicleWPAddMode 
 				&&  !vehicleWPDelMode ) { 
 			lsnr.Vehicle_Unselected_From_pnlMap();
-		}   
+		}
 
 		// Add goal
 		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleGoalMode ) { 
@@ -765,7 +765,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 		}
 
 		// Delete a waypoint
-		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode && wp!=null) {  
+		if( Utils.isLeftClick(m_ev) && mapSettingMode && vehicleWPDelMode && wp!=null) {
 			getSelectedVehicle().delWaypoint(wp.getX(), wp.getY());
 			setClear();
 		} 
@@ -791,7 +791,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 				// check if the UAV is disappeared
 				if(gp.getV().isDisappeared) return;
 				
-				setSelectedVehicle(gp.getV());   
+				setSelectedVehicle(gp.getV());
 				lsnr.activateUAVFeed(gp.getV().getIndex()-1);
 				repaint();
 				//System.out.println("[mousePressed]Vehicle(" + getV().getName() + ") selected.(gp)"); 
@@ -885,7 +885,13 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			wp = game.Vehicle_Waypoint_Check(clicked_pos_x, clicked_pos_y);
 			if(wp != null) return;
 			
-			int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);        	
+			// avoid the waypoint bug triggered by UAV reaches its endpoint
+			if(getSelectedVehicle().getPathSize() == 0) {
+				setClear();
+				return;
+			}
+			
+			int idx = getSelectedVehicle().addWaypoint(clicked_pos_x, clicked_pos_y);
 			just_added_WP = new int[]{clicked_pos_x, clicked_pos_y, idx};	        
 			setWPNextPrev(idx);	        
 			showPopup(this, m_ev.getX(), m_ev.getY(), game.getVehicleList().getVehicle(clicked_pos_x, clicked_pos_y));
