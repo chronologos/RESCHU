@@ -345,7 +345,7 @@ public class Reschu extends JFrame implements GUI_Listener {
 				EVT_Vehicle_EscapeHazardArea(vIdx);
 			}
 		}    		
-	} 
+	}
 
 	//Gui_Listener Interface
 	
@@ -1000,7 +1000,7 @@ public class Reschu extends JFrame implements GUI_Listener {
     			"Incorrect hacking detected for UAV["+v.getIndex()+"]", v.getX(), v.getY());
     }
     public void EVT_UAV_DECIDED_HACKED(Vehicle v) {
-    	Write(MyDB.INVOKER_SYSTEM, MyDB.UAV_HACKED_DECIDED, v.getIndex(),
+    	Write(MyDB.INVOKER_USER, MyDB.UAV_HACKED_DECIDED, v.getIndex(),
     			"UAV["+v.getIndex()+"] is considered being attacked from pop menu", v.getX(), v.getY());
     	try {
 			Vehicle_Go_Home(v, 2);

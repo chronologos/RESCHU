@@ -980,7 +980,7 @@ public class PanelMap extends JPanel implements ActionListener, MouseListener, M
 			lsnr.EVT_WP_AddWP_Cancel(selectedVehicle.getIndex());
 		}
 		setClear(); 
-		repaint(); 
+		repaint();
 	}
 
 	private int[] getClip(int x1, int y1, int x2, int y2, int x3, int y3) {
