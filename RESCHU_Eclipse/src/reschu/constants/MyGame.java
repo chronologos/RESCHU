@@ -16,7 +16,7 @@ public class MyGame {
 	final static public int STATUS_VEHICLE_ATTACKED = 4;
 	final static public int STATUS_VEHICLE_LOST 	= 5;
  
-    final static public int nHAZARD_AREA = 21; // original 14
+    final static public int nHAZARD_AREA = 21; // original 21
     final static public int nHAZARD_AREA_TUTORIAL = 3;
     
     final static public int nTARGET_AREA_LAND = 2; // original 8
