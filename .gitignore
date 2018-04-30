@@ -1,9 +1,9 @@
-parport-win32
-DS_STORE
-Code Backups
 *.pdf
 RESCHU_Eclipse/logs
 RESCHU_Eclipse/PayloadText.txt
-RESCHU_Eclipse/AttackFile.txt
-RESCHU_Eclipse/AttackFile_practice.txt
-RESCHU_Eclipse/AttackFile_pilot_test.txt
+RESCHU_Eclipse/AttackFile_High.txt
+RESCHU_Eclipse/AttackFile_Low.txt
+RESCHU_Eclipse/AttackFile_Practice_High.txt
+RESCHU_Eclipse/AttackFile_Practice_Low.txt
+RESCHU_Eclipse/AttackFile_Test_High.txt
+RESCHU_Eclipse/AttackFile_Test_Low.txt
